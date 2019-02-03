@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -16,9 +18,9 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:db.properties")
-public class DatasourceConfig {
+public class DatabaseConfig {
 	
-	public static final Logger LOG = Logger.getLogger(DatasourceConfig.class);
+	public static final Logger LOG = Logger.getLogger(DatabaseConfig.class);
 	
 	@Autowired
 	private Environment env;
@@ -31,6 +33,11 @@ public class DatasourceConfig {
 		config.setPassword(env.getProperty("spring.datasource.dev.password"));
 		config.setDriverClassName(env.getProperty("spring.datasource.dev.driver"));
 		return new HikariDataSource(config);
+	}
+	
+	@Bean
+	public PlatformTransactionManager transactionManagerOracleDev() {
+	    return new DataSourceTransactionManager(dataSourceOracleDev());
 	}
 	
 }

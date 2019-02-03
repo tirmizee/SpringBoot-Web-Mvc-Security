@@ -37,20 +37,18 @@ public class MSSQLGenerator extends AbstractSqlGenerator {
 
 	public String generateSelectAllWithPagination(TableDescription table, Pageable page) {
 		
-		final int beginOffset = beginOffset(page);
-		final int endOffset = beginOffset + page.getPageSize() - 1;
+		final int beginOffset = beginOffset(page),
+		          endOffset = beginOffset + page.getPageSize() - 1;
 		
-		String orderByPart = orderByPart(page, table);
-		String selectAllPart = selectAll(table);
+		String orderByPart = orderByPart(page, table),
+		        selectAllPart = selectAll(table);
 		
 		return String.format(ROW_NUM_WRAPPER, orderByPart, selectAllPart, beginOffset, endOffset);
 	}
 	
 	public String generateSelectWithPagination(TableDescription table, StringBuilder statement ,Pageable page) {
-		
-		final int beginOffset = beginOffset(page);
-		final int endOffset = beginOffset + page.getPageSize() - 1;
-		
+		final int beginOffset = beginOffset(page),
+		          endOffset = beginOffset + page.getPageSize() - 1;
 		String orderByPart = orderByPart(page, table);
 		return String.format(ROW_NUM_WRAPPER, orderByPart, statement, beginOffset, endOffset);
 	}
