@@ -14,5 +14,5 @@ public class RestApiController {
     public NHSO01Detail index() {
         return new NHSO01Detail();
     }
-
+	
 }
