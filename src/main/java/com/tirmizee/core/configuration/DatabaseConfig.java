@@ -12,6 +12,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.tirmizee.core.constant.Properties;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -28,10 +29,10 @@ public class DatabaseConfig {
 	@Bean
 	public DataSource dataSourceOracleDev(){
 		HikariConfig config = new HikariConfig();
-		config.setJdbcUrl(env.getProperty("spring.datasource.dev.url"));
-		config.setUsername(env.getProperty("spring.datasource.dev.username"));
-		config.setPassword(env.getProperty("spring.datasource.dev.password"));
-		config.setDriverClassName(env.getProperty("spring.datasource.dev.driver"));
+		config.setJdbcUrl(env.getProperty(Properties.DB.ORACLE_DEV_URL));
+		config.setUsername(env.getProperty(Properties.DB.ORACLE_DEV_USER));
+		config.setPassword(env.getProperty(Properties.DB.ORACLE_DEV_PASS));
+		config.setDriverClassName(env.getProperty(Properties.DB.ORACLE_DEV_DRIVER));
 		return new HikariDataSource(config);
 	}
 	
