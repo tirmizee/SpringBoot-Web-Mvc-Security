@@ -15,7 +15,7 @@ import com.tirmizee.core.jdbcrepository.TableDescription;
  * @author pratya yeekhaday
  *
  */
-public class MYSQLGenerator extends AbstractSqlGenerator {
+public class MysqlGenerator extends AbstractSqlGenerator {
 
 	public static final String PRODUCT_NAME = "MySQL";
 	

@@ -42,7 +42,7 @@ public class MemberRepositoryImpl extends AbstractOracleJdbcRepository<Member, S
 	public MemberRepositoryImpl(String tableName) {
 		super(ROW_MAPPER, ROW_UNMAPPER, tableName, COL_USERNAME);
 	}
-
+	
 	@Override
 	protected <S extends Member> S postUpdate(S entity) {
 		entity.withPersisted(true);

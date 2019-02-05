@@ -25,8 +25,8 @@ public class SqlGeneratorFactory {
 	public SqlGeneratorFactory(boolean registerDefault) {
 	    if (registerDefault) {
 	    	registerGenerator(new Oracle9SqlGenerator());
-	        registerGenerator(new MYSQLGenerator());
-	        registerGenerator(new MSSQLGenerator());
+	        registerGenerator(new MysqlGenerator());
+	        registerGenerator(new MssqlGenerator());
 	    }
 	}
 	

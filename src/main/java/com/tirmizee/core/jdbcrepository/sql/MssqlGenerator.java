@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import com.tirmizee.core.exception.UnsupportedSQLException;
 import com.tirmizee.core.jdbcrepository.TableDescription;
 
-public class MSSQLGenerator extends AbstractSqlGenerator {
+public class MssqlGenerator extends AbstractSqlGenerator {
 
 	public static final String PRODUCT_NAME = "Microsoft SQL Server";
 	

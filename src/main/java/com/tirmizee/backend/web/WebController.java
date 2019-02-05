@@ -10,7 +10,7 @@ public class WebController {
 	@GetMapping(path = "/")
 	public String index(ModelMap model) {
 		model.addAttribute("h", "hello world 555");
-		return "login";
+		return "login/login";
 	}
 	
 }
