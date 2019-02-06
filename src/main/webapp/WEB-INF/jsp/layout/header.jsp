@@ -1,4 +1,3 @@
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <header class="main-header">
     <a href="" class="logo">
         <span class="logo-mini"><b>T</b>MZ</span>
