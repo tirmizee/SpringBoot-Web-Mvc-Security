@@ -11,10 +11,6 @@ import com.tirmizee.core.exception.UnsupportedSQLException;
 import com.tirmizee.core.jdbcrepository.TableDescription;
 
 
-/**
- * @author pratya yeekhaday
- *
- */
 public class MysqlGenerator extends AbstractSqlGenerator {
 
 	public static final String PRODUCT_NAME = "MySQL";

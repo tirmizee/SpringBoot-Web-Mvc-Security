@@ -15,10 +15,6 @@ import org.springframework.util.Assert;
 
 import com.tirmizee.core.jdbcrepository.TableDescription;
 
-/**
- * @author pratya yeekhaday
- *
- */
 public abstract class AbstractSqlGenerator implements SqlGenerator {
 
 	public static final String WHERE = " WHERE ";
