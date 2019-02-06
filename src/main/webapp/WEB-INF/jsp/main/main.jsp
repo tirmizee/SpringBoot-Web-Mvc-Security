@@ -27,10 +27,16 @@
    		<jsp:include page="../layout/sidebar.jsp" />
    		<div class="content-wrapper">
    			 <section class="content-header">
-   			 
+	   			 <h1>
+				     TROO1 <small>main page</small>
+				 </h1>
+				 <ol class="breadcrumb">
+				    <li><a href="#"><i class="fa fa-dashboard"></i> Home ${pageContext.response.locale}</a></li>
+				    <li class="active">Dashboard</li>
+				 </ol>
    			 </section>
    			 <section class="content">
-   			 
+   			 	<jsp:include page="conponent/main_body.jsp" />
    			 </section>
    		</div>
    		<jsp:include page="../layout/footer.jsp" />
