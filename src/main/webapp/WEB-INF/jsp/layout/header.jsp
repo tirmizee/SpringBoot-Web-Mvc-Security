@@ -17,12 +17,12 @@
                 </li>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="${pageContext.request.contextPath}/resources/libs/admin-lte2/img/user.png" class="user-image" alt="User Image">
+                        <img src="${pageContext.request.contextPath}/file/resource/img/profile" class="user-image" alt="User Image">
                         <span class="hidden-xs">xxx</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header">
-                            <img src="${pageContext.request.contextPath}/resources/libs/admin-lte2/img/user.png"" class="img-circle" alt="User Image">
+                            <img src="${pageContext.request.contextPath}/file/resource/img/profile" class="img-circle" alt="User Image">
                             <p>
                                 xxxxxxxxx  - Web Developer
                                 <small>Member since Nov. 2012</small>
