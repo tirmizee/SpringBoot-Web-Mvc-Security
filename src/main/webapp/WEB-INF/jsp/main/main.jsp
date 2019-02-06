@@ -20,7 +20,7 @@
   <script src="${pageContext.request.contextPath}/resources/libs/validate-form-master/js/framework/bootstrap.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/libs/viewer/js/viewer.js"></script>
 <title><spring:message code="app.name" /></title>
-</head>
+</head> 
 <body class="hold-transition skin-purple sidebar-mini">
 	<div class="wrapper">
 		<jsp:include page="../layout/header.jsp" />
