@@ -13,12 +13,12 @@ public class WebController {
 		if(error != null) { 
 			model.addAttribute("error", error);
 		}
-		return "login/login";
+		return "pages/login/login";
 	}
 	
 	@GetMapping(path = "/main")
 	public String main(ModelMap model) {
-		return "main/main";
+		return "pages/main/main";
 	}
 	
 }
