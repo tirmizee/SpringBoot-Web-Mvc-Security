@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-    <li>
+    <li class="font-kanit-regular">
    		<i class="fa fa-clock-o"></i> 
    		<label id="server_time"></label>
     </li>

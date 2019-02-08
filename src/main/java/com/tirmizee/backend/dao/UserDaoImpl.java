@@ -16,7 +16,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	public User findByUsername(String username) {
 		try {
 			StringBuilder statemet = new StringBuilder()
-				.append("SELECT * FROM ").append(TB_MEMBER)
+				.append("SELECT * FROM ").append(TB_USERS)
 				.append(" WHERE ").append(COL_USERNAME).append(" = ? ");
 			return getJdbcOps().queryForObject(statemet.toString(), params(username), ROW_MAPPER);
 		} catch(EmptyResultDataAccessException ex) {

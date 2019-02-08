@@ -21,10 +21,10 @@ public class UserRepositoryImpl extends AbstractOracleJdbcRepository<User, Strin
 			User user = new User();
 			user.setPassword(rs.getString(COL_PASSWORD));
 			user.setUsername(rs.getString(COL_USERNAME));
-			user.setCredentialsnonexpired(rs.getInt(COL_CREDENTIALSNONEXPIRED));
-			user.setAccountnonexpired(rs.getInt(COL_ACCOUNTNONEXPIRED));
-			user.setAccountnonlocked(rs.getInt(COL_ACCOUNTNONLOCKED));
-			user.setEnabled(rs.getInt(COL_ENABLED));
+			user.setCredentialsnonexpired(rs.getBoolean(COL_CREDENTIALSNONEXPIRED));
+			user.setAccountnonexpired(rs.getBoolean(COL_ACCOUNTNONEXPIRED));
+			user.setAccountnonlocked(rs.getBoolean(COL_ACCOUNTNONLOCKED));
+			user.setEnabled(rs.getBoolean(COL_ENABLED));
 			return user.withPersisted(true);
 		}
 	};

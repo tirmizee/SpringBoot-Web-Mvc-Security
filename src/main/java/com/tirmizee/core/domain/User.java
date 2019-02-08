@@ -10,10 +10,10 @@ public class User implements Persistable<String>{
 	
 	private String password;
 	private String username; 
-	private Integer enabled;
-	private Integer credentialsnonexpired;
-	private Integer accountnonexpired;
-	private Integer accountnonlocked;
+	private Boolean enabled;
+	private Boolean credentialsnonexpired;
+	private Boolean accountnonexpired;
+	private Boolean accountnonlocked;
 	
 	public String getUsername() {
 		return username;
@@ -39,35 +39,35 @@ public class User implements Persistable<String>{
 		this.persisted = persisted;
 	}
 
-	public Integer getEnabled() {
+	public Boolean getEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(Integer enabled) {
+	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
 
-	public Integer getCredentialsnonexpired() {
+	public Boolean getCredentialsnonexpired() {
 		return credentialsnonexpired;
 	}
 
-	public void setCredentialsnonexpired(Integer credentialsnonexpired) {
+	public void setCredentialsnonexpired(Boolean credentialsnonexpired) {
 		this.credentialsnonexpired = credentialsnonexpired;
 	}
 
-	public Integer getAccountnonexpired() {
+	public Boolean getAccountnonexpired() {
 		return accountnonexpired;
 	}
 
-	public void setAccountnonexpired(Integer accountnonexpired) {
+	public void setAccountnonexpired(Boolean accountnonexpired) {
 		this.accountnonexpired = accountnonexpired;
 	}
 
-	public Integer getAccountnonlocked() {
+	public Boolean getAccountnonlocked() {
 		return accountnonlocked;
 	}
 
-	public void setAccountnonlocked(Integer accountnonlocked) {
+	public void setAccountnonlocked(Boolean accountnonlocked) {
 		this.accountnonlocked = accountnonlocked;
 	}
 

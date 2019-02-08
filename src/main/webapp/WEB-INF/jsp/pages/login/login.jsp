@@ -3,31 +3,36 @@
 <!DOCTYPE html>
 <html>
 <head>
- <meta charset="UTF-8">
+
+  <meta charset="UTF-8">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/bootstrap/css/bootstrap.min.css" >
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/ionicons/css/ionicons.min.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/inputmark/css/inputmask.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/admin-lte2/css/AdminLTE.min.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/admin-lte2/css/skins/skin-green.min.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/validate-form-master/css/formValidation.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css">
 
   <script src="${pageContext.request.contextPath}/resources/libs/bootstrap/js/jquery-3.2.1.min.js" ></script>
   <script src="${pageContext.request.contextPath}/resources/libs/bootstrap/js/bootstrap.min.js" ></script>
+  <script src="${pageContext.request.contextPath}/resources/libs/inputmark/js/jquery.inputmask.bundle.js" ></script>
   <script src="${pageContext.request.contextPath}/resources/libs/admin-lte2/js/app.js"></script>
   <script src="${pageContext.request.contextPath}/resources/libs/validate-form-master/js/formValidation.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/libs/validate-form-master/js/formValidation.popular.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/libs/validate-form-master/js/framework/bootstrap.min.js"></script>
+
 <title><spring:message code="app.name" /></title>
+
 </head>
 <body class="hold-transition">
     <div class="login-box">
         <div class="login-logo">
             <a href=""><b>Spring</b> 1.5</a>
         </div>
-        <div class="login-box-body">
-        	
+        <div class="login-box-body with-body-white">
             <p class="login-box-msg">Sign in to start your session</p>
-            <form action="login" method="post">
+            <form  id="formLogin" action="login" method="post">
             	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />	
                 <div class="form-group has-feedback">
                     <input name="username" type="text" class="form-control" placeholder="Username">
@@ -43,7 +48,6 @@
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                     </div>
                 </div>
-                
             </form>
             <div class="social-auth-links text-center">
                 <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using Facebook</a>

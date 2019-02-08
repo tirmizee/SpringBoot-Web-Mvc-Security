@@ -18,19 +18,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		
-		final User member  = userDao.findByUsername(username);
+		final User user  = userDao.findByUsername(username);
 	
-		if (member == null ) {
+		if (user == null ) {
 			throw new UsernameNotFoundException(username);
 		}
 
 		return new UserProfile.Builder()
 				.username(username)
-				.password(member.getPassword())
-				.enabled(true)
-				.accountNonExpired(true)
-				.accountNonLocked(true)
-				.credentialsNonExpired(true)
+				.password(user.getPassword())
+				.enabled(user.getEnabled())
+				.accountNonExpired(user.getAccountnonexpired())
+				.accountNonLocked(user.getAccountnonlocked())
+				.credentialsNonExpired(user.getCredentialsnonexpired())
 				.build();
 	}
 	
