@@ -1,5 +1,6 @@
 package com.tirmizee.backend.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -26,7 +27,10 @@ public class QRCodeServiceImpl implements QRCodeService {
 
 	@Override
 	public byte[] generateQRCodeByte(String text, int width, int height) throws WriterException, IOException {
-		return null;
+		BitMatrix bitMatrix = new QRCodeWriter().encode(text, BarcodeFormat.QR_CODE, width, height);
+		ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
+		MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
+		return pngOutputStream.toByteArray();
 	}
 
 }

@@ -9,12 +9,12 @@
             </div>
             <div class="pull-left info">
                 <p>${profile.username}</p>
-                <a href="">Role : admin</a>
+                <a href="">${profile.fistName}  ${profile.lastName}</a>
             </div>
         </div>
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="menu-main"><a href="/"><i class="fa fa-book"></i> <span>Main</span></a></li>
+            <li class="menu-main"><a href="/main"><i class="fa fa-book"></i> <span>Main</span></a></li>
         </ul>
     </section>
 </aside>

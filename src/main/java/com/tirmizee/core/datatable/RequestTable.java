@@ -20,12 +20,16 @@ public class RequestTable<T> implements Serializable{
 	private static final long serialVersionUID = -2791529125797233533L;
 	
 	protected long draw;
+	
 	@NotNull
 	protected long start;
+	
 	@NotNull
 	protected long length;
+	
 	@JsonProperty("search")
 	protected T search;
+	
 	protected List<OrderData> orders;
 	protected List<ColumnData> columns;
 	
@@ -61,9 +65,8 @@ public class RequestTable<T> implements Serializable{
 		this.search = search;
 	}
 
-
-	public void setOrder(List<OrderData> order) {
-		this.orders = order;
+	public void setOrder(List<OrderData> orders) {
+		this.orders = orders;
 	}
 
 	public List<OrderData> getOrders() {

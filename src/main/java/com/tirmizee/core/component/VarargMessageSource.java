@@ -11,12 +11,12 @@ import org.springframework.context.HierarchicalMessageSource;
  */
 public interface VarargMessageSource extends HierarchicalMessageSource {
 	
-	String getMessage(String code, Object...args);
+	String getVarargsMessage(String code, Object...args);
 
-	String getMessage(Locale locale, String code, Object...args);
+	String getVarargsMessage(Locale locale, String code, Object...args);
 	
-	String getMessageOrDefault(String defaultMessage, String code, Object...args);
+	String getVarargsMessageDefault(String defaultMessage, String code, Object...args);
 	
-	String getMessageOrDefault(String defaultMessage,Locale locale, String code, Object...args);
+	String getVarargsMessageDefault(String defaultMessage,Locale locale, String code, Object...args);
 	
 }

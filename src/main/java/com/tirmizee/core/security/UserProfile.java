@@ -10,7 +10,8 @@ public class UserProfile extends UserDetailsImpl {
 	private String lastName;
 	private String roleName;
 	private String accessIp;
-	private boolean initialLogin;
+	private int sessionTimeout;
+	private boolean firstLogin;
 	private Timestamp credentialsExpiredDate;
 	
 	public UserProfile(Builder builder) {
@@ -19,7 +20,8 @@ public class UserProfile extends UserDetailsImpl {
 		this.lastName = builder.lastName;
 		this.roleName = builder.roleName;
 		this.accessIp = builder.accessIp;
-		this.initialLogin = builder.initialLogin;
+		this.firstLogin = builder.firstLogin;
+		this.sessionTimeout = builder.sessionTimeout;
 		this.credentialsExpiredDate = builder.credentialsExpiredDate;
 	}
 	
@@ -55,18 +57,26 @@ public class UserProfile extends UserDetailsImpl {
 		this.accessIp = accessIp;
 	}
 	
-	public boolean isInitialLogin() {
-		return initialLogin;
+	public boolean isFirstLogin() {
+		return firstLogin;
 	}
-	
-	public void setInitialLogin(boolean initialLogin) {
-		this.initialLogin = initialLogin;
+
+	public void setFirstLogin(boolean firstLogin) {
+		this.firstLogin = firstLogin;
 	}
-	
+
 	public Timestamp getCredentialsExpiredDate() {
 		return credentialsExpiredDate;
 	}
 	
+	public int getSessionTimeout() {
+		return sessionTimeout;
+	}
+
+	public void setSessionTimeout(int sessionTimeout) {
+		this.sessionTimeout = sessionTimeout;
+	}
+
 	public void setCredentialsExpiredDate(Timestamp credentialsExpiredDate) {
 		this.credentialsExpiredDate = credentialsExpiredDate;
 	}
@@ -77,7 +87,8 @@ public class UserProfile extends UserDetailsImpl {
 		private String lastName;
 		private String roleName;
 		private String accessIp;
-		private boolean initialLogin;
+		private int sessionTimeout;
+		private boolean firstLogin;
 		private Timestamp credentialsExpiredDate;
 		
 		public Builder(){}
@@ -103,8 +114,13 @@ public class UserProfile extends UserDetailsImpl {
 			return this;
 		}
 		
-		public Builder initialLogin(boolean initialLogin){
-			this.initialLogin = initialLogin;
+		public Builder sessionTimeout(int sessionTimeout){
+			this.sessionTimeout = sessionTimeout;
+			return this;
+		}
+		
+		public Builder firstLogin(boolean firstLogin){
+			this.firstLogin = firstLogin;
 			return this;
 		}
 		

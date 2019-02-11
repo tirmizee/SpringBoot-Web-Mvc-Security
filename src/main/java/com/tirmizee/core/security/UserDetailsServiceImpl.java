@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.tirmizee.backend.dao.UserDao;
-import com.tirmizee.core.domain.User;
+import com.tirmizee.core.domain.UserDetail;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
@@ -18,19 +18,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		
-		final User user  = userDao.findByUsername(username);
+		final UserDetail userDetail  = userDao.findDetailByUsername(username);
 	
-		if (user == null ) {
+		if (userDetail == null ) {
 			throw new UsernameNotFoundException(username);
 		}
 
 		return new UserProfile.Builder()
 				.username(username)
-				.password(user.getPassword())
-				.enabled(user.getEnabled())
-				.accountNonExpired(user.getAccountnonexpired())
-				.accountNonLocked(user.getAccountnonlocked())
-				.credentialsNonExpired(user.getCredentialsnonexpired())
+				.password(userDetail.getPassword())
+				.enabled(userDetail.isEnabled())
+				.accountNonExpired(userDetail.isAccountnonexpired())
+				.accountNonLocked(userDetail.isAccountnonlocked())
+				.credentialsNonExpired(userDetail.isCredentialsnonexpired())
+				.fistName(userDetail.getFirstName())
+				.lastName(userDetail.getLastName())
 				.build();
 	}
 	

@@ -2,19 +2,47 @@ package com.tirmizee.core.domain;
 
 import org.springframework.data.domain.Persistable;
 
-public class User implements Persistable<String>{
+public class User implements Persistable<Long>{
 
 	private static final long serialVersionUID = 5399011411340065307L;
 
 	private transient boolean persisted;
 	
+	private Long userId;
+	private Integer profileId;
+	private String username;
 	private String password;
-	private String username; 
-	private Boolean enabled;
-	private Boolean credentialsnonexpired;
-	private Boolean accountnonexpired;
-	private Boolean accountnonlocked;
+	private java.sql.Date updateDate;
+	private java.sql.Date createDate;
+	private boolean credentialsnonexpired;
+	private boolean accountnonexpired;
+	private boolean accountnonlocked;	
+	private boolean enabled;
 	
+	public boolean isPersisted() {
+		return persisted;
+	}
+
+	public void setPersisted(boolean persisted) {
+		this.persisted = persisted;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public Integer getProfileId() {
+		return profileId;
+	}
+
+	public void setProfileId(Integer profileId) {
+		this.profileId = profileId;
+	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -31,49 +59,57 @@ public class User implements Persistable<String>{
 		this.password = password;
 	}
 
-	public boolean isPersisted() {
-		return persisted;
+	public java.sql.Date getUpdateDate() {
+		return updateDate;
 	}
 
-	public void setPersisted(boolean persisted) {
-		this.persisted = persisted;
+	public void setUpdateDate(java.sql.Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
-	public Boolean getEnabled() {
-		return enabled;
+	public java.sql.Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
+	public void setCreateDate(java.sql.Date createDate) {
+		this.createDate = createDate;
 	}
 
-	public Boolean getCredentialsnonexpired() {
+	public boolean getCredentialsnonexpired() {
 		return credentialsnonexpired;
 	}
 
-	public void setCredentialsnonexpired(Boolean credentialsnonexpired) {
+	public void setCredentialsnonexpired(boolean credentialsnonexpired) {
 		this.credentialsnonexpired = credentialsnonexpired;
 	}
 
-	public Boolean getAccountnonexpired() {
+	public boolean getAccountnonexpired() {
 		return accountnonexpired;
 	}
 
-	public void setAccountnonexpired(Boolean accountnonexpired) {
+	public void setAccountnonexpired(boolean accountnonexpired) {
 		this.accountnonexpired = accountnonexpired;
 	}
 
-	public Boolean getAccountnonlocked() {
+	public boolean getAccountnonlocked() {
 		return accountnonlocked;
 	}
 
-	public void setAccountnonlocked(Boolean accountnonlocked) {
+	public void setAccountnonlocked(boolean accountnonlocked) {
 		this.accountnonlocked = accountnonlocked;
 	}
 
+	public boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	@Override
-	public String getId() {
-		return username;
+	public Long getId() {
+		return userId;
 	}
 
 	@Override

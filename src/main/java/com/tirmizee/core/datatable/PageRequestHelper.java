@@ -35,12 +35,12 @@ public class PageRequestHelper {
 		return listOrderBy.isEmpty() ? null : new Sort(listOrderBy);
 	}
 
-	private static void addOrderBy(Direction direction, String requestColumn, List<Order> results, Field[] fields) {
+	private static void addOrderBy(Direction direction, String requestColumn, List<Order> resultOrders, Field[] fields) {
 		for (Field field : fields) {
 			if (field.isAnnotationPresent(SortColumn.class) && field.getName().equalsIgnoreCase(requestColumn)) {
 				SortColumn sortColumns = field.getAnnotation(SortColumn.class);
 				for (String column : sortColumns.value()) {
-					results.add(new Order(direction, column, NullHandling.NATIVE));
+					resultOrders.add(new Order(direction, column, NullHandling.NATIVE));
 				}
 				break;
 			}

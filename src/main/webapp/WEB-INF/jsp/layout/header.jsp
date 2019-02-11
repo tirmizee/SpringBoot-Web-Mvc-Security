@@ -26,7 +26,7 @@
                         <li class="user-header">
                             <img src="${pageContext.request.contextPath}/resources/libs/admin-lte2/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                             <p>
-                                ${profile.username}  - Web Developer
+                                ${profile.fistName}  ${profile.lastName}
                                 <small>Member since Nov. 2012</small>
                             </p>
                         </li>

@@ -28,7 +28,7 @@
 <body class="hold-transition">
     <div class="login-box">
         <div class="login-logo">
-            <a href=""><b>Spring</b> 1.5</a>
+            <a href=""><b>Spring Boot</b> 1.5</a>
         </div>
         <div class="login-box-body with-body-white">
             <p class="login-box-msg">Sign in to start your session</p>
