@@ -25,6 +25,8 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.util.Assert;
 
@@ -106,6 +108,10 @@ public abstract class AbstractJdbcRepository<T extends Persistable<ID>, ID exten
 	
 	protected JdbcOperations getJdbcOps() {
         return jdbcOperations;
+    }
+	
+	protected NamedParameterJdbcOperations getNamedJdbcOps() {
+        return new NamedParameterJdbcTemplate(jdbcOperations);
     }
 	
 	protected SqlGenerator getSqlGenerator() {

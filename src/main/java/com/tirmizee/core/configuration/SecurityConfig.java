@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.core.security.AuthenticationProviderImpl;
@@ -30,6 +31,9 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired 
+	private AuthenticationSuccessHandler authenticationSuccessHandler;
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -70,7 +74,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 				.formLogin()
             .loginPage("/login")
             	.permitAll()
-            	.defaultSuccessUrl("/main")
+            	.successHandler(authenticationSuccessHandler)
                 .and()
             .logout()
                 .permitAll();
