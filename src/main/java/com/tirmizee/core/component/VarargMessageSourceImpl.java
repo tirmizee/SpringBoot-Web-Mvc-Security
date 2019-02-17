@@ -12,17 +12,17 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 public class VarargMessageSourceImpl extends ReloadableResourceBundleMessageSource implements VarargMessageSource {
 	
 	@Override
-	public String getVarargsMessage(String code, Object...args) {
+	public String getVargMessage(String code, Object...args) {
 		return getMessage(code, args, LocaleContextHolder.getLocale());
 	}
 	
 	@Override
-	public String getVarargsMessage(Locale locale, String code, Object...args) {
+	public String getVargMessage(Locale locale, String code, Object...args) {
 		return getMessage(code, args, locale);
 	}
 
 	@Override
-	public String getVarargsMessageDefault(String defaultMessage, String code, Object...args) {
+	public String getVargMessageDefault(String defaultMessage, String code, Object...args) {
 		return getMessage(code, args, defaultMessage, LocaleContextHolder.getLocale());
 	}
 	

@@ -34,6 +34,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
+		 <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-tomcat</artifactId>
+	        <scope>provided</scope>
+	    </dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -138,6 +144,12 @@
 	        <artifactId>javase</artifactId>
 	        <version>3.3.0</version>
 	    </dependency>
+	    
+		<dependency>
+		    <groupId>com.googlecode.jmapper-framework</groupId>
+		    <artifactId>jmapper-core</artifactId>
+		    <version>1.6.0.1</version>
+		</dependency>
 	    
 	</dependencies>
 	

@@ -2,6 +2,8 @@ package com.tirmizee.core.security;
 
 import java.sql.Timestamp;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 public class UserProfile extends UserDetailsImpl {
 	
 	private static final long serialVersionUID = 196667297093501169L;
@@ -10,7 +12,6 @@ public class UserProfile extends UserDetailsImpl {
 	private String lastName;
 	private String roleName;
 	private String accessIp;
-	private int sessionTimeout;
 	private boolean firstLogin;
 	private Timestamp credentialsExpiredDate;
 	
@@ -21,7 +22,6 @@ public class UserProfile extends UserDetailsImpl {
 		this.roleName = builder.roleName;
 		this.accessIp = builder.accessIp;
 		this.firstLogin = builder.firstLogin;
-		this.sessionTimeout = builder.sessionTimeout;
 		this.credentialsExpiredDate = builder.credentialsExpiredDate;
 	}
 	
@@ -69,17 +69,22 @@ public class UserProfile extends UserDetailsImpl {
 		return credentialsExpiredDate;
 	}
 	
-	public int getSessionTimeout() {
-		return sessionTimeout;
-	}
-
-	public void setSessionTimeout(int sessionTimeout) {
-		this.sessionTimeout = sessionTimeout;
-	}
-
 	public void setCredentialsExpiredDate(Timestamp credentialsExpiredDate) {
 		this.credentialsExpiredDate = credentialsExpiredDate;
 	}
+	
+	 @Override
+     public boolean equals(Object obj) {
+         if (obj instanceof UserDetails) {
+           return getUsername().equals(((UserDetails) obj).getUsername());
+         }
+         return false;
+     }
+
+     @Override
+     public int hashCode() {
+         return getUsername() != null ? getUsername().hashCode() : 0;
+     }
 	
 	public static class Builder extends UserDetailsImpl.Builder<Builder>{
 		
@@ -87,7 +92,6 @@ public class UserProfile extends UserDetailsImpl {
 		private String lastName;
 		private String roleName;
 		private String accessIp;
-		private int sessionTimeout;
 		private boolean firstLogin;
 		private Timestamp credentialsExpiredDate;
 		
@@ -111,11 +115,6 @@ public class UserProfile extends UserDetailsImpl {
 		
 		public Builder accessIp(String accessIp){
 			this.accessIp = accessIp;
-			return this;
-		}
-		
-		public Builder sessionTimeout(int sessionTimeout){
-			this.sessionTimeout = sessionTimeout;
 			return this;
 		}
 		

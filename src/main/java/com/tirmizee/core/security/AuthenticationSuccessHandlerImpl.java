@@ -41,6 +41,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		
 		// REDIRECT TO URL 
 		STRATEGY.sendRedirect(request, response, targetUrl);
+		
 	}
 	
 	protected String determineTargetUrl(Authentication authentication) {

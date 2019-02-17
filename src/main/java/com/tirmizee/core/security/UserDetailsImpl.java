@@ -3,6 +3,7 @@ package com.tirmizee.core.security;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -79,6 +80,19 @@ public class UserDetailsImpl implements UserDetails {
 	public boolean isEnabled() {
 		return enabled;
 	}
+	
+	 @Override
+     public boolean equals(Object obj) {
+         if (obj instanceof UserDetails) {
+           return username.equals(((UserDetails) obj).getUsername());
+         }
+         return false;
+     }
+
+     @Override
+     public int hashCode() {
+         return username != null ? username.hashCode() : 0;
+     }
 	
 	public static class Builder<T extends Builder<?>>{
 		

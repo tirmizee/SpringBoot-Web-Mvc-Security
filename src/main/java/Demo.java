@@ -6,11 +6,14 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
 import org.springframework.util.StringUtils;
 
+import com.tirmizee.core.security.UserProfile;
+
 public class Demo {
 
     public static void main(String[] args) {
     	
-//    	SqlParameterSource 
+    	System.out.println(new UserProfile.Builder().username("tirmizeeq").build().hashCode());
+    	System.out.println(new UserProfile.Builder().username("tirmizee").build().hashCode());
     }
 
 }
