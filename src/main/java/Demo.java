@@ -4,7 +4,7 @@ public class Demo {
 
     public static void main(String[] args) {
     	
-    	SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	System.out.println(String.format("/login?error=%s", "sssssssssssssssss"));
     }
 
 }

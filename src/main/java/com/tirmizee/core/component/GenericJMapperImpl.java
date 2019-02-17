@@ -17,26 +17,25 @@ import com.googlecode.jmapper.api.MappedClass;
  * @author Pratya Yeekhaday
  *
  */
-public class GenericJMapperImpl {
+public class GenericJMapperImpl implements GenericJMapper {
 
 	private static final Global GLOBAL = new Global();
 	
+	@Override
 	public <D,S> D map(S source, final Class<D> destination){
 		JMapperAPI jMapperAPI = globalJmapperApi(destination);
 		JMapper<D,S> jMapper = getjmapper(destination, claszz(source), jMapperAPI);
 		return jMapper.getDestination(source);
 	}
-	
-	private <D,S> JMapper<D,S> getjmapper(Class<D> destination, Class<S> claszz, JMapperAPI jMapperAPI) {
-		return new JMapper<>(destination, claszz, jMapperAPI);
-	}
 
+	@Override
 	public <D,S> List<D> map(List<S> source, final Class<D> destination){
 		List<D> target = new ArrayList<>();
 		source.forEach(o -> target.add(map(o, destination)));
 		return target; 
 	}
 	
+	@Override
 	public <D,S> Page<D> map(Page<S> source, Class<D> destination){
 		final List<D> content = new ArrayList<>();
 		final int page = source.getNumber(),
@@ -47,6 +46,10 @@ public class GenericJMapperImpl {
 			content.add(map(s, destination));
 		}
 		return new PageImpl<D>(content, pageRequest, source.getTotalElements());	
+	}
+	
+	private <D,S> JMapper<D,S> getjmapper(Class<D> destination, Class<S> claszz, JMapperAPI jMapperAPI) {
+		return new JMapper<>(destination, claszz, jMapperAPI);
 	}
 	
 	@SuppressWarnings("unchecked")

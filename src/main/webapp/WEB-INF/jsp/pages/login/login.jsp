@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"   prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,6 +32,16 @@
             <a href=""><b>Spring Boot</b> 1.5</a>
         </div>
         <div class="login-box-body with-body-white">
+        	<c:if test="${not empty error}">
+				<div id="errorMsg"  class="alert alert-danger" align="center">
+				<a href="#" class="close" onclick="$('#errorMsg').hide()"> &times;</a>
+					${error}
+				</div>
+				<br>
+			</c:if>
+			<c:if test="${not empty msg}">
+				<div class="msg">${msg}</div>
+			</c:if>
             <p class="login-box-msg">Sign in to start your session</p>
             <form  id="formLogin" action="login" method="post">
             	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />	

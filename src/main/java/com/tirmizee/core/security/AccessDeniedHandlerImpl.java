@@ -11,13 +11,16 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.csrf.InvalidCsrfTokenException;
 import org.springframework.security.web.csrf.MissingCsrfTokenException;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Pratya Yeekhaday
+ *
+ */
 
 @Component
-public class AccessDeniedHandlerImpl implements AccessDeniedHandler{
+public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 	
 	public static final Logger LOG = Logger.getLogger(AccessDeniedHandlerImpl.class);
 
@@ -26,12 +29,18 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler{
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
-		if (accessDeniedException instanceof InvalidCsrfTokenException) {
-			STRATEGY.sendRedirect(request, response, "/");
-		}else if (accessDeniedException instanceof MissingCsrfTokenException) {
+		LOG.debug(accessDeniedException.getMessage());
+		if (accessDeniedException instanceof MissingCsrfTokenException) {
+			if (request.getRequestURI().contains("login")) {
+				STRATEGY.sendRedirect(request, response, "/login?error=Token timeout please try again");
+			} else if (request.getRequestURI().contains("logout")) {
+				STRATEGY.sendRedirect(request, response, "/login");
+			} else {
+				STRATEGY.sendRedirect(request, response, "/");
+			}
+		} else {
 			STRATEGY.sendRedirect(request, response, "/");
 		}
-		STRATEGY.sendRedirect(request, response, "/");
 	}
 
 }

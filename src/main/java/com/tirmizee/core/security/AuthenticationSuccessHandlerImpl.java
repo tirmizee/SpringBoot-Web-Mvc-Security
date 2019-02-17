@@ -39,7 +39,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		int sessionTimeout = Integer.parseInt(appSetting.findOne(SESSION_TIME_OUT).getValue());
 		request.getSession().setMaxInactiveInterval(sessionTimeout * 60);
 		
-		// REDIRECT TO URL 
+		// REDIRECT URL TO TARGET 
 		STRATEGY.sendRedirect(request, response, targetUrl);
 		
 	}
