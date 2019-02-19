@@ -13,8 +13,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.tirmizee.core.constant.Constant;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @EnableTransactionManagement
@@ -26,16 +24,12 @@ public class DatabaseConfig {
 	@Bean
 	@Profile(Constant.Profiles.DEVELOP)
 	public DataSource dataSourceOracleDev() throws IllegalArgumentException, NamingException {
-		
 		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
 		bean.setJndiName("java:/comp/env/" + TomcatEmbeddedConfig.JNDI_ORACLE_DEV);  
         bean.setProxyInterface(DataSource.class);
         bean.setLookupOnStartup(false);
         bean.afterPropertiesSet();
-        
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setDataSource((DataSource) bean.getObject());
-        return new HikariDataSource(hikariConfig);
+        return (DataSource) bean.getObject();
 	}
 	
 	@Bean
@@ -46,10 +40,7 @@ public class DatabaseConfig {
         bean.setProxyInterface(DataSource.class);
         bean.setLookupOnStartup(false);
         bean.afterPropertiesSet();
-        
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setDataSource((DataSource) bean.getObject());
-        return new HikariDataSource(hikariConfig);
+        return (DataSource) bean.getObject();
 	}
 	
 	@Bean
@@ -60,10 +51,7 @@ public class DatabaseConfig {
         bean.setProxyInterface(DataSource.class);
         bean.setLookupOnStartup(false);
         bean.afterPropertiesSet();
-        
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setDataSource((DataSource) bean.getObject());
-        return new HikariDataSource(hikariConfig);
+        return (DataSource) bean.getObject();
 	}
 	
 	@Bean

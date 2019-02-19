@@ -43,8 +43,9 @@ public class TomcatEmbeddedConfig extends TomcatEmbeddedServletContainerFactory{
 		resource.setName(JNDI_ORACLE_DEV);
 		resource.setType(DataSource.class.getName());
 		resource.setProperty("auth", "Container");
+		resource.setProperty("factory", "com.zaxxer.hikari.HikariJNDIFactory");
 		resource.setProperty("driverClassName", env.getProperty(Properties.DB.ORACLE_DEV_DRIVER));
-		resource.setProperty("url", env.getProperty(Properties.DB.ORACLE_DEV_URL));
+		resource.setProperty("jdbcUrl", env.getProperty(Properties.DB.ORACLE_DEV_URL));
 		resource.setProperty("username", env.getProperty(Properties.DB.ORACLE_DEV_USER));
 		resource.setProperty("password", env.getProperty(Properties.DB.ORACLE_DEV_PASS));
 		return resource;
@@ -55,8 +56,9 @@ public class TomcatEmbeddedConfig extends TomcatEmbeddedServletContainerFactory{
 		resource.setName(JNDI_ORACLE_UAT);
 		resource.setType(DataSource.class.getName());
 		resource.setProperty("auth", "Container");
+		resource.setProperty("factory", "com.zaxxer.hikari.HikariJNDIFactory");
 		resource.setProperty("driverClassName", env.getProperty(Properties.DB.ORACLE_UAT_DRIVER));
-		resource.setProperty("url", env.getProperty(Properties.DB.ORACLE_UAT_URL));
+		resource.setProperty("jdbcUrl", env.getProperty(Properties.DB.ORACLE_UAT_URL));
 		resource.setProperty("username", env.getProperty(Properties.DB.ORACLE_UAT_USER));
 		resource.setProperty("password", env.getProperty(Properties.DB.ORACLE_UAT_PASS));
 		return resource;
@@ -67,8 +69,9 @@ public class TomcatEmbeddedConfig extends TomcatEmbeddedServletContainerFactory{
 		resource.setName(JNDI_ORACLE_PRO);
 		resource.setType(DataSource.class.getName());
 		resource.setProperty("auth", "Container");
+		resource.setProperty("factory", "com.zaxxer.hikari.HikariJNDIFactory");
 		resource.setProperty("driverClassName", env.getProperty(Properties.DB.ORACLE_PRO_DRIVER));
-		resource.setProperty("url", env.getProperty(Properties.DB.ORACLE_PRO_URL));
+		resource.setProperty("jdbcUrl", env.getProperty(Properties.DB.ORACLE_PRO_URL));
 		resource.setProperty("username", env.getProperty(Properties.DB.ORACLE_PRO_USER));
 		resource.setProperty("password", env.getProperty(Properties.DB.ORACLE_PRO_PASS));
 		return resource;
