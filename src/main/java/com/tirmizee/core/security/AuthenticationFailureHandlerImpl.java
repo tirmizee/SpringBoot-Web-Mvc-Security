@@ -26,36 +26,39 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 	
 	public static final Logger LOG = Logger.getLogger(AuthenticationFailureHandlerImpl.class);
 	
-	private final RedirectStrategy strategy = new DefaultRedirectStrategy();
+	private final RedirectStrategy STRATEGY = new DefaultRedirectStrategy();
 
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
 			throws IOException, ServletException {
 		
-		//CHECK USERNAME IS INVALID
+		// DETERMINE URL
+		String url = determineRedirectUrl(exception);
+		
+		// REDIRECT TO TARGET
+		STRATEGY.sendRedirect(request, response, url);
+	}
+	
+	private String determineRedirectUrl( AuthenticationException exception){
+		
+		// DETERMINE URL FOR USERNAME IS INVALID
 		if (exception instanceof UsernameNotFoundException) {
-			determineRedirectUrl(request, response, "/login?error=Username or Password invalid");
+			return "/login?error=Username or Password invalid";
 		} 
 		
-		//CHECK PASSWORD IS INVALID
+		//DETERMINE URL FOR PASSWORD IS INVALID
 		else if(exception instanceof LimitBadCredentialsException) {
 			LimitBadCredentialsException badCredentials = (LimitBadCredentialsException) exception;
 			String error = badCredentials.isLocked() ? "Username is Locked" : "Username or Password invalid";
-			determineRedirectUrl(request, response, String.format("/login?error=%s", error));
+			return String.format("/login?error=%s", error);
 		} 
 		
-		//CHECK USERNAME IS LOCKED
+		//DETERMINE URL FOR USERNAME IS LOCKED
 		else if(exception instanceof LockedException) {
-			determineRedirectUrl(request, response, "/login?error=Username is Locked");
+			return "/login?error=Username is Locked";
 		}
 		
-		else determineRedirectUrl(request, response, "/login");
-		
-	}
-	
-	private void determineRedirectUrl( HttpServletRequest request, HttpServletResponse response, String url) 
-			throws ServletException, IOException{
-		strategy.sendRedirect(request, response, url);
+		return "/login";
 	}
 	
 }

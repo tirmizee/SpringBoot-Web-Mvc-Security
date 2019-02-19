@@ -1,10 +1,13 @@
-import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.Random;
 
 public class Demo {
 
     public static void main(String[] args) {
     	
-    	System.out.println(String.format("/login?error=%s", "sssssssssssssssss"));
+    	for (int i = 1; i < 1000; i++) {
+			System.out.println(new Random().nextInt(1000) + 1);
+		}
+    	
     }
 
 }

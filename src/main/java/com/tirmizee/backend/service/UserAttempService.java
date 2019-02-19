@@ -2,8 +2,8 @@ package com.tirmizee.backend.service;
 
 public interface UserAttempService {
 
-	boolean updateLoginAttemptIsLocked(String username);
+	boolean updateLoginAttemptIsLocked(String username, String accessIp);
 	
-	void resetLoginAttempt(String username);
+	void resetLoginAttempt(String username, String accessIp);
 	
 }

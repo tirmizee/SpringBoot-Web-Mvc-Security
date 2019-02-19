@@ -22,7 +22,7 @@ public class UserAttempServiceImpl implements UserAttempService {
 	private UserAttempDao userAttempDao;
 	
 	@Override
-	public boolean updateLoginAttemptIsLocked(String username) {
+	public boolean updateLoginAttemptIsLocked(String username, String accessIp) {
 		
 		boolean isLocked = false;
 		UserAttemp userAttempt = userAttempDao.findByUsername(username);
@@ -34,6 +34,7 @@ public class UserAttempServiceImpl implements UserAttempService {
 		}
 		
 		final int attemp = plusOne(userAttempt.getAttemp());
+		userAttempt.setAccessIp(accessIp);
 		userAttempt.setAttemp(attemp);
 		userAttempt.setLastModified(DateUtils.nowTimestamp());
 		userAttempDao.save(userAttempt);
@@ -48,13 +49,14 @@ public class UserAttempServiceImpl implements UserAttempService {
 	}
 
 	@Override
-	public void resetLoginAttempt(String username) {
+	public void resetLoginAttempt(String username, String accessIp) {
 		UserAttemp userAttempt = userAttempDao.findByUsername(username);
 		if (userAttempt == null) {
 			userAttempt = new UserAttemp();
 			userAttempt.setUsername(username);
 		}
 		userAttempt.setAttemp(0);
+		userAttempt.setAccessIp(accessIp);
 		userAttempDao.save(userAttempt);
 	}
 	

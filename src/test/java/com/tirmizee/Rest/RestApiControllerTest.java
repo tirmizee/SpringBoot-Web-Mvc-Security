@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.tirmizee.application.ApplicationInitializer;
+import com.tirmizee.ApplicationInitializer;
 import com.tirmizee.backend.test.Person;
 import com.tirmizee.backend.test.PersonDTO;
 import com.tirmizee.core.component.GenericJMapperImpl;

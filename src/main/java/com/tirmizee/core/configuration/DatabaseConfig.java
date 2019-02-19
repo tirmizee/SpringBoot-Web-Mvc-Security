@@ -1,81 +1,86 @@
 package com.tirmizee.core.configuration;
 
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.tirmizee.core.constant.Constant;
-import com.tirmizee.core.constant.Properties;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:db.properties")
+
 public class DatabaseConfig {
 	
 	public static final Logger LOG = Logger.getLogger(DatabaseConfig.class);
 	
-	@Autowired
-	private Environment env;
-	
 	@Bean
 	@Profile(Constant.Profiles.DEVELOP)
-	public DataSource dataSourceOracleDev(){
-		HikariConfig config = new HikariConfig();
-		config.setJdbcUrl(env.getProperty(Properties.DB.ORACLE_DEV_URL));
-		config.setUsername(env.getProperty(Properties.DB.ORACLE_DEV_USER));
-		config.setPassword(env.getProperty(Properties.DB.ORACLE_DEV_PASS));
-		config.setDriverClassName(env.getProperty(Properties.DB.ORACLE_DEV_DRIVER));
-		return new HikariDataSource(config);
+	public DataSource dataSourceOracleDev() throws IllegalArgumentException, NamingException {
+		
+		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
+		bean.setJndiName("java:/comp/env/" + TomcatEmbeddedConfig.JNDI_ORACLE_DEV);  
+        bean.setProxyInterface(DataSource.class);
+        bean.setLookupOnStartup(false);
+        bean.afterPropertiesSet();
+        
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDataSource((DataSource) bean.getObject());
+        return new HikariDataSource(hikariConfig);
 	}
 	
 	@Bean
 	@Profile(Constant.Profiles.UAT)
-	public DataSource dataSourceOracleUat(){
-		HikariConfig config = new HikariConfig();
-		config.setJdbcUrl(env.getProperty(Properties.DB.ORACLE_UAT_URL));
-		config.setUsername(env.getProperty(Properties.DB.ORACLE_UAT_USER));
-		config.setPassword(env.getProperty(Properties.DB.ORACLE_UAT_PASS));
-		config.setDriverClassName(env.getProperty(Properties.DB.ORACLE_UAT_DRIVER));
-		return new HikariDataSource(config);
+	public DataSource dataSourceOracleUat() throws IllegalArgumentException, NamingException{
+		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
+		bean.setJndiName("java:/comp/env/" + TomcatEmbeddedConfig.JNDI_ORACLE_UAT);  
+        bean.setProxyInterface(DataSource.class);
+        bean.setLookupOnStartup(false);
+        bean.afterPropertiesSet();
+        
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDataSource((DataSource) bean.getObject());
+        return new HikariDataSource(hikariConfig);
 	}
 	
 	@Bean
 	@Profile(Constant.Profiles.PRODUCTION)
-	public DataSource dataSourceOracleProduction(){
-		HikariConfig config = new HikariConfig();
-		config.setJdbcUrl(env.getProperty(Properties.DB.ORACLE_PRO_URL));
-		config.setUsername(env.getProperty(Properties.DB.ORACLE_PRO_USER));
-		config.setPassword(env.getProperty(Properties.DB.ORACLE_PRO_PASS));
-		config.setDriverClassName(env.getProperty(Properties.DB.ORACLE_PRO_DRIVER));
-		return new HikariDataSource(config);
+	public DataSource dataSourceOracleProduction() throws IllegalArgumentException, NamingException{
+		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
+		bean.setJndiName("java:/comp/env/" + TomcatEmbeddedConfig.JNDI_ORACLE_PRO);  
+        bean.setProxyInterface(DataSource.class);
+        bean.setLookupOnStartup(false);
+        bean.afterPropertiesSet();
+        
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDataSource((DataSource) bean.getObject());
+        return new HikariDataSource(hikariConfig);
 	}
 	
 	@Bean
 	@Profile(Constant.Profiles.DEVELOP)
-	public PlatformTransactionManager transactionManagerOracleDev() {
+	public PlatformTransactionManager transactionManagerOracleDev() throws IllegalArgumentException, NamingException  {
 	    return new DataSourceTransactionManager(dataSourceOracleDev());
 	}
 	
 	@Bean
 	@Profile(Constant.Profiles.UAT)
-	public PlatformTransactionManager transactionManagerOracleUat() {
+	public PlatformTransactionManager transactionManagerOracleUat() throws IllegalArgumentException, NamingException {
 	    return new DataSourceTransactionManager(dataSourceOracleUat());
 	}
 	
 	@Bean
 	@Profile(Constant.Profiles.PRODUCTION)
-	public PlatformTransactionManager transactionManagerOracleProduction() {
+	public PlatformTransactionManager transactionManagerOracleProduction() throws IllegalArgumentException, NamingException {
 	    return new DataSourceTransactionManager(dataSourceOracleProduction());
 	}
 	

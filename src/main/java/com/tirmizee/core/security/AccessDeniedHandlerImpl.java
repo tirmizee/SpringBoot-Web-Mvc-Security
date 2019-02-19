@@ -30,14 +30,24 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		LOG.debug(accessDeniedException.getMessage());
+		
+		// HANDLER CSRF TIME OUT
 		if (accessDeniedException instanceof MissingCsrfTokenException) {
+			
+			//  LOGIN
 			if (request.getRequestURI().contains("login")) {
 				STRATEGY.sendRedirect(request, response, "/login?error=Token timeout please try again");
-			} else if (request.getRequestURI().contains("logout")) {
+			} 
+			
+			//  LOGOUT
+			else if (request.getRequestURI().contains("logout")) {
 				STRATEGY.sendRedirect(request, response, "/login");
-			} else {
+			} 
+			
+			else {
 				STRATEGY.sendRedirect(request, response, "/");
 			}
+
 		} else {
 			STRATEGY.sendRedirect(request, response, "/");
 		}

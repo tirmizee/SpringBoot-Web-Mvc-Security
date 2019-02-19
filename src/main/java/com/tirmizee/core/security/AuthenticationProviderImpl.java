@@ -1,5 +1,7 @@
 package com.tirmizee.core.security;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,17 +18,21 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 	public static final Logger LOG = Logger.getLogger(AuthenticationProviderImpl.class);
 
 	@Autowired
+	private HttpServletRequest servletRequest;
+	
+	@Autowired
 	private UserAttempService userAttempService;
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		final String accessIp = servletRequest.getRemoteAddr();
 		final String username = authentication.getName();
 		try{
 			Authentication authen = super.authenticate(authentication);
-			userAttempService.resetLoginAttempt(username);
+			userAttempService.resetLoginAttempt(username, accessIp);
 			return authen;
 		}catch (BadCredentialsException ex) {
-			boolean isLocked = userAttempService.updateLoginAttemptIsLocked(username);
+			boolean isLocked = userAttempService.updateLoginAttemptIsLocked(username, accessIp);
 			throw new LimitBadCredentialsException(ex.getMessage(), username, isLocked);
 		}catch (Exception ex) {
 			throw ex;

@@ -40,6 +40,12 @@
 	        <scope>provided</scope>
 	    </dependency>
 		
+		 <dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-dbcp</artifactId>
+			<version>${tomcat.version}</version>
+		</dependency>
+        
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -163,6 +169,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+                    <addResources>true</addResources>
+                </configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -32,12 +32,12 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		
-		// DETERMINE URL FOR PERMISSION
-		String targetUrl = determineTargetUrl(authentication);
-		
 		// SET SESSION TIMEOUT
 		int sessionTimeout = Integer.parseInt(appSetting.findOne(SESSION_TIME_OUT).getValue());
 		request.getSession().setMaxInactiveInterval(sessionTimeout * 60);
+		
+		// DETERMINE URL FOR PERMISSION
+		String targetUrl = determineTargetUrl(authentication);
 		
 		// REDIRECT URL TO TARGET 
 		STRATEGY.sendRedirect(request, response, targetUrl);
