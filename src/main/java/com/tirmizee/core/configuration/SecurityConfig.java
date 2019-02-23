@@ -1,11 +1,9 @@
 package com.tirmizee.core.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -27,7 +25,6 @@ import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.core.security.AuthenticationProviderImpl;
 import com.tirmizee.core.security.UserDetailsServiceImpl;
 
-
 /**
  * @author Pratya Yeekhaday
  *
@@ -35,9 +32,10 @@ import com.tirmizee.core.security.UserDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-public class SecurityConfig  extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	public static final String PERMISSION_FIRST_LOGIN = "FIRST_LOGIN";
+	
 	@Autowired
 	private UserDao userDao;
 
@@ -71,8 +69,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	public SessionRegistry sessionRegistry() {
-	    SessionRegistry sessionRegistry = new SessionRegistryImpl();
-	    return sessionRegistry;
+	    return new SessionRegistryImpl();
 	}
 	
 	@Bean
@@ -96,12 +93,18 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 			.exceptionHandling()
 				.accessDeniedHandler(accessDeniedHandler)
 				.and()
+			.csrf()
+				.ignoringAntMatchers("/logout")
+				.and()
 			.authorizeRequests()
 				.antMatchers(
 					"/",
-					"/api/**",
 					"/login**"
 				).permitAll()
+				.antMatchers(
+					"/firstlogin",
+					"/api/user/password/firstlogin"
+				).hasAuthority(PERMISSION_FIRST_LOGIN)
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()

@@ -15,6 +15,8 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
+import com.tirmizee.core.configuration.SecurityConfig;
+import com.tirmizee.core.exception.FirstloginException;
 import com.tirmizee.core.exception.LimitBadCredentialsException;
 
 /**
@@ -31,34 +33,34 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
 			throws IOException, ServletException {
-		
-		// DETERMINE URL
-		String url = determineRedirectUrl(exception);
-		
-		// REDIRECT TO TARGET
-		STRATEGY.sendRedirect(request, response, url);
-	}
-	
-	private String determineRedirectUrl( AuthenticationException exception){
-		
+
 		// DETERMINE URL FOR USERNAME IS INVALID
 		if (exception instanceof UsernameNotFoundException) {
-			return "/login?error=Username or Password invalid";
+			STRATEGY.sendRedirect(request, response, "/login?error=Username or Password invalid");
 		} 
 		
 		//DETERMINE URL FOR PASSWORD IS INVALID
 		else if(exception instanceof LimitBadCredentialsException) {
 			LimitBadCredentialsException badCredentials = (LimitBadCredentialsException) exception;
 			String error = badCredentials.isLocked() ? "Username is Locked" : "Username or Password invalid";
-			return String.format("/login?error=%s", error);
+			STRATEGY.sendRedirect(request, response, String.format("/login?error=%s", error));
 		} 
 		
 		//DETERMINE URL FOR USERNAME IS LOCKED
 		else if(exception instanceof LockedException) {
-			return "/login?error=Username is Locked";
+			STRATEGY.sendRedirect(request, response, "/login?error=Username is Locked");
+		}
+
+		//DETERMINE URL FOR USER FIRST LOGIN
+		else if(exception instanceof FirstloginException) {
+			final FirstloginException firstloginException = (FirstloginException) exception;
+			final String username = firstloginException.getUsername();
+			SecurityContextHolderUtils.grantAuthority(username, SecurityConfig.PERMISSION_FIRST_LOGIN);
+			STRATEGY.sendRedirect(request, response, "/firstlogin");
 		}
 		
-		return "/login";
+		else STRATEGY.sendRedirect(request, response, "/login");
+		
 	}
 	
 }

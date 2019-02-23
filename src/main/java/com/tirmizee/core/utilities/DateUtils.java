@@ -9,4 +9,8 @@ public final class DateUtils {
 		return new Timestamp(new Date().getTime());
 	}
 	
+	public static java.sql.Date now(){
+		return new java.sql.Date(new Date().getTime());
+	}
+	
 }

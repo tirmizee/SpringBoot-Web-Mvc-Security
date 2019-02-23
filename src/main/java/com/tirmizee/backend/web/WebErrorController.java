@@ -13,7 +13,7 @@ public class WebErrorController {
 
 	private static final Logger LOGGER = Logger.getLogger(WebErrorController.class);
 	
-	@GetMapping(value = "/AccessDenied")
+	@GetMapping(value = "/accessdenied")
 	@ResponseStatus(code = HttpStatus.FORBIDDEN)
 	public String accessDenied(ModelMap model) {
 		LOGGER.debug("/AccessDenied");

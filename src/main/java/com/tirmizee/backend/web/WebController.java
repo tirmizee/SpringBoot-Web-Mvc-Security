@@ -21,4 +21,9 @@ public class WebController {
 		return "pages/main/main";
 	}
 	
+	@GetMapping(path = "/firstlogin")
+	public String firstLogin(ModelMap model) {
+		return "pages/first_login/change_password_firstlogin";
+	}
+	
 }

@@ -34,22 +34,22 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 		// HANDLER CSRF TIME OUT
 		if (accessDeniedException instanceof MissingCsrfTokenException) {
 			
-			//  LOGIN
+			// WHEN LOGIN
 			if (request.getRequestURI().contains("login")) {
 				STRATEGY.sendRedirect(request, response, "/login?error=Token timeout please try again");
 			} 
 			
-			//  LOGOUT
+			// WHEN LOGOUT
 			else if (request.getRequestURI().contains("logout")) {
 				STRATEGY.sendRedirect(request, response, "/login");
 			} 
 			
 			else {
-				STRATEGY.sendRedirect(request, response, "/");
+				STRATEGY.sendRedirect(request, response, "/accessdenied");
 			}
 
 		} else {
-			STRATEGY.sendRedirect(request, response, "/");
+			STRATEGY.sendRedirect(request, response, "/accessdenied");
 		}
 	}
 

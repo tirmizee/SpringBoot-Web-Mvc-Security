@@ -12,7 +12,7 @@ public class UserProfile extends UserDetailsImpl {
 	private String lastName;
 	private String roleName;
 	private String accessIp;
-	private boolean firstLogin;
+	private boolean isFirstLogin;
 	private Timestamp credentialsExpiredDate;
 	
 	public UserProfile(Builder builder) {
@@ -21,7 +21,7 @@ public class UserProfile extends UserDetailsImpl {
 		this.lastName = builder.lastName;
 		this.roleName = builder.roleName;
 		this.accessIp = builder.accessIp;
-		this.firstLogin = builder.firstLogin;
+		this.isFirstLogin = builder.isFirstLogin;
 		this.credentialsExpiredDate = builder.credentialsExpiredDate;
 	}
 	
@@ -58,11 +58,11 @@ public class UserProfile extends UserDetailsImpl {
 	}
 	
 	public boolean isFirstLogin() {
-		return firstLogin;
+		return isFirstLogin;
 	}
 
-	public void setFirstLogin(boolean firstLogin) {
-		this.firstLogin = firstLogin;
+	public void setFirstLogin(boolean isFirstLogin) {
+		this.isFirstLogin = isFirstLogin;
 	}
 
 	public Timestamp getCredentialsExpiredDate() {
@@ -92,7 +92,7 @@ public class UserProfile extends UserDetailsImpl {
 		private String lastName;
 		private String roleName;
 		private String accessIp;
-		private boolean firstLogin;
+		private boolean isFirstLogin;
 		private Timestamp credentialsExpiredDate;
 		
 		public Builder(){}
@@ -118,8 +118,8 @@ public class UserProfile extends UserDetailsImpl {
 			return this;
 		}
 		
-		public Builder firstLogin(boolean firstLogin){
-			this.firstLogin = firstLogin;
+		public Builder isFirstLogin(boolean isFirstLogin){
+			this.isFirstLogin = isFirstLogin;
 			return this;
 		}
 		

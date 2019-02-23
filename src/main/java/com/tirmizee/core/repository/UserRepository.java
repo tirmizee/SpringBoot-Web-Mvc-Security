@@ -6,7 +6,7 @@ import com.tirmizee.core.jdbcrepository.JdbcRepository;
 public interface UserRepository extends JdbcRepository<User, Long>{
 	
 	public static final String TB_USERS = "USERS";
-	
+	public static final String COL_FIRST_LOGIN = "FIRST_LOGIN";
 	public static final String COL_UPDATE_DATE = "UPDATE_DATE";
 	public static final String COL_CREATE_DATE = "CREATE_DATE";
 	public static final String COL_CREDENTIALSNONEXPIRED = "CREDENTIALSNONEXPIRED";
@@ -17,7 +17,7 @@ public interface UserRepository extends JdbcRepository<User, Long>{
 	public static final String COL_USERNAME = "USERNAME";
 	public static final String COL_PROFILE_ID = "PROFILE_ID";
 	public static final String COL_USER_ID = "USER_ID";
-	
+	public static final String FIRST_LOGIN = "USERS.FIRST_LOGIN";
 	public static final String UPDATE_DATE = "USERS.UPDATE_DATE";
 	public static final String CREATE_DATE = "USERS.CREATE_DATE";
 	public static final String CREDENTIALSNONEXPIRED = "USERS.CREDENTIALSNONEXPIRED";

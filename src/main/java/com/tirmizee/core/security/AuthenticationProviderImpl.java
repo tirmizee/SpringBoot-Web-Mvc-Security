@@ -10,8 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
 import com.tirmizee.backend.service.UserAttempService;
+import com.tirmizee.core.exception.FirstloginException;
 import com.tirmizee.core.exception.LimitBadCredentialsException;
-
 
 public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 	
@@ -25,13 +25,20 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		
 		final String accessIp = servletRequest.getRemoteAddr();
 		final String username = authentication.getName();
-		try{
+		
+		try {
 			Authentication authen = super.authenticate(authentication);
+			UserProfile userProfile =  (UserProfile) authen.getPrincipal();
 			userAttempService.resetLoginAttempt(username, accessIp);
+			if (userProfile.isFirstLogin()) {
+				LOG.info(username + " : " + "Force password change first login");
+				throw new FirstloginException(username, "Force password change first login");
+			}
 			return authen;
-		}catch (BadCredentialsException ex) {
+		} catch (BadCredentialsException ex) {
 			boolean isLocked = userAttempService.updateLoginAttemptIsLocked(username, accessIp);
 			throw new LimitBadCredentialsException(ex.getMessage(), username, isLocked);
 		}catch (Exception ex) {

@@ -10,6 +10,12 @@ public class BussinessException extends RuntimeException {
 	private Object args[];
 	private HttpStatus status;
 	
+	public BussinessException(String code, Object...args) {
+		this.code = code;
+		this.args = args;
+		this.status = HttpStatus.BAD_REQUEST;
+	}
+	
 	public BussinessException(HttpStatus status, String code, Object...args) {
 		this.code = code;
 		this.args = args;

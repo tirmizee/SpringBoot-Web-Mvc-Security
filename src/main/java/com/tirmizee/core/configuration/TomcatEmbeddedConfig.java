@@ -8,15 +8,18 @@ import org.apache.tomcat.util.descriptor.web.ContextResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
+import com.tirmizee.core.constant.Constant;
 import com.tirmizee.core.constant.Properties;
 
 @Configuration
 @PropertySource("classpath:db.properties")
-public class TomcatEmbeddedConfig extends TomcatEmbeddedServletContainerFactory{
+public class TomcatEmbeddedConfig {
 
 	public static final String JNDI_ORACLE_DEV = "jndi/dev";
 	public static final String JNDI_ORACLE_UAT = "jndi/uat";
@@ -25,24 +28,64 @@ public class TomcatEmbeddedConfig extends TomcatEmbeddedServletContainerFactory{
 	@Autowired
 	private Environment env;
 	
-	@Override
-	protected TomcatEmbeddedServletContainer getTomcatEmbeddedServletContainer(Tomcat tomcat) {
-		 tomcat.enableNaming();
-         return super.getTomcatEmbeddedServletContainer(tomcat);
+	@Bean
+	@Profile(Constant.Profiles.DEVELOP)
+	public TomcatEmbeddedServletContainerFactory TomcatEmbeddedContainerDev() {
+		return new TomcatEmbeddedServletContainerFactory() {
+			@Override
+			protected TomcatEmbeddedServletContainer getTomcatEmbeddedServletContainer(Tomcat tomcat) {
+				 tomcat.enableNaming();
+		         return super.getTomcatEmbeddedServletContainer(tomcat);
+			}
+			@Override
+			protected void postProcessContext(Context context) {
+				context.getNamingResources().addResource(resourceDatasourceDev());
+			}
+		};
 	}
 	
-	@Override
-	protected void postProcessContext(Context context) {
-		context.getNamingResources().addResource(resourceDatasourceDev());
-		context.getNamingResources().addResource(resourceDatasourceUat());
-		context.getNamingResources().addResource(resourceDatasourcePro());
+	@Bean
+	@Profile(Constant.Profiles.UAT)
+	public TomcatEmbeddedServletContainerFactory TomcatEmbeddedContainerUat() {
+		return new TomcatEmbeddedServletContainerFactory() {
+			@Override
+			protected TomcatEmbeddedServletContainer getTomcatEmbeddedServletContainer(Tomcat tomcat) {
+				 tomcat.enableNaming();
+		         return super.getTomcatEmbeddedServletContainer(tomcat);
+			}
+			@Override
+			protected void postProcessContext(Context context) {
+				context.getNamingResources().addResource(resourceDatasourceUat());
+			}
+		};
 	}
-
+	
+	@Bean
+	@Profile(Constant.Profiles.UAT)
+	public TomcatEmbeddedServletContainerFactory TomcatEmbeddedContainerPro() {
+		return new TomcatEmbeddedServletContainerFactory() {
+			@Override
+			protected TomcatEmbeddedServletContainer getTomcatEmbeddedServletContainer(Tomcat tomcat) {
+				 tomcat.enableNaming();
+		         return super.getTomcatEmbeddedServletContainer(tomcat);
+			}
+			@Override
+			protected void postProcessContext(Context context) {
+				context.getNamingResources().addResource(resourceDatasourcePro());
+			}
+		};
+	}
+	
+	/**
+	 * https://github.com/brettwooldridge/HikariCP/wiki/JNDI-DataSource-Factory-(Tomcat,-etc.)
+	 **/	
 	private ContextResource resourceDatasourceDev() {
 		ContextResource resource = new ContextResource();
 		resource.setName(JNDI_ORACLE_DEV);
 		resource.setType(DataSource.class.getName());
 		resource.setProperty("auth", "Container");
+		resource.setProperty("maxActive", "1");
+		resource.setProperty("maxIdle", "1");
 		resource.setProperty("factory", "com.zaxxer.hikari.HikariJNDIFactory");
 		resource.setProperty("driverClassName", env.getProperty(Properties.DB.ORACLE_DEV_DRIVER));
 		resource.setProperty("jdbcUrl", env.getProperty(Properties.DB.ORACLE_DEV_URL));

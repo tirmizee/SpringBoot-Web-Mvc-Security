@@ -14,6 +14,7 @@ public class UserDetail implements Serializable{
 	private boolean accountnonexpired;
 	private boolean accountnonlocked;	
 	private boolean enabled;
+	private boolean isFirstLogin;
 	
 	public String getUsername() {
 		return username;
@@ -63,11 +64,19 @@ public class UserDetail implements Serializable{
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+	public boolean getFirstLogin() {
+		return isFirstLogin;
+	}
+	public void setFirstLogin(boolean isFirstLogin) {
+		this.isFirstLogin = isFirstLogin;
+	}
 	@Override
 	public String toString() {
 		return "UserDetail [username=" + username + ", password=" + password + ", lastName=" + lastName + ", firstName="
 				+ firstName + ", credentialsnonexpired=" + credentialsnonexpired + ", accountnonexpired="
-				+ accountnonexpired + ", accountnonlocked=" + accountnonlocked + ", enabled=" + enabled + "]";
+				+ accountnonexpired + ", accountnonlocked=" + accountnonlocked + ", enabled=" + enabled
+				+ ", isFirstLogin=" + isFirstLogin + "]";
 	}
+	
 	
 }

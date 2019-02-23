@@ -33,6 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				.credentialsNonExpired(userDetail.isCredentialsnonexpired())
 				.fistName(userDetail.getFirstName())
 				.lastName(userDetail.getLastName())
+				.isFirstLogin(userDetail.getFirstLogin())
 				.build();
 	}
 	

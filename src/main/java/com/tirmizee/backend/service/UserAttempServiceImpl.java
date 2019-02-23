@@ -1,8 +1,10 @@
 package com.tirmizee.backend.service;
+import static com.tirmizee.core.constant.Constant.AppSetting.MAX_LOGIN_FAIL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tirmizee.backend.dao.AppSettingDao;
 import com.tirmizee.backend.dao.UserAttempDao;
 import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.core.domain.User;
@@ -13,10 +15,11 @@ import com.tirmizee.core.utilities.DateUtils;
 @Service
 public class UserAttempServiceImpl implements UserAttempService {
 
-	public final int MAX_LOGIN_FAIL = 3;
-	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private AppSettingService appSettingService;
 	
 	@Autowired
 	private UserAttempDao userAttempDao;
@@ -39,7 +42,8 @@ public class UserAttempServiceImpl implements UserAttempService {
 		userAttempt.setLastModified(DateUtils.nowTimestamp());
 		userAttempDao.save(userAttempt);
 		
-		if (attemp >= MAX_LOGIN_FAIL) {
+		int maxLoginFail = Integer.parseInt(appSettingService.getValue(MAX_LOGIN_FAIL));
+		if (attemp >= maxLoginFail) {
 			isLocked = true;
 			User user = userDao.findByUsername(username);
 			user.setAccountnonlocked(false);

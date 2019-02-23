@@ -16,7 +16,6 @@ import com.tirmizee.core.constant.Constant;
 
 @Configuration
 @EnableTransactionManagement
-
 public class DatabaseConfig {
 	
 	public static final Logger LOG = Logger.getLogger(DatabaseConfig.class);
@@ -53,8 +52,8 @@ public class DatabaseConfig {
         bean.afterPropertiesSet();
         return (DataSource) bean.getObject();
 	}
-	
-	@Bean
+
+	@Bean 
 	@Profile(Constant.Profiles.DEVELOP)
 	public PlatformTransactionManager transactionManagerOracleDev() throws IllegalArgumentException, NamingException  {
 	    return new DataSourceTransactionManager(dataSourceOracleDev());

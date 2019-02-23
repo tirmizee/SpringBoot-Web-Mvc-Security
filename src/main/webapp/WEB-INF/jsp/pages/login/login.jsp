@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/admin-lte2/css/AdminLTE.min.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/admin-lte2/css/skins/skin-green.min.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/validate-form-master/css/formValidation.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/commons/fonts.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css">
 
   <script src="${pageContext.request.contextPath}/resources/libs/bootstrap/js/jquery-3.2.1.min.js" ></script>
@@ -42,16 +43,16 @@
 			<c:if test="${not empty msg}">
 				<div class="msg">${msg}</div>
 			</c:if>
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg font-kanit-regular">Sign in to start your session</p>
             <form  id="formLogin" action="login" method="post">
             	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />	
                 <div class="form-group has-feedback">
+                	<span class="fa fa-user form-control-feedback"></span>
                     <input name="username" type="text" class="form-control" placeholder="Username">
-                    <span class="fa fa-user form-control-feedback"></span>
                 </div>
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback has-feedback-left">
+                	<span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     <input name="password" type="password" class="form-control" placeholder="Password">
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="row">
                     <div class="col-xs-8"></div>

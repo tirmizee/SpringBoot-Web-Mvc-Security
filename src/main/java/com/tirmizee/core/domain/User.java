@@ -18,6 +18,7 @@ public class User implements Persistable<Long>{
 	private boolean accountnonexpired;
 	private boolean accountnonlocked;	
 	private boolean enabled;
+	private boolean firstLogin;
 	
 	public boolean isPersisted() {
 		return persisted;
@@ -105,6 +106,14 @@ public class User implements Persistable<Long>{
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public boolean getFirstLogin() {
+		return firstLogin;
+	}
+
+	public void setFirstLogin(boolean firstLogin) {
+		this.firstLogin = firstLogin;
 	}
 
 	@Override

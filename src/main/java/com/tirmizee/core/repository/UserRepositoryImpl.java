@@ -22,6 +22,7 @@ public class UserRepositoryImpl extends AbstractOracleJdbcRepository<User, Long>
 			user.setUserId(rs.getLong(COL_USER_ID));
 			user.setUpdateDate(rs.getDate(COL_UPDATE_DATE));
 			user.setCreateDate(rs.getDate(COL_CREATE_DATE));
+			user.setFirstLogin(rs.getBoolean(COL_FIRST_LOGIN));
 			user.setCredentialsnonexpired(rs.getBoolean(COL_CREDENTIALSNONEXPIRED));
 			user.setAccountnonexpired(rs.getBoolean(COL_ACCOUNTNONEXPIRED));
 			user.setAccountnonlocked(rs.getBoolean(COL_ACCOUNTNONLOCKED));
@@ -37,6 +38,7 @@ public class UserRepositoryImpl extends AbstractOracleJdbcRepository<User, Long>
 		@Override
 		public Map<String, Object> mapColumns(User param) {
 			Map<String, Object> map = new LinkedHashMap<>();
+			map.put(COL_FIRST_LOGIN, param.getFirstLogin());
 			map.put(COL_UPDATE_DATE, param.getUpdateDate());
 			map.put(COL_CREATE_DATE, param.getCreateDate());
 			map.put(COL_CREDENTIALSNONEXPIRED, param.getCredentialsnonexpired());
