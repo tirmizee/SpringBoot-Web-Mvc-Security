@@ -13,9 +13,4 @@ public final class Constant {
 		public static final String MAX_LOGIN_FAIL = "MAX_LOGIN_FAIL";
 	}
 	
-	public static final class MSG {
-		public static final String S001 = "sssssssssssss";
-		public static final String S002 = "xxxxxxxxxxxxx";
-	}
-	
 }

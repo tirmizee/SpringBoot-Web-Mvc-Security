@@ -23,6 +23,7 @@ public class UserRepositoryImpl extends AbstractOracleJdbcRepository<User, Long>
 			user.setUpdateDate(rs.getDate(COL_UPDATE_DATE));
 			user.setCreateDate(rs.getDate(COL_CREATE_DATE));
 			user.setFirstLogin(rs.getBoolean(COL_FIRST_LOGIN));
+			user.setCredentialsexpiredDate(rs.getDate(COL_CREDENTIALSEXPIRED_DATE));
 			user.setCredentialsnonexpired(rs.getBoolean(COL_CREDENTIALSNONEXPIRED));
 			user.setAccountnonexpired(rs.getBoolean(COL_ACCOUNTNONEXPIRED));
 			user.setAccountnonlocked(rs.getBoolean(COL_ACCOUNTNONLOCKED));
@@ -41,6 +42,7 @@ public class UserRepositoryImpl extends AbstractOracleJdbcRepository<User, Long>
 			map.put(COL_FIRST_LOGIN, param.getFirstLogin());
 			map.put(COL_UPDATE_DATE, param.getUpdateDate());
 			map.put(COL_CREATE_DATE, param.getCreateDate());
+			map.put(COL_CREDENTIALSEXPIRED_DATE, param.getCredentialsexpiredDate());
 			map.put(COL_CREDENTIALSNONEXPIRED, param.getCredentialsnonexpired());
 			map.put(COL_ACCOUNTNONEXPIRED, param.getAccountnonexpired());
 			map.put(COL_ACCOUNTNONLOCKED, param.getAccountnonlocked());

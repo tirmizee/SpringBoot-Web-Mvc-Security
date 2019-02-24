@@ -40,6 +40,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 				.append(ENABLED).append(" , ")
 				.append(ACCOUNTNONLOCKED).append(" , ")
 				.append(ACCOUNTNONEXPIRED).append(" , ")
+				.append(COL_CREDENTIALSEXPIRED_DATE).append(" , ")
 				.append(CREDENTIALSNONEXPIRED).append(" , ")
 				.append(FIRST_LOGIN).append(" , ")
 				.append(ProfileRepository.FIRST_NAME).append(" , ")

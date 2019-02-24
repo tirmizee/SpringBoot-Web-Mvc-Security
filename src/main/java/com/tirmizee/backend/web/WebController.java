@@ -18,12 +18,22 @@ public class WebController {
 	
 	@GetMapping(path = "/main")
 	public String main(ModelMap model) {
-		return "pages/main/main";
+		return "pages/P001_main/P001_main";
 	}
 	
 	@GetMapping(path = "/firstlogin")
 	public String firstLogin(ModelMap model) {
-		return "pages/first_login/change_password_firstlogin";
+		return "pages/PG00_password_firstlogin/PG00_password_firstlogin";
+	}
+	
+	@GetMapping(path = "/passwordexpried")
+	public String passwordExpried(ModelMap model) {
+		return "pages/PG01_password_expried/PG01_password_expried";
+	}
+	
+	@GetMapping(path = "/report")
+	public String report(ModelMap model) {
+		return "pages/report/report";
 	}
 	
 }

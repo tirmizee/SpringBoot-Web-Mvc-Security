@@ -1,10 +1,18 @@
 package com.tirmizee.backend.service;
 
-import com.tirmizee.backend.api.user.data.RequestPasswordDTO;
-import com.tirmizee.backend.web.data.ResponseSuccess;
+import java.sql.Date;
+
+import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
+import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 
 public interface UserService {
 	
-	ResponseSuccess changePasswordFirstLogin(String username, RequestPasswordDTO passwordDTO);
+	boolean isPasswordExpried(Date expriedDate);
+	
+	void updatePasswordExpired(String username);
+	
+	void changePasswordFirstLogin(String username, ReqPasswordDTO passwordDTO);
+	
+	void changePasswordExpired(String username, ReqPasswordExpriedDTO passwordExpriedDTO);
 	
 }

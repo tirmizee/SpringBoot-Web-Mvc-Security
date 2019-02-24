@@ -1,6 +1,7 @@
 package com.tirmizee.core.domain;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class UserDetail implements Serializable{
 
@@ -10,11 +11,12 @@ public class UserDetail implements Serializable{
 	private String password;
 	private String lastName;
 	private String firstName;
+	private Date credentialsexpiredDate;
 	private boolean credentialsnonexpired;
 	private boolean accountnonexpired;
 	private boolean accountnonlocked;	
 	private boolean enabled;
-	private boolean isFirstLogin;
+	private boolean firstLogin;
 	
 	public String getUsername() {
 		return username;
@@ -65,17 +67,23 @@ public class UserDetail implements Serializable{
 		this.enabled = enabled;
 	}
 	public boolean getFirstLogin() {
-		return isFirstLogin;
+		return firstLogin;
 	}
 	public void setFirstLogin(boolean isFirstLogin) {
-		this.isFirstLogin = isFirstLogin;
+		this.firstLogin = isFirstLogin;
+	}
+	public Date getCredentialsexpiredDate() {
+		return credentialsexpiredDate;
+	}
+	public void setCredentialsexpiredDate(Date credentialsexpiredDate) {
+		this.credentialsexpiredDate = credentialsexpiredDate;
 	}
 	@Override
 	public String toString() {
 		return "UserDetail [username=" + username + ", password=" + password + ", lastName=" + lastName + ", firstName="
 				+ firstName + ", credentialsnonexpired=" + credentialsnonexpired + ", accountnonexpired="
 				+ accountnonexpired + ", accountnonlocked=" + accountnonlocked + ", enabled=" + enabled
-				+ ", isFirstLogin=" + isFirstLogin + "]";
+				+ ", isFirstLogin=" + firstLogin + "]";
 	}
 	
 	

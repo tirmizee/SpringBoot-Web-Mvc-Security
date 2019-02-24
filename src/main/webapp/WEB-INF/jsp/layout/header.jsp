@@ -11,12 +11,28 @@
         </a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <li class="dropdown tasks-menu">
-                    <a id="aLanguage" href="#" class="dropdown-toggle">
-                        <i class="fa fa-language " style="height: 20px;font-size:20px"></i>
+            	<li class="dropdown notifications-menu">
+				   <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+				   		<i class="fa fa-language " style="height: 20px;font-size:20px"></i>
                         <span id="spLanguage" class="label label-warning">th</span>
-                    </a>
-                </li>
+				   </a>
+				   <ul class="dropdown-menu">
+				      <li>
+				         <ul class="menu">
+				            <li>
+				               <a href="#">
+				               <i class="fa fa-shopping-cart text-green"></i> Thai
+				               </a>
+				            </li>
+				            <li>
+				               <a href="#">
+				               <i class="fa fa-user text-red"></i> English
+				               </a>
+				            </li>
+				         </ul>
+				      </li>
+				   </ul>
+				</li>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="${pageContext.request.contextPath}/resources/libs/admin-lte2/img/user2-160x160.jpg" class="user-image" alt="User Image">

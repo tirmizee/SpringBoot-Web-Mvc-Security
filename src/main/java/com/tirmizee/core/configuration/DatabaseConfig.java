@@ -25,10 +25,10 @@ public class DatabaseConfig {
 	public DataSource dataSourceOracleDev() throws IllegalArgumentException, NamingException {
 		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
 		bean.setJndiName("java:/comp/env/" + TomcatEmbeddedConfig.JNDI_ORACLE_DEV);  
-        bean.setProxyInterface(DataSource.class);
-        bean.setLookupOnStartup(false);
-        bean.afterPropertiesSet();
-        return (DataSource) bean.getObject();
+		bean.setProxyInterface(DataSource.class);
+		bean.setLookupOnStartup(false);
+		bean.afterPropertiesSet();
+		return (DataSource) bean.getObject();
 	}
 	
 	@Bean
@@ -36,10 +36,10 @@ public class DatabaseConfig {
 	public DataSource dataSourceOracleUat() throws IllegalArgumentException, NamingException{
 		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
 		bean.setJndiName("java:/comp/env/" + TomcatEmbeddedConfig.JNDI_ORACLE_UAT);  
-        bean.setProxyInterface(DataSource.class);
-        bean.setLookupOnStartup(false);
-        bean.afterPropertiesSet();
-        return (DataSource) bean.getObject();
+		bean.setProxyInterface(DataSource.class);
+		bean.setLookupOnStartup(false);
+		bean.afterPropertiesSet();
+		return (DataSource) bean.getObject();
 	}
 	
 	@Bean
@@ -47,10 +47,10 @@ public class DatabaseConfig {
 	public DataSource dataSourceOracleProduction() throws IllegalArgumentException, NamingException{
 		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
 		bean.setJndiName("java:/comp/env/" + TomcatEmbeddedConfig.JNDI_ORACLE_PRO);  
-        bean.setProxyInterface(DataSource.class);
-        bean.setLookupOnStartup(false);
-        bean.afterPropertiesSet();
-        return (DataSource) bean.getObject();
+		bean.setProxyInterface(DataSource.class);
+		bean.setLookupOnStartup(false);
+		bean.afterPropertiesSet();
+		return (DataSource) bean.getObject();
 	}
 
 	@Bean 

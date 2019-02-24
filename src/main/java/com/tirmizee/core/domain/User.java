@@ -14,6 +14,7 @@ public class User implements Persistable<Long>{
 	private String password;
 	private java.sql.Date updateDate;
 	private java.sql.Date createDate;
+	private java.sql.Date credentialsexpiredDate;
 	private boolean credentialsnonexpired;
 	private boolean accountnonexpired;
 	private boolean accountnonlocked;	
@@ -78,6 +79,14 @@ public class User implements Persistable<Long>{
 
 	public boolean getCredentialsnonexpired() {
 		return credentialsnonexpired;
+	}
+
+	public java.sql.Date getCredentialsexpiredDate() {
+		return credentialsexpiredDate;
+	}
+
+	public void setCredentialsexpiredDate(java.sql.Date credentialsexpiredDate) {
+		this.credentialsexpiredDate = credentialsexpiredDate;
 	}
 
 	public void setCredentialsnonexpired(boolean credentialsnonexpired) {

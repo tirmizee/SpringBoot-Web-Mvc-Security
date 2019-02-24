@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import com.tirmizee.core.configuration.SecurityConfig;
 import com.tirmizee.core.exception.FirstloginException;
 import com.tirmizee.core.exception.LimitBadCredentialsException;
+import com.tirmizee.core.exception.PasswordExpriedException;
 
 /**
  * @author Pratya Yeekhaday
@@ -39,24 +40,32 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 			STRATEGY.sendRedirect(request, response, "/login?error=Username or Password invalid");
 		} 
 		
-		//DETERMINE URL FOR PASSWORD IS INVALID
+		// DETERMINE URL FOR PASSWORD IS INVALID
 		else if(exception instanceof LimitBadCredentialsException) {
 			LimitBadCredentialsException badCredentials = (LimitBadCredentialsException) exception;
 			String error = badCredentials.isLocked() ? "Username is Locked" : "Username or Password invalid";
 			STRATEGY.sendRedirect(request, response, String.format("/login?error=%s", error));
 		} 
 		
-		//DETERMINE URL FOR USERNAME IS LOCKED
+		// DETERMINE URL FOR USERNAME IS LOCKED
 		else if(exception instanceof LockedException) {
 			STRATEGY.sendRedirect(request, response, "/login?error=Username is Locked");
 		}
 
-		//DETERMINE URL FOR USER FIRST LOGIN
+		// DETERMINE URL FOR USER FIRST LOGIN
 		else if(exception instanceof FirstloginException) {
 			final FirstloginException firstloginException = (FirstloginException) exception;
 			final String username = firstloginException.getUsername();
 			SecurityContextHolderUtils.grantAuthority(username, SecurityConfig.PERMISSION_FIRST_LOGIN);
 			STRATEGY.sendRedirect(request, response, "/firstlogin");
+		}
+		
+		// DETERMINE URL FOR USER PASSWORD EXPRIED
+		else if(exception instanceof PasswordExpriedException) {
+			final PasswordExpriedException passwordExpriedException = (PasswordExpriedException) exception;
+			final String username = passwordExpriedException.getUsername();
+			SecurityContextHolderUtils.grantAuthority(username, SecurityConfig.PERMISSION_PASSWORD_EXPRIED);
+			STRATEGY.sendRedirect(request, response, "/passwordexpried");
 		}
 		
 		else STRATEGY.sendRedirect(request, response, "/login");

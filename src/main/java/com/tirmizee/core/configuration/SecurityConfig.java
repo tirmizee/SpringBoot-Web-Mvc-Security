@@ -35,6 +35,7 @@ import com.tirmizee.core.security.UserDetailsServiceImpl;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public static final String PERMISSION_FIRST_LOGIN = "FIRST_LOGIN";
+	public static final String PERMISSION_PASSWORD_EXPRIED = "PASSWORD_EXPRIED";
 	
 	@Autowired
 	private UserDao userDao;
@@ -105,6 +106,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					"/firstlogin",
 					"/api/user/password/firstlogin"
 				).hasAuthority(PERMISSION_FIRST_LOGIN)
+				.antMatchers(
+					"/passwordexpried"
+					).hasAuthority(PERMISSION_PASSWORD_EXPRIED)
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
@@ -121,7 +125,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement()                         
                 .maximumSessions(1)                        
                 .maxSessionsPreventsLogin(false)
-				.expiredUrl("/login?error=This user being used by another")             
+				.expiredUrl("/login?error=This username being used by another")             
 				.sessionRegistry(sessionRegistry());    
 	}
 

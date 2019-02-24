@@ -1,0 +1,9 @@
+.navbar-nav>
+.notifications-menu>
+.dropdown-menu, .navbar-nav>
+.messages-menu>
+.dropdown-menu, .navbar-nav>
+.tasks-menu>
+.dropdown-menu {
+    width: 100px !important;
+}

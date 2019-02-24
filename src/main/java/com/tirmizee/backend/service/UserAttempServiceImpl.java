@@ -4,7 +4,6 @@ import static com.tirmizee.core.constant.Constant.AppSetting.MAX_LOGIN_FAIL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tirmizee.backend.dao.AppSettingDao;
 import com.tirmizee.backend.dao.UserAttempDao;
 import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.core.domain.User;
@@ -19,10 +18,10 @@ public class UserAttempServiceImpl implements UserAttempService {
 	private UserDao userDao;
 	
 	@Autowired
-	private AppSettingService appSettingService;
+	private UserAttempDao userAttempDao;
 	
 	@Autowired
-	private UserAttempDao userAttempDao;
+	private AppSettingService appSettingService;
 	
 	@Override
 	public boolean updateLoginAttemptIsLocked(String username, String accessIp) {
