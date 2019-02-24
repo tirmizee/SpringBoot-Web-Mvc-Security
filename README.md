@@ -1,5 +1,5 @@
-# SpringBoot
+# SpringBoot 
 
-	RequestContextHolder.currentRequestAttributes().getSessionId();
+1. 
+
 	
-	SecurityContextHolder.getContext().getAuthentication().getPrincipal();
