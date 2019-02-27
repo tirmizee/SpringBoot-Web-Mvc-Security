@@ -22,6 +22,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import com.tirmizee.backend.dao.UserDao;
+import com.tirmizee.core.constant.PermissionCode;
 import com.tirmizee.core.security.AuthenticationProviderImpl;
 import com.tirmizee.core.security.UserDetailsServiceImpl;
 
@@ -34,9 +35,6 @@ import com.tirmizee.core.security.UserDetailsServiceImpl;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	public static final String PERMISSION_FIRST_LOGIN = "FIRST_LOGIN";
-	public static final String PERMISSION_PASSWORD_EXPRIED = "PASSWORD_EXPRIED";
-	
 	@Autowired
 	private UserDao userDao;
 
@@ -105,10 +103,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(
 					"/firstlogin",
 					"/api/user/password/firstlogin"
-				).hasAuthority(PERMISSION_FIRST_LOGIN)
+				).hasAuthority(PermissionCode.PG00)
 				.antMatchers(
 					"/passwordexpried"
-					).hasAuthority(PERMISSION_PASSWORD_EXPRIED)
+					).hasAuthority(PermissionCode.PG01)
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()

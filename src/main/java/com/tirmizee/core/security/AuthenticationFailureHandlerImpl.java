@@ -15,7 +15,7 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
-import com.tirmizee.core.configuration.SecurityConfig;
+import com.tirmizee.core.constant.PermissionCode;
 import com.tirmizee.core.exception.FirstloginException;
 import com.tirmizee.core.exception.LimitBadCredentialsException;
 import com.tirmizee.core.exception.PasswordExpriedException;
@@ -56,7 +56,7 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 		else if(exception instanceof FirstloginException) {
 			final FirstloginException firstloginException = (FirstloginException) exception;
 			final String username = firstloginException.getUsername();
-			SecurityContextHolderUtils.grantAuthority(username, SecurityConfig.PERMISSION_FIRST_LOGIN);
+			SecurityContextHolderUtils.grantAuthority(username, PermissionCode.PG00);
 			STRATEGY.sendRedirect(request, response, "/firstlogin");
 		}
 		
@@ -64,7 +64,7 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 		else if(exception instanceof PasswordExpriedException) {
 			final PasswordExpriedException passwordExpriedException = (PasswordExpriedException) exception;
 			final String username = passwordExpriedException.getUsername();
-			SecurityContextHolderUtils.grantAuthority(username, SecurityConfig.PERMISSION_PASSWORD_EXPRIED);
+			SecurityContextHolderUtils.grantAuthority(username,PermissionCode.PG01);
 			STRATEGY.sendRedirect(request, response, "/passwordexpried");
 		}
 		

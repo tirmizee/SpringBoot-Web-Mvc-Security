@@ -63,9 +63,7 @@ var PasswordExpriedModule = function(){
 					var error = JSON.parse(jqXHR.responseText);
 					swal({ type  : 'error', 
 						   title : "Message Alert",  
-						   text  : error.message, 
-						   showConfirmButton : false, 
-						   timer: 4000 });
+						   text  : error.message });
 					$('#formPasswordExpried button[type="submit"]').prop("disabled",false);
 				});
 		});

@@ -37,14 +37,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 			// WHEN LOGIN
 			if (request.getRequestURI().contains("login")) {
 				STRATEGY.sendRedirect(request, response, "/login?error=Token timeout please try again");
-			} 
-			
-			// WHEN LOGOUT
-			else if (request.getRequestURI().contains("logout")) {
-				STRATEGY.sendRedirect(request, response, "/login");
-			} 
-			
-			else {
+			} else {
 				STRATEGY.sendRedirect(request, response, "/accessdenied");
 			}
 

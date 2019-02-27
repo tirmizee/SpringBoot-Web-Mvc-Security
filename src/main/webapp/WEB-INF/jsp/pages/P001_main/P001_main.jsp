@@ -41,7 +41,7 @@
    		
    			<!-- CONTENT HEADER -->
 			<section class="content-header">
-				<h1>TROO1 <small>main page</small></h1>
+				<h1>P001 <small>main page</small></h1>
 				<jsp:include page="../../commons/servertime.jsp" />
 			</section>
 			

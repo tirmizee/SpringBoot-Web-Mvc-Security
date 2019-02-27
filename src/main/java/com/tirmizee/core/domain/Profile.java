@@ -11,6 +11,7 @@ public class Profile implements Persistable<Long>{
 	private Long profileId;
 	private String lastName;
 	private String firstName;
+	private String email;
 	private java.sql.Date updateDate;
 	private java.sql.Date createDate;
 	
@@ -60,6 +61,14 @@ public class Profile implements Persistable<Long>{
 
 	public void setCreateDate(java.sql.Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override

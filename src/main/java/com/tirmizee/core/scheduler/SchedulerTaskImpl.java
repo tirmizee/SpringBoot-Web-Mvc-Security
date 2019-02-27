@@ -9,7 +9,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.tirmizee.backend.dto.Payload;
+import com.tirmizee.backend.web.data.Payload;
 
 @Component
 public class SchedulerTaskImpl implements SchedulerTask {

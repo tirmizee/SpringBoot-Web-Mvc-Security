@@ -36,7 +36,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		int sessionTimeout = Integer.parseInt(appSettingService.getValue(SESSION_TIME_OUT));
 		request.getSession().setMaxInactiveInterval(sessionTimeout * 60);
 		
-		// DETERMINE URL FOR PERMISSION
+		// DETERMINE DEFAULT URL FOR PERMISSION
 		String targetUrl = determineTargetUrl(authentication);
 		
 		// REDIRECT URL TO TARGET 
@@ -46,7 +46,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 	
 	protected String determineTargetUrl(Authentication authentication) {
 		Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-		if (authorities.contains(PermissionCode.TR001)) {
+		if (authorities.contains(PermissionCode.P000)) {
 			return "/main";
 		}else {
 			return "/main";

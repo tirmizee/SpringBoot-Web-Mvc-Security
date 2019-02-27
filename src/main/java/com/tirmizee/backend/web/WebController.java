@@ -33,7 +33,7 @@ public class WebController {
 	
 	@GetMapping(path = "/report")
 	public String report(ModelMap model) {
-		return "pages/report/report";
+		return "pages/P002_report/P002_report";
 	}
 	
 }
