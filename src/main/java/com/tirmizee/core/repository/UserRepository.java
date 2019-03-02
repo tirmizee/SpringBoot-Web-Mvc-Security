@@ -9,6 +9,7 @@ public interface UserRepository extends JdbcRepository<User, Long>{
 	public static final String COL_FIRST_LOGIN = "FIRST_LOGIN";
 	public static final String COL_UPDATE_DATE = "UPDATE_DATE";
 	public static final String COL_CREATE_DATE = "CREATE_DATE";
+	public static final String COL_FK_ROLE_ID = "FK_ROLE_ID";
 	public static final String COL_CREDENTIALSEXPIRED_DATE = "CREDENTIALSEXPIRED_DATE";
 	public static final String COL_CREDENTIALSNONEXPIRED = "CREDENTIALSNONEXPIRED";
 	public static final String COL_ACCOUNTNONEXPIRED = "ACCOUNTNONEXPIRED";
@@ -21,6 +22,7 @@ public interface UserRepository extends JdbcRepository<User, Long>{
 	public static final String FIRST_LOGIN = "USERS.FIRST_LOGIN";
 	public static final String UPDATE_DATE = "USERS.UPDATE_DATE";
 	public static final String CREATE_DATE = "USERS.CREATE_DATE";
+	public static final String FK_ROLE_ID = "USERS.FK_ROLE_ID";
 	public static final String CREDENTIALSEXPIRED_DATE = "USERS.CREDENTIALSEXPIRED_DATE";
 	public static final String CREDENTIALSNONEXPIRED = "USERS.CREDENTIALSNONEXPIRED";
 	public static final String ACCOUNTNONEXPIRED = "USERS.ACCOUNTNONEXPIRED";

@@ -1,9 +1,16 @@
 .navbar-nav>
 .notifications-menu>
-.dropdown-menu, .navbar-nav>
-.messages-menu>
-.dropdown-menu, .navbar-nav>
-.tasks-menu>
 .dropdown-menu {
     width: 100px !important;
+}
+
+.navbar-nav>
+.notifications-menu>
+.dropdown-menu>
+li .menu>li>a:hover {
+    background: #f9f9f9;
+}
+
+.content-wrapper, .right-side {
+    background-color: #fbfbfb !important;
 }

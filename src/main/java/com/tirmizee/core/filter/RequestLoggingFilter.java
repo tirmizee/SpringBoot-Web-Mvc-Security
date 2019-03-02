@@ -2,6 +2,7 @@ package com.tirmizee.core.filter;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.AbstractRequestLoggingFilter;
@@ -16,7 +17,8 @@ public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 
 	@Override
 	protected void afterRequest(HttpServletRequest request, String message) {
-		LOG.info(message);
+		String accessIp = request.getRemoteAddr();
+		LOG.info(accessIp + " : " + message);
 	}
 
 	@Override
@@ -41,7 +43,8 @@ public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 
 	@Override
 	protected boolean shouldLog(HttpServletRequest request) {
-		return request.getRequestURL().toString().indexOf("resource") < 0;
+		final String requestUrl = request.getRequestURL().toString();
+		return StringUtils.indexOfAny(requestUrl, "resource","webjars","ws") < 0;
 	}
 	
 }

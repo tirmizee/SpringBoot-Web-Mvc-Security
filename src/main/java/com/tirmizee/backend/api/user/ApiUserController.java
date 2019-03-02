@@ -1,5 +1,7 @@
 package com.tirmizee.backend.api.user;
 
+import java.util.concurrent.ForkJoinPool;
+
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -9,11 +11,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
+import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
+import com.tirmizee.backend.api.user.data.UserDetailDTO;
 import com.tirmizee.backend.service.UserService;
 import com.tirmizee.backend.web.data.MessageSuccess;
+import com.tirmizee.core.datatable.RequestTable;
+import com.tirmizee.core.datatable.ResponseTable;
 
 @RestController
 @RequestMapping("/api/user")
@@ -38,4 +45,19 @@ public class ApiUserController {
 		return new MessageSuccess();
 	}
 	
+	@PostMapping(path = "/page")
+	public DeferredResult<ResponseTable<UserDetailDTO>> page(@RequestBody @Valid RequestTable<UserDetailCriteriaDTO> requestTable){
+		ForkJoinPool pool = new ForkJoinPool(100);
+		DeferredResult<ResponseTable<UserDetailDTO>> deferredResult = new DeferredResult<>(60000L);
+		pool.submit(()->{
+			try {
+				ResponseTable<UserDetailDTO> result = userService.pagingTable(requestTable);
+				deferredResult.setResult(result);
+			}catch (Exception ex) {
+				deferredResult.setErrorResult(ex);
+			}
+		});
+		return deferredResult;
+	}
+
 }

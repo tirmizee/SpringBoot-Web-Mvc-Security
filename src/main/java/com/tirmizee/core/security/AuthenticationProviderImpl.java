@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -21,13 +23,17 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 	public static final Logger LOG = Logger.getLogger(AuthenticationProviderImpl.class);
 
 	@Autowired
-	private HttpServletRequest servletRequest;
+	@Qualifier("taskExecutor")
+	private TaskExecutor task;
 	
 	@Autowired
 	private UserService userService;
 	
 	@Autowired
 	private UserAttempService userAttempService;
+	
+	@Autowired
+	private HttpServletRequest servletRequest;
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -39,7 +45,7 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 			
 			Authentication authen = super.authenticate(authentication);
 			UserProfile userProfile =  (UserProfile) authen.getPrincipal();
-			userAttempService.resetLoginAttempt(username, accessIp);
+			task.execute(() -> userAttempService.resetLoginAttempt(username, accessIp));
 			
 			// USER FIRST LOGIN 
 			if (userProfile.isFirstLogin()) {

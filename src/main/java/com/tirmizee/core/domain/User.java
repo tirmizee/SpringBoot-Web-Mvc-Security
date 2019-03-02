@@ -20,6 +20,7 @@ public class User implements Persistable<Long>{
 	private boolean accountnonlocked;	
 	private boolean enabled;
 	private boolean firstLogin;
+	private Integer fkRoleId;
 	
 	public boolean isPersisted() {
 		return persisted;
@@ -123,6 +124,14 @@ public class User implements Persistable<Long>{
 
 	public void setFirstLogin(boolean firstLogin) {
 		this.firstLogin = firstLogin;
+	}
+
+	public Integer getFkRoleId() {
+		return fkRoleId;
+	}
+
+	public void setFkRoleId(Integer fkRoleId) {
+		this.fkRoleId = fkRoleId;
 	}
 
 	@Override

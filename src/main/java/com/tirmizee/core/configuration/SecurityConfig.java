@@ -21,6 +21,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
+import com.tirmizee.backend.dao.PermissionDao;
 import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.core.constant.PermissionCode;
 import com.tirmizee.core.security.AuthenticationProviderImpl;
@@ -37,6 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private PermissionDao permissionDao;
 
 	@Autowired 
 	private AccessDeniedHandler accessDeniedHandler;
@@ -54,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	public UserDetailsService userDetailsService() {
-		return new UserDetailsServiceImpl(userDao);
+		return new UserDetailsServiceImpl(userDao, permissionDao);
 	}
 	
 	@Bean

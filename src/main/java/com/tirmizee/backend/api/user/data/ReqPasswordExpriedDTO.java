@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.tirmizee.core.annotaion.FieldMatch;
+import com.tirmizee.core.hibernate.validator.FieldMatch;
 
 @FieldMatch(
-	firstField = "newPassword",
-	secondField = "newPasswordConfirm",
+	field = "newPassword",
+	fieldMatch = "newPasswordConfirm",
 	message = "The password fields must match" )
 public class ReqPasswordExpriedDTO implements Serializable {
 

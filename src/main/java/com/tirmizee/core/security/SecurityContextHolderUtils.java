@@ -11,6 +11,10 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * @author Pratya Yeekhaday
+ *
+ */
 public class SecurityContextHolderUtils {
 	
 	public static void grantAuthority(String username, String authority){

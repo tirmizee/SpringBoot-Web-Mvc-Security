@@ -2,7 +2,7 @@ package com.tirmizee.core.exception;
 
 import org.springframework.security.core.AuthenticationException;
 
-public class FirstloginException  extends AuthenticationException {
+public class FirstloginException extends AuthenticationException {
 
 	private static final long serialVersionUID = -6537804745024332721L;
 

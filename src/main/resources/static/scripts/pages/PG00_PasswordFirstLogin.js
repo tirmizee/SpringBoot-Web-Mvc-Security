@@ -52,7 +52,7 @@ var FirstLoginModule = function(){
 					}
 				},
 				function(jqXHR, textStatus, errorThrown){
-
+					$('#formFirstLogin button[type="submit"]').prop("disabled",false);
 				});
             
 		});
