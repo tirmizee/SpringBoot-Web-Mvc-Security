@@ -47,9 +47,8 @@ public class ApiUserController {
 	
 	@PostMapping(path = "/page")
 	public DeferredResult<ResponseTable<UserDetailDTO>> page(@RequestBody @Valid RequestTable<UserDetailCriteriaDTO> requestTable){
-		ForkJoinPool pool = new ForkJoinPool(100);
 		DeferredResult<ResponseTable<UserDetailDTO>> deferredResult = new DeferredResult<>(60000L);
-		pool.submit(()->{
+		ForkJoinPool.commonPool().submit(()->{
 			try {
 				ResponseTable<UserDetailDTO> result = userService.pagingTable(requestTable);
 				deferredResult.setResult(result);

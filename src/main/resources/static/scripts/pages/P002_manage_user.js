@@ -28,10 +28,12 @@ var ManageUserModule = function(){
 				headers: {
 	                'X-CSRF-TOKEN' : AjaxManager.CsrfToken 
 	            },
-				data: function (d) {
+				data : function (d) {
 					d.search = Search;
 					return JSON.stringify(d);
-				}
+				},error : function (xhr, error, thrown) {
+					window.location.replace("tirmizee/login");
+	            }
 			},
 			columns: [
 				{ data: null           ,title : "Action" },
@@ -39,7 +41,8 @@ var ManageUserModule = function(){
 				{ data : "username"    ,title : "Ussername"},
 				{ data : "firstName"   ,title : "First Name"},
 				{ data : "lastName"    ,title : "Last Name"},
-				{ data : "roleName"    ,title : "Role Name"}
+				{ data : "roleName"    ,title : "Role Name"},
+				{ data : "email"       ,title : "Email"}
 			],
 			columnDefs: [
 				{
@@ -58,7 +61,20 @@ var ManageUserModule = function(){
 						return meta.settings._iDisplayStart + meta.row + 1;
 					}
 				}
-			]
+			],
+			colReorder : {
+		        fixedColumnsLeft: 2
+		    }
+		});
+	}
+	
+	var handleButtonSearch = function(){
+		$('#BtnSearch').on('click', function(){
+			Search.username = $('input[name="username"]').val();
+			Search.firstName = $('input[name="firstName"]').val();
+			Search.lastName = $('input[name="lastName"]').val();
+			Search.email = $('input[name="email"]').val();
+			DataTable.ajax.reload();
 		});
 	}
 	
@@ -66,6 +82,7 @@ var ManageUserModule = function(){
 		init : function(){
 			activeMenu();
 			handleDataTable();
+			handleButtonSearch();
 		}
 	};
 	

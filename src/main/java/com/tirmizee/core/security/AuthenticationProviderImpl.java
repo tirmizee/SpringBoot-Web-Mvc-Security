@@ -56,7 +56,7 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 			// USER PASSWORD EXPRIED 
 			if(userService.isPasswordExpried(userProfile.getCredentialsExpiredDate())) {
 				LOG.info(username + " : " + "password expried");
-				userService.updatePasswordExpired(username);
+				userService.fourcePasswordExpired(username);
 				throw new PasswordExpriedException(username, "Force password expried change");
 			}
 			

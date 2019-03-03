@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updatePasswordExpired(String username) {
+	public void fourcePasswordExpired(String username) {
 		User user = userDao.findByUsername(username);
 		user.setCredentialsnonexpired(false);
 		user.setUpdateDate(DateUtils.now());

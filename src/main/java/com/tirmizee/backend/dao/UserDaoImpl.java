@@ -1,7 +1,9 @@
 package com.tirmizee.backend.dao;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -65,6 +67,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 
 	@Override
 	public Page<UserDetailDTO> findPageByCriteria(Pageable pageable, UserDetailCriteriaDTO search) {
+		List<Object> params = new LinkedList<>();
 		StringBuilder statement = new StringBuilder()
 			.append(" SELECT ")
 				.append(USER_ID).append(",")
@@ -86,10 +89,36 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 			.append(" INNER JOIN ").append(ProfileRepository.TB_PROFILE)
 				.append(" ON ").append(PROFILE_ID).append(" = ").append(ProfileRepository.PROFILE_ID)
 			.append(" INNER JOIN ").append(RoleRepository.TB_ROLE)
-				.append(" ON ").append(FK_ROLE_ID).append(" = ").append(RoleRepository.ROLE_ID);
+				.append(" ON ").append(FK_ROLE_ID).append(" = ").append(RoleRepository.ROLE_ID)
+			.append(" WHERE ").append(USER_ID).append(" IS NOT NULL");
+		
+		if (!StringUtils.isBlank(search.getUsername())) {
+			statement.append(" AND ").append(USERNAME).append(" LIKE ? ");
+			params.add("%" + StringUtils.trimToEmpty(search.getUsername()) + "%");
+		}
+		
+		if (!StringUtils.isBlank(search.getFirstName())) {
+			statement.append(" AND ").append(ProfileRepository.FIRST_NAME).append(" LIKE ? ");
+			params.add("%" + StringUtils.trimToEmpty(search.getFirstName()) + "%");
+		}
+		
+		if (!StringUtils.isBlank(search.getLastName())) {
+			statement.append(" AND ").append(ProfileRepository.LAST_NAME).append(" LIKE ? ");
+			params.add("%" + StringUtils.trimToEmpty(search.getLastName()) + "%");
+		}
+		
+		if (!StringUtils.isBlank(search.getEmail())) {
+			statement.append(" AND ").append(ProfileRepository.EMAIL).append(" LIKE ? ");
+			params.add("%" + StringUtils.trimToEmpty(search.getEmail()) + "%");
+		}
+		
 		String statementPage = getSqlGenerator().selectAll(statement, pageable);
-		List<UserDetailDTO> content = getJdbcOps().query(statementPage.toString(), new BeanPropertyRowMapper<>(UserDetailDTO.class));
-		long total = count(statement.toString());
+		List<UserDetailDTO> content = getJdbcOps().query(
+			statementPage.toString(), 
+			params.toArray(), 
+			new BeanPropertyRowMapper<>(UserDetailDTO.class)
+		);
+		long total = count(statement.toString(), params.toArray());
 		return new PageImpl<>(content, pageable, total);
 	}
 

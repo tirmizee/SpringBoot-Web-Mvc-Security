@@ -11,32 +11,32 @@
         <div class="row">
         	<div class="col-md-3">
 	        	<div class="form-group">
-				    <label>Text</label>
-				    <input type="text" class="form-control" placeholder="Enter ...">
+				    <label>User Name</label>
+				    <input name="username" type="text" class="form-control" placeholder="Username...">
 				</div>
         	</div>
         	<div class="col-md-3">
         		<div class="form-group">
-				    <label>Text</label>
-				    <input type="text" class="form-control" placeholder="Enter ...">
+				    <label>First Name</label>
+				    <input name="firstName" type="text" class="form-control" placeholder="Firstname...">
 				</div>
         	</div>
         	<div class="col-md-3">
 	        	<div class="form-group">
-				    <label>Text</label>
-				    <input type="text" class="form-control" placeholder="Enter ...">
+				    <label>Last Name</label>
+				    <input name="lastName" type="text" class="form-control" placeholder="Lastname...">
 				</div>
         	</div>
         	<div class="col-md-3">
         		<div class="form-group">
-				    <label>Text</label>
-				    <input type="text" class="form-control" placeholder="Enter ...">
+				    <label>Email</label>
+				    <input name="email" type="text" class="form-control" placeholder="Email...">
 				</div>
         	</div>
         </div>
         <div class="row text-center">
-			<button id="btnClear" type="button" class="btn btn-default btn-flat">Clear</button>
-			<button id="btnSearch" type="button" class="btn btn-primary btn-flat">Search</button>
+			<button id="BtnClear" type="button" class="btn btn-default btn-flat">Clear</button>
+			<button id="BtnSearch" type="button" class="btn btn-primary btn-flat">Search</button>
 		</div>
     </div>
 </div>

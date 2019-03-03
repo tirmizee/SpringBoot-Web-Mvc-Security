@@ -13,7 +13,7 @@ public interface UserService {
 	
 	boolean isPasswordExpried(Date expriedDate);
 	
-	void updatePasswordExpired(String username);
+	void fourcePasswordExpired(String username);
 	
 	void changePasswordFirstLogin(String username, ReqPasswordDTO passwordDTO);
 	

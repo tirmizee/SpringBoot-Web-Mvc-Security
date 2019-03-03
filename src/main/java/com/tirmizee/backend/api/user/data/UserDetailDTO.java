@@ -2,26 +2,54 @@ package com.tirmizee.backend.api.user.data;
 
 import java.io.Serializable;
 
+import com.tirmizee.core.datatable.SortColumn;
+import com.tirmizee.core.repository.ProfileRepository;
+import com.tirmizee.core.repository.RoleRepository;
+import com.tirmizee.core.repository.UserRepository;
+
 public class UserDetailDTO implements Serializable {
 
 	private static final long serialVersionUID = 1831017480680058509L;
 
 	private Long userId;
+	
+	@SortColumn(UserRepository.COL_USERNAME)
 	private String username;
+	
+	@SortColumn(UserRepository.COL_CREDENTIALSEXPIRED_DATE)
 	private java.sql.Date credentialsexpiredDate;
+	
+	@SortColumn(UserRepository.COL_CREDENTIALSNONEXPIRED)
 	private boolean credentialsnonexpired;
+	
+	@SortColumn(UserRepository.COL_ACCOUNTNONEXPIRED)
 	private boolean accountnonexpired;
+	
+	@SortColumn(UserRepository.COL_ACCOUNTNONLOCKED)
 	private boolean accountnonlocked;	
+	
+	@SortColumn(UserRepository.COL_ENABLED)
 	private boolean enabled;
+	
+	@SortColumn(UserRepository.COL_FIRST_LOGIN)
 	private boolean firstLogin;
 	
 	private Integer profileId;
+	
+	@SortColumn(ProfileRepository.COL_LAST_NAME)
 	private String lastName;
+	
+	@SortColumn(ProfileRepository.COL_FIRST_NAME)
 	private String firstName;
+	
+	@SortColumn(ProfileRepository.COL_EMAIL)
 	private String email;
 	
 	private Integer roleId;
+	
+	@SortColumn(RoleRepository.COL_ROLE_NAME)
 	private String roleName;
+	
 	private String roleCode;
 	
 	public Integer getRoleId() {
