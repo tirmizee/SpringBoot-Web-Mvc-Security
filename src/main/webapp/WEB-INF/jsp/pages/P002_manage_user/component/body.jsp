@@ -34,6 +34,16 @@
 				</div>
         	</div>
         </div>
+        <div class="row">
+        	<div class="col-md-3">
+        		<div class="form-group">
+				    <label>Disabled Result</label>
+				    <select id="SLRole" class="form-control select2" style="width: 100%;">
+				        <option selected="selected">Alabama</option>
+				    </select>
+				</div>
+        	</div>
+        </div>
         <div class="row text-center">
 			<button id="BtnClear" type="button" class="btn btn-default btn-flat">Clear</button>
 			<button id="BtnSearch" type="button" class="btn btn-primary btn-flat">Search</button>

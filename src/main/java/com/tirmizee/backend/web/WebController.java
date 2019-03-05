@@ -1,5 +1,6 @@
 package com.tirmizee.backend.web;
 
+import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class WebController {
+
+	public static final Logger LOG = Logger.getLogger(WebController.class);
 	
 	@GetMapping(path = {"/","/login"})
 	public String login(@RequestParam(required = false) String error, ModelMap model) {
@@ -42,6 +45,11 @@ public class WebController {
 	@GetMapping(path = "/manageuser")
 	public String manageUser(ModelMap model) {
 		return "pages/P002_manage_user/P002_manage_user";
+	}
+	
+	@GetMapping(path = "/managesession")
+	public String manageSession(ModelMap model) {
+		return "pages/P003_manage_session/P003_manage_session";
 	}
 	
 }

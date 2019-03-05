@@ -11,6 +11,8 @@ public class UserDetail implements Serializable{
 	private String password;
 	private String lastName;
 	private String firstName;
+	private Integer roleId;
+	private String roleName;
 	private Date credentialsexpiredDate;
 	private boolean credentialsnonexpired;
 	private boolean accountnonexpired;
@@ -77,6 +79,18 @@ public class UserDetail implements Serializable{
 	}
 	public void setCredentialsexpiredDate(Date credentialsexpiredDate) {
 		this.credentialsexpiredDate = credentialsexpiredDate;
+	}
+	public Integer getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 	@Override
 	public String toString() {

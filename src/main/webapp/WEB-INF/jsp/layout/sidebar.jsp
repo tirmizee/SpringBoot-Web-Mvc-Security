@@ -9,7 +9,7 @@
             </div>
             <div class="pull-left info">
                 <p>${profile.username}</p>
-                <a href="">${profile.fistName}  ${profile.lastName}</a>
+                <a href="">${profile.firstName}  ${profile.lastName}</a>
             </div>
         </div>
         <ul class="sidebar-menu">
@@ -42,8 +42,9 @@
 			    </a>
 				<ul class="treeview-menu" style="display: none;">
 					<security:authorize access="hasAnyAuthority('P002')">
-				   	<li><a href="${pageContext.request.contextPath}/manageuser"><i class="fa fa-users"></i>Manage User</a></li>
+				   	<li><a href="${pageContext.request.contextPath}/manageuser"><i class="fa fa-users"></i>Manage Users</a></li>
 				   	</security:authorize>
+				   	<li><a href="${pageContext.request.contextPath}/managesession"><i class="fa fa-users"></i>Manage Sessions</a></li>
 				</ul>
 			</li>
 			</security:authorize>

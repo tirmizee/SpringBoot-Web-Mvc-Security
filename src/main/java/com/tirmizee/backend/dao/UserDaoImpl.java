@@ -47,6 +47,8 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 				.append("SELECT ")
 				.append(USERNAME).append(" , ")
 				.append(PASSWORD).append(" , ")
+				.append(RoleRepository.ROLE_ID).append(" , ")
+				.append(RoleRepository.ROLE_NAME).append(" , ")
 				.append(ENABLED).append(" , ")
 				.append(ACCOUNTNONLOCKED).append(" , ")
 				.append(ACCOUNTNONEXPIRED).append(" , ")
@@ -58,6 +60,8 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 				.append(" FROM ").append(TB_USERS)
 				.append(" INNER JOIN ").append(ProfileRepository.TB_PROFILE)
 				.append(" ON ").append(PROFILE_ID).append(" = ").append(ProfileRepository.PROFILE_ID)
+				.append(" INNER JOIN ").append(RoleRepository.TB_ROLE)
+				.append(" ON ").append(FK_ROLE_ID).append(" = ").append(RoleRepository.ROLE_ID)
 				.append(" WHERE ").append(USERNAME).append(" = :username ");
 			return getNamedJdbcOps().queryForObject(statemet.toString(), params, new BeanPropertyRowMapper<>(UserDetail.class));
 		} catch(EmptyResultDataAccessException ex) {

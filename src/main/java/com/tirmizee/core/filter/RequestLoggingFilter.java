@@ -45,7 +45,7 @@ public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 	
 	@Override
 	protected int getMaxPayloadLength() {
-		return 40;
+		return 250;
 	}
 
 	@Override

@@ -32,6 +32,9 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		
+		// SET ACCESS IP 
+		((UserProfile) authentication.getPrincipal()).setAccessIp(request.getRemoteAddr());
+		
 		// SET SESSION TIMEOUT
 		int sessionTimeout = Integer.parseInt(appSettingService.getValue(SESSION_TIME_OUT));
 		request.getSession().setMaxInactiveInterval(sessionTimeout * 60);

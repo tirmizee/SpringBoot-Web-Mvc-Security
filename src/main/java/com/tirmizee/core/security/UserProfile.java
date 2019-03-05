@@ -1,7 +1,6 @@
 package com.tirmizee.core.security;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,7 +8,7 @@ public class UserProfile extends UserDetailsImpl {
 	
 	private static final long serialVersionUID = 196667297093501169L;
 	
-	private String fistName;
+	private String firstName;
 	private String lastName;
 	private String roleName;
 	private String accessIp;
@@ -18,7 +17,7 @@ public class UserProfile extends UserDetailsImpl {
 	
 	public UserProfile(Builder builder) {
 		super(builder);
-		this.fistName = builder.fistName;
+		this.firstName = builder.firstName;
 		this.lastName = builder.lastName;
 		this.roleName = builder.roleName;
 		this.accessIp = builder.accessIp;
@@ -26,14 +25,14 @@ public class UserProfile extends UserDetailsImpl {
 		this.credentialsExpiredDate = builder.credentialsExpiredDate;
 	}
 	
-	public String getFistName() {
-		return fistName;
+	public String getFirstName() {
+		return firstName;
 	}
-	
-	public void setFistName(String fistName) {
-		this.fistName = fistName;
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	
+
 	public String getLastName() {
 		return lastName;
 	}
@@ -89,7 +88,7 @@ public class UserProfile extends UserDetailsImpl {
 	
 	public static class Builder extends UserDetailsImpl.Builder<Builder>{
 		
-		private String fistName;
+		private String firstName;
 		private String lastName;
 		private String roleName;
 		private String accessIp;
@@ -98,8 +97,8 @@ public class UserProfile extends UserDetailsImpl {
 		
 		public Builder(){}
 		
-		public Builder fistName(String fistName){
-			this.fistName = fistName;
+		public Builder firstName(String firstName){
+			this.firstName = firstName;
 			return this;
 		}
 		

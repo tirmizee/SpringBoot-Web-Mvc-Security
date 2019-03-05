@@ -17,9 +17,9 @@ var ManageUserModule = function(){
 			processing   : true,
 			serverSide   : true,
 			responsive   : false,
-			select       : true,
 			searching    : false,
 			scrollX      : true,
+			select       : true,
 			deferRender  : true,
 			ajax: {
 				url: 'api/user/page',
@@ -62,6 +62,9 @@ var ManageUserModule = function(){
 					}
 				}
 			],
+			select: {
+		   		style: 'single'
+		    },
 			colReorder : {
 		        fixedColumnsLeft: 2
 		    }
@@ -78,11 +81,59 @@ var ManageUserModule = function(){
 		});
 	}
 	
+	var handleSelect2Role = function(){
+		$('#SLRole').select2({
+			placeholder: 'Search Role',
+			ajax: {
+			    url : 'api/role/page',
+			    delay : 250,
+			    type : 'POST',
+			    contentType : 'application/json',
+			    headers : {
+	                'X-CSRF-TOKEN' : AjaxManager.CsrfToken 
+	            },
+	            data : function (params) {
+	            	params.page = params.page || 0;
+	            	params.size = 5;
+	                return JSON.stringify(params);
+	            },
+			    processResults : function (data , params) {
+			    	return {
+		                results : $.map(data.content, function (item) { 
+		                    return {
+		                    	id     : item.roleId,
+		                    	code   : item.roleCode,
+		                    	text   : item.roleName
+		                    }
+		                }),
+	                    pagination: {
+	                        more : !data.last
+	                    }
+		            };
+			    }
+			  },
+			  cache : true,
+			  templateResult : function (data) {
+				  
+				  var $template = $('<div></div>');
+				  var $body_line1 = $('<span>' + data.text + '</span>');  
+				  var $body_line2 = $('<small><b>code : </b>' + data.code + '</small>');  
+				  
+				  $template.append($body_line1);
+				  $template.append('<br>');
+				  $template.append($body_line2);
+				  
+                  return $template;
+			  } 
+		});
+	}
+	
 	return {
 		init : function(){
 			activeMenu();
 			handleDataTable();
 			handleButtonSearch();
+			handleSelect2Role();
 		}
 	};
 	

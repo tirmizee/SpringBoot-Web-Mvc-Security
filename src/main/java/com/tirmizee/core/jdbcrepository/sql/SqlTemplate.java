@@ -11,8 +11,8 @@ import org.apache.commons.lang3.text.StrSubstitutor;
  */
 public class SqlTemplate {
 
-	public static final String DEFAULT_PREFIX = "("; 
-	public static final String DEFAULT_SUFFIX = ")";
+	public static final String DEFAULT_PREFIX = "{"; 
+	public static final String DEFAULT_SUFFIX = "}";
 	
 	private String PREFIX; 
 	private String SUFFIX ;

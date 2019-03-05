@@ -40,7 +40,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		
 		List<Permission> permissions = permissionDao.findByUsername(username);
-
 		LOG.info(username + " : " + permissions.stream().map(e -> e.getPerCode()).collect(Collectors.toList()).toString());
 		
 		return new UserProfile.Builder()
@@ -52,8 +51,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				.accountNonLocked(userDetail.isAccountnonlocked())
 				.credentialsNonExpired(userDetail.isCredentialsnonexpired())
 				.credentialsExpiredDate(userDetail.getCredentialsexpiredDate())
-				.fistName(userDetail.getFirstName())
+				.firstName(userDetail.getFirstName())
 				.lastName(userDetail.getLastName())
+				.roleName(userDetail.getRoleName())
 				.isFirstLogin(userDetail.getFirstLogin())
 				.build();
 	}
