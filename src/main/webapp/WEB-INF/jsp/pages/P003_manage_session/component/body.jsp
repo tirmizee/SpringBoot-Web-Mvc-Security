@@ -9,12 +9,38 @@
     </div>
     <div class="box-body" style="">
         <div class="row">
-	        <div class="col-md-3">
+        	<div class="col-md-3">
+	        	<div class="info-box bg-red">
+				    <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
+				    <div class="info-box-content">
+				        <span class="info-box-text">All Users</span>
+				        <span id="SPCountUsers" class="info-box-number">0</span>
+				        <div class="progress">
+				            <div class="progress-bar" style="width: 70%"></div>
+				        </div>
+				        <span class="progress-description"> 70% Increase in 30 Days  </span>
+				    </div>
+				</div>
+        	</div>
+        	<div class="col-md-3">
+        		<div class="info-box bg-green">
+				    <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
+				    <div class="info-box-content">
+				        <span class="info-box-text">All Users Active</span>
+				        <span id="SPCountUserActive" class="info-box-number">0</span>
+				        <div class="progress">
+				            <div class="progress-bar" style="width: 70%"></div>
+				        </div>
+				        <span class="progress-description">70% Increase in 30 Days</span>
+				    </div>
+				</div>
+        	</div>
+        	 <div class="col-md-3">
         		<div class="info-box">
 				   <span class="info-box-icon bg-aqua"><i class="ion ion-ios-people-outline"></i></span>
 				   <div class="info-box-content">
 				      <span class="info-box-text">All Users</span>
-				      <span class="info-box-number">2,000</span>
+				      <span  class="info-box-number">0</span>
 				   </div>
 				</div>
         	</div>
@@ -23,20 +49,8 @@
 				   <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
 				   <div class="info-box-content">
 				      <label class="info-box-text">All Users Active</label>
-				      <span id="SPCountUsers" class="info-box-number"></span>
+				      <span  class="info-box-number">0</span>
 				   </div>
-				</div>
-        	</div>
-        	<div class="col-md-3">
-	        	<div class="form-group">
-				    <label>Last Name</label>
-				    <input name="lastName" type="text" class="form-control" placeholder="Lastname...">
-				</div>
-        	</div>
-        	<div class="col-md-3">
-        		<div class="form-group">
-				    <label>Email</label>
-				    <input name="email" type="text" class="form-control" placeholder="Email...">
 				</div>
         	</div>
         </div>

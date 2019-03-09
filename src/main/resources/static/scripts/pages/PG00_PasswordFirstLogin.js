@@ -41,19 +41,27 @@ var FirstLoginModule = function(){
 				function(response){
 					if (response) {
 						console.log(response);
-						swal({ type  : 'success',  
-							   title : 'Reset Your Password Complete', 
-							   text  : 'Go To Login Page', 
-							   showConfirmButton : false, 
-							   timer: 2000  
-						}).then(function() {
-							window.location.href = 'login';
+						$.confirm({
+						    title: 'Message Alert!',
+						    content: 'Reset Your Password Complete',
+						    type: 'green',
+						    typeAnimated: true,
+						    buttons: {
+						        ok : {
+						            text: 'Try again',
+						            btnClass: 'btn-red',
+						            action: function(){
+						            	window.location.href = 'login';
+						            }
+						        }
+						    }
 						});
 					}
 				},
 				function(jqXHR, textStatus, errorThrown){
 					$('#formFirstLogin button[type="submit"]').prop("disabled",false);
-				});
+				}
+			);
             
 		});
 	}

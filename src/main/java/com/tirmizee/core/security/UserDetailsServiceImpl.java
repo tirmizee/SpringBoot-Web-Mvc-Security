@@ -17,6 +17,7 @@ import com.tirmizee.backend.dao.PermissionDao;
 import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.core.domain.Permission;
 import com.tirmizee.core.domain.UserDetail;
+import com.tirmizee.core.utilities.DateUtils;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
@@ -55,6 +56,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				.lastName(userDetail.getLastName())
 				.roleName(userDetail.getRoleName())
 				.isFirstLogin(userDetail.getFirstLogin())
+				.createDate(DateUtils.now())
 				.build();
 	}
 	

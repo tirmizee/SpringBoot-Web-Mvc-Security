@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<security:authentication var="profile" property="principal" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +24,8 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/datatables/css/responsive.dataTables.min.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/datatables/css/select.dataTables.min.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/waitme/css/waitMe.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/sweetalert2/css/sweetalert2.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/jquery-confirm/css/jquery-confirm.min.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/commons/fonts.css">
 	
   <script src="${pageContext.request.contextPath}/resources/libs/bootstrap/js/jquery-3.2.1.min.js" ></script>
@@ -40,6 +44,11 @@
   <script src="${pageContext.request.contextPath}/webjars/sockjs-client/sockjs.min.js"></script>
   <script src="${pageContext.request.contextPath}/webjars/stomp-websocket/stomp.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/libs/waitme/js/waitMe.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/libs/sweetalert2/js/sweetalert2.all.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/libs/jquery-confirm/js/jquery-confirm.min.js"></script>
+  <script>
+  	var uid = '${profile.username}';
+  </script>
   
 <title><spring:message code="app.name"/></title>
 </head> 

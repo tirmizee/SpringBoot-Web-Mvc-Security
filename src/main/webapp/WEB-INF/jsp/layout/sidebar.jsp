@@ -44,7 +44,9 @@
 					<security:authorize access="hasAnyAuthority('P002')">
 				   	<li><a href="${pageContext.request.contextPath}/manageuser"><i class="fa fa-users"></i>Manage Users</a></li>
 				   	</security:authorize>
+				   	<security:authorize access="hasAnyAuthority('P003')">
 				   	<li><a href="${pageContext.request.contextPath}/managesession"><i class="fa fa-users"></i>Manage Sessions</a></li>
+				   	</security:authorize>
 				</ul>
 			</li>
 			</security:authorize>

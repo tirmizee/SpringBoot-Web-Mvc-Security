@@ -68,6 +68,10 @@ var ManageUserModule = function(){
 			colReorder : {
 		        fixedColumnsLeft: 2
 		    }
+		}).on( 'mouseenter', 'tbody tr', function (){
+			  $(this).css({color: "#ff0000"});
+		}).on( 'mouseleave', 'tbody tr', function (){
+			  $(this).css({color: "black"});
 		});
 	}
 	

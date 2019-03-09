@@ -115,6 +115,11 @@ public class UserServiceImpl implements UserService {
 		Pageable pageable = RequestPageHelper.build(requestTable, UserDetailDTO.class);
 		Page<UserDetailDTO> page = userDao.findPageByCriteria(pageable, requestTable.getSerch());
 		return new ResponseTable<>(page);
+	}
+
+	@Override
+	public long countUses() {
+		return userDao.count();
 	} 
 	
 }

@@ -14,6 +14,7 @@ public class UserProfile extends UserDetailsImpl {
 	private String accessIp;
 	private boolean isFirstLogin;
 	private Date credentialsExpiredDate;
+	private java.util.Date createDate;
 	
 	public UserProfile(Builder builder) {
 		super(builder);
@@ -21,6 +22,7 @@ public class UserProfile extends UserDetailsImpl {
 		this.lastName = builder.lastName;
 		this.roleName = builder.roleName;
 		this.accessIp = builder.accessIp;
+		this.createDate = builder.createDate;
 		this.isFirstLogin = builder.isFirstLogin;
 		this.credentialsExpiredDate = builder.credentialsExpiredDate;
 	}
@@ -73,18 +75,26 @@ public class UserProfile extends UserDetailsImpl {
 		this.credentialsExpiredDate = credentialsExpiredDate;
 	}
 	
-	 @Override
-     public boolean equals(Object obj) {
-         if (obj instanceof UserDetails) {
-           return getUsername().equals(((UserDetails) obj).getUsername());
-         }
-         return false;
-     }
+	public java.util.Date getCreateDate() {
+		return createDate;
+	}
 
-     @Override
-     public int hashCode() {
-         return getUsername() != null ? getUsername().hashCode() : 0;
-     }
+	public void setCreateDate(java.util.Date createDate) {
+		this.createDate = createDate;
+	}
+
+	@Override
+    public boolean equals(Object obj) {
+		if (obj instanceof UserDetails) {
+			return getUsername().equals(((UserDetails) obj).getUsername());
+		}
+		return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return getUsername() != null ? getUsername().hashCode() : 0;
+    }
 	
 	public static class Builder extends UserDetailsImpl.Builder<Builder>{
 		
@@ -92,6 +102,7 @@ public class UserProfile extends UserDetailsImpl {
 		private String lastName;
 		private String roleName;
 		private String accessIp;
+		private java.util.Date createDate;
 		private boolean isFirstLogin;
 		private Date credentialsExpiredDate;
 		
@@ -114,6 +125,11 @@ public class UserProfile extends UserDetailsImpl {
 		
 		public Builder accessIp(String accessIp){
 			this.accessIp = accessIp;
+			return this;
+		}
+		
+		public Builder createDate(java.util.Date createDate){
+			this.createDate = createDate;
 			return this;
 		}
 		

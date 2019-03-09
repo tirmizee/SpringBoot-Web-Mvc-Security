@@ -9,7 +9,7 @@ var ManageSessionModule = function(){
 	
 	var handleDataTable = function() {
 		
-		var btnDelete = '<button data-btn-name="btnDelete" type="button" class="btn btn-danger" data-toggle="tooltip" title="Delete Member !"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
+		var btnDelete = '<a href="#" data-btn-name="btnDelete" data-toggle="tooltip" title="Delete Session !"><span class="fa fa-lg fa-remove text-danger" aria-hidden="true"></span></a>';
 		
 		DataTable = $('#TBSession').DataTable({
 			processing   : true,
@@ -20,12 +20,12 @@ var ManageSessionModule = function(){
 			data         : [],
 			columns: [
 				{ data : null          ,title : "Action" },
-				{ data : "sessionId"   ,title : "Session"},
-				{ data : "username"    ,title : "User Name"},
-				{ data : "firstName"   ,title : "Full Name"},
-				{ data : "roleName"    ,title : "Role Name"},
+				{ data : "username"    ,title : "Useruame"},
+				{ data : "firstName"   ,title : "Fullname"},
+				{ data : "roleName"    ,title : "Role"},
+				{ data : "createDate"  ,title : "Login Date"},
 				{ data : "accessIp"    ,title : "Access IP"},
-				{ data : null          ,title : "Status"}
+				{ data : "expired"     ,title : "Status"}
 			],
 			columnDefs: [
 				{
@@ -33,21 +33,29 @@ var ManageSessionModule = function(){
 					orderable : false,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
-						return btnDelete;
+						return (row.username == uid) ? "" : btnDelete;
 					}
 				},
 				{
-					targets   :3,
+					targets   : 2,
 					render    : function (data, type, row, meta) {
 						return row.firstName + ' ' + row.lastName;
 					}
 				},
 				{
-					targets   : 6,
-					orderable : false,
+					targets   : 4,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
-						return '<label class="text-success">Active</label>';
+						return new Date(data).toLocaleString();
+					}
+				},
+				{
+					targets   : 6,
+					className : "text-center",
+					render    : function (data, type, row, meta) {
+						var actice = '<label class="text-success">Session Active</label>';
+						var inActive = '<label class="text-danger">Session Expired</label>';
+						return !data ? actice : inActive;
 					}
 				}
 			],
@@ -57,14 +65,53 @@ var ManageSessionModule = function(){
 			colReorder : {
 		        fixedColumnsLeft: 1
 		    }
+		}).on('click', 'a[data-btn-name="btnDelete"]', function (event) {
+			
+			var data = DataTable.row($(this).parents('tr')).data();
+			
+			$.confirm({
+			    title: 'Confirm!',
+			    type: 'blue',
+			    content: 'Simple confirm!',
+			    buttons: {
+			        confirm: {
+			        	btnClass: 'btn-blue',
+			        	action: function(){
+			        		AjaxManager.GetData(null ,"api/session/removesession/" + data.username,
+			    				function(response){
+			        				loadData();
+			        				$.confirm({
+			        				    title: 'Meaages Alert!',
+			        				    content: 'Remove Session Complete',
+			        				    type: 'green',
+			        				    typeAnimated: true,
+			        				    buttons: {
+			        				        close: function () {
+			        				        	
+			        				        }
+			        				    }
+			        				});
+			    				},
+			    				function(jqXHR, textStatus, errorThrown){
+			    					$.alert('Error!');
+			    				}
+			    			);
+			            }
+			        },
+			        cancel: function () {}
+			    }
+			});
+			
 		});
 	}
 	
 	var loadData = function() {
+	
 		AjaxManager.PostData(null ,"api/session/alluserlogged",
 			function(response){
 				if (response) {
-					$('#SPCountUsers').text(response.length);
+					$('#SPCountUserActive').text(response.length);
+					DataTable.clear();
 					DataTable.rows.add(response);
 					DataTable.draw();
 				}
@@ -72,6 +119,17 @@ var ManageSessionModule = function(){
 			function(jqXHR, textStatus, errorThrown){
 				
 			});
+		
+		AjaxManager.GetData(null ,"api/user/count",
+			function(response){
+				if (response) {
+					$('#SPCountUsers').text(response);
+				}
+			},
+			function(jqXHR, textStatus, errorThrown){
+				
+			});
+	
 	}
 	
 	return {

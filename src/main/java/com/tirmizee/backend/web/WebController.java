@@ -47,6 +47,7 @@ public class WebController {
 		return "pages/P002_manage_user/P002_manage_user";
 	}
 	
+	@PreAuthorize("hasAnyAuthority('P003')")
 	@GetMapping(path = "/managesession")
 	public String manageSession(ModelMap model) {
 		return "pages/P003_manage_session/P003_manage_session";

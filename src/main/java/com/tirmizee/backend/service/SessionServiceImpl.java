@@ -3,6 +3,8 @@ package com.tirmizee.backend.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
@@ -14,6 +16,8 @@ import com.tirmizee.core.security.UserProfile;
 
 @Service
 public class SessionServiceImpl implements SessionService {
+	
+	public static final Logger LOG = Logger.getLogger(SessionServiceImpl.class);
 
 	@Autowired 
 	private PageMapper mapper;
@@ -35,9 +39,9 @@ public class SessionServiceImpl implements SessionService {
 		for (Object principal : principals) {
 			if (principal instanceof UserProfile) {
 				UserProfile profile = (UserProfile) principal;
-				List<SessionInformation> sessionInformations = sessionRegistry.getAllSessions(principal, false);
+				List<SessionInformation> sessionInfos = getAllSessionsByUsername(profile.getUsername());
 				UserLoggedDTO userLogged = mapper.map(profile, UserLoggedDTO.class);
-				userLogged.setSessionId(sessionInformations.get(0).getSessionId());
+				userLogged.setExpired(sessionInfos.isEmpty());
 				allUserLogged.add(userLogged);
 			}
 		}
@@ -45,9 +49,28 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public Object removeSession(String sessionId) {
-		sessionRegistry.removeSessionInformation(sessionId);
-		return null;
+	public void removeSession(String username) {
+		List<SessionInformation> sessionInformations = getAllSessionsByUsername(username);
+		SessionInformation sessionInformation = sessionInformations.get(0);
+		sessionInformation.expireNow();
+	}
+
+	@Override
+	public List<SessionInformation> getAllSessionsByUsername(String username) {
+		
+		List<SessionInformation> foundSession = null;
+		List<Object> principals = sessionRegistry.getAllPrincipals();
+		
+		for (Object principal : principals) {
+			if (principal instanceof UserProfile) {
+				UserProfile profile = (UserProfile) principal;
+				if (StringUtils.equals(username, profile.getUsername())) {
+					foundSession = sessionRegistry.getAllSessions(profile, false);
+					break;
+				}
+			}
+		}
+		return foundSession;
 	}
 
 }

@@ -22,11 +22,11 @@ public class ResponseTable<T> implements Serializable {
 	
 	public ResponseTable(Collection<T> datas){
 		data = datas;
-		recordsTotal =  (long) datas.size();
+		recordsTotal = (long) datas.size();
 		recordsFiltered = recordsTotal;
 	}
 	
-	public ResponseTable(long draw,Collection<T> datas) {
+	public ResponseTable(long draw, Collection<T> datas) {
 		this(datas);
 		this.draw = draw;
 	}

@@ -11,6 +11,8 @@ import com.tirmizee.core.datatable.ResponseTable;
 
 public interface UserService {
 	
+	long countUses();
+	
 	boolean isPasswordExpried(Date expriedDate);
 	
 	void fourcePasswordExpired(String username);
@@ -20,5 +22,6 @@ public interface UserService {
 	void changePasswordExpired(String username, ReqPasswordExpriedDTO passwordExpriedDTO);
 	
 	ResponseTable<UserDetailDTO> pagingTable(RequestTable<UserDetailCriteriaDTO> requestTable); 
+	
 	
 }

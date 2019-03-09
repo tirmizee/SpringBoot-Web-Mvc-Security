@@ -36,7 +36,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 			
 			// WHEN LOGIN
 			if (request.getRequestURI().contains("login")) {
-				STRATEGY.sendRedirect(request, response, "/login?error=CSRF Token timeout please try again");
+				STRATEGY.sendRedirect(request, response, "/login?error=CSRF Token Timeout Please Try Again");
 			} else {
 				STRATEGY.sendRedirect(request, response, "/accessdenied");
 			}

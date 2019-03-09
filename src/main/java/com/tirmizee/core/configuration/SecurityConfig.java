@@ -53,21 +53,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(13);
+		return new BCryptPasswordEncoder(11);
 	}
 	
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new UserDetailsServiceImpl(userDao, permissionDao);
-	}
-	
-	@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-	    DaoAuthenticationProvider authProvider = new AuthenticationProviderImpl();
-	    authProvider.setHideUserNotFoundExceptions(false);
-	    authProvider.setUserDetailsService(userDetailsService());
-	    authProvider.setPasswordEncoder(passwordEncoder());
-	    return authProvider;
 	}
 	
 	@Bean
@@ -80,6 +71,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
 	}
 
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+	    DaoAuthenticationProvider authProvider = new AuthenticationProviderImpl();
+	    authProvider.setHideUserNotFoundExceptions(false);
+	    authProvider.setUserDetailsService(userDetailsService());
+	    authProvider.setPasswordEncoder(passwordEncoder());
+	    return authProvider;
+	}
+	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/resources/**");
@@ -124,10 +124,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             	.deleteCookies("JSESSIONID")
                 .permitAll()
                 .and()
-            .sessionManagement()                         
+            .sessionManagement()     
+//            	.sessionAuthenticationStrategy(sessionAuthenticationStrategy)
                 .maximumSessions(1)                        
                 .maxSessionsPreventsLogin(false)
-				.expiredUrl("/login?error=This username being used by another")             
+				.expiredUrl("/login?error=Session Expried")             
 				.sessionRegistry(sessionRegistry());    
 	}
 
