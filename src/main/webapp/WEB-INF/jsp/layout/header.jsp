@@ -1,5 +1,8 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <security:authentication var="profile" property="principal" />
+<style>
+	#spLanguage { text-transform: uppercase;}
+</style>
 <header class="main-header">
     <a href="" class="logo">
         <span class="logo-mini"><b>T</b>MZ</span>
@@ -14,7 +17,7 @@
             	<li class="dropdown notifications-menu">
 				   <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 				   		<i class="fa fa-language " style="height: 20px;font-size:20px"></i>
-                        <span id="spLanguage" class="label label-warning">th</span>
+                        <span id="spLanguage" class="label label-warning">${pageContext.response.locale}</span>
 				   </a>
 				   <ul class="dropdown-menu">
 				      <li>

@@ -1,7 +1,10 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <%@ taglib uri="http://www.springframework.org/tags"          prefix="spring"%>
 <security:authentication var="profile" property="principal" />
-<aside class="main-sidebar">
+<style>
+	aside.main-sidebar {font-family: kanit-medium}
+</style>
+<aside class="main-sidebar" style="font-family: kanit-medium">
     <section class="sidebar">
         <div class="user-panel">
             <div class="pull-left image">
@@ -14,19 +17,19 @@
         </div>
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="menu-main"><a href="${pageContext.request.contextPath}/main"><i class="fa fa-book"></i> <span>Main</span></a></li>
+            <li class="menu-main"><a href="${pageContext.request.contextPath}/main"><i class="fa fa-book"></i> <span><spring:message code="app.menu.main"/></span></a></li>
         	<security:authorize access="hasAnyAuthority('P001')">
         	<li class="treeview-report">
 			    <a href="#">
 					<i class="fa fa-edit"></i> 
-					<span>Report</span>
+					<span><spring:message code="app.menu.report"/></span>
 			   		<span class="pull-right-container">
 			   			<i class="fa fa-angle-left pull-right"></i>
 			   		</span>
 			    </a>
 				<ul class="treeview-menu" style="display: none;">
 					<security:authorize access="hasAnyAuthority('P001')">
-				   	<li><a href="${pageContext.request.contextPath}/report"><i class="fa fa-pie-chart"></i>Chart</a></li>
+				   	<li><a href="${pageContext.request.contextPath}/report"><i class="fa fa-pie-chart"></i><spring:message code="app.menu.report.chart"/></a></li>
 					</security:authorize>
 				</ul>
 			</li>
@@ -35,17 +38,17 @@
 			<li class="treeview-setting">
 			    <a href="#">
 					<i class="fa fa-cog"></i> 
-					<span>Setting</span>
+					<span><spring:message code="app.menu.setting"/></span>
 			   		<span class="pull-right-container">
 			   			<i class="fa fa-angle-left pull-right"></i>
 			   		</span>
 			    </a>
 				<ul class="treeview-menu" style="display: none;">
 					<security:authorize access="hasAnyAuthority('P002')">
-				   	<li><a href="${pageContext.request.contextPath}/manageuser"><i class="fa fa-users"></i>Manage Users</a></li>
+				   	<li><a href="${pageContext.request.contextPath}/manageuser"><i class="fa fa-users"></i><spring:message code="app.menu.manageuser"/></a></li>
 				   	</security:authorize>
 				   	<security:authorize access="hasAnyAuthority('P003')">
-				   	<li><a href="${pageContext.request.contextPath}/managesession"><i class="fa fa-users"></i>Manage Sessions</a></li>
+				   	<li><a href="${pageContext.request.contextPath}/managesession"><i class="fa fa-users"></i><spring:message code="app.menu.managesession"/></a></li>
 				   	</security:authorize>
 				</ul>
 			</li>

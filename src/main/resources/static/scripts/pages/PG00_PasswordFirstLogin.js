@@ -49,7 +49,7 @@ var FirstLoginModule = function(){
 						    buttons: {
 						        ok : {
 						            text: 'Try again',
-						            btnClass: 'btn-red',
+						            btnClass: 'btn-green',
 						            action: function(){
 						            	window.location.href = 'login';
 						            }

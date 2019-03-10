@@ -11,7 +11,7 @@
         <div class="row">
         	<div class="col-md-3">
 	        	<div class="info-box bg-red">
-				    <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
+				    <span class="info-box-icon"><i class="ion ion-ios-people-outline"></i></span>
 				    <div class="info-box-content">
 				        <span class="info-box-text">All Users</span>
 				        <span id="SPCountUsers" class="info-box-number">0</span>
@@ -24,7 +24,7 @@
         	</div>
         	<div class="col-md-3">
         		<div class="info-box bg-green">
-				    <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
+				    <span class="info-box-icon"><i class="fa fa-user"></i></span>
 				    <div class="info-box-content">
 				        <span class="info-box-text">All Users Active</span>
 				        <span id="SPCountUserActive" class="info-box-number">0</span>
