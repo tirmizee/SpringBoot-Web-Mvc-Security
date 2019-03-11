@@ -5,6 +5,8 @@ import static com.tirmizee.core.constant.Constant.AppSetting.PASSWORD_CHANGE_DAY
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +20,7 @@ import com.tirmizee.backend.api.user.data.UserDetailDTO;
 import com.tirmizee.backend.dao.LogPasswordDao;
 import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.core.constant.MessageCode;
-import com.tirmizee.core.datatable.RequestPageHelper;
+import com.tirmizee.core.datatable.PageRequestHelper;
 import com.tirmizee.core.datatable.RequestTable;
 import com.tirmizee.core.datatable.ResponseTable;
 import com.tirmizee.core.domain.LogPassword;
@@ -29,6 +31,10 @@ import com.tirmizee.core.utilities.DateUtils;
 @Service
 public class UserServiceImpl implements UserService {
 
+	@Autowired
+	@Qualifier("taskExecutor")
+	private TaskExecutor task;
+	
 	@Autowired 
 	private UserDao userDao;
 	
@@ -48,19 +54,26 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void changePasswordFirstLogin(String username, ReqPasswordDTO passwordDTO) {
 		
-		final String passwordEncode = passwordEncoder.encode(passwordDTO.getConfirmPassword());
-		
 		User user = userDao.findByUsername(username);
+		
+		// VALIDATE THE PASSWORD MUST BE UNIQUE.
+		if (passwordEncoder.matches(passwordDTO.getConfirmPassword(), user.getPassword())) {
+			throw new BusinessException(MessageCode.MSG003);
+		}
+		
+		final String passwordEncode = passwordEncoder.encode(passwordDTO.getConfirmPassword());
 		user.setPassword(passwordEncode);
 		user.setUpdateDate(DateUtils.now());
 		user.setFirstLogin(false);
 		userDao.save(user);
 		
-		LogPassword logPassword = new LogPassword();
-		logPassword.setUsername(username);
-		logPassword.setPassword(passwordEncode);
-		logPassword.setCreateDate(DateUtils.now());
-		logPasswordDao.save(logPassword);
+		task.execute(() -> {
+			LogPassword logPassword = new LogPassword();
+			logPassword.setUsername(username);
+			logPassword.setPassword(passwordEncode);
+			logPassword.setCreateDate(DateUtils.now());
+			logPasswordDao.save(logPassword);
+		});
 		
 	}
 	
@@ -89,7 +102,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		// VALIDATE NEW PASSWORD MUST NOT BE LIKE OLD PASSWORD
-		if (logPasswordService.isFoundPassword(username, passwordExpriedDTO.getNewPasswordConfirm())) {
+		if (logPasswordService.isPasswordExists(username, passwordExpriedDTO.getNewPasswordConfirm())) {
 			throw new BusinessException(MessageCode.MSG002);
 		}
 		
@@ -112,7 +125,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public ResponseTable<UserDetailDTO> pagingTable(RequestTable<UserDetailCriteriaDTO> requestTable) {
-		Pageable pageable = RequestPageHelper.build(requestTable, UserDetailDTO.class);
+		Pageable pageable = PageRequestHelper.build(requestTable, UserDetailDTO.class);
 		Page<UserDetailDTO> page = userDao.findPageByCriteria(pageable, requestTable.getSerch());
 		return new ResponseTable<>(page);
 	}

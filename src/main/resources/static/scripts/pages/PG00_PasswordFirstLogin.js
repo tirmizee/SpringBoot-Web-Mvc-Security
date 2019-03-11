@@ -50,6 +50,7 @@ var FirstLoginModule = function(){
 						        ok : {
 						            text: 'Try again',
 						            btnClass: 'btn-green',
+						            closeIcon: true,
 						            action: function(){
 						            	window.location.href = 'login';
 						            }
@@ -59,7 +60,21 @@ var FirstLoginModule = function(){
 					}
 				},
 				function(jqXHR, textStatus, errorThrown){
+					var error = JSON.parse(jqXHR.responseText);
 					$('#formFirstLogin button[type="submit"]').prop("disabled",false);
+					$.confirm({
+					    title: 'Message Alert!' ,
+					    content: error.message ,
+					    type: 'red',
+					    typeAnimated: true ,
+					    closeIcon: true,
+					    closeIconClass: 'fa fa-close',
+					    buttons: {
+					        close: function () {	
+					        	
+					        }
+					    }
+					});
 				}
 			);
             

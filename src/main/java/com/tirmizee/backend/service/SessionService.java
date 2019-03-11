@@ -8,7 +8,11 @@ import com.tirmizee.backend.api.session.data.UserLoggedDTO;
 
 public interface SessionService {
 	
-	int countUserLogged();
+	int countSessions();
+	
+	int countSessionsActive();
+	
+	int countSessionsExpired();
 	
 	List<UserLoggedDTO> allUserLogged();
 	

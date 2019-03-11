@@ -19,9 +19,9 @@ public class LogPasswordServiceImpl implements LogPasswordService {
 	private PasswordEncoder passwordEncoder;
 	
 	@Override
-	public boolean isFoundPassword(String username, String password) {
-		List<LogPassword> passwords = logPasswordDao.findByUsername(username);
-		for (LogPassword logPassword : passwords) {
+	public boolean isPasswordExists(String username, String password) {
+		List<LogPassword> logPasswords = logPasswordDao.findByUsername(username);
+		for (LogPassword logPassword : logPasswords) {
 			if (passwordEncoder.matches(password, logPassword.getPassword())) {
 				return true;
 			}

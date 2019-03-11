@@ -18,6 +18,11 @@ import com.tirmizee.core.exception.FirstloginException;
 import com.tirmizee.core.exception.LimitBadCredentialsException;
 import com.tirmizee.core.exception.PasswordExpriedException;
 
+
+/**
+ * @author Pratya Yeekhaday
+ *
+ */
 public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 	
 	public static final Logger LOG = Logger.getLogger(AuthenticationProviderImpl.class);

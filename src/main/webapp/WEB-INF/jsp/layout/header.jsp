@@ -23,12 +23,12 @@
 				      <li>
 				         <ul class="menu">
 				            <li>
-				               <a href="#">
+				               <a href="?language=th">
 				               <i class="fa fa-shopping-cart text-green"></i> Thai
 				               </a>
 				            </li>
 				            <li>
-				               <a href="#">
+				               <a href="?language=en">
 				               <i class="fa fa-user text-red"></i> English
 				               </a>
 				            </li>

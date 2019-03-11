@@ -24,11 +24,6 @@ public class SessionServiceImpl implements SessionService {
 	
 	@Autowired
 	private SessionRegistry sessionRegistry;
-	
-	@Override
-	public int countUserLogged() {
-		return sessionRegistry.getAllPrincipals().size();
-	}
 
 	@Override
 	public List<UserLoggedDTO> allUserLogged() {
@@ -71,6 +66,43 @@ public class SessionServiceImpl implements SessionService {
 			}
 		}
 		return foundSession;
+	}
+	
+	@Override
+	public int countSessions() {
+		return sessionRegistry.getAllPrincipals().size();
+	}
+
+	@Override
+	public int countSessionsExpired() {
+		int count = 0;
+		List<Object> principals = sessionRegistry.getAllPrincipals();
+		for (Object principal : principals) {
+			if (principal instanceof UserProfile) {
+				UserProfile profile = (UserProfile) principal;
+				List<SessionInformation> sessionInfos = sessionRegistry.getAllSessions(profile, false);
+				if (sessionInfos.isEmpty()) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
+	@Override
+	public int countSessionsActive() {
+		int count = 0;
+		List<Object> principals = sessionRegistry.getAllPrincipals();
+		for (Object principal : principals) {
+			if (principal instanceof UserProfile) {
+				UserProfile profile = (UserProfile) principal;
+				List<SessionInformation> sessionInfos = sessionRegistry.getAllSessions(profile, false);
+				if (!sessionInfos.isEmpty()) {
+					count++;
+				}
+			}
+		}
+		return count;
 	}
 
 }

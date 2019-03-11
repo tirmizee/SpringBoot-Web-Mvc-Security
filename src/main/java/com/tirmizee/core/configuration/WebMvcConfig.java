@@ -2,6 +2,7 @@ package com.tirmizee.core.configuration;
 
 import java.util.Locale;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
@@ -13,6 +14,8 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
+	public static final Logger LOG = Logger.getLogger(WebMvcConfig.class);
+	
 	@Bean
 	public LocaleResolver localeResolver() {
 		CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
@@ -31,8 +34,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 			
 	    	@Override
 	    	protected Locale parseLocaleValue(String locale) {
-	    		String repairedLocel = locale.replaceAll("'", "");
-	    		if ("th".equalsIgnoreCase(repairedLocel)) {
+	    		String repairedLocale = locale.replaceAll("'", "");
+	    		if ("th".equalsIgnoreCase(repairedLocale)) {
 	    			return new Locale("th");
 	    		}
 	    		return Locale.ENGLISH;
