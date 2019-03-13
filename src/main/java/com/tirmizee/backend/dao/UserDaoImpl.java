@@ -126,4 +126,19 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 		return new PageImpl<>(content, pageable, total);
 	}
 
+	@Override
+	public User findByEmail(String email) {
+		try {
+			StringBuilder statemet = new StringBuilder()
+				.append(" SELECT ").append(TB_USERS).append(".*")
+				.append(" FROM ").append(TB_USERS)
+				.append(" INNER JOIN ").append(ProfileRepository.TB_PROFILE)
+					.append(" ON ").append(PROFILE_ID).append(" = ").append(ProfileRepository.PROFILE_ID)
+				.append(" WHERE ").append(ProfileRepository.EMAIL).append(" = ? ");
+			return getJdbcOps().queryForObject(statemet.toString(), params(email), ROW_MAPPER);
+		} catch(EmptyResultDataAccessException ex) {
+			return null;
+		}
+	}
+
 }

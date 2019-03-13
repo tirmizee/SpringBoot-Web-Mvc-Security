@@ -3,6 +3,7 @@ package com.tirmizee.backend.service;
 import static com.tirmizee.core.constant.Constant.AppSetting.PASSWORD_CHANGE_DAY;
 
 import java.sql.Date;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +20,7 @@ import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
 import com.tirmizee.backend.api.user.data.UserDetailDTO;
 import com.tirmizee.backend.dao.LogPasswordDao;
 import com.tirmizee.backend.dao.UserDao;
+import com.tirmizee.core.component.PasswordGenerator;
 import com.tirmizee.core.constant.MessageCode;
 import com.tirmizee.core.datatable.PageRequestHelper;
 import com.tirmizee.core.datatable.RequestTable;
@@ -49,6 +51,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired 
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired 
+	private ForgotPasswordService forgotPasswordService;
 
 	@Override
 	@Transactional
@@ -78,19 +83,6 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public boolean isPasswordExpried(Date expriedDate) {
-		return expriedDate == null ? false : DateUtils.now().after(expriedDate);
-	}
-
-	@Override
-	public void fourcePasswordExpired(String username) {
-		User user = userDao.findByUsername(username);
-		user.setCredentialsnonexpired(false);
-		user.setUpdateDate(DateUtils.now());
-		userDao.save(user);
-	}
-	
-	@Override
 	@Transactional
 	public void changePasswordExpired(String username, ReqPasswordExpriedDTO passwordExpriedDTO) {
 		
@@ -115,11 +107,13 @@ public class UserServiceImpl implements UserService {
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 		
-		LogPassword logPassword = new LogPassword();
-		logPassword.setUsername(username);
-		logPassword.setPassword(passwordEncode);
-		logPassword.setCreateDate(DateUtils.now());
-		logPasswordDao.save(logPassword);
+		task.execute(() -> {
+			LogPassword logPassword = new LogPassword();
+			logPassword.setUsername(username);
+			logPassword.setPassword(passwordEncode);
+			logPassword.setCreateDate(DateUtils.now());
+			logPasswordDao.save(logPassword);
+		});
 		
 	}
 
@@ -131,8 +125,35 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public boolean isPasswordExpried(Date expriedDate) {
+		return expriedDate == null ? false : DateUtils.now().after(expriedDate);
+	}
+
+	@Override
+	public void fourcePasswordExpired(String username) {
+		User user = userDao.findByUsername(username);
+		user.setCredentialsnonexpired(false);
+		user.setUpdateDate(DateUtils.now());
+		userDao.save(user);
+	}
+	
+	@Override
 	public long countUses() {
 		return userDao.count();
+	}
+
+	@Override
+	public void forgotPassword(String email) {
+		
+		// VALIDATE EMAIL IN SYSTEM
+		User user = userDao.findByEmail(email);
+		if (user == null) {
+			throw new BusinessException(MessageCode.MSG004);
+		}
+		
+		String token = forgotPasswordService.generateToken();
+		String url = forgotPasswordService.createUrlResetPassword(token);
+		
 	} 
 	
 }

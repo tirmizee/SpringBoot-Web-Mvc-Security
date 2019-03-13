@@ -20,6 +20,16 @@ public class WebController {
 		return "pages/login/login";
 	}
 	
+	@GetMapping(path = "forgotpassword")
+	public String forgotPassword(ModelMap model) {
+		return "pages/forgotpassword/forgotpassword";
+	}
+	
+	@GetMapping(path = "resetpassword")
+	public String resetPassword(ModelMap model) {
+		return "pages/resetpassword/resetpassword";
+	}
+	
 	@GetMapping(path = "/main")
 	public String main(ModelMap model) {
 		return "pages/P000_main/P000_main";

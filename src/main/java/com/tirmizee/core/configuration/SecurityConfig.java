@@ -25,6 +25,7 @@ import com.tirmizee.backend.dao.PermissionDao;
 import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.core.constant.PermissionCode;
 import com.tirmizee.core.security.AuthenticationProviderImpl;
+import com.tirmizee.core.security.CustomHttpSessionCsrfTokenRepository;
 import com.tirmizee.core.security.UserDetailsServiceImpl;
 
 /**
@@ -50,6 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired 
 	private AuthenticationSuccessHandler authenticationSuccessHandler;
+	
+	@Autowired 
+	private CustomHttpSessionCsrfTokenRepository customHttpSessionCsrfTokenRepository;
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -97,12 +101,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.accessDeniedHandler(accessDeniedHandler)
 				.and()
 			.csrf()
+				.csrfTokenRepository(customHttpSessionCsrfTokenRepository)
 				.ignoringAntMatchers("/logout")
 				.and()
 			.authorizeRequests()
 				.antMatchers(
 					"/",
-					"/login**"
+					"/login**",
+					"/forgotpassword",
+					"/api/user/forgotpassword"
 				).permitAll()
 				.antMatchers(
 					"/firstlogin",

@@ -15,6 +15,8 @@ public interface UserService {
 	
 	boolean isPasswordExpried(Date expriedDate);
 	
+	void forgotPassword(String email);
+	
 	void fourcePasswordExpired(String username);
 	
 	void changePasswordFirstLogin(String username, ReqPasswordDTO passwordDTO);

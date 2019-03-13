@@ -46,8 +46,10 @@ public class SessionServiceImpl implements SessionService {
 	@Override
 	public void removeSession(String username) {
 		List<SessionInformation> sessionInformations = getAllSessionsByUsername(username);
-		SessionInformation sessionInformation = sessionInformations.get(0);
-		sessionInformation.expireNow();
+		if (!sessionInformations.isEmpty()) {
+			SessionInformation sessionInformation = sessionInformations.get(0);
+			sessionInformation.expireNow();
+		}
 	}
 
 	@Override

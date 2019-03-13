@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import com.tirmizee.backend.api.user.data.ReqForgotPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
@@ -43,6 +44,12 @@ public class ApiUserController {
 	public MessageSuccess changePasswordExpried(@RequestBody @Valid ReqPasswordExpriedDTO passwordExpriedDTO) {
 		final String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		userService.changePasswordExpired(username, passwordExpriedDTO);
+		return new MessageSuccess();
+	}
+	
+	@PostMapping(path = "/forgotpassword")
+	public MessageSuccess forgotPassword(@RequestBody @Valid ReqForgotPasswordDTO forgotPasswordDTO) {
+		userService.forgotPassword(forgotPasswordDTO.getEmail());
 		return new MessageSuccess();
 	}
 	
