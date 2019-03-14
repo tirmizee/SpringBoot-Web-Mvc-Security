@@ -2,6 +2,7 @@ package com.tirmizee.core.utilities;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public final class DateUtils {
@@ -17,6 +18,11 @@ public final class DateUtils {
 	public static java.sql.Date plusDays(int day){
 		LocalDate localDateNow = LocalDate.now().plusDays(day);
 		return java.sql.Date.valueOf(localDateNow);
+	}
+	
+	public static Timestamp plusMinutes(int minutes){
+		LocalDateTime localDateNow = LocalDateTime.now().plusMinutes(minutes);
+		return Timestamp.valueOf(localDateNow);
 	}
 	
 }

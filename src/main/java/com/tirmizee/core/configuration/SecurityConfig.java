@@ -108,6 +108,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(
 					"/",
 					"/login**",
+					"/resetpassword",
 					"/forgotpassword",
 					"/api/user/forgotpassword"
 				).permitAll()

@@ -22,7 +22,7 @@ public class ApplicationInitializer extends SpringBootServletInitializer {
 	public TaskExecutor taskExecutor() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		executor.setCorePoolSize(10);
-		executor.setMaxPoolSize(10);
+		executor.setMaxPoolSize(20);
 		return executor;
 	}
 	

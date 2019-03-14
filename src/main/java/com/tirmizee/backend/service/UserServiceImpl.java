@@ -3,7 +3,8 @@ package com.tirmizee.backend.service;
 import static com.tirmizee.core.constant.Constant.AppSetting.PASSWORD_CHANGE_DAY;
 
 import java.sql.Date;
-import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,13 +19,14 @@ import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
 import com.tirmizee.backend.api.user.data.UserDetailDTO;
+import com.tirmizee.backend.dao.ForgotPasswordDao;
 import com.tirmizee.backend.dao.LogPasswordDao;
 import com.tirmizee.backend.dao.UserDao;
-import com.tirmizee.core.component.PasswordGenerator;
 import com.tirmizee.core.constant.MessageCode;
 import com.tirmizee.core.datatable.PageRequestHelper;
 import com.tirmizee.core.datatable.RequestTable;
 import com.tirmizee.core.datatable.ResponseTable;
+import com.tirmizee.core.domain.ForgotPassword;
 import com.tirmizee.core.domain.LogPassword;
 import com.tirmizee.core.domain.User;
 import com.tirmizee.core.exception.BusinessException;
@@ -37,11 +39,17 @@ public class UserServiceImpl implements UserService {
 	@Qualifier("taskExecutor")
 	private TaskExecutor task;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	@Autowired 
 	private UserDao userDao;
 	
 	@Autowired 
 	private LogPasswordDao logPasswordDao;
+	
+	@Autowired 
+	private ForgotPasswordDao forgotPasswordDao;
 	
 	@Autowired 
 	private LogPasswordService logPasswordService;
@@ -54,6 +62,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired 
 	private ForgotPasswordService forgotPasswordService;
+	
+	@Autowired 
+	private HttpServletRequest request;
 
 	@Override
 	@Transactional
@@ -143,16 +154,30 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void forgotPassword(String email) {
 		
-		// VALIDATE EMAIL IN SYSTEM
 		User user = userDao.findByEmail(email);
 		if (user == null) {
 			throw new BusinessException(MessageCode.MSG004);
 		}
 		
+		String accessIp = request.getRemoteAddr();
 		String token = forgotPasswordService.generateToken();
 		String url = forgotPasswordService.createUrlResetPassword(token);
+		
+		ForgotPassword forgotPassword = new ForgotPassword();
+		forgotPassword.setUsername(user.getUsername());
+		forgotPassword.setEmail(email);
+		forgotPassword.setToken(token);
+		forgotPassword.setAccessIp(accessIp);
+		forgotPassword.setExpiredDate(DateUtils.plusMinutes(15));
+		forgotPassword.setCreateDate(DateUtils.nowTimestamp());
+		forgotPasswordDao.save(forgotPassword);
+		
+		task.execute(() -> {
+			emailService.sendMailForgotPassword(email, url);
+		});
 		
 	} 
 	

@@ -13,6 +13,7 @@ public class ForgotPassword implements Persistable<Integer> {
 	private String token;
 	private Timestamp updateDate;
 	private Timestamp createDate;
+	private Timestamp expiredDate;
 	private String email;
 	private String accessIp;
 	
@@ -78,4 +79,12 @@ public class ForgotPassword implements Persistable<Integer> {
 		this.id = id;
 	}
 
+	public Timestamp getExpiredDate() {
+		return expiredDate;
+	}
+
+	public void setExpiredDate(Timestamp expiredDate) {
+		this.expiredDate = expiredDate;
+	}
+	
 }

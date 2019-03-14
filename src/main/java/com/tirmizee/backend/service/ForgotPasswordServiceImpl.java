@@ -16,10 +16,10 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 	private HttpServletRequest request;
 	
 	@Override
-	public boolean isTokenExpired(String token) {
+	public boolean isTokenExpired(String token, boolean includeTokenNull) {
 		return false;
 	}
-
+	
 	@Override
 	public String generateToken() {
 		return UUID.randomUUID().toString() + "-" + PasswordGenerator.generate(20);

@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -20,13 +21,13 @@ public class WebController {
 		return "pages/login/login";
 	}
 	
-	@GetMapping(path = "forgotpassword")
+	@GetMapping(path = "/forgotpassword")
 	public String forgotPassword(ModelMap model) {
 		return "pages/forgotpassword/forgotpassword";
 	}
 	
-	@GetMapping(path = "resetpassword")
-	public String resetPassword(ModelMap model) {
+	@GetMapping(path = "/resetpassword/{token}")
+	public String resetPassword(@PathVariable String token, ModelMap model) {
 		return "pages/resetpassword/resetpassword";
 	}
 	
