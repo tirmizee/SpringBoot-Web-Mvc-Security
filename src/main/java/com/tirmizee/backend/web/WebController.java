@@ -1,6 +1,7 @@
 package com.tirmizee.backend.web;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -8,10 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.tirmizee.backend.service.ForgotPasswordService;
+
 @Controller
 public class WebController {
 
 	public static final Logger LOG = Logger.getLogger(WebController.class);
+	
+	@Autowired
+	private ForgotPasswordService forgotPasswordService;
 	
 	@GetMapping(path = {"/","/login"})
 	public String login(@RequestParam(required = false) String error, ModelMap model) {
@@ -28,6 +34,7 @@ public class WebController {
 	
 	@GetMapping(path = "/resetpassword/{token}")
 	public String resetPassword(@PathVariable String token, ModelMap model) {
+		forgotPasswordService.validateToken(token);
 		return "pages/resetpassword/resetpassword";
 	}
 	

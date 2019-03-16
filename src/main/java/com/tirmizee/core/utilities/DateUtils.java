@@ -25,4 +25,8 @@ public final class DateUtils {
 		return Timestamp.valueOf(localDateNow);
 	}
 	
+	public static boolean nowAfter(Timestamp time){
+		return nowTimestamp().after(time);
+	}
+	
 }

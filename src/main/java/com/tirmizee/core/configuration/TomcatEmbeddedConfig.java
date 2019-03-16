@@ -61,7 +61,7 @@ public class TomcatEmbeddedConfig {
 	}
 	
 	@Bean
-	@Profile(Constant.Profiles.UAT)
+	@Profile(Constant.Profiles.PRODUCTION)
 	public TomcatEmbeddedServletContainerFactory TomcatEmbeddedContainerPro() {
 		return new TomcatEmbeddedServletContainerFactory() {
 			@Override

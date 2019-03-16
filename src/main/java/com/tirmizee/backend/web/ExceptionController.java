@@ -5,15 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.tirmizee.backend.web.data.MessageError;
 import com.tirmizee.core.component.VarargMessageSource;
 import com.tirmizee.core.exception.BusinessException;
+import com.tirmizee.core.exception.UrlNotFoundException;
 
 @ControllerAdvice
-public class WebExceptionController {
+public class ExceptionController {
 	
-	public final Logger LOG = Logger.getLogger(WebExceptionController.class);
+	public final Logger LOG = Logger.getLogger(ExceptionController.class);
 	
 	@Autowired
 	private VarargMessageSource messageSource;
@@ -26,6 +29,16 @@ public class WebExceptionController {
 		messageError.setMessage(message);
 		messageError.setStatus(ex.getStatus());
 		return new ResponseEntity<>(messageError, ex.getStatus());
+	}
+	
+	@ExceptionHandler(NoHandlerFoundException.class)
+	public ModelAndView handleNotFoundException(NoHandlerFoundException ex){
+		return new ModelAndView("redirect:/NotFound");
+	}
+	
+	@ExceptionHandler(UrlNotFoundException.class)
+	public ModelAndView handleNotFoundUrlNotFoundException(UrlNotFoundException ex){
+		return new ModelAndView("redirect:/NotFound");
 	}
 
 }

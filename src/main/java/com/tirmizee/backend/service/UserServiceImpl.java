@@ -22,6 +22,8 @@ import com.tirmizee.backend.api.user.data.UserDetailDTO;
 import com.tirmizee.backend.dao.ForgotPasswordDao;
 import com.tirmizee.backend.dao.LogPasswordDao;
 import com.tirmizee.backend.dao.UserDao;
+import com.tirmizee.backend.service.data.ForgotPasswordModel;
+import com.tirmizee.core.component.PageMapper;
 import com.tirmizee.core.constant.MessageCode;
 import com.tirmizee.core.datatable.PageRequestHelper;
 import com.tirmizee.core.datatable.RequestTable;
@@ -65,6 +67,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired 
 	private HttpServletRequest request;
+	
+	@Autowired 
+	private PageMapper mapper;
 
 	@Override
 	@Transactional
@@ -176,7 +181,9 @@ public class UserServiceImpl implements UserService {
 		forgotPasswordDao.save(forgotPassword);
 		
 		task.execute(() -> {
-			emailService.sendMailForgotPassword(email, url);
+			ForgotPasswordModel passwordModel = mapper.map(forgotPassword, ForgotPasswordModel.class);
+			passwordModel.setUrl(url);
+			emailService.sendMailForgotPassword(passwordModel);
 		});
 		
 	} 

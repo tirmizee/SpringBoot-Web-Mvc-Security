@@ -1,7 +1,9 @@
 package com.tirmizee.backend.service;
 
+import com.tirmizee.backend.service.data.ForgotPasswordModel;
+
 public interface EmailService {
 	
-	void sendMailForgotPassword(String email, String url);
+	void sendMailForgotPassword(ForgotPasswordModel forgotPasswordModel);
 
 }

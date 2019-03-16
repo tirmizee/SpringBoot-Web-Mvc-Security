@@ -29,6 +29,4 @@ public class LogPasswordServiceImpl implements LogPasswordService {
 		return false;
 	}
 
-	
-	
 }

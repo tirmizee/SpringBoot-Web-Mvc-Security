@@ -22,7 +22,7 @@ public class WebErrorController {
 	
 	@GetMapping(value = "/NotFound")
 	@ResponseStatus(code = HttpStatus.NOT_FOUND)
-	public String notFound(ModelMap model, @RequestParam String RequestURL) {
+	public String notFound(ModelMap model, @RequestParam(required = false) String RequestURL) {
 		LOGGER.debug("/NotFound");
 		model.addAttribute("RequestURL", RequestURL);
 		return "error/404";

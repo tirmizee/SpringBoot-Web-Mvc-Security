@@ -6,6 +6,10 @@ public interface ForgotPasswordService {
 	
 	String createUrlResetPassword(String token);
 	
-	boolean isTokenExpired(String token, boolean includeTokenNull);
+	boolean isTokenExpired(String token);
+	
+	boolean isTokenExists(String token);
+	
+	void validateToken(String token);
 	
 }
