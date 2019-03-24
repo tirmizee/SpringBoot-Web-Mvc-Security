@@ -18,6 +18,10 @@ import org.springframework.data.domain.Sort.Order;
  */
 public class PageRequestHelper {
 	
+	public static  PageRequest of(int page, int size){
+		return new PageRequest(page, size);
+	}
+	
 	public static  PageRequest build(RequestTable<?> requestData,Class<?> clazz){
 		int page = (int) (requestData.getStart()/requestData.getLength()),
 			size = (int) requestData.getLength();

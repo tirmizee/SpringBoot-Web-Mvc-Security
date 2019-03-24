@@ -14,9 +14,9 @@ public interface SessionService {
 	
 	int countSessionsExpired();
 	
-	List<UserLoggedDTO> allUserLogged();
-	
 	void removeSession(String username);
+	
+	List<UserLoggedDTO> allUserLogged();
 	
 	List<SessionInformation> getAllSessionsByUsername(String username);
 	
