@@ -28,41 +28,26 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 	}
 
 	@Override
-	public String createUrlResetPassword(String token) {
-		String urlFormat = "%s://%s:%d%s";
+	public String createURLResetPassword(Long uid, String token) {
+		String urlFormat = "%s://%s:%d%s/resetpassword/%s/%s";
 		String scheme = request.getScheme();
 		String serverName = request.getServerName();
 		String path = request.getContextPath();
 		int port = request.getServerPort();
-		String url = String.format(urlFormat, scheme, serverName, port, path);
-		return url + "/resetpassword/" + token;
+		return String.format(urlFormat, scheme, serverName, port, path, uid, token);
 	}
 
 	@Override
-	public boolean isTokenExists(String token) {
-		return forgotPasswordDao.findByToken(token) != null;
-	}
-	
-	@Override
-	public boolean isTokenExpired(String token) {
-		ForgotPassword forgotPassword = forgotPasswordDao.findByToken(token);
-		if (forgotPassword != null) {
-			return DateUtils.nowAfter(forgotPassword.getExpiredDate());
-		}
-		return false;
-	}
-
-	@Override
-	public void validateToken(String token) {
+	public void validatePasswordResetToken(Long uid, String token) {
 		
-		ForgotPassword forgotPassword = forgotPasswordDao.findByToken(token);
+		ForgotPassword forgotPassword = forgotPasswordDao.findByUserIdAndToken(uid, token);
 		
 		// VALIDATE TOKEN IS EXISTS
 		if (forgotPassword == null) {
 			throw new UrlNotFoundException(); 
 		}
 		
-		// VALIDATE TOKEN IS EXPIRED
+		// VALIDATE TOKEN HAS EXPIRED
 		if (DateUtils.nowAfter(forgotPassword.getExpiredDate())) {
 			throw new UrlNotFoundException(); 
 		}

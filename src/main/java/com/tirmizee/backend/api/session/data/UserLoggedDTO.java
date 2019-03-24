@@ -3,6 +3,8 @@ package com.tirmizee.backend.api.session.data;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class UserLoggedDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -12,7 +14,10 @@ public class UserLoggedDTO implements Serializable {
 	private String lastName;
 	private String roleName;
 	private String accessIp;
+	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date createDate;
+	
 	private boolean expired ;
 	
 	public String getUsername() {

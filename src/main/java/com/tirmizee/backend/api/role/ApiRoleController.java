@@ -26,7 +26,7 @@ public class ApiRoleController {
 		DeferredResult<Page<RoleDTO>> deferredResult = new DeferredResult<>(60000L);
 		ForkJoinPool.commonPool().submit(()->{
 			try {
-				Page<RoleDTO> result = roleService.buildPageByTerm(searchTerm);
+				Page<RoleDTO> result = roleService.generatePageByTerm(searchTerm);
 				deferredResult.setResult(result);
 			} catch (Exception ex) {
 				deferredResult.setErrorResult(ex);

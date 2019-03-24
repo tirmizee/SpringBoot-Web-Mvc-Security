@@ -116,6 +116,11 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 			params.add("%" + StringUtils.trimToEmpty(search.getEmail()) + "%");
 		}
 		
+		if (search.getRoleId() != null) {
+			statement.append(" AND ").append(RoleRepository.ROLE_ID).append(" = ? ");
+			params.add(search.getRoleId());
+		}
+		
 		String statementPage = getSqlGenerator().selectAll(statement, pageable);
 		List<UserDetailDTO> content = getJdbcOps().query(
 			statementPage.toString(), 

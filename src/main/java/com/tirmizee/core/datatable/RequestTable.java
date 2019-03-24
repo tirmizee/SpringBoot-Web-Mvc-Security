@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 
- * @author pratya yeekhaday
+ * @author Pratya Yeekhaday
  * 
  * @param <T> search criteria
  * @see https://datatables.net/manual/server-side

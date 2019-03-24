@@ -5,6 +5,6 @@ import com.tirmizee.core.repository.ForgotPasswordRepository;
 
 public interface ForgotPasswordDao extends ForgotPasswordRepository {
 
-	ForgotPassword findByToken(String token);
+	ForgotPassword findByUserIdAndToken(Long uid, String token);
 	
 }

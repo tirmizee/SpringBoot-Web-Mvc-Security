@@ -46,4 +46,16 @@ public class RoleMapPermissionRepositoryImpl extends AbstractOracleJdbcRepositor
 		super(ROW_MAPPER, ROW_UNMAPPER, new TableDescription(tableName, null, COL_PER_ID,COL_PER_ID));
 	}
 
+	@Override
+	protected <S extends RoleMapPermission> S postUpdate(S entity) {
+		entity.withPersisted(true);
+		return entity;
+	}
+
+	@Override
+	protected <S extends RoleMapPermission> S postCreate(S entity, Number generatedId) {
+		entity.withPersisted(true);
+		return entity;
+	}
+	
 }

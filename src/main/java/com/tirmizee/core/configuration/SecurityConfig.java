@@ -108,12 +108,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(
 					"/",
 					"/login**",
-					"/resetpassword/*",
-					"/accessdenied",
 					"/NotFound",
+					"/accessdenied",
 					"/ServerError",
 					"/forgotpassword",
-					"/api/user/forgotpassword"
+					"/resetpassword/**",
+					"/api/user/password/forgot",
+					"/api/user/password/reset"
 				).permitAll()
 				.antMatchers(
 					"/firstlogin",
@@ -121,7 +122,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				).hasAuthority(PermissionCode.PG00)
 				.antMatchers(
 					"/passwordexpried"
-					).hasAuthority(PermissionCode.PG01)
+				).hasAuthority(PermissionCode.PG01)
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()

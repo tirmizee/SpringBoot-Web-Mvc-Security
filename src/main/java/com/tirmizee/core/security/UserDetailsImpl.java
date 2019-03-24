@@ -8,7 +8,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * @author pratya yeekhday
+ * @author Pratya Yeekhday
  *
  */
 public class UserDetailsImpl implements UserDetails {

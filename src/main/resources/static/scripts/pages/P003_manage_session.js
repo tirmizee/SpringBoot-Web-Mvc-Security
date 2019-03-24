@@ -44,17 +44,14 @@ var ManageSessionModule = function(){
 				},
 				{
 					targets   : 4,
-					className : "text-center",
-					render    : function (data, type, row, meta) {
-						return new Date(data).toLocaleString();
-					}
+					className : "text-center"
 				},
 				{
 					targets   : 6,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
-						var actice = '<label class="text-success">Session Active</label>';
-						var inActive = '<label class="text-danger">Session Expired</label>';
+						var actice = '<span class="label label-success">Session Active</span>';
+						var inActive = '<span class="label label-danger">Session Expired</span>';
 						return !data ? actice : inActive;
 					}
 				}

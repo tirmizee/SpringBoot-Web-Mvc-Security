@@ -1,5 +1,7 @@
 package com.tirmizee.backend.web;
 
+import javax.servlet.ServletContext;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +19,9 @@ public class WebController {
 	public static final Logger LOG = Logger.getLogger(WebController.class);
 	
 	@Autowired
+	private ServletContext servletContext;
+	
+	@Autowired
 	private ForgotPasswordService forgotPasswordService;
 	
 	@GetMapping(path = {"/","/login"})
@@ -32,9 +37,11 @@ public class WebController {
 		return "pages/forgotpassword/forgotpassword";
 	}
 	
-	@GetMapping(path = "/resetpassword/{token}")
-	public String resetPassword(@PathVariable String token, ModelMap model) {
-		forgotPasswordService.validateToken(token);
+	@GetMapping(path = "/resetpassword/{uid}/{token}")
+	public String resetPassword(@PathVariable Long uid, @PathVariable String token, ModelMap model) {
+		forgotPasswordService.validatePasswordResetToken(uid, token);
+		model.addAttribute("uid", uid);
+		model.addAttribute("token", token);
 		return "pages/resetpassword/resetpassword";
 	}
 	
@@ -69,6 +76,12 @@ public class WebController {
 	@GetMapping(path = "/managesession")
 	public String manageSession(ModelMap model) {
 		return "pages/P003_manage_session/P003_manage_session";
+	}
+	
+	@PreAuthorize("hasAnyAuthority('P004')")
+	@GetMapping(path = "/log")
+	public String log(ModelMap model) {
+		return "pages/P004_logfile/P004_logfile";
 	}
 	
 }

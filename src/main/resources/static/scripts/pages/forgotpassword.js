@@ -21,15 +21,29 @@ var ForgotPasswordModule = function(){
             	email : $('input[name="email"]').val()
             };
             
-            AjaxManager.PostData(ReqForgotPassword, "api/user/forgotpassword",
+            AjaxManager.PostData(ReqForgotPassword, "api/user/password/forgot",
 				function(response){
-
+	            	$.confirm({
+					    title: 'Message Alert!',
+					    content: 'The system has received the request. Please check the email.',
+					    type: 'green',
+					    typeAnimated: true,
+					    buttons: {
+					        ok : {
+					            text: 'OK',
+					            btnClass: 'btn-green',
+					            closeIcon: true,
+					            action: function(){
+					            	window.location.href = 'login';
+					            }
+					        }
+					    }
+					});
             	},
-				function(jqXHR, textStatus, errorThrown){
-
+            	function(jqXHR, textStatus, errorThrown){
+            		$('#formForgotPassword button[type="submit"]').prop("disabled",false);
             	}
 			);
-            
 		});
 	}
 	

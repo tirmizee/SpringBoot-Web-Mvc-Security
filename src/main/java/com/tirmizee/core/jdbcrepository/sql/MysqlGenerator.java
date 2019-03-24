@@ -15,6 +15,9 @@ public class MysqlGenerator extends AbstractSqlGenerator {
 
 	public static final String PRODUCT_NAME = "MySQL";
 	
+	public static String LIMIT_OFFSET_WRAPPER = "%s LIMIT %d OFFSET %d";
+	
+	
 	@Override
 	public boolean isCompatible(DatabaseMetaData metadata) throws SQLException {
 		return PRODUCT_NAME.equalsIgnoreCase(metadata.getDatabaseProductName());
@@ -28,8 +31,7 @@ public class MysqlGenerator extends AbstractSqlGenerator {
 	
 	@Override
 	public String selectAll(StringBuilder statement, Pageable page) {
-		return selectAll(statement, page.getSort()) + 
-			   format(" LIMIT %d OFFSET %d",page.getPageSize(), page.getOffset());
+		return format(LIMIT_OFFSET_WRAPPER, selectAll(statement, page.getSort()), page.getPageSize(), page.getOffset());
 	}
 	
 	@Override

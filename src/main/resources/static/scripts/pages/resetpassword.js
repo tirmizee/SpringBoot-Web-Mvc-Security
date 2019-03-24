@@ -1,15 +1,25 @@
 var ResetPasswordModule = function(){
 	
-	var handleFormForgotPassword = function(){
-		$('#formForgotPassword').bootstrapValidator({
+	var handleFormResetPassword = function(){
+		$('#formResetPassword').bootstrapValidator({
 	        fields: {
-	            email: {
+	        	password: {
 	                validators: {
 	                    notEmpty: {
-	                        message: 'The username is required'
+	                        message: 'The password is required'
 	                    },
-	                    emailAddress: {
-	                    	 message: 'The input is not a valid email address'
+	                    stringLength: {
+	                        min: 6,
+	                        max: 30,
+	                        message: 'The password must be more than 6 and less than 30'
+	                    }
+	                }
+	            },
+	            confirmPassword : {
+	                validators: {
+	                    identical: {
+	                        field: 'password',
+	                        message: 'The password and its confirm are not the same'
 	                    }
 	                }
 	            }
@@ -17,19 +27,50 @@ var ResetPasswordModule = function(){
 		}).on('success.form.bv', function(e) {
             e.preventDefault();
             
-            var ReqForgotPassword = {
-            	email : $('input[name="email"]').val()
+            var reqPasswordResetToken = {
+            	uid             : parseInt($('input[name="uid"]').val()),
+            	token           : $('input[name="token"]').val(),
+            	password        : $('input[name="password"]').val(),
+            	confirmPassword : $('input[name="passwordConfirm"]').val()
             };
-            
-            AjaxManager.PostData(ReqForgotPassword, "api/user/forgotpassword",
+           
+            AjaxManager.PostData(reqPasswordResetToken, "../../api/user/password/reset",
 				function(response){
-
+	            	$.confirm({
+					    title: 'Message Alert!',
+					    content: response.messageName,
+					    type: 'green',
+					    typeAnimated: true,
+					    buttons: {
+					        ok : {
+					            text: 'OK',
+					            btnClass: 'btn-green',
+					            closeIcon: true,
+					            action: function(){
+					            	window.location.href = '../../login';
+					            }
+					        }
+					    }
+					});
             	},
 				function(jqXHR, textStatus, errorThrown){
-
+            		var error = JSON.parse(jqXHR.responseText);
+					$('#formResetPassword button[type="submit"]').prop("disabled",false);
+					$.confirm({
+					    title: 'Message Alert!' ,
+					    content: error.message ,
+					    type: 'red',
+					    typeAnimated: true ,
+					    closeIcon: true,
+					    closeIconClass: 'fa fa-close',
+					    buttons: {
+					        close: function () {	
+					        	
+					        }
+					    }
+					});
             	}
 			);
-            
 		});
 	}
 	

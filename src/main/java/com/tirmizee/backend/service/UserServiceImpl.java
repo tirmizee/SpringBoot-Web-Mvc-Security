@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
+import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
 import com.tirmizee.backend.api.user.data.UserDetailDTO;
 import com.tirmizee.backend.dao.ForgotPasswordDao;
@@ -41,6 +42,12 @@ public class UserServiceImpl implements UserService {
 	@Qualifier("taskExecutor")
 	private TaskExecutor task;
 	
+	@Autowired 
+	private PageMapper mapper;
+	
+	@Autowired 
+	private HttpServletRequest request;
+	
 	@Autowired
 	private EmailService emailService;
 	
@@ -54,6 +61,9 @@ public class UserServiceImpl implements UserService {
 	private ForgotPasswordDao forgotPasswordDao;
 	
 	@Autowired 
+	private ForgotPasswordService forgotPasswordService;
+	
+	@Autowired 
 	private LogPasswordService logPasswordService;
 
 	@Autowired
@@ -62,15 +72,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired 
 	private PasswordEncoder passwordEncoder;
 	
-	@Autowired 
-	private ForgotPasswordService forgotPasswordService;
-	
-	@Autowired 
-	private HttpServletRequest request;
-	
-	@Autowired 
-	private PageMapper mapper;
-
 	@Override
 	@Transactional
 	public void changePasswordFirstLogin(String username, ReqPasswordDTO passwordDTO) {
@@ -169,22 +170,47 @@ public class UserServiceImpl implements UserService {
 		
 		String accessIp = request.getRemoteAddr();
 		String token = forgotPasswordService.generateToken();
-		String url = forgotPasswordService.createUrlResetPassword(token);
+		String url = forgotPasswordService.createURLResetPassword(user.getId(),token);
 		
 		ForgotPassword forgotPassword = new ForgotPassword();
-		forgotPassword.setUsername(user.getUsername());
+		forgotPassword.setUserId(user.getId());
 		forgotPassword.setEmail(email);
 		forgotPassword.setToken(token);
 		forgotPassword.setAccessIp(accessIp);
 		forgotPassword.setExpiredDate(DateUtils.plusMinutes(15));
 		forgotPassword.setCreateDate(DateUtils.nowTimestamp());
+		forgotPassword.setReset(false);
 		forgotPasswordDao.save(forgotPassword);
 		
 		task.execute(() -> {
 			ForgotPasswordModel passwordModel = mapper.map(forgotPassword, ForgotPasswordModel.class);
+			passwordModel.setTitle("Forgot Password");
 			passwordModel.setUrl(url);
+			passwordModel.setUsername(user.getUsername());
 			emailService.sendMailForgotPassword(passwordModel);
 		});
+		
+	}
+
+	@Override
+	@Transactional
+	public void resetPassword(ReqPasswordResetTokenDTO passwordResetTokenDTO) {
+		
+		Long uid = passwordResetTokenDTO.getUid();
+		String token = passwordResetTokenDTO.getToken();
+		
+		ForgotPassword forgotPassword = forgotPasswordDao.findByUserIdAndToken(uid, token);
+		if (forgotPassword == null) {
+			throw new BusinessException(MessageCode.MSG005);
+		}
+		
+		User user = userDao.findOne(uid);
+		user.setPassword(passwordEncoder.encode(passwordResetTokenDTO.getConfirmPassword()));
+		user.setUpdateDate(DateUtils.now());
+		userDao.save(user);
+		
+		forgotPassword.setReset(true);
+		forgotPasswordDao.save(forgotPassword);
 		
 	} 
 	

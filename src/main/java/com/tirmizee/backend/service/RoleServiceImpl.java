@@ -18,7 +18,7 @@ public class RoleServiceImpl implements RoleService {
 	private RoleDao roleDao;
 	
 	@Override
-	public Page<RoleDTO> buildPageByTerm(SearchTermDTO searchTerm) {
+	public Page<RoleDTO> generatePageByTerm(SearchTermDTO searchTerm) {
 		Integer page = ObjectUtils.defaultIfNull(searchTerm.getPage(), 0),
 				size = ObjectUtils.defaultIfNull(searchTerm.getSize(), 20);
 		Pageable pageable = new PageRequest(page, size);

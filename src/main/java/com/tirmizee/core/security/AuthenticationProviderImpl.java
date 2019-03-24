@@ -72,8 +72,8 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 			throw new LimitBadCredentialsException(ex.getMessage(), username, isLocked);
 		} catch (CredentialsExpiredException ex) {
 			throw new PasswordExpriedException(username, "Force password expried change");
-		} catch (Exception ex) {
-			throw ex;
+		} catch (Exception exception) {
+			throw exception;
 		}
 	}
 	

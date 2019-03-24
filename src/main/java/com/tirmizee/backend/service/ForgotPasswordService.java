@@ -4,12 +4,8 @@ public interface ForgotPasswordService {
 
 	String generateToken();
 	
-	String createUrlResetPassword(String token);
+	String createURLResetPassword(Long uid, String token);
 	
-	boolean isTokenExpired(String token);
-	
-	boolean isTokenExists(String token);
-	
-	void validateToken(String token);
+	void validatePasswordResetToken(Long uid, String token);
 	
 }

@@ -26,8 +26,9 @@ public class ForgotPasswordRepositoryImpl extends AbstractOracleJdbcRepository<F
 			map.put(COL_EMAIL, param.getEmail());
 			map.put(COL_ACCESS_IP, param.getAccessIp());
 			map.put(COL_TOKEN, param.getToken());
-			map.put(COL_USERNAME, param.getUsername());
+			map.put(COL_USERID, param.getUserId());
 			map.put(COL_EXPIRED_DATE, param.getExpiredDate());
+			map.put(COL_IS_RESET, param.isReset());
 			return map;
 		}
 	};

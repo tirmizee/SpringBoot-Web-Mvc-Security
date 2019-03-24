@@ -62,7 +62,7 @@ public class UserRepositoryImpl extends AbstractOracleJdbcRepository<User, Long>
 	}
 	
 	public UserRepositoryImpl(String tableName) {
-		super(ROW_MAPPER, ROW_UNMAPPER, tableName, COL_USERNAME);
+		super(ROW_MAPPER, ROW_UNMAPPER, tableName, COL_USER_ID);
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 public class ForgotPasswordModel {
 
+	private String title;
 	private String username;
 	private String email;
 	private String url;
@@ -39,6 +40,12 @@ public class ForgotPasswordModel {
 	}
 	public void setExpiredDate(Timestamp expiredDate) {
 		this.expiredDate = expiredDate;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
 }

@@ -6,7 +6,7 @@ import java.util.Collection;
 import org.springframework.data.domain.Page;
 
 /**
- * @author pratya yeekhaday
+ * @author Pratya Yeekhaday
  * 
  * @param <T> Type object return
  * @see https://datatables.net/manual/server-side

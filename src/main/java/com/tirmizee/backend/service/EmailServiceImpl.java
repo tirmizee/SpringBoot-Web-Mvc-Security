@@ -17,6 +17,8 @@ import com.tirmizee.core.component.TemplateUtils;
 @Service
 public class EmailServiceImpl implements EmailService {
 	
+	public static final String TEMPLATE_FORGOTPASSWORD = "ForgotPassword.ftl";
+	
 	@Autowired
 	private TemplateUtils template;
 	
@@ -35,8 +37,8 @@ public class EmailServiceImpl implements EmailService {
         try {
 			helper = new MimeMessageHelper(message, true ,"UTF-8");
 	        helper.setTo(forgotPasswordModel.getEmail());
-	        helper.setSubject("Forgot Password");
-	        helper.setText(template.load("ForgotPassword.ftl", model) , true);
+	        helper.setSubject(forgotPasswordModel.getTitle());
+	        helper.setText(template.load(TEMPLATE_FORGOTPASSWORD, model) , true);
 	        mailSender.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();

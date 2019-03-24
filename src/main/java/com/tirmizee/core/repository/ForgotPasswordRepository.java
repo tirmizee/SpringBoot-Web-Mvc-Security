@@ -11,16 +11,18 @@ public interface ForgotPasswordRepository extends JdbcRepository<ForgotPassword,
 	public static final String COL_EMAIL = "EMAIL";
 	public static final String COL_ACCESS_IP = "ACCESS_IP";
 	public static final String COL_TOKEN = "TOKEN";
-	public static final String COL_USERNAME = "USERNAME";
+	public static final String COL_USERID = "USERID";
 	public static final String COL_ID = "ID";
+	public static final String COL_IS_RESET = "IS_RESET";
 	public static final String COL_EXPIRED_DATE = "EXPIRED_DATE";
 	public static final String UPDATE_DATE = "FORGOT_PASSWORD.UPDATE_DATE";
 	public static final String CREATE_DATE = "FORGOT_PASSWORD.CREATE_DATE";
 	public static final String EMAIL = "FORGOT_PASSWORD.EMAIL";
 	public static final String ACCESS_IP = "FORGOT_PASSWORD.ACCESS_IP";
 	public static final String TOKEN = "FORGOT_PASSWORD.TOKEN";
-	public static final String USERNAME = "FORGOT_PASSWORD.USERNAME";
+	public static final String USERID = "FORGOT_PASSWORD.USERID";
 	public static final String ID = "FORGOT_PASSWORD.ID";
 	public static final String EXPIRED_DATE = "FORGOT_PASSWORD.EXPIRED_DATE";
+	public static final String IS_RESET = "FORGOT_PASSWORD.IS_RESET";
 
 }

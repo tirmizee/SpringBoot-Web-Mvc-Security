@@ -25,7 +25,7 @@ public class SecurityContextHolderUtils {
 	
 	public static void grantAuthority(String username, String...authorities){
 		UsernamePasswordAuthenticationToken authRequest = authenticationToken(
-				username , null , AuthorityUtils.createAuthorityList(authorities));
+				username, null, AuthorityUtils.createAuthorityList(authorities));
 		updateAuthentication(authRequest);
 	}
 	

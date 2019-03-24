@@ -81,13 +81,14 @@ var ManageUserModule = function(){
 			Search.firstName = $('input[name="firstName"]').val();
 			Search.lastName = $('input[name="lastName"]').val();
 			Search.email = $('input[name="email"]').val();
+			Search.roleId = parseInt($('#SLRole').val());
 			DataTable.ajax.reload();
 		});
 	}
 	
 	var handleSelect2Role = function(){
 		$('#SLRole').select2({
-			placeholder: 'Search Role',
+			placeholder: 'Role',
 			ajax: {
 			    url : 'api/role/page',
 			    delay : 250,
