@@ -2,8 +2,8 @@
 
 ## Building and running
 
-mvn package
+	mvn package
 
-java -jar SpringBoot-0.0.1-SNAPSHOT.war 
+	java -jar SpringBoot-0.0.1-SNAPSHOT.war 
 
 	
