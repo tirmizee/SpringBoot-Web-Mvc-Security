@@ -52,13 +52,13 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 			UserProfile userProfile =  (UserProfile) authen.getPrincipal();
 			task.execute(() -> userAttempService.resetLoginAttempt(username, accessIp));
 			
-			// USER FIRST LOGIN 
+			// FIRST LOGIN 
 			if (userProfile.isFirstLogin()) {
 				LOG.info(username + " : " + "first login");
 				throw new FirstloginException(username, "Force password change first login");
 			}
 			
-			// USER PASSWORD EXPRIED 
+			// PASSWORD EXPRIED 
 			if(userService.isPasswordExpried(userProfile.getCredentialsExpiredDate())) {
 				LOG.info(username + " : " + "password expried");
 				userService.fourcePasswordExpired(username);

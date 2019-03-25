@@ -37,7 +37,7 @@
 			<security:authorize access="hasAnyAuthority('P004')">
 			<li class="menu-log"><a href="${pageContext.request.contextPath}/log"><i class="fa fa-book"></i> <span><spring:message code="app.menu.viewlog"/></span></a></li>
 			</security:authorize>
-			<security:authorize access="hasAnyAuthority('P002')">
+			<security:authorize access="hasAnyAuthority('P002,P003,P005')">
 			<li class="treeview-setting">
 			    <a href="#">
 					<i class="fa fa-cog"></i> 
@@ -53,6 +53,9 @@
 				   	<security:authorize access="hasAnyAuthority('P003')">
 				   	<li><a href="${pageContext.request.contextPath}/managesession"><i class="fa fa-users"></i><spring:message code="app.menu.managesession"/></a></li>
 				   	</security:authorize>
+				   <%-- 	<security:authorize access="hasAnyAuthority('P005')"> --%>
+				   	<li><a href="${pageContext.request.contextPath}/managerole"><i class="fa fa-users"></i><spring:message code="app.menu.permission"/></a></li>
+					<%-- </security:authorize> --%>
 				</ul>
 			</li>
 			</security:authorize>

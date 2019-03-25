@@ -4,5 +4,6 @@ encoding//src/main/resources=UTF-8
 encoding//src/main/resources/i18n/messages/messages_en.properties=UTF-8
 encoding//src/main/resources/i18n/messages/messages_th.properties=UTF-8
 encoding//src/main/resources/templates/NewFile.html=UTF-8
+encoding//src/main/webapp/WEB-INF/views/layout/sidebar.jsp=UTF-8
 encoding//src/test/java=UTF-8
 encoding/<project>=UTF-8

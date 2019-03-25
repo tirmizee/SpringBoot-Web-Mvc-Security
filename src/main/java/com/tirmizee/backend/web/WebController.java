@@ -84,4 +84,10 @@ public class WebController {
 		return "pages/P004_logfile/P004_logfile";
 	}
 	
+	@PreAuthorize("hasAnyAuthority('P005')")
+	@GetMapping(path = "/managerole")
+	public String manageRole(ModelMap model) {
+		return "pages/P005_manage_role/P005_manage_role";
+	}
+	
 }

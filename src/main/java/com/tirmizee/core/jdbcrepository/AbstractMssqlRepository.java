@@ -14,7 +14,7 @@ import com.tirmizee.core.jdbcrepository.sql.SqlGenerator;
  * @author Pratya Yeekhaday
  *
  */
-public abstract class AbstractMssqlRepository <T extends Persistable<ID>, ID extends Serializable> extends AbstractJdbcRepository<T,ID>{
+public abstract class AbstractMssqlRepository <T extends Persistable<ID>, ID extends Serializable> extends AbstractJdbcRepository<T,ID> {
 
 	public static final Logger LOG = Logger.getLogger(AbstractMssqlRepository.class);
 	
