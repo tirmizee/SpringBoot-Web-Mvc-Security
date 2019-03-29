@@ -30,7 +30,7 @@ public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 
 	@Override
 	public boolean isIncludeHeaders() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 	
 	@Override
 	protected int getMaxPayloadLength() {
-		return 250;
+		return 100;
 	}
 
 	@Override

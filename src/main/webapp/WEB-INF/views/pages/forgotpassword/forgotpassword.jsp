@@ -57,7 +57,7 @@
         </div>
     </div>
 <script src="${pageContext.request.contextPath}/resources/scripts/commons/Commons.AjaxManager.js"></script>
-<script src="${pageContext.request.contextPath}/resources/scripts/pages/forgotpassword.js"></script>
+<script src="${pageContext.request.contextPath}/resources/scripts/forgotpassword.js"></script>
 <script>
 $(document).ready(function() {
 	ForgotPasswordModule.init();

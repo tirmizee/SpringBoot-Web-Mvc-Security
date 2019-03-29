@@ -7,6 +7,6 @@ import com.tirmizee.backend.api.role.data.SearchTermDTO;
 
 public interface RoleService {
 	
-	Page<RoleDTO> generatePageByTerm(SearchTermDTO searchTerm);
-
+	Page<RoleDTO> buildPageByTerm(SearchTermDTO searchTerm);
+	
 }

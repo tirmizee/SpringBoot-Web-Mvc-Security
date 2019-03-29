@@ -12,6 +12,7 @@ public class UserDetail implements Serializable{
 	private String lastName;
 	private String firstName;
 	private Integer roleId;
+	private String roleCode;
 	private String roleName;
 	private Date credentialsexpiredDate;
 	private boolean credentialsnonexpired;
@@ -91,6 +92,12 @@ public class UserDetail implements Serializable{
 	}
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+	public String getRoleCode() {
+		return roleCode;
+	}
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
 	}
 	@Override
 	public String toString() {

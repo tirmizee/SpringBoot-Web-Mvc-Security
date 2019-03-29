@@ -1,5 +1,8 @@
 package com.tirmizee.core.configuration;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -19,12 +22,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy;
+import org.springframework.security.web.session.ConcurrentSessionFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.security.web.session.SimpleRedirectSessionInformationExpiredStrategy;
 
 import com.tirmizee.backend.dao.PermissionDao;
 import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.core.constant.PermissionCode;
 import com.tirmizee.core.security.AuthenticationProviderImpl;
+import com.tirmizee.core.security.CustomConcurrentSessionControlAuthenStrategy;
 import com.tirmizee.core.security.CustomHttpSessionCsrfTokenRepository;
 import com.tirmizee.core.security.UserDetailsServiceImpl;
 
@@ -69,12 +79,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public SessionRegistry sessionRegistry() {
 	    return new SessionRegistryImpl();
 	}
-	
+    
+    @Bean
+    public ConcurrentSessionFilter concurrentSessionFilter(){
+    	return new ConcurrentSessionFilter(sessionRegistry(), sessionInformationExpiredStrategy());
+    }
+    
+    @Bean
+    public SimpleRedirectSessionInformationExpiredStrategy sessionInformationExpiredStrategy(){
+    	return new SimpleRedirectSessionInformationExpiredStrategy("/login?error=This username is logged in by another user.");
+    }
+    
 	@Bean
 	public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
 	    return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
 	}
 
+	@Bean
+    public CompositeSessionAuthenticationStrategy sessionAuthenticationStrategy(){
+    	List<SessionAuthenticationStrategy> delegateStrategies = Arrays.asList(
+   			new SessionFixationProtectionStrategy(), 
+    		new CustomConcurrentSessionControlAuthenStrategy(sessionRegistry()), 
+			new RegisterSessionAuthenticationStrategy(sessionRegistry())
+    	);
+    	return new CompositeSessionAuthenticationStrategy(delegateStrategies);    
+    }
+	
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 	    DaoAuthenticationProvider authProvider = new AuthenticationProviderImpl();
@@ -136,12 +166,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             	.deleteCookies("JSESSIONID")
                 .permitAll()
                 .and()
-            .sessionManagement()     
-//            	.sessionAuthenticationStrategy(sessionAuthenticationStrategy)
-                .maximumSessions(1)                        
-                .maxSessionsPreventsLogin(false)
-				.expiredUrl("/login?error=Session Expried")             
-				.sessionRegistry(sessionRegistry());    
+            .sessionManagement()
+//	            .maximumSessions(1)                        
+//	            .maxSessionsPreventsLogin(false)
+//				.expiredUrl("/login?error=Session Expried")             
+//				.sessionRegistry(sessionRegistry());
+				.sessionAuthenticationStrategy(sessionAuthenticationStrategy())
+				.and()
+			.addFilter(concurrentSessionFilter());
 	}
 
 }

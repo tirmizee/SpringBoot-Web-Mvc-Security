@@ -67,7 +67,7 @@
         </div>
     </div>
 <script src="${pageContext.request.contextPath}/resources/scripts/commons/Commons.AjaxManager.js"></script>
-<script src="${pageContext.request.contextPath}/resources/scripts/pages/PG00_PasswordFirstLogin.js"></script>
+<script src="${pageContext.request.contextPath}/resources/scripts/PG00_PasswordFirstLogin.js"></script>
 <script>
 $(document).ready(function(){
 	FirstLoginModule.init();

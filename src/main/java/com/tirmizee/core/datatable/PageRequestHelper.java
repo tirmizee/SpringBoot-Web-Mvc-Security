@@ -22,10 +22,10 @@ public class PageRequestHelper {
 		return new PageRequest(page, size);
 	}
 	
-	public static  PageRequest build(RequestTable<?> requestData,Class<?> clazz){
-		int page = (int) (requestData.getStart()/requestData.getLength()),
-			size = (int) requestData.getLength();
-		return new PageRequest(page, size, buildSort(requestData,clazz));
+	public static  PageRequest build(RequestTable<?> requestTable, Class<?> clazz){
+		int page = (int) (requestTable.getStart()/requestTable.getLength()),
+			size = (int) requestTable.getLength();
+		return new PageRequest(page, size, buildSort(requestTable, clazz));
 	}
 	
 	private static Sort buildSort(RequestTable<?> requestData,Class<?> clazz) {

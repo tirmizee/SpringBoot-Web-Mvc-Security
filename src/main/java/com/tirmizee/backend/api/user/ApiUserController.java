@@ -60,6 +60,11 @@ public class ApiUserController {
 		return new MessageSuccess(null, "Reset your password complete.");
 	}
 	
+	@PostMapping(path = "/update/enabled")
+	public MessageSuccess updateEnabled(@RequestBody @Valid ReqPasswordResetTokenDTO passwordResetTokenDTO) {
+		return null;
+	}
+	
 	@PostMapping(path = "/page")
 	public DeferredResult<ResponseTable<UserDetailDTO>> pageDataTable(@RequestBody @Valid RequestTable<UserDetailCriteriaDTO> requestTable){
 		DeferredResult<ResponseTable<UserDetailDTO>> deferredResult = new DeferredResult<>(60000L);

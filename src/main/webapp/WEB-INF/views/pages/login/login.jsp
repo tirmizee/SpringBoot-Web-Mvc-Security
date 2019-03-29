@@ -69,7 +69,7 @@
             <a href="register.html" class="text-center">Register a new membership</a>
         </div>
     </div>
-<script src="${pageContext.request.contextPath}/resources/scripts/pages/login.js"></script>
+<script src="${pageContext.request.contextPath}/resources/scripts/login.js"></script>
 <script>
 $(document).ready(function() {
 	LoginModule.init();

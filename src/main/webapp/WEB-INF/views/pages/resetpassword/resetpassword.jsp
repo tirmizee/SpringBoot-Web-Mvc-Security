@@ -63,7 +63,7 @@
         </div>
     </div>
 <script src="${pageContext.request.contextPath}/resources/scripts/commons/Commons.AjaxManager.js"></script>
-<script src="${pageContext.request.contextPath}/resources/scripts/pages/resetpassword.js"></script>
+<script src="${pageContext.request.contextPath}/resources/scripts/resetpassword.js"></script>
 <script>
 $(document).ready(function() {
 	ResetPasswordModule.init();

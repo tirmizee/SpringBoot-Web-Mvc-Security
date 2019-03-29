@@ -68,8 +68,10 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 			return authen;
 			
 		} catch (BadCredentialsException ex) {
+			
 			boolean isLocked = userAttempService.updateLoginAttemptIsLocked(username, accessIp);
 			throw new LimitBadCredentialsException(ex.getMessage(), username, isLocked);
+			
 		} catch (CredentialsExpiredException ex) {
 			throw new PasswordExpriedException(username, "Force password expried change");
 		} catch (Exception exception) {

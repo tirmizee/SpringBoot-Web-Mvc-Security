@@ -10,6 +10,7 @@ public class UserProfile extends UserDetailsImpl {
 	
 	private String firstName;
 	private String lastName;
+	private String roleCode;
 	private String roleName;
 	private String accessIp;
 	private boolean isFirstLogin;
@@ -20,6 +21,7 @@ public class UserProfile extends UserDetailsImpl {
 		super(builder);
 		this.firstName = builder.firstName;
 		this.lastName = builder.lastName;
+		this.roleCode = builder.roleCode;
 		this.roleName = builder.roleName;
 		this.accessIp = builder.accessIp;
 		this.createDate = builder.createDate;
@@ -43,6 +45,14 @@ public class UserProfile extends UserDetailsImpl {
 		this.lastName = lastName;
 	}
 	
+	public String getRoleCode() {
+		return roleCode;
+	}
+
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
+	}
+
 	public String getRoleName() {
 		return roleName;
 	}
@@ -100,6 +110,7 @@ public class UserProfile extends UserDetailsImpl {
 		
 		private String firstName;
 		private String lastName;
+		private String roleCode;
 		private String roleName;
 		private String accessIp;
 		private java.util.Date createDate;
@@ -115,6 +126,11 @@ public class UserProfile extends UserDetailsImpl {
 		
 		public Builder lastName(String lastName){
 			this.lastName = lastName;
+			return this;
+		}
+		
+		public Builder roleCode(String roleCode){
+			this.roleCode = roleCode;
 			return this;
 		}
 		

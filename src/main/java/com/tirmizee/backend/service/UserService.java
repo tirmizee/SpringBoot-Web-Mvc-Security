@@ -5,6 +5,7 @@ import java.sql.Date;
 import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
+import com.tirmizee.backend.api.user.data.ReqUpdateEnable;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
 import com.tirmizee.backend.api.user.data.UserDetailDTO;
 import com.tirmizee.core.datatable.RequestTable;
@@ -25,6 +26,8 @@ public interface UserService {
 	void changePasswordFirstLogin(String username, ReqPasswordDTO passwordDTO);
 	
 	void changePasswordExpired(String username, ReqPasswordExpriedDTO passwordExpriedDTO);
+	
+	void updateStatusEnable(ReqUpdateEnable updateEnable);
 	
 	ResponseTable<UserDetailDTO> pagingTable(RequestTable<UserDetailCriteriaDTO> requestTable); 
 	

@@ -39,7 +39,7 @@
   		<div class="control-sidebar-bg"></div>
 	
 	</div>
-<script src="${pageContext.request.contextPath}/resources/scripts/pages/P000_main.js"></script>
+<script src="${pageContext.request.contextPath}/resources/scripts/P000_main.js"></script>
 <script>
 $(document).ready(function() {
 	MainModule.init();

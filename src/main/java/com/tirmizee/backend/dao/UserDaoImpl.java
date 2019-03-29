@@ -48,6 +48,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 				.append(USERNAME).append(" , ")
 				.append(PASSWORD).append(" , ")
 				.append(RoleRepository.ROLE_ID).append(" , ")
+				.append(RoleRepository.ROLE_CODE).append(" , ")
 				.append(RoleRepository.ROLE_NAME).append(" , ")
 				.append(ENABLED).append(" , ")
 				.append(ACCOUNTNONLOCKED).append(" , ")

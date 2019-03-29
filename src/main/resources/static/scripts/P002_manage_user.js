@@ -1,7 +1,7 @@
 var ManageUserModule = function(){
 	
-	var DataTable = {};
 	var Search = {};
+	var DataTable = {};
 	
 	var activeMenu = function(){
 		 $('ul.sidebar-menu > li.treeview-setting').addClass('active');
@@ -21,6 +21,7 @@ var ManageUserModule = function(){
 			scrollX      : true,
 			select       : true,
 			deferRender  : true,
+			pagingType   : "full_numbers",
 			ajax: {
 				url: 'api/user/page',
 				type: "POST",
@@ -36,13 +37,17 @@ var ManageUserModule = function(){
 	            }
 			},
 			columns: [
-				{ data: null           ,title : "Action" },
-				{ data : null          ,title : "Order" },
-				{ data : "username"    ,title : "Ussername"},
-				{ data : "firstName"   ,title : "First Name"},
-				{ data : "lastName"    ,title : "Last Name"},
-				{ data : "roleName"    ,title : "Role Name"},
-				{ data : "email"       ,title : "Email"}
+				{ data: null           		      ,title : "Action" },
+				{ data : null                     ,title : "Order" },
+				{ data : "username"               ,title : "Ussername"},
+				{ data : "firstName"              ,title : "First Name"},
+				{ data : "lastName"               ,title : "Last Name"},
+				{ data : "roleName"               ,title : "Role Name"},
+				{ data : "email"                  ,title : "Email"},
+				{ data : "enabled"     		      ,title : "Status Enable"},
+				{ data : "accountnonlocked"       ,title : "Status Locked"},
+				{ data : "credentialsnonexpired"  ,title : "Status Password"},
+				{ data : "firstLogin"             ,title : "Status First Login"}
 			],
 			columnDefs: [
 				{
@@ -60,6 +65,42 @@ var ManageUserModule = function(){
 					render    : function (data, type, row, meta) {
 						return meta.settings._iDisplayStart + meta.row + 1;
 					}
+				},
+				{
+					targets   : 7,
+					className : "text-center",
+					render    : function (data, type, row, meta) {
+						var actice = '<a data-btn-name="enable" href=""><span class="label label-success raduis">active</span></a>';
+						var inActive = '<a data-btn-name="enable" href=""><span class="label label-danger raduis">inactive</span></a>';
+						return data ? actice : inActive;
+					}
+				},
+				{
+					targets   : 8,
+					className : "text-center",
+					render    : function (data, type, row, meta) {
+						var normal = '<a data-btn-name="locked" href=""><span class="label label-success raduis">normal</span></a>';
+						var locked = '<a data-btn-name="locked" href=""><span class="label label-danger raduis">locked</span></a>';
+						return data ? normal : locked;
+					}
+				},
+				{
+					targets   : 9,
+					className : "text-center",
+					render    : function (data, type, row, meta) {
+						var normal = '<a data-btn-name="expired" href=""><span class="label label-success raduis">normal</span></a>';
+						var expired = '<a data-btn-name="expired" href=""><span class="label label-danger raduis">expired</span></a>';
+						return data ? normal : expired;
+					}
+				},
+				{
+					targets   : 10,
+					className : "text-center",
+					render    : function (data, type, row, meta) {
+						var normal = '<a data-btn-name="firstlogin" href=""><span class="label label-success raduis">active</span></a>';
+						var expired = '<a data-btn-name="firstlogin" href=""><span class="label label-warning raduis">inactive</span></a>';
+						return data ? normal : expired;
+					}
 				}
 			],
 			select: {
@@ -68,11 +109,44 @@ var ManageUserModule = function(){
 			colReorder : {
 		        fixedColumnsLeft: 2
 		    }
-		}).on( 'mouseenter', 'tbody tr', function (){
-			  $(this).css({color: "#ff0000"});
-		}).on( 'mouseleave', 'tbody tr', function (){
-			  $(this).css({color: "black"});
+		}).on('click', 'a[data-btn-name="enable"]', function (event) {
+			event.preventDefault();
+
+			var data = DataTable.row($(this).parents('tr')).data();
+			updateStatusEnable(data);
+		}).on('click', 'a[data-btn-name="locked"]', function (event) {
+			event.preventDefault();
+			
+			var data = DataTable.row($(this).parents('tr')).data();
+			updateStatusLocked(data);
+		}).on('click', 'a[data-btn-name="expired"]', function (event) {
+			event.preventDefault();
+			
+			var data = DataTable.row($(this).parents('tr')).data();
+			updateStatusExpired(data);
+		}).on('click', 'a[data-btn-name="firstlogin"]', function (event) {
+			event.preventDefault();
+			
+			var data = DataTable.row($(this).parents('tr')).data();
+			updateStatusLogin(data);
 		});
+		
+	}
+	
+	var updateStatusEnable = function(data){
+		
+	}
+	
+	var updateStatusLocked = function(data){
+		
+	}
+
+	var updateStatusExpired = function(data){
+		
+	}
+
+	var updateStatusLogin = function(data){
+	
 	}
 	
 	var handleButtonSearch = function(){

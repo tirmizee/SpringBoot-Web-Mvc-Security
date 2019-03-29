@@ -39,7 +39,7 @@
   		<div class="control-sidebar-bg"></div>
 	
 	</div>
-<script src="${pageContext.request.contextPath}/resources/scripts/pages/P001_report.js"></script>
+<script src="${pageContext.request.contextPath}/resources/scripts/P001_report.js"></script>
 <script>
 $(document).ready(function() {
 	ReportModule.init();

@@ -8,7 +8,11 @@
   <meta name="_csrf" content="${_csrf.token}"/>
   <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <jsp:include page="../../commons/imports.jsp" />
-  
+  <style type="text/css">
+  	.raduis {
+	    border-radius: 1em !important;
+	}
+  </style>
 <title><spring:message code="app.name"/></title>
 </head> 
 <body class="hold-transition skin-purple sidebar-mini">
@@ -42,7 +46,7 @@
 	
 	</div>
 <script src="${pageContext.request.contextPath}/resources/scripts/commons/Commons.AjaxManager.js"></script>
-<script src="${pageContext.request.contextPath}/resources/scripts/pages/P002_manage_user.js"></script>
+<script src="${pageContext.request.contextPath}/resources/scripts/P002_manage_user.js"></script>
 <script>
 $(document).ready(function() {
 	ManageUserModule.init();

@@ -25,6 +25,7 @@ public class RoleRepositoryImpl extends AbstractOracleJdbcRepository<Role, Integ
 			role.setRoleName(rs.getString(COL_ROLE_NAME));
 			role.setRoleCode(rs.getString(COL_ROLE_CODE));
 			role.setRoleId(rs.getInt(COL_ROLE_ID));
+			role.setCreateDate(rs.getDate(COL_CREATE_DATE));
 			return role;
 		}
 	};
@@ -39,6 +40,7 @@ public class RoleRepositoryImpl extends AbstractOracleJdbcRepository<Role, Integ
 			map.put(COL_ROLE_NAME, param.getRoleName());
 			map.put(COL_ROLE_CODE, param.getRoleCode());
 			map.put(COL_ROLE_ID, param.getRoleId());
+			map.put(COL_CREATE_DATE, param.getCreateDate());
 			return map;
 		}
 	};

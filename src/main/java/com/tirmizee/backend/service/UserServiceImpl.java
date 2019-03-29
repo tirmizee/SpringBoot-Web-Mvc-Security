@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
+import com.tirmizee.backend.api.user.data.ReqUpdateEnable;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
 import com.tirmizee.backend.api.user.data.UserDetailDTO;
 import com.tirmizee.backend.dao.ForgotPasswordDao;
@@ -48,9 +49,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired 
 	private HttpServletRequest request;
 	
-	@Autowired
-	private EmailService emailService;
-	
 	@Autowired 
 	private UserDao userDao;
 	
@@ -59,6 +57,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired 
 	private ForgotPasswordDao forgotPasswordDao;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	@Autowired 
 	private ForgotPasswordService forgotPasswordService;
@@ -111,7 +112,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		// VALIDATE NEW PASSWORD MUST NOT BE LIKE OLD PASSWORD
-		if (logPasswordService.isPasswordExists(username, passwordExpriedDTO.getNewPasswordConfirm())) {
+		if (logPasswordService.isPasswordExists(username, passwordExpriedDTO.getNewPasswordConfirm(), 2)) {
 			throw new BusinessException(MessageCode.MSG002);
 		}
 		
@@ -212,6 +213,15 @@ public class UserServiceImpl implements UserService {
 		forgotPassword.setReset(true);
 		forgotPasswordDao.save(forgotPassword);
 		
+	}
+
+	@Override
+	@Transactional
+	public void updateStatusEnable(ReqUpdateEnable updateEnable) {
+		User user = userDao.findByUsername(updateEnable.getUsername());
+		user.setEnabled(updateEnable.isEnabled());
+		user.setUpdateDate(DateUtils.now());
+		userDao.save(user);
 	} 
 	
 }

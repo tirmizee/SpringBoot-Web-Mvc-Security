@@ -44,7 +44,7 @@
 	
 	</div>
 <script src="${pageContext.request.contextPath}/resources/scripts/commons/Commons.AjaxManager.js"></script>
-<script src="${pageContext.request.contextPath}/resources/scripts/pages/P004_logfile.js"></script>
+<script src="${pageContext.request.contextPath}/resources/scripts/P004_logfile.js"></script>
 <script>
 $(document).ready(function() {
 	ViewLogModule.init(); 

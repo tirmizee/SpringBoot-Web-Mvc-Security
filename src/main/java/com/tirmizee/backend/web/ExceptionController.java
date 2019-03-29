@@ -32,7 +32,7 @@ public class ExceptionController {
 	}
 	
 	@ExceptionHandler(NoHandlerFoundException.class)
-	public ModelAndView handleNotFoundException(NoHandlerFoundException ex){
+	public ModelAndView handleNotFoundException(NoHandlerFoundException ex ){
 		return new ModelAndView("redirect:/NotFound");
 	}
 	

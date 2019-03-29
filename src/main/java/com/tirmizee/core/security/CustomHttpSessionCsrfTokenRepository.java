@@ -77,6 +77,7 @@ public final class CustomHttpSessionCsrfTokenRepository implements CsrfTokenRepo
 		this.sessionAttributeName = sessionAttributeName;
 	}
 
+	// custom create token 
 	private String createNewToken() {
 		return UUID.randomUUID().toString() + "-" + PasswordGenerator.generate(10);
 	}

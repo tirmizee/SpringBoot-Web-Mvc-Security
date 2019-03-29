@@ -2,8 +2,11 @@ package com.tirmizee.backend.api.role;
 
 import java.util.concurrent.ForkJoinPool;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,13 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import com.tirmizee.backend.api.role.data.RoleDTO;
+import com.tirmizee.backend.api.role.data.SearchRoleDTO;
 import com.tirmizee.backend.api.role.data.SearchTermDTO;
+import com.tirmizee.backend.dao.RoleDao;
 import com.tirmizee.backend.service.RoleService;
+import com.tirmizee.core.datatable.PageRequestHelper;
+import com.tirmizee.core.datatable.RequestTable;
+import com.tirmizee.core.datatable.ResponseTable;
 
 @RestController
 @RequestMapping(path = "api/role")
 public class ApiRoleController {
 
+	@Autowired
+	private RoleDao roleDao;
+	
 	@Autowired
 	private RoleService roleService;
 	
@@ -26,8 +37,24 @@ public class ApiRoleController {
 		DeferredResult<Page<RoleDTO>> deferredResult = new DeferredResult<>(60000L);
 		ForkJoinPool.commonPool().submit(()->{
 			try {
-				Page<RoleDTO> result = roleService.generatePageByTerm(searchTerm);
+				Page<RoleDTO> result = roleService.buildPageByTerm(searchTerm);
 				deferredResult.setResult(result);
+			} catch (Exception ex) {
+				deferredResult.setErrorResult(ex);
+			}
+		});
+		return deferredResult;
+	}
+	
+	@PostMapping(path = "/find/page")
+	public DeferredResult<ResponseTable<RoleDTO>> findPage(@RequestBody @Valid RequestTable<SearchRoleDTO> requestTable) {
+		DeferredResult<ResponseTable<RoleDTO>> deferredResult = new DeferredResult<>(60000L);
+		ForkJoinPool.commonPool().submit(()->{
+			try {
+				Pageable pageable = PageRequestHelper.build(requestTable, RoleDTO.class);
+				Page<RoleDTO> page = roleDao.findPageTable(requestTable.getSerch(), pageable);
+				ResponseTable<RoleDTO> responseTable = new ResponseTable<>(page);
+				deferredResult.setResult(responseTable);
 			} catch (Exception ex) {
 				deferredResult.setErrorResult(ex);
 			}

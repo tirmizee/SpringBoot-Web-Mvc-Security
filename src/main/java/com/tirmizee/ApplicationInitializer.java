@@ -18,7 +18,7 @@ public class ApplicationInitializer extends SpringBootServletInitializer {
 		SpringApplication.run(ApplicationInitializer.class, args);
 	}
 	
-	@Bean
+	@Bean("taskExecutor")
 	public TaskExecutor taskExecutor() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		executor.setCorePoolSize(10);

@@ -2,7 +2,7 @@ package com.tirmizee.core.domain;
 
 import org.springframework.data.domain.Persistable;
 
-public class Role implements Persistable<Integer>{
+public class Role implements Persistable<Integer> {
 
 	private static final long serialVersionUID = 1522087496128759375L;
 
@@ -12,6 +12,7 @@ public class Role implements Persistable<Integer>{
 	private String roleDesc;
 	private String updateBy;
 	private java.sql.Date updateDate;
+	private java.sql.Date CreateDate;
 	
 	@Override
 	public Integer getId() {
@@ -69,6 +70,14 @@ public class Role implements Persistable<Integer>{
 
 	public void setUpdateDate(java.sql.Date updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public java.sql.Date getCreateDate() {
+		return CreateDate;
+	}
+
+	public void setCreateDate(java.sql.Date createDate) {
+		CreateDate = createDate;
 	}
 
 }

@@ -38,7 +38,7 @@ import com.tirmizee.core.jdbcrepository.sql.SqlGeneratorFactory;
  */
 public abstract class AbstractJdbcRepository<T extends Persistable<ID>, ID extends Serializable> implements JdbcRepository<T, ID>, InitializingBean {
 
-	private static final Logger LOG = Logger.getLogger(AbstractJdbcRepository.class);
+	public static final Logger LOG = Logger.getLogger(AbstractJdbcRepository.class);
 	
 	private TableDescription table;
 	private final RowMapper<T> rowMapper;

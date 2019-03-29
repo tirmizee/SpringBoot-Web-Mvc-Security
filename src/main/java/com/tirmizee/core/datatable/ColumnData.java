@@ -6,6 +6,7 @@ package com.tirmizee.core.datatable;
  * @author pratya yeekhaday
  * @see https://datatables.net/manual/server-side
  */
+
 public class ColumnData {
 
 	private String data;

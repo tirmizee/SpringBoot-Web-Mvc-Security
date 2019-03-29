@@ -23,15 +23,15 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	    return cookieLocaleResolver;
 	}
 	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new LocaleChangeInterceptor() {
-			
+	@Bean
+	public LocaleChangeInterceptor localeChangeInterceptor() {
+	    return new LocaleChangeInterceptor() {
+	    	
 	    	@Override
 			public String getParamName() {
 				return "language";
 			}
-			
+	    	
 	    	@Override
 	    	protected Locale parseLocaleValue(String locale) {
 	    		String repairedLocale = locale.replaceAll("'", "");
@@ -40,8 +40,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	    		}
 	    		return Locale.ENGLISH;
 	    	}
-	    	
-	    });
+	    };
+	}
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(localeChangeInterceptor());
 	}
 	
 }

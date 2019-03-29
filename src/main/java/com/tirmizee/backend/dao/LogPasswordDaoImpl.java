@@ -18,4 +18,15 @@ public class LogPasswordDaoImpl extends LogPasswordRepositoryImpl implements Log
 		return getJdbcOps().query(statement.toString(), params(username), ROW_MAPPER);
 	}
 
+	@Override
+	public List<LogPassword> findDescByUsername(String username, int limit) {
+		
+		StringBuilder subStatement = new StringBuilder()
+			.append(" SELECT * FROM ").append(TB_LOG_PASSWORD)
+			.append(" WHERE ").append(COL_USERNAME).append(" = ? ")
+			.append(" ORDER BY ").append(COL_CREATE_DATE).append(" DESC ");
+		String statement = String.format("SELECT * FROM (%s) WHERE ROWNUM <= ?", subStatement.toString());
+		return getJdbcOps().query(statement, params(username, limit), ROW_MAPPER);
+	}
+
 }

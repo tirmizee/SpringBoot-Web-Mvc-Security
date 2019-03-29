@@ -7,7 +7,10 @@ var ViewLogModule = function(){
 	}
 	
 	var handleDataTable = function() {
-		var btnView = '<button data-btn-name="btnView" type="button" class="btn btn-info" data-toggle="tooltip" title="View Member !"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>';
+		
+		var btnView = '<button data-btn-name="btnView" type="button" class="btn btn-primary" data-toggle="tooltip" title="View Log!"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>';
+		var btnLoad = '<button data-btn-name="btnLoad" type="button" class="btn btn-warning" data-toggle="tooltip" title="Download Log!"><span class="fa fa-download" aria-hidden="true"></span></button>';
+		
 		DataTable = $('#TBLog').DataTable({
 			processing   : true,
 			responsive   : false,
@@ -29,7 +32,7 @@ var ViewLogModule = function(){
 					orderable : false,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
-						return btnView;
+						return btnView + ' ' + btnLoad;
 					}
 				},
 				{

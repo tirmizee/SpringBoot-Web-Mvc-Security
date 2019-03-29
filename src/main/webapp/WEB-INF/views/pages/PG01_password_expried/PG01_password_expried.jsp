@@ -71,7 +71,7 @@
         </div>
     </div>
 <script src="${pageContext.request.contextPath}/resources/scripts/commons/Commons.AjaxManager.js"></script>
-<script src="${pageContext.request.contextPath}/resources/scripts/pages/PG01_PasswordExpried.js"></script> 
+<script src="${pageContext.request.contextPath}/resources/scripts/PG01_PasswordExpried.js"></script> 
 <script>
 $(document).ready(function(){
 	PasswordExpriedModule.init();

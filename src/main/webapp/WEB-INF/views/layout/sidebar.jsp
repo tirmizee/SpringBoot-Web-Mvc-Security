@@ -1,6 +1,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <%@ taglib uri="http://www.springframework.org/tags"          prefix="spring"%>
 <security:authentication var="profile" property="principal" />
+
 <style>
 	aside.main-sidebar {font-family: kanit-medium}
 </style>

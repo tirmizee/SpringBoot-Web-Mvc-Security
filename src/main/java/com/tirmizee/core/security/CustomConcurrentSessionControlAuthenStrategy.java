@@ -12,6 +12,15 @@ public class CustomConcurrentSessionControlAuthenStrategy extends ConcurrentSess
 
 	@Override
 	protected int getMaximumSessionsForThisUser(Authentication authentication) {
+		
+		Object principal = authentication.getPrincipal();
+		
+		if (principal instanceof UserProfile) {
+			UserProfile userProfile = (UserProfile) principal;
+			if("R01".equalsIgnoreCase(userProfile.getRoleCode())){
+				return 2;
+			}
+		}
 		return 1;
 	}
 	

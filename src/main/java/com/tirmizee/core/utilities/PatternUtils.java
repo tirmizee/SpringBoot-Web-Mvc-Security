@@ -14,5 +14,4 @@ public final class PatternUtils {
 		return Pattern.matches(format, uuid);
 	}
 	
-	
 }

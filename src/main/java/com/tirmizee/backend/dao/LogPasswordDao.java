@@ -9,4 +9,6 @@ public interface LogPasswordDao extends LogPasswordRepository {
 	
 	List<LogPassword> findByUsername(String username);
 	
+	List<LogPassword> findDescByUsername(String username, int limit);
+	
 }

@@ -54,6 +54,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				.credentialsExpiredDate(userDetail.getCredentialsexpiredDate())
 				.firstName(userDetail.getFirstName())
 				.lastName(userDetail.getLastName())
+				.roleCode(userDetail.getRoleCode())
 				.roleName(userDetail.getRoleName())
 				.isFirstLogin(userDetail.getFirstLogin())
 				.createDate(DateUtils.now())
