@@ -4,6 +4,8 @@ public class UrlNotFoundException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 	
+	private String requestURL;
+	
 	public UrlNotFoundException() {
 		super();
 	}
@@ -12,12 +14,16 @@ public class UrlNotFoundException extends RuntimeException{
 		super(message);
 	}
 	
-	public UrlNotFoundException(String message,String url) {
+	public UrlNotFoundException(String message,String requestURL) {
 		super(message);
 	}
 
-	public UrlNotFoundException(Throwable cause) {
-		super(cause);
+	public String getRequestURL() {
+		return requestURL;
+	}
+
+	public void setRequestURL(String requestURL) {
+		this.requestURL = requestURL;
 	}
 
 }

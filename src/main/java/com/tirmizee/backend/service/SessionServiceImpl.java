@@ -34,26 +34,32 @@ public class SessionServiceImpl implements SessionService {
 		for (Object principal : principals) {
 			if (principal instanceof UserProfile) {
 				UserProfile profile = (UserProfile) principal;
-				List<SessionInformation> sessionInfos = getAllSessionsByUsername(profile.getUsername());
-				UserLoggedDTO userLogged = mapper.map(profile, UserLoggedDTO.class);
-				userLogged.setExpired(sessionInfos.isEmpty());
-				allUserLogged.add(userLogged);
+				List<SessionInformation> sessionInfos = getAllSessionsByUsername(profile.getUsername(), true);
+				for (SessionInformation sessionInfo : sessionInfos) {
+					UserLoggedDTO userLogged = mapper.map(profile, UserLoggedDTO.class);
+					userLogged.setExpired(sessionInfo.isExpired());
+					userLogged.setSessionId(sessionInfo.getSessionId());
+					userLogged.setCreateDate(sessionInfo.getLastRequest());
+					allUserLogged.add(userLogged);
+				}
 			}
 		}
 		return allUserLogged;
 	}
 
 	@Override
-	public void removeSession(String username) {
-		List<SessionInformation> sessionInformations = getAllSessionsByUsername(username);
-		if (!sessionInformations.isEmpty()) {
-			SessionInformation sessionInformation = sessionInformations.get(0);
-			sessionInformation.expireNow();
+	public void removeSession(String username, String sessionId) {
+		List<SessionInformation> sessionInformations = getAllSessionsByUsername(username, false);
+		for (SessionInformation sessionInformation : sessionInformations) {
+			if (StringUtils.equals(sessionId, sessionInformation.getSessionId())) {
+				sessionInformation.expireNow();
+				break;
+			}
 		}
 	}
 
 	@Override
-	public List<SessionInformation> getAllSessionsByUsername(String username) {
+	public List<SessionInformation> getAllSessionsByUsername(String username, boolean includeExpiredSessions) {
 		
 		List<SessionInformation> foundSession = null;
 		List<Object> principals = sessionRegistry.getAllPrincipals();
@@ -62,7 +68,7 @@ public class SessionServiceImpl implements SessionService {
 			if (principal instanceof UserProfile) {
 				UserProfile profile = (UserProfile) principal;
 				if (StringUtils.equals(username, profile.getUsername())) {
-					foundSession = sessionRegistry.getAllSessions(profile, false);
+					foundSession = sessionRegistry.getAllSessions(profile, includeExpiredSessions);
 					break;
 				}
 			}
@@ -82,9 +88,11 @@ public class SessionServiceImpl implements SessionService {
 		for (Object principal : principals) {
 			if (principal instanceof UserProfile) {
 				UserProfile profile = (UserProfile) principal;
-				List<SessionInformation> sessionInfos = sessionRegistry.getAllSessions(profile, false);
-				if (sessionInfos.isEmpty()) {
-					count++;
+				List<SessionInformation> sessionInfos = sessionRegistry.getAllSessions(profile, true);
+				for (SessionInformation sessionInfo : sessionInfos) {
+					if (sessionInfo.isExpired()) {
+						count++;
+					}
 				}
 			}
 		}
@@ -99,8 +107,10 @@ public class SessionServiceImpl implements SessionService {
 			if (principal instanceof UserProfile) {
 				UserProfile profile = (UserProfile) principal;
 				List<SessionInformation> sessionInfos = sessionRegistry.getAllSessions(profile, false);
-				if (!sessionInfos.isEmpty()) {
-					count++;
+				for (SessionInformation sessionInfo : sessionInfos) {
+					if (!sessionInfo.isExpired()) {
+						count++;
+					}
 				}
 			}
 		}

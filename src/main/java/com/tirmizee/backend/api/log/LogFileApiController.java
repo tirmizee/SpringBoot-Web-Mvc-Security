@@ -31,7 +31,7 @@ public class LogFileApiController {
 	
 	@PreAuthorize("hasAnyAuthority('P004')")
 	@GetMapping(path = "/{date}")
-	public List<String> reaData(@PathVariable String date) throws IOException{
+	public List<String> readData(@PathVariable String date) throws IOException{
 		return logFileService.readLineByDate(date);
 	}
 

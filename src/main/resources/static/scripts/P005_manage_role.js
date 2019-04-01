@@ -26,7 +26,7 @@ var ManageRoleModule = function(){
 				type: "POST",
 				contentType: 'application/json',
 				headers: {
-	                'X-CSRF-TOKEN' : AjaxManager.CsrfToken 
+					[AjaxManager.CsrfHeader] : AjaxManager.CsrfToken 
 	            },
 				data : function (d) {
 					d.search = Search;

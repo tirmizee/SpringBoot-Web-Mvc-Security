@@ -39,6 +39,11 @@
 			            <input type="text" class="form-control pull-right" id="reservationtime">
 			        </div>
 			    </div>
+			    <div class="row">
+					<div class="box-body">
+				    	<table id="TBEditPermission" class="display nowrap" cellspacing="0" width="100%"></table>
+				    </div>
+			    </div>
 	        </div>
 	        <div class="modal-footer">
 	            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

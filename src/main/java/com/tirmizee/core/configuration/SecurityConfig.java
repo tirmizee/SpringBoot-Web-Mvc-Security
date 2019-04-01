@@ -26,12 +26,14 @@ import org.springframework.security.web.authentication.session.CompositeSessionA
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.session.ConcurrentSessionFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.session.SimpleRedirectSessionInformationExpiredStrategy;
 
 import com.tirmizee.backend.dao.PermissionDao;
 import com.tirmizee.backend.dao.UserDao;
+import com.tirmizee.core.constant.Constant;
 import com.tirmizee.core.constant.PermissionCode;
 import com.tirmizee.core.security.AuthenticationProviderImpl;
 import com.tirmizee.core.security.CustomConcurrentSessionControlAuthenStrategy;
@@ -62,9 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired 
 	private AuthenticationSuccessHandler authenticationSuccessHandler;
 	
-	@Autowired 
-	private CustomHttpSessionCsrfTokenRepository customHttpSessionCsrfTokenRepository;
-	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder(11);
@@ -85,9 +84,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	return new ConcurrentSessionFilter(sessionRegistry(), sessionInformationExpiredStrategy());
     }
     
+    @Bean 
+	public CsrfTokenRepository httpSessionCsrfTokenRepository() {
+    	CustomHttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new CustomHttpSessionCsrfTokenRepository();
+    	httpSessionCsrfTokenRepository.setHeaderName(Constant.Resource.APPLICATION.getString("security.csrf.header"));
+		return httpSessionCsrfTokenRepository;
+	}
+    
     @Bean
     public SimpleRedirectSessionInformationExpiredStrategy sessionInformationExpiredStrategy(){
-    	return new SimpleRedirectSessionInformationExpiredStrategy("/login?error=This username is logged in by another user.");
+    	return new SimpleRedirectSessionInformationExpiredStrategy("/login?error=Session Expired");
     }
     
 	@Bean
@@ -97,11 +103,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
     public CompositeSessionAuthenticationStrategy sessionAuthenticationStrategy(){
-    	List<SessionAuthenticationStrategy> delegateStrategies = Arrays.asList(
-   			new SessionFixationProtectionStrategy(), 
-    		new CustomConcurrentSessionControlAuthenStrategy(sessionRegistry()), 
+		List<SessionAuthenticationStrategy> delegateStrategies = Arrays.asList(
+			new SessionFixationProtectionStrategy(), 
+			new CustomConcurrentSessionControlAuthenStrategy(sessionRegistry()), 
 			new RegisterSessionAuthenticationStrategy(sessionRegistry())
-    	);
+		);
     	return new CompositeSessionAuthenticationStrategy(delegateStrategies);    
     }
 	
@@ -131,7 +137,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.accessDeniedHandler(accessDeniedHandler)
 				.and()
 			.csrf()
-				.csrfTokenRepository(customHttpSessionCsrfTokenRepository)
+				.csrfTokenRepository(httpSessionCsrfTokenRepository())
 				.ignoringAntMatchers("/logout")
 				.and()
 			.authorizeRequests()

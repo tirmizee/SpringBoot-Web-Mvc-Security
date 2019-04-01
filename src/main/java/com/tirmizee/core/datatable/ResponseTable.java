@@ -19,6 +19,7 @@ public class ResponseTable<T> implements Serializable {
 	protected Long recordsTotal;
 	protected Long recordsFiltered;
 	protected Iterable<T> data;
+	protected Object other;
 	
 	public ResponseTable(Collection<T> datas){
 		data = datas;
@@ -72,6 +73,14 @@ public class ResponseTable<T> implements Serializable {
 
 	public void setData(Iterable<T> data) {
 		this.data = data;
+	}
+
+	public Object getOther() {
+		return other;
+	}
+
+	public void setOther(Object other) {
+		this.other = other;
 	}
 	
 }

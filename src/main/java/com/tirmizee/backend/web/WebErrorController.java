@@ -11,19 +11,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Controller
 public class WebErrorController {
 
-	private static final Logger LOGGER = Logger.getLogger(WebErrorController.class);
+	public static final Logger LOGGER = Logger.getLogger(WebErrorController.class);
 	
 	@GetMapping(value = "/accessdenied")
 	@ResponseStatus(code = HttpStatus.FORBIDDEN)
 	public String accessDenied(ModelMap model) {
-		LOGGER.debug("/AccessDenied");
 		return "error/403";
 	}
 	
 	@GetMapping(value = "/NotFound")
 	@ResponseStatus(code = HttpStatus.NOT_FOUND)
 	public String notFound(ModelMap model, @RequestParam(required = false) String RequestURL) {
-		LOGGER.debug("/NotFound");
 		model.addAttribute("RequestURL", RequestURL);
 		return "error/404";
 	}
@@ -31,7 +29,6 @@ public class WebErrorController {
 	@GetMapping(value = "/ServerError")
 	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
 	public String serverError(ModelMap model) {
-		LOGGER.debug("/ServerError");
 		return "error/500";
 	}
 	

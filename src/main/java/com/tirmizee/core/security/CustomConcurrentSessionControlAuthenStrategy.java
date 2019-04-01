@@ -1,5 +1,6 @@
 package com.tirmizee.core.security;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy;
@@ -17,9 +18,7 @@ public class CustomConcurrentSessionControlAuthenStrategy extends ConcurrentSess
 		
 		if (principal instanceof UserProfile) {
 			UserProfile userProfile = (UserProfile) principal;
-			if("R01".equalsIgnoreCase(userProfile.getRoleCode())){
-				return 2;
-			}
+			return ObjectUtils.defaultIfNull(userProfile.getMaxSession(), 1);
 		}
 		return 1;
 	}

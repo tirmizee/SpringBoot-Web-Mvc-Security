@@ -21,6 +21,7 @@ public class User implements Persistable<Long>{
 	private boolean enabled;
 	private boolean firstLogin;
 	private Integer fkRoleId;
+	private Integer maxSession;
 	
 	public boolean isPersisted() {
 		return persisted;
@@ -132,6 +133,14 @@ public class User implements Persistable<Long>{
 
 	public void setFkRoleId(Integer fkRoleId) {
 		this.fkRoleId = fkRoleId;
+	}
+
+	public Integer getMaxSession() {
+		return maxSession;
+	}
+
+	public void setMaxSession(Integer maxSession) {
+		this.maxSession = maxSession;
 	}
 
 	@Override

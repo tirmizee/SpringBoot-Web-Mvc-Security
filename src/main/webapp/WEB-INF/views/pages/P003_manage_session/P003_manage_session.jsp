@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<security:authentication var="profile" property="principal" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +10,7 @@
   <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <jsp:include page="../../commons/imports.jsp" />
   <script>
-  	var uid = '${profile.username}';
+  	var sessionid = '${sessionid}';
   </script>
   
 <title><spring:message code="app.name"/></title>

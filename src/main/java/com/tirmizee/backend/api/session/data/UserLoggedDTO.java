@@ -14,6 +14,8 @@ public class UserLoggedDTO implements Serializable {
 	private String lastName;
 	private String roleName;
 	private String accessIp;
+	private String sessionId;
+	private Integer maxSession;
 	
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date createDate;
@@ -62,5 +64,17 @@ public class UserLoggedDTO implements Serializable {
 	public void setExpired(boolean expired) {
 		this.expired = expired;
 	}
-	
+	public String getSessionId() {
+		return sessionId;
+	}
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+	public Integer getMaxSession() {
+		return maxSession;
+	}
+	public void setMaxSession(Integer maxSession) {
+		this.maxSession = maxSession;
+	}
+
 }

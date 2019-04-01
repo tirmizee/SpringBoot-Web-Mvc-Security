@@ -3,22 +3,20 @@ package com.tirmizee.core.security;
 import static com.tirmizee.core.constant.Constant.AppSetting.SESSION_TIME_OUT;
 
 import java.io.IOException;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import com.tirmizee.backend.service.AppSettingService;
-import com.tirmizee.core.constant.PermissionCode;
 
 @Component
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler{
@@ -48,12 +46,20 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 	}
 	
 	protected String determineTargetUrl(Authentication authentication) {
-		Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-		if (authorities.contains(PermissionCode.P000)) {
-			return "/main";
-		}else {
-			return "/main";
+		
+//		Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+		
+		Object principal = authentication.getPrincipal();
+		
+		if (principal instanceof UserProfile) {
+			UserProfile userProfile = (UserProfile) principal;
+			switch (StringUtils.upperCase(userProfile.getRoleCode())) {
+				case "R01": return "/main";
+				case "R02": return "/main";
+				case "R03": return "/main";
+			}
 		}
+		return "/main";
 	}
 	
 }

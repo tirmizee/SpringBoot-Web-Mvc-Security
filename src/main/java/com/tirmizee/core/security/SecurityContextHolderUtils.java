@@ -1,5 +1,6 @@
 package com.tirmizee.core.security;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -17,12 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class SecurityContextHolderUtils {
 	
-	public static void grantAuthority(String username, String authority){
-		List<GrantedAuthority> authorities = Arrays.asList( new SimpleGrantedAuthority(authority));
-		UsernamePasswordAuthenticationToken authRequest = authenticationToken(username , null ,authorities);
-		updateAuthentication(authRequest);
-	}
-	
 	public static void grantAuthority(String username, String...authorities){
 		UsernamePasswordAuthenticationToken authRequest = authenticationToken(
 				username, null, AuthorityUtils.createAuthorityList(authorities));
@@ -31,6 +26,28 @@ public class SecurityContextHolderUtils {
 	
 	public static void grantAuthority(String username, GrantedAuthority...authorities){
 		UsernamePasswordAuthenticationToken authRequest = authenticationToken(username, null, Arrays.asList(authorities));
+		updateAuthentication(authRequest);
+	}
+	
+	public static void addAuthority(String username, String authority){
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.add( new SimpleGrantedAuthority(authority));
+		authorities.addAll(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+		UsernamePasswordAuthenticationToken authRequest = authenticationToken(username , null ,authorities);
+		updateAuthentication(authRequest);
+	}
+	
+	public static void addAuthority(String username, String...authority){
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.addAll(AuthorityUtils.createAuthorityList(authority));
+		authorities.addAll(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+		UsernamePasswordAuthenticationToken authRequest = authenticationToken(username , null ,authorities);
+		updateAuthentication(authRequest);
+	}
+	
+	public static void grantAuthority(String username, String authority){
+		List<GrantedAuthority> authorities = Arrays.asList( new SimpleGrantedAuthority(authority));
+		UsernamePasswordAuthenticationToken authRequest = authenticationToken(username , null ,authorities);
 		updateAuthentication(authRequest);
 	}
 	

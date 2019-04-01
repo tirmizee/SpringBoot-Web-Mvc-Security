@@ -20,6 +20,7 @@ public class UserDetail implements Serializable{
 	private boolean accountnonlocked;	
 	private boolean enabled;
 	private boolean firstLogin;
+	private Integer maxSession;
 	
 	public String getUsername() {
 		return username;
@@ -98,6 +99,12 @@ public class UserDetail implements Serializable{
 	}
 	public void setRoleCode(String roleCode) {
 		this.roleCode = roleCode;
+	}
+	public Integer getMaxSession() {
+		return maxSession;
+	}
+	public void setMaxSession(Integer maxSession) {
+		this.maxSession = maxSession;
 	}
 	@Override
 	public String toString() {

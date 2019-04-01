@@ -17,6 +17,7 @@ import com.tirmizee.backend.service.UserService;
 import com.tirmizee.core.exception.FirstloginException;
 import com.tirmizee.core.exception.LimitBadCredentialsException;
 import com.tirmizee.core.exception.PasswordExpriedException;
+import com.tirmizee.core.utilities.DateUtils;
 
 
 /**
@@ -59,7 +60,7 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 			}
 			
 			// PASSWORD EXPRIED 
-			if(userService.isPasswordExpried(userProfile.getCredentialsExpiredDate())) {
+			if(DateUtils.nowAfter(userProfile.getCredentialsExpiredDate())) {
 				LOG.info(username + " : " + "password expried");
 				userService.fourcePasswordExpired(username);
 				throw new PasswordExpriedException(username, "Force password expried change");

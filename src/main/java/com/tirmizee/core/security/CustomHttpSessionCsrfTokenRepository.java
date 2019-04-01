@@ -10,12 +10,10 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import com.tirmizee.core.component.PasswordGenerator;
 
-@Component
 public final class CustomHttpSessionCsrfTokenRepository implements CsrfTokenRepository {
 	
 	private static final String DEFAULT_CSRF_PARAMETER_NAME = "_csrf";

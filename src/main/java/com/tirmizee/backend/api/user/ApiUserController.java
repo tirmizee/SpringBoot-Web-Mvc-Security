@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,10 @@ import com.tirmizee.backend.api.user.data.ReqForgotPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
+import com.tirmizee.backend.api.user.data.ReqUpdateAccountNonLockedDTO;
+import com.tirmizee.backend.api.user.data.ReqUpdateEnableDTO;
+import com.tirmizee.backend.api.user.data.ReqUpdateFirstLoginDTO;
+import com.tirmizee.backend.api.user.data.ReqUpdatePasswordExpiredDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
 import com.tirmizee.backend.api.user.data.UserDetailDTO;
 import com.tirmizee.backend.service.UserService;
@@ -34,6 +39,7 @@ public class ApiUserController {
 	@Autowired 
 	private UserService userService;
 	
+	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/password/firstlogin")
 	public MessageSuccess changePasswordFirstLogin(@RequestBody @Valid ReqPasswordDTO passwordDTO) {
 		final String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -41,6 +47,7 @@ public class ApiUserController {
 		return new MessageSuccess();
 	}
 	
+	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/password/expried")
 	public MessageSuccess changePasswordExpried(@RequestBody @Valid ReqPasswordExpriedDTO passwordExpriedDTO) {
 		final String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -48,23 +55,49 @@ public class ApiUserController {
 		return new MessageSuccess();
 	}
 	
+	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/password/forgot")
 	public MessageSuccess forgotPassword(@RequestBody @Valid ReqForgotPasswordDTO forgotPasswordDTO) {
 		userService.forgotPassword(forgotPasswordDTO.getEmail());
 		return new MessageSuccess();
 	}
 	
+	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/password/reset")
 	public MessageSuccess resetPassword(@RequestBody @Valid ReqPasswordResetTokenDTO passwordResetTokenDTO) {
 		userService.resetPassword(passwordResetTokenDTO);
 		return new MessageSuccess(null, "Reset your password complete.");
 	}
 	
+	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/update/enabled")
-	public MessageSuccess updateEnabled(@RequestBody @Valid ReqPasswordResetTokenDTO passwordResetTokenDTO) {
-		return null;
+	public MessageSuccess updateEnabled(@RequestBody @Valid ReqUpdateEnableDTO reqUpdateEnableDTO) {
+		userService.updateStatusEnable(reqUpdateEnableDTO);
+		return new MessageSuccess(null, "Update Status Enble Complete.");
 	}
 	
+	@PreAuthorize("hasAnyAuthority('P002')")
+	@PostMapping(path = "/update/passwordexpired")
+	public MessageSuccess updatePasswordExpired(@RequestBody @Valid ReqUpdatePasswordExpiredDTO reqUpdatePasswordExpiredDTO) {
+		userService.updateStatusPasswordExpired(reqUpdatePasswordExpiredDTO);
+		return new MessageSuccess(null, "Update Status Password Expired Complete.");
+	}
+	
+	@PreAuthorize("hasAnyAuthority('P002')")
+	@PostMapping(path = "/update/accountnonlocked")
+	public MessageSuccess updateAccountNonLocked(@RequestBody @Valid ReqUpdateAccountNonLockedDTO reqUpdateAccountNonLockedDTO) {
+		userService.updateStatusLocked(reqUpdateAccountNonLockedDTO);
+		return new MessageSuccess(null, "Update Status Account Non Locked Complete.");
+	}
+	
+	@PreAuthorize("hasAnyAuthority('P002')")
+	@PostMapping(path = "/update/firstlogin")
+	public MessageSuccess updateFirstLogin(@RequestBody @Valid ReqUpdateFirstLoginDTO reqUpdateFirstLoginDTO) {
+		userService.updateStatusFirstLogin(reqUpdateFirstLoginDTO);
+		return new MessageSuccess(null, "Update Status First Login Complete.");
+	}
+	
+	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/page")
 	public DeferredResult<ResponseTable<UserDetailDTO>> pageDataTable(@RequestBody @Valid RequestTable<UserDetailCriteriaDTO> requestTable){
 		DeferredResult<ResponseTable<UserDetailDTO>> deferredResult = new DeferredResult<>(60000L);
@@ -72,21 +105,22 @@ public class ApiUserController {
 			try {
 				ResponseTable<UserDetailDTO> result = userService.pagingTable(requestTable);
 				deferredResult.setResult(result);
-			}catch (Exception ex) {
-				deferredResult.setErrorResult(ex);
+			}catch (Exception exception) {
+				deferredResult.setErrorResult(exception);
 			}
 		});
 		return deferredResult;
 	}
 
+	@PreAuthorize("hasAnyAuthority('P002')")
 	@GetMapping(path = "/count")
 	public DeferredResult<Long> count() {
 		DeferredResult<Long> deferredResult = new DeferredResult<>(60000L);
 		ForkJoinPool.commonPool().submit(()->{
 			try {
 				deferredResult.setResult(userService.countUses());
-			}catch (Exception ex) {
-				deferredResult.setErrorResult(ex);
+			}catch (Exception exception) {
+				deferredResult.setErrorResult(exception);
 			}
 		});
 		return deferredResult;

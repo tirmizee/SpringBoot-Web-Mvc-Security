@@ -14,6 +14,7 @@ public class UserProfile extends UserDetailsImpl {
 	private String roleName;
 	private String accessIp;
 	private boolean isFirstLogin;
+	private Integer maxSession;
 	private Date credentialsExpiredDate;
 	private java.util.Date createDate;
 	
@@ -26,6 +27,7 @@ public class UserProfile extends UserDetailsImpl {
 		this.accessIp = builder.accessIp;
 		this.createDate = builder.createDate;
 		this.isFirstLogin = builder.isFirstLogin;
+		this.maxSession = builder.maxSession;
 		this.credentialsExpiredDate = builder.credentialsExpiredDate;
 	}
 	
@@ -93,6 +95,14 @@ public class UserProfile extends UserDetailsImpl {
 		this.createDate = createDate;
 	}
 
+	public Integer getMaxSession() {
+		return maxSession;
+	}
+
+	public void setMaxSession(Integer maxSession) {
+		this.maxSession = maxSession;
+	}
+
 	@Override
     public boolean equals(Object obj) {
 		if (obj instanceof UserDetails) {
@@ -113,9 +123,11 @@ public class UserProfile extends UserDetailsImpl {
 		private String roleCode;
 		private String roleName;
 		private String accessIp;
+		private Integer maxSession;
 		private java.util.Date createDate;
 		private boolean isFirstLogin;
 		private Date credentialsExpiredDate;
+		
 		
 		public Builder(){}
 		
@@ -141,6 +153,11 @@ public class UserProfile extends UserDetailsImpl {
 		
 		public Builder accessIp(String accessIp){
 			this.accessIp = accessIp;
+			return this;
+		}
+		
+		public Builder maxSession(Integer maxSession){
+			this.maxSession = maxSession;
 			return this;
 		}
 		

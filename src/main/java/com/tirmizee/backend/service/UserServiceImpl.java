@@ -2,8 +2,6 @@ package com.tirmizee.backend.service;
 
 import static com.tirmizee.core.constant.Constant.AppSetting.PASSWORD_CHANGE_DAY;
 
-import java.sql.Date;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
-import com.tirmizee.backend.api.user.data.ReqUpdateEnable;
+import com.tirmizee.backend.api.user.data.ReqUpdateAccountNonLockedDTO;
+import com.tirmizee.backend.api.user.data.ReqUpdateEnableDTO;
+import com.tirmizee.backend.api.user.data.ReqUpdateFirstLoginDTO;
+import com.tirmizee.backend.api.user.data.ReqUpdatePasswordExpiredDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
 import com.tirmizee.backend.api.user.data.UserDetailDTO;
 import com.tirmizee.backend.dao.ForgotPasswordDao;
@@ -143,11 +144,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean isPasswordExpried(Date expriedDate) {
-		return expriedDate == null ? false : DateUtils.now().after(expriedDate);
-	}
-
-	@Override
 	public void fourcePasswordExpired(String username) {
 		User user = userDao.findByUsername(username);
 		user.setCredentialsnonexpired(false);
@@ -194,7 +190,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
 	public void resetPassword(ReqPasswordResetTokenDTO passwordResetTokenDTO) {
 		
 		Long uid = passwordResetTokenDTO.getUid();
@@ -216,12 +211,42 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
-	public void updateStatusEnable(ReqUpdateEnable updateEnable) {
-		User user = userDao.findByUsername(updateEnable.getUsername());
-		user.setEnabled(updateEnable.isEnabled());
+	public boolean isPasswordExpired(String username) {
+		User user = userDao.findByUsername(username);
+		if (user == null) { return false; }
+		return DateUtils.nowAfter(user.getCredentialsexpiredDate());
+	} 
+	
+	@Override
+	public void updateStatusEnable(ReqUpdateEnableDTO updateEnableDTO) {
+		User user = userDao.findByUsername(updateEnableDTO.getUsername());
+		user.setEnabled(updateEnableDTO.isEnabled());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
-	} 
+	}
+
+	@Override
+	public void updateStatusPasswordExpired(ReqUpdatePasswordExpiredDTO UpdatePasswordExpiredDTO) {
+		User user = userDao.findByUsername(UpdatePasswordExpiredDTO.getUsername());
+		user.setCredentialsnonexpired(UpdatePasswordExpiredDTO.isPasswordExpired());
+		user.setUpdateDate(DateUtils.now());
+		userDao.save(user);
+	}
+
+	@Override
+	public void updateStatusLocked(ReqUpdateAccountNonLockedDTO updateAccountNonLockedDTO) {
+		User user = userDao.findByUsername(updateAccountNonLockedDTO.getUsername());
+		user.setAccountnonlocked(updateAccountNonLockedDTO.isAccountnonlocked());
+		user.setUpdateDate(DateUtils.now());
+		userDao.save(user);
+	}
+
+	@Override
+	public void updateStatusFirstLogin(ReqUpdateFirstLoginDTO updateFirstLogin) {
+		User user = userDao.findByUsername(updateFirstLogin.getUsername());
+		user.setFirstLogin(updateFirstLogin.isFirstLogin());
+		user.setUpdateDate(DateUtils.now());
+		userDao.save(user);
+	}
 	
 }

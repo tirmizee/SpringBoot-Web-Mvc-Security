@@ -14,10 +14,10 @@ public interface SessionService {
 	
 	int countSessionsExpired();
 	
-	void removeSession(String username);
+	void removeSession(String username, String sessionId);
 	
 	List<UserLoggedDTO> allUserLogged();
 	
-	List<SessionInformation> getAllSessionsByUsername(String username);
+	List<SessionInformation> getAllSessionsByUsername(String username, boolean includeExpiredSessions);
 	
 }

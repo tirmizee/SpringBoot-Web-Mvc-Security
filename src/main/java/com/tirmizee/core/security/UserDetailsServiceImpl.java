@@ -57,6 +57,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				.roleCode(userDetail.getRoleCode())
 				.roleName(userDetail.getRoleName())
 				.isFirstLogin(userDetail.getFirstLogin())
+				.maxSession(userDetail.getMaxSession())
 				.createDate(DateUtils.now())
 				.build();
 	}

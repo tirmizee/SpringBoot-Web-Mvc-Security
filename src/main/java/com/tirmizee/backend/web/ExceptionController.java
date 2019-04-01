@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tirmizee.backend.web.data.MessageError;
 import com.tirmizee.core.component.VarargMessageSource;
@@ -32,12 +33,14 @@ public class ExceptionController {
 	}
 	
 	@ExceptionHandler(NoHandlerFoundException.class)
-	public ModelAndView handleNotFoundException(NoHandlerFoundException ex ){
+	public ModelAndView handleNotFoundException(NoHandlerFoundException ex, RedirectAttributes redirectAttr){
+		redirectAttr.addFlashAttribute("url", ex.getRequestURL());
 		return new ModelAndView("redirect:/NotFound");
 	}
 	
 	@ExceptionHandler(UrlNotFoundException.class)
-	public ModelAndView handleNotFoundUrlNotFoundException(UrlNotFoundException ex){
+	public ModelAndView handleNotFoundUrlNotFoundException(UrlNotFoundException ex, RedirectAttributes redirectAttr){
+		redirectAttr.addFlashAttribute("url", ex.getRequestURL());
 		return new ModelAndView("redirect:/NotFound");
 	}
 

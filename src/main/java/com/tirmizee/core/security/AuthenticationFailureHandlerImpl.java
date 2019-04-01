@@ -35,19 +35,19 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
 			throws IOException, ServletException {
 
-		// DETERMINE URL FOR USERNAME IS INVALID
+		// DETERMINE URL FOR USERNAME INVALID
 		if (exception instanceof UsernameNotFoundException) {
 			STRATEGY.sendRedirect(request, response, "/login?error=Username or Password invalid");
 		} 
 		
-		// DETERMINE URL FOR PASSWORD IS INVALID
+		// DETERMINE URL FOR PASSWORD INVALID
 		else if(exception instanceof LimitBadCredentialsException) {
 			LimitBadCredentialsException badCredentials = (LimitBadCredentialsException) exception;
 			String error = badCredentials.isLocked() ? "Username is Locked" : "Username or Password invalid";
 			STRATEGY.sendRedirect(request, response, String.format("/login?error=%s", error));
 		} 
 		
-		// DETERMINE URL FOR USERNAME IS LOCKED
+		// DETERMINE URL FOR USERNAME LOCKED
 		else if(exception instanceof LockedException) {
 			STRATEGY.sendRedirect(request, response, "/login?error=Username is Locked");
 		}
@@ -64,7 +64,7 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 		else if(exception instanceof PasswordExpriedException) {
 			final PasswordExpriedException passwordExpriedException = (PasswordExpriedException) exception;
 			final String username = passwordExpriedException.getUsername();
-			SecurityContextHolderUtils.grantAuthority(username,PermissionCode.PG01);
+			SecurityContextHolderUtils.grantAuthority(username, PermissionCode.PG01);
 			STRATEGY.sendRedirect(request, response, "/passwordexpried");
 		}
 		

@@ -57,6 +57,7 @@
 				   <%-- 	<security:authorize access="hasAnyAuthority('P005')"> --%>
 				   	<li><a href="${pageContext.request.contextPath}/managerole"><i class="fa fa-users"></i><spring:message code="app.menu.permission"/></a></li>
 					<%-- </security:authorize> --%>
+					<li><a href="${pageContext.request.contextPath}/managerole"><i class="fa fa-users"></i><spring:message code="app.menu.appsetting"/></a></li>
 				</ul>
 			</li>
 			</security:authorize>

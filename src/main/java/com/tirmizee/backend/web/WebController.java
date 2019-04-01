@@ -1,7 +1,5 @@
 package com.tirmizee.backend.web;
 
-import javax.servlet.ServletContext;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import com.tirmizee.backend.service.ForgotPasswordService;
 
@@ -17,9 +16,6 @@ import com.tirmizee.backend.service.ForgotPasswordService;
 public class WebController {
 
 	public static final Logger LOG = Logger.getLogger(WebController.class);
-	
-	@Autowired
-	private ServletContext servletContext;
 	
 	@Autowired
 	private ForgotPasswordService forgotPasswordService;
@@ -75,6 +71,8 @@ public class WebController {
 	@PreAuthorize("hasAnyAuthority('P003')")
 	@GetMapping(path = "/managesession")
 	public String manageSession(ModelMap model) {
+		String sessionid = RequestContextHolder.currentRequestAttributes().getSessionId();
+		model.addAttribute("sessionid", sessionid);
 		return "pages/P003_manage_session/P003_manage_session";
 	}
 	

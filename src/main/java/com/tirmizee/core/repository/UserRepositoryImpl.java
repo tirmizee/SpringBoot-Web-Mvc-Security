@@ -32,6 +32,7 @@ public class UserRepositoryImpl extends AbstractOracleJdbcRepository<User, Long>
 			user.setPassword(rs.getString(COL_PASSWORD));
 			user.setUsername(rs.getString(COL_USERNAME));
 			user.setProfileId(rs.getInt(COL_PROFILE_ID));
+			user.setMaxSession(rs.getInt(COL_MAX_SESSION));
 			return user.withPersisted(true);
 		}
 	};
@@ -53,6 +54,7 @@ public class UserRepositoryImpl extends AbstractOracleJdbcRepository<User, Long>
 			map.put(COL_USERNAME, param.getUsername());
 			map.put(COL_PROFILE_ID, param.getProfileId());
 			map.put(COL_USER_ID, param.getUserId());
+			map.put(COL_MAX_SESSION, param.getMaxSession());
 			return map;
 		}
 	};

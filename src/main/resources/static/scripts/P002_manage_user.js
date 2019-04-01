@@ -27,17 +27,17 @@ var ManageUserModule = function(){
 				type: "POST",
 				contentType: 'application/json',
 				headers: {
-	                'X-CSRF-TOKEN' : AjaxManager.CsrfToken 
+					[AjaxManager.CsrfHeader] : AjaxManager.CsrfToken 
 	            },
 				data : function (d) {
 					d.search = Search;
 					return JSON.stringify(d);
 				},error : function (xhr, error, thrown) {
-					window.location.replace("tirmizee/login");
+					window.location.replace("/login");
 	            }
 			},
 			columns: [
-				{ data: null           		      ,title : "Action" },
+				{ data : null           		  ,title : "Action" },
 				{ data : null                     ,title : "Order" },
 				{ data : "username"               ,title : "Ussername"},
 				{ data : "firstName"              ,title : "First Name"},
@@ -70,9 +70,9 @@ var ManageUserModule = function(){
 					targets   : 7,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
-						var actice = '<a data-btn-name="enable" href=""><span class="label label-success raduis">active</span></a>';
-						var inActive = '<a data-btn-name="enable" href=""><span class="label label-danger raduis">inactive</span></a>';
-						return data ? actice : inActive;
+						var enable = '<a data-btn-name="enable" href=""><span class="label label-success raduis">enable</span></a>';
+						var disable = '<a data-btn-name="enable" href=""><span class="label label-danger raduis">disable</span></a>';
+						return data ? enable : disable;
 					}
 				},
 				{
@@ -99,7 +99,7 @@ var ManageUserModule = function(){
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="firstlogin" href=""><span class="label label-success raduis">active</span></a>';
 						var expired = '<a data-btn-name="firstlogin" href=""><span class="label label-warning raduis">inactive</span></a>';
-						return data ? normal : expired;
+						return !data ? normal : expired;
 					}
 				}
 			],
@@ -111,42 +111,194 @@ var ManageUserModule = function(){
 		    }
 		}).on('click', 'a[data-btn-name="enable"]', function (event) {
 			event.preventDefault();
-
+			
 			var data = DataTable.row($(this).parents('tr')).data();
-			updateStatusEnable(data);
+			
+			$.confirm({
+			    title: 'Confirm!',
+			    icon: 'glyphicon glyphicon-heart',
+			    type: 'blue',
+			    content: 'Simple confirm!',
+			    buttons: {
+			        confirm: {
+			        	btnClass : 'btn-blue',
+			        	action : function() {
+			        		updateStatusEnable(data);
+			            }
+			        },
+			        cancel: function () {}
+			    }
+			});
+			
 		}).on('click', 'a[data-btn-name="locked"]', function (event) {
 			event.preventDefault();
 			
 			var data = DataTable.row($(this).parents('tr')).data();
-			updateStatusLocked(data);
+			
+			$.confirm({
+			    title: 'Confirm!',
+			    icon: 'glyphicon glyphicon-heart',
+			    type: 'blue',
+			    content: 'Simple confirm!',
+			    buttons: {
+			        confirm: {
+			        	btnClass : 'btn-blue',
+			        	action : function() {
+			        		updateStatusLocked(data);
+			            }
+			        },
+			        cancel: function () {}
+			    }
+			});
+			
 		}).on('click', 'a[data-btn-name="expired"]', function (event) {
 			event.preventDefault();
 			
 			var data = DataTable.row($(this).parents('tr')).data();
-			updateStatusExpired(data);
+			
+			$.confirm({
+			    title: 'Confirm!',
+			    icon: 'glyphicon glyphicon-heart',
+			    type: 'blue',
+			    content: 'Simple confirm!',
+			    buttons: {
+			        confirm: {
+			        	btnClass : 'btn-blue',
+			        	action : function() {
+			        		updateStatusExpired(data);
+			            }
+			        },
+			        cancel: function () {}
+			    }
+			});
+			
 		}).on('click', 'a[data-btn-name="firstlogin"]', function (event) {
 			event.preventDefault();
 			
 			var data = DataTable.row($(this).parents('tr')).data();
-			updateStatusLogin(data);
+			
+			$.confirm({
+			    title: 'Confirm!',
+			    icon: 'glyphicon glyphicon-heart',
+			    type: 'blue',
+			    content: 'Simple confirm!',
+			    buttons: {
+			        confirm: {
+			        	btnClass : 'btn-blue',
+			        	action : function() {
+			        		updateStatusLogin(data);
+			            }
+			        },
+			        cancel: function () {}
+			    }
+			});
+			
 		});
 		
 	}
 	
 	var updateStatusEnable = function(data){
-		
+		var request = {
+			username : data.username,
+			enabled : !data.enabled
+		};
+		AjaxManager.PostData(request, 'api/user/update/enabled',
+			function(response){
+				$.confirm({
+				    title: 'Meaages Alert!',
+				    content: response.messageName,
+				    type: 'green',
+				    typeAnimated: true,
+				    buttons: {
+				        close: function () {	        				        	
+				        
+				        }
+				    }
+				});
+				DataTable.ajax.reload(false);
+			},
+			function(jqXHR, textStatus, errorThrown){
+				$.alert('Error!');
+			}
+		);
 	}
 	
 	var updateStatusLocked = function(data){
-		
+		var request = {
+			username : data.username,
+			accountnonlocked : !data.accountnonlocked
+		};
+		AjaxManager.PostData(request, 'api/user/update/accountnonlocked',
+			function(response){
+				$.confirm({
+				    title: 'Meaages Alert!',
+				    content: response.messageName,
+				    type: 'green',
+				    typeAnimated: true,
+				    buttons: {
+				        close: function () {	        				        	
+				        
+				        }
+				    }
+				});
+				DataTable.ajax.reload(false);
+			},
+			function(jqXHR, textStatus, errorThrown){
+				$.alert('Error!');
+			}
+		);
 	}
 
 	var updateStatusExpired = function(data){
-		
+		var request = {
+			username : data.username,
+			passwordExpired : !data.credentialsnonexpired
+		};
+		AjaxManager.PostData(request, 'api/user/update/passwordexpired',
+			function(response){
+				$.confirm({
+				    title: 'Meaages Alert!',
+				    content: response.messageName,
+				    type: 'green',
+				    typeAnimated: true,
+				    buttons: {
+				        close: function () {	        				        	
+				        
+				        }
+				    }
+				});
+				DataTable.ajax.reload(false);
+			},
+			function(jqXHR, textStatus, errorThrown){
+				$.alert('Error!');
+			}
+		);
 	}
 
 	var updateStatusLogin = function(data){
-	
+		var request = {
+			username : data.username,
+			firstLogin : !data.firstLogin
+		};
+		AjaxManager.PostData(request, 'api/user/update/firstlogin',
+			function(response){
+				$.confirm({
+				    title: 'Meaages Alert!',
+				    content: response.messageName,
+				    type: 'green',
+				    typeAnimated: true,
+				    buttons: {
+				        close: function () {	        				        	
+				        
+				        }
+				    }
+				});
+				DataTable.ajax.reload(false);
+			},
+			function(jqXHR, textStatus, errorThrown){
+				$.alert('Error!');
+			}
+		);
 	}
 	
 	var handleButtonSearch = function(){
@@ -169,7 +321,7 @@ var ManageUserModule = function(){
 			    type : 'POST',
 			    contentType : 'application/json',
 			    headers : {
-	                'X-CSRF-TOKEN' : AjaxManager.CsrfToken 
+			    	[AjaxManager.CsrfHeader] : AjaxManager.CsrfToken 
 	            },
 	            data : function (params) {
 	            	params.page = params.page || 0;
@@ -190,20 +342,20 @@ var ManageUserModule = function(){
 	                    }
 		            };
 			    }
-			  },
-			  cache : true,
-			  templateResult : function (data) {
+			},
+			cache : true,
+			templateResult : function (data) {
 				  
-				  var $template = $('<div></div>');
-				  var $body_line1 = $('<span>' + data.text + '</span>');  
-				  var $body_line2 = $('<small><b>code : </b>' + data.code + '</small>');  
+				var $template = $('<div></div>');
+				var $body_line1 = $('<span>' + data.text + '</span>');  
+				var $body_line2 = $('<small><b>code : </b>' + data.code + '</small>');  
+				
+				$template.append($body_line1);
+				$template.append('<br>');
+				$template.append($body_line2);
 				  
-				  $template.append($body_line1);
-				  $template.append('<br>');
-				  $template.append($body_line2);
-				  
-                  return $template;
-			  } 
+				return $template;
+			} 
 		});
 	}
 	

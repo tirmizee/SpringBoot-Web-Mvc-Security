@@ -23,9 +23,11 @@ var ManageSessionModule = function(){
 				{ data : "username"    ,title : "Useruame"},
 				{ data : "firstName"   ,title : "Fullname"},
 				{ data : "roleName"    ,title : "Role"},
-				{ data : "createDate"  ,title : "Login Date"},
+				{ data : "createDate"  ,title : "Last Request"},
 				{ data : "accessIp"    ,title : "Access IP"},
-				{ data : "expired"     ,title : "Status"}
+				{ data : "maxSession"  ,title : "Max Session"},
+				{ data : "expired"     ,title : "Status"},
+				{ data : "sessionId"   ,title : "SessionId"}
 			],
 			columnDefs: [
 				{
@@ -33,7 +35,7 @@ var ManageSessionModule = function(){
 					orderable : false,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
-						return (row.username == uid) ? "" : btnDelete;
+						return (sessionid == row.sessionId ? '' : btnDelete);
 					}
 				},
 				{
@@ -47,13 +49,17 @@ var ManageSessionModule = function(){
 					className : "text-center"
 				},
 				{
-					targets   : 6,
+					targets   : 7,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var actice = '<span class="label label-success">Session Active</span>';
 						var inActive = '<span class="label label-danger">Session Expired</span>';
 						return !data ? actice : inActive;
 					}
+				},
+				{
+					targets : 8,
+					visible : false
 				}
 			],
 			select: {
@@ -65,7 +71,8 @@ var ManageSessionModule = function(){
 		}).on('click', 'a[data-btn-name="btnDelete"]', function (event) {
 			
 			var data = DataTable.row($(this).parents('tr')).data();
-			
+			var url = "api/session/removesession/" + data.username + '/' + data.sessionId;
+				
 			$.confirm({
 			    title: 'Confirm!',
 			    type: 'blue',
@@ -74,25 +81,7 @@ var ManageSessionModule = function(){
 			        confirm: {
 			        	btnClass: 'btn-blue',
 			        	action: function(){
-			        		AjaxManager.GetData(null ,"api/session/removesession/" + data.username,
-			    				function(response){
-			        				loadData();
-			        				$.confirm({
-			        				    title: 'Meaages Alert!',
-			        				    content: 'Remove Session Complete',
-			        				    type: 'green',
-			        				    typeAnimated: true,
-			        				    buttons: {
-			        				        close: function () {
-			        				        	
-			        				        }
-			        				    }
-			        				});
-			    				},
-			    				function(jqXHR, textStatus, errorThrown){
-			    					$.alert('Error!');
-			    				}
-			    			);
+			        		updateSession(url);
 			            }
 			        },
 			        cancel: function () {}
@@ -100,6 +89,28 @@ var ManageSessionModule = function(){
 			});
 			
 		});
+	}
+	
+	var updateSession = function(url){
+		AjaxManager.GetData(null, url,
+			function(response){
+				loadData();
+				$.confirm({
+				    title: 'Meaages Alert!',
+				    content: 'Remove Session Complete',
+				    type: 'green',
+				    typeAnimated: true,
+				    buttons: {
+				        close: function () {
+				        	
+				        }
+				    }
+				});
+			},
+			function(jqXHR, textStatus, errorThrown){
+				$.alert('Error!');
+			}
+		);
 	}
 	
 	var loadData = function() {
@@ -150,7 +161,6 @@ var ManageSessionModule = function(){
 				$('#BoxAllUsers').waitMe("hide");
 			}
 		);
-		
 	}
 	
 	var handleButtonRefresh = function(){

@@ -38,7 +38,7 @@ import com.tirmizee.core.jdbcrepository.sql.SqlGeneratorFactory;
  */
 public abstract class AbstractJdbcRepository<T extends Persistable<ID>, ID extends Serializable> implements JdbcRepository<T, ID>, InitializingBean {
 
-	public static final Logger LOG = Logger.getLogger(AbstractJdbcRepository.class);
+	public static Logger LOG = Logger.getLogger(AbstractJdbcRepository.class);
 	
 	private TableDescription table;
 	private final RowMapper<T> rowMapper;
@@ -51,7 +51,6 @@ public abstract class AbstractJdbcRepository<T extends Persistable<ID>, ID exten
 	private SqlGeneratorFactory sqlGeneratorFactory = SqlGeneratorFactory.getInstance();
 	
 	public AbstractJdbcRepository(RowMapper<T> rowMapper, RowUnmapper<T> rowUnmapper, SqlGenerator sqlGenerator, TableDescription table) {
-		LOG.debug("new connection data source");
 		Assert.notNull(rowMapper,"row mapper must be provided");
 		Assert.notNull(rowUnmapper,"row unmapper must be provided");
 
@@ -87,7 +86,7 @@ public abstract class AbstractJdbcRepository<T extends Persistable<ID>, ID exten
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		LOG.debug("afterPropertiesSet");
+		LOG.info("afterPropertiesSet");
 		Assert.notNull(dataSource, "dataSource must be provided");
 		this.jdbcOperations = new JdbcTemplate(this.dataSource);
 		this.sqlGenerator = sqlGeneratorFactory.getGenerator(dataSource);

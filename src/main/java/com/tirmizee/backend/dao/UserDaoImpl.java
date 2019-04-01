@@ -56,6 +56,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 				.append(COL_CREDENTIALSEXPIRED_DATE).append(" , ")
 				.append(CREDENTIALSNONEXPIRED).append(" , ")
 				.append(FIRST_LOGIN).append(" , ")
+				.append(MAX_SESSION).append(" , ")
 				.append(ProfileRepository.FIRST_NAME).append(" , ")
 				.append(ProfileRepository.LAST_NAME)
 				.append(" FROM ").append(TB_USERS)

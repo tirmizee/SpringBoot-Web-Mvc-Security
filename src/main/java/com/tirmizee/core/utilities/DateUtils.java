@@ -26,7 +26,11 @@ public final class DateUtils {
 	}
 	
 	public static boolean nowAfter(Timestamp time){
-		return nowTimestamp().after(time);
+		return time == null ? false : nowTimestamp().after(time);
+	}
+	
+	public static boolean nowAfter(java.sql.Date date){
+		return date == null ? false : now().after(date);
 	}
 	
 }

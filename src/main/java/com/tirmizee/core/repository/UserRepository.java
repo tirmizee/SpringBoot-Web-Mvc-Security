@@ -19,6 +19,7 @@ public interface UserRepository extends JdbcRepository<User, Long>{
 	public static final String COL_USERNAME = "USERNAME";
 	public static final String COL_PROFILE_ID = "PROFILE_ID";
 	public static final String COL_USER_ID = "USER_ID";
+	public static final String COL_MAX_SESSION = "MAX_SESSION";
 	public static final String FIRST_LOGIN = "USERS.FIRST_LOGIN";
 	public static final String UPDATE_DATE = "USERS.UPDATE_DATE";
 	public static final String CREATE_DATE = "USERS.CREATE_DATE";
@@ -32,5 +33,6 @@ public interface UserRepository extends JdbcRepository<User, Long>{
 	public static final String USERNAME = "USERS.USERNAME";
 	public static final String PROFILE_ID = "USERS.PROFILE_ID";
 	public static final String USER_ID = "USERS.USER_ID";
+	public static final String MAX_SESSION = "USERS.MAX_SESSION";
 	
 }

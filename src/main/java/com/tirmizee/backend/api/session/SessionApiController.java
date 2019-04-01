@@ -41,9 +41,9 @@ public class SessionApiController {
 	}
 	
 	@PreAuthorize("hasAnyAuthority('P003')")
-	@GetMapping(path = "/removesession/{username}")
-	public MessageSuccess removeSession(@PathVariable String username) {
-		sessionService.removeSession(username);
+	@GetMapping(path = "/removesession/{username}/{sessionId}")
+	public MessageSuccess removeSession(@PathVariable String username, @PathVariable String sessionId) {
+		sessionService.removeSession(username, sessionId);
 		return new MessageSuccess();
 	}
 	

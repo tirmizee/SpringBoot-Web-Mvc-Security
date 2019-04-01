@@ -31,6 +31,7 @@ public class RequestTable<T> implements Serializable{
 	protected T search;
 	
 	protected List<OrderData> orders;
+	
 	protected List<ColumnData> columns;
 	
 	public long getDraw() {

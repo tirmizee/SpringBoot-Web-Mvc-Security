@@ -11,7 +11,7 @@ var AjaxManager = function(){
             contentType: 'application/json',
             headers: {
                 'Accept' : 'application/json',
-                'X-CSRF-TOKEN' : token 
+                [header] : token 
             },
             data: JSON.stringify(objToPost)
         }).done(function (objRet) {
@@ -31,7 +31,7 @@ var AjaxManager = function(){
             dataType: 'json',
             headers: {
             	'Accept' : 'application/json',
-            	'X-CSRF-TOKEN' : token
+            	[header] : token
             },
             data: objToGet,
         }).done(function (objRet) {
@@ -50,7 +50,7 @@ var AjaxManager = function(){
             contentType: 'application/json;charset=utf-8',
             headers: {
             	'Accept'        : 'application/json',
-            	'X-CSRF-TOKEN'  : token
+            	[header]  : token
             },
         }).done(function (objRet) {
         	onDeleteSuccess(objRet);
@@ -66,7 +66,7 @@ var AjaxManager = function(){
         	processData: false,
             contentType: false,
             headers: {
-            	'X-CSRF-TOKEN' : token
+            	[header] : token
             },
             async: false,
             cache: false,
