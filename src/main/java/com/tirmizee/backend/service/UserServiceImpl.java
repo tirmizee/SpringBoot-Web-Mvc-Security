@@ -16,10 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
-import com.tirmizee.backend.api.user.data.ReqUpdateAccountNonLockedDTO;
-import com.tirmizee.backend.api.user.data.ReqUpdateEnableDTO;
-import com.tirmizee.backend.api.user.data.ReqUpdateFirstLoginDTO;
-import com.tirmizee.backend.api.user.data.ReqUpdatePasswordExpiredDTO;
+import com.tirmizee.backend.api.user.data.ReqUpdateStatusDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
 import com.tirmizee.backend.api.user.data.UserDetailDTO;
 import com.tirmizee.backend.dao.ForgotPasswordDao;
@@ -218,35 +215,45 @@ public class UserServiceImpl implements UserService {
 	} 
 	
 	@Override
-	public void updateStatusEnable(ReqUpdateEnableDTO updateEnableDTO) {
+	public void updateStatusEnable(ReqUpdateStatusDTO updateEnableDTO) {
 		User user = userDao.findByUsername(updateEnableDTO.getUsername());
-		user.setEnabled(updateEnableDTO.isEnabled());
+		user.setEnabled(updateEnableDTO.getStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}
 
 	@Override
-	public void updateStatusPasswordExpired(ReqUpdatePasswordExpiredDTO UpdatePasswordExpiredDTO) {
+	public void updateStatusPasswordExpired(ReqUpdateStatusDTO UpdatePasswordExpiredDTO) {
 		User user = userDao.findByUsername(UpdatePasswordExpiredDTO.getUsername());
-		user.setCredentialsnonexpired(UpdatePasswordExpiredDTO.isPasswordExpired());
+		user.setCredentialsnonexpired(UpdatePasswordExpiredDTO.getStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}
 
 	@Override
-	public void updateStatusLocked(ReqUpdateAccountNonLockedDTO updateAccountNonLockedDTO) {
+	public void updateStatusLocked(ReqUpdateStatusDTO updateAccountNonLockedDTO) {
 		User user = userDao.findByUsername(updateAccountNonLockedDTO.getUsername());
-		user.setAccountnonlocked(updateAccountNonLockedDTO.isAccountnonlocked());
+		user.setAccountnonlocked(updateAccountNonLockedDTO.getStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}
 
 	@Override
-	public void updateStatusFirstLogin(ReqUpdateFirstLoginDTO updateFirstLogin) {
+	public void updateStatusFirstLogin(ReqUpdateStatusDTO updateFirstLogin) {
 		User user = userDao.findByUsername(updateFirstLogin.getUsername());
-		user.setFirstLogin(updateFirstLogin.isFirstLogin());
+		user.setFirstLogin(updateFirstLogin.getStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}
+
+	@Override
+	public void updateStatusAccountExpired(ReqUpdateStatusDTO updateAccountExpired) {
+		User user = userDao.findByUsername(updateAccountExpired.getUsername());
+		user.setAccountnonexpired(updateAccountExpired.getStatus());
+		user.setUpdateDate(DateUtils.now());
+		userDao.save(user);
+	}
+	
+	
 	
 }

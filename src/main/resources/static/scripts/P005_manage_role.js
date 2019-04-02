@@ -1,19 +1,20 @@
 var ManageRoleModule = function(){
 	
 	var Search = {};
-	var DataTable = {};
+	var TableRole = {};
+	var TableEditPermission = {};
 	
 	var activeMenu = function(){
 		 $('ul.sidebar-menu > li.treeview-setting').addClass('active');
 	}
 	
-	var handleDataTable = function() {
+	var handleTableRole = function() {
 		
 		var btnEdit = '<button data-btn-name="btnEdit" type="button" class="btn btn-success" data-toggle="tooltip" title="Edit Member !"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>';
 		var btnView = '<button data-btn-name="btnView" type="button" class="btn btn-info" data-toggle="tooltip" title="View Member !"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>';
 		var btnDelete = '<button data-btn-name="btnDelete" type="button" class="btn btn-danger" data-toggle="tooltip" title="Delete Member !"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
 		
-		DataTable = $('#TBRole').DataTable({
+		TableRole = $('#TBRole').DataTable({
 			processing   : true,
 			serverSide   : true,
 			searching    : false,
@@ -74,18 +75,87 @@ var ManageRoleModule = function(){
 		        fixedColumnsLeft: 1
 		    }
 		}).on('click', 'button[data-btn-name="btnEdit"]', function (event) {
+			
+			var data = TableRole.row($(this).parents('tr')).data();
+			
 			$('#ModalEditRole').modal({
 			    backdrop: 'static',
 			    keyboard: false
 			});
+			
+			AjaxManager.GetData( null, 'api/role/get/' + data.roleId,
+				function(response){
+					$('#FormEditRole input[name="roleCode"]').val(response.roleCode);
+					$('#FormEditRole input[name="roleName"]').val(response.roleName);
+				},
+				function(jqXHR, textStatus, errorThrown){
+					$.alert('Error!');
+				}
+			);
+			
+			TableEditPermission.ajax.url( 'api/permission/' + data.roleId).load();
 		});
+	}
+	
+	var handleTableEditPermission = function(){
+		TableEditPermission = $('#TBEditPermission').DataTable({
+			processing   : true,
+			responsive   : false,
+			searching    : true,
+			scrollX      : true,
+			deferRender  : true,
+			data: [],
+			columns: [
+				{ data : null           ,title : "Order" },
+				{ data : "perId"        ,title : "" },
+				{ data : "perCode"      ,title : "Permission Code"},
+				{ data : "perName"      ,title : "Permission Name"},
+				{ data : "hasPercode"   ,title : "Status"}
+			],
+			columnDefs: [
+				{
+					targets   : 0,
+					width     : "10%",
+					searchable: false,
+					orderable : false
+				},
+				{
+					targets : 1,
+					visible : false
+				},
+				{
+					targets : 2,
+					width : "10%"
+				},
+				{
+					targets   : 4,
+					width     : "10%",
+					className : "text-center",
+					orderDataType : "dom-text",
+					render : function (data, type, row, meta) {
+						var checked = (data ? 'checked' : '');
+						return '<input type="checkbox" ' + checked + ' data-toggle="toggle" data-style="ios" data-onstyle="success" data-offstyle="danger" data-size="mini">';
+					}
+				}
+			],
+			fnDrawCallback : function() {
+	            $('input[type="checkbox"]').bootstrapToggle();
+	        },
+	        lengthMenu : [[5,10, 25, 50, -1], [5,10, 25, 50, "All"]]
+	        
+		}).on( 'draw.dt', function () {
+			var PageInfo = TableEditPermission.page.info();
+			TableEditPermission.column(0, { page: 'current' }).nodes().each( function (cell, i) {
+	        	cell.innerHTML = i + 1 + PageInfo.start;
+	        });
+	    });
 	}
 	
 	var handleButtonSearch = function(){
 		$('#BtnSearch').on('click', function(){
 			Search.roleCode = $('#FormSearchRole input[name="roleCode"]').val();
 			Search.roleName = $('#FormSearchRole input[name="roleName"]').val();
-			DataTable.ajax.reload();
+			TableRole.ajax.reload();
 		});
 	}
 	
@@ -95,12 +165,97 @@ var ManageRoleModule = function(){
 		});
 	}
 	
+	var handleModalEditRole = function(){
+		$(document).bind('shown.bs.modal', function (e) {
+			TableEditPermission.columns.adjust();
+		}).bind('hidden.bs.modal', function (event) {
+			$('#FormEditRole').bootstrapValidator('resetForm', true);
+		});;
+	}
+	
+	var handleFormEditRole = function(){
+		$('#FormEditRole').bootstrapValidator({
+			excluded: [':disabled'],
+	        fields : {
+	        	roleCode : {
+	                validators: {
+	                    notEmpty: {
+	                        message: 'The username is required'
+	                    }
+	                }
+	            },
+	            roleName : {
+	                validators: {
+	                    notEmpty: {
+	                        message: 'The username is required'
+	                    }
+	                }
+	            }
+        	}
+		}).on('success.form.bv', function(e) {
+            e.preventDefault();
+            
+            $.confirm({
+			    title: 'Confirm!',
+			    icon: 'fa fa-warning',
+			    typeAnimated: true,
+			    animation: 'zoom',
+			    type: 'orange',
+			    content: 'Confirm!',
+			    buttons: {
+			        cancel: function () {
+			        	$('#FormEditRole button[type="submit"]').attr("disabled", false);
+			        },
+		            confirm: {
+			        	btnClass : 'btn-orange',
+			        	action : function() {
+			        		updateRole();
+			            }
+			        }
+			    }
+			});
+		});
+	}
+	
+	var updateRole = function(){
+		/* var ReqForgotPassword = {
+    	email : $('input[name="email"]').val()
+    };
+    
+    AjaxManager.PostData(ReqForgotPassword, "api/user/password/forgot",
+		function(response){
+        	$.confirm({
+			    title: 'Message Alert!',
+			    content: 'The system has received the request. Please check the email.',
+			    type: 'green',
+			    typeAnimated: true,
+			    buttons: {
+			        ok : {
+			            text: 'OK',
+			            btnClass: 'btn-green',
+			            closeIcon: true,
+			            action: function(){
+			            	window.location.href = 'login';
+			            }
+			        }
+			    }
+			});
+    	},
+    	function(jqXHR, textStatus, errorThrown){
+    		$('#formForgotPassword button[type="submit"]').prop("disabled",false);
+    	}
+	);*/
+	}
+	
 	return {
 		init : function(){
 			activeMenu();
-			handleDataTable();
+			handleTableRole();
+			handleTableEditPermission();
 			handleButtonSearch();
 			handleButtonClear();
+			handleModalEditRole();
+			handleFormEditRole();
 		}
 	};
 	

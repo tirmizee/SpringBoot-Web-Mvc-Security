@@ -45,6 +45,7 @@ var ManageUserModule = function(){
 				{ data : "roleName"               ,title : "Role Name"},
 				{ data : "email"                  ,title : "Email"},
 				{ data : "enabled"     		      ,title : "Status Enable"},
+				{ data : "accountnonexpired"      ,title : "Status Account"},
 				{ data : "accountnonlocked"       ,title : "Status Locked"},
 				{ data : "credentialsnonexpired"  ,title : "Status Password"},
 				{ data : "firstLogin"             ,title : "Status First Login"}
@@ -79,13 +80,22 @@ var ManageUserModule = function(){
 					targets   : 8,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
+						var normal = '<a data-btn-name="account" href=""><span class="label label-success raduis">normal</span></a>';
+						var expired = '<a data-btn-name="account" href=""><span class="label label-danger raduis">expired</span></a>';
+						return data ? normal : expired;
+					}
+				},
+				{
+					targets   : 9,
+					className : "text-center",
+					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="locked" href=""><span class="label label-success raduis">normal</span></a>';
 						var locked = '<a data-btn-name="locked" href=""><span class="label label-danger raduis">locked</span></a>';
 						return data ? normal : locked;
 					}
 				},
 				{
-					targets   : 9,
+					targets   : 10,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="expired" href=""><span class="label label-success raduis">normal</span></a>';
@@ -94,7 +104,7 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 10,
+					targets   : 11,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="firstlogin" href=""><span class="label label-success raduis">active</span></a>';
@@ -113,94 +123,128 @@ var ManageUserModule = function(){
 			event.preventDefault();
 			
 			var data = DataTable.row($(this).parents('tr')).data();
-			
-			$.confirm({
-			    title: 'Confirm!',
-			    icon: 'glyphicon glyphicon-heart',
-			    type: 'blue',
-			    content: 'Simple confirm!',
-			    buttons: {
-			        confirm: {
-			        	btnClass : 'btn-blue',
-			        	action : function() {
-			        		updateStatusEnable(data);
-			            }
-			        },
-			        cancel: function () {}
-			    }
-			});
+			confirmUpdateStatusEnable(data);
 			
 		}).on('click', 'a[data-btn-name="locked"]', function (event) {
 			event.preventDefault();
 			
 			var data = DataTable.row($(this).parents('tr')).data();
-			
-			$.confirm({
-			    title: 'Confirm!',
-			    icon: 'glyphicon glyphicon-heart',
-			    type: 'blue',
-			    content: 'Simple confirm!',
-			    buttons: {
-			        confirm: {
-			        	btnClass : 'btn-blue',
-			        	action : function() {
-			        		updateStatusLocked(data);
-			            }
-			        },
-			        cancel: function () {}
-			    }
-			});
+			confirmUpdateStatusLocked(data);
 			
 		}).on('click', 'a[data-btn-name="expired"]', function (event) {
 			event.preventDefault();
 			
 			var data = DataTable.row($(this).parents('tr')).data();
-			
-			$.confirm({
-			    title: 'Confirm!',
-			    icon: 'glyphicon glyphicon-heart',
-			    type: 'blue',
-			    content: 'Simple confirm!',
-			    buttons: {
-			        confirm: {
-			        	btnClass : 'btn-blue',
-			        	action : function() {
-			        		updateStatusExpired(data);
-			            }
-			        },
-			        cancel: function () {}
-			    }
-			});
+			confirmUpdateStatusExpired(data);
 			
 		}).on('click', 'a[data-btn-name="firstlogin"]', function (event) {
 			event.preventDefault();
 			
 			var data = DataTable.row($(this).parents('tr')).data();
+			confirmUpdateStatusLogin(data);
+		}).on('click', 'a[data-btn-name="account"]', function (event) {
+			event.preventDefault();
 			
-			$.confirm({
-			    title: 'Confirm!',
-			    icon: 'glyphicon glyphicon-heart',
-			    type: 'blue',
-			    content: 'Simple confirm!',
-			    buttons: {
-			        confirm: {
-			        	btnClass : 'btn-blue',
-			        	action : function() {
-			        		updateStatusLogin(data);
-			            }
-			        },
-			        cancel: function () {}
-			    }
-			});
-			
+			var data = DataTable.row($(this).parents('tr')).data();
+			confirmUpdateStatusAccount(data);
 		});
 		
+	}
+	
+	var confirmUpdateStatusAccount = function(data){
+		$.confirm({
+		    title: 'Confirm!',
+		    icon: 'glyphicon glyphicon-heart',
+		    type: 'blue',
+		    content: 'Simple confirm!',
+		    buttons: {
+		        confirm: {
+		        	btnClass : 'btn-blue',
+		        	action : function() {
+		        		updateStatusAccount(data);
+		            }
+		        },
+		        cancel: function () {}
+		    }
+		});
+	}
+	
+	var confirmUpdateStatusEnable = function(data){
+		$.confirm({
+		    title: 'Confirm!',
+		    icon: 'glyphicon glyphicon-heart',
+		    type: 'blue',
+		    content: 'Simple confirm!',
+		    buttons: {
+		        confirm: {
+		        	btnClass : 'btn-blue',
+		        	action : function() {
+		        		updateStatusEnable(data);
+		            }
+		        },
+		        cancel: function () {}
+		    }
+		});
+	}
+	
+	var confirmUpdateStatusLocked = function(data){
+		$.confirm({
+		    title: 'Confirm!',
+		    icon: 'glyphicon glyphicon-heart',
+		    type: 'blue',
+		    content: 'Simple confirm!',
+		    buttons: {
+		        confirm: {
+		        	btnClass : 'btn-blue',
+		        	action : function() {
+		        		updateStatusLocked(data);
+		            }
+		        },
+		        cancel: function () {}
+		    }
+		});
+	}
+	
+	var confirmUpdateStatusExpired = function(data){
+		$.confirm({
+		    title: 'Confirm!',
+		    icon: 'glyphicon glyphicon-heart',
+		    type: 'blue',
+		    content: 'Simple confirm!',
+		    buttons: {
+		        confirm: {
+		        	btnClass : 'btn-blue',
+		        	action : function() {
+		        		updateStatusExpired(data);
+		            }
+		        },
+		        cancel: function () {}
+		    }
+		});
+	}
+	
+	var confirmUpdateStatusLogin = function(data){
+		$.confirm({
+		    title: 'Confirm!',
+		    icon: 'glyphicon glyphicon-heart',
+		    type: 'blue',
+		    content: 'Simple confirm!',
+		    buttons: {
+		        confirm: {
+		        	btnClass : 'btn-blue',
+		        	action : function() {
+		        		updateStatusLogin(data);
+		            }
+		        },
+		        cancel: function () {}
+		    }
+		});
 	}
 	
 	var updateStatusEnable = function(data){
 		var request = {
 			username : data.username,
-			enabled : !data.enabled
+			status : !data.enabled
 		};
 		AjaxManager.PostData(request, 'api/user/update/enabled',
 			function(response){
@@ -226,7 +270,7 @@ var ManageUserModule = function(){
 	var updateStatusLocked = function(data){
 		var request = {
 			username : data.username,
-			accountnonlocked : !data.accountnonlocked
+			status : !data.accountnonlocked
 		};
 		AjaxManager.PostData(request, 'api/user/update/accountnonlocked',
 			function(response){
@@ -252,7 +296,7 @@ var ManageUserModule = function(){
 	var updateStatusExpired = function(data){
 		var request = {
 			username : data.username,
-			passwordExpired : !data.credentialsnonexpired
+			status : !data.credentialsnonexpired
 		};
 		AjaxManager.PostData(request, 'api/user/update/passwordexpired',
 			function(response){
@@ -278,15 +322,41 @@ var ManageUserModule = function(){
 	var updateStatusLogin = function(data){
 		var request = {
 			username : data.username,
-			firstLogin : !data.firstLogin
+			status : !data.firstLogin
 		};
 		AjaxManager.PostData(request, 'api/user/update/firstlogin',
 			function(response){
 				$.confirm({
-				    title: 'Meaages Alert!',
-				    content: response.messageName,
+				    title : 'Meaages Alert!',
+				    content : response.messageName,
 				    type: 'green',
-				    typeAnimated: true,
+				    typeAnimated : true,
+				    buttons: {
+				        close: function () {	        				        	
+				        
+				        }
+				    }
+				});
+				DataTable.ajax.reload(false);
+			},
+			function(jqXHR, textStatus, errorThrown){
+				$.alert('Error!');
+			}
+		);
+	}
+	
+	var updateStatusAccount = function(data){
+		var request = {
+			username : data.username,
+			status : !data.accountnonexpired
+		};
+		AjaxManager.PostData(request, 'api/user/update/accountnonexpired',
+			function(response){
+				$.confirm({
+				    title : 'Meaages Alert!',
+				    content : response.messageName,
+				    type: 'green',
+				    typeAnimated : true,
 				    buttons: {
 				        close: function () {	        				        	
 				        

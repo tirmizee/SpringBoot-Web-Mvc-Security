@@ -100,7 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
 	    return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
 	}
-
+	
 	@Bean
     public CompositeSessionAuthenticationStrategy sessionAuthenticationStrategy(){
 		List<SessionAuthenticationStrategy> delegateStrategies = Arrays.asList(

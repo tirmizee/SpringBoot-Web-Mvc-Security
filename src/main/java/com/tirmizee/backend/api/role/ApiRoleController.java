@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +20,11 @@ import com.tirmizee.backend.api.role.data.SearchRoleDTO;
 import com.tirmizee.backend.api.role.data.SearchTermDTO;
 import com.tirmizee.backend.dao.RoleDao;
 import com.tirmizee.backend.service.RoleService;
+import com.tirmizee.core.component.PageMapper;
 import com.tirmizee.core.datatable.PageRequestHelper;
 import com.tirmizee.core.datatable.RequestTable;
 import com.tirmizee.core.datatable.ResponseTable;
+import com.tirmizee.core.domain.Role;
 
 @RestController
 @RequestMapping(path = "api/role")
@@ -31,6 +35,24 @@ public class ApiRoleController {
 	
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private PageMapper mapper;
+	
+	@GetMapping(path = "/get/{roleId}")
+	public DeferredResult<RoleDTO> get(@PathVariable Integer roleId) {
+		DeferredResult<RoleDTO> deferredResult = new DeferredResult<>(60000L);
+		ForkJoinPool.commonPool().submit(()->{
+			try {
+				Role role = roleDao.findOne(roleId);
+				RoleDTO roleDTO = mapper.map(role, RoleDTO.class);
+				deferredResult.setResult(roleDTO);
+			} catch (Exception ex) {
+				deferredResult.setErrorResult(ex);
+			}
+		});
+		return deferredResult;
+	}
 	
 	@PostMapping(path = "/page")
 	public DeferredResult<Page<RoleDTO>> page(@RequestBody SearchTermDTO searchTerm) {

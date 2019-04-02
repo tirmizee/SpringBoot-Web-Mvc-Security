@@ -2,9 +2,13 @@ package com.tirmizee.backend.dao;
 
 import java.util.List;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.tirmizee.backend.api.permission.data.PermissionDTO;
 import com.tirmizee.core.domain.Permission;
+import com.tirmizee.core.jdbcrepository.sql.TempQuery;
 import com.tirmizee.core.repository.PermissionRepositoryImpl;
 import com.tirmizee.core.repository.RoleMapPermissionRepository;
 import com.tirmizee.core.repository.RoleRepository;
@@ -31,6 +35,12 @@ public class PermissionDaoImpl extends PermissionRepositoryImpl implements Permi
 			.append(" WHERE ").append(UserRepository.USERNAME)
 			.append(" = ? ");
 		return getJdbcOps().query(statement.toString(), params(username), ROW_MAPPER);
+	}
+
+	@Override
+	public List<PermissionDTO> findAllByUsername(Integer roleId) {
+		RowMapper<PermissionDTO> mapper = new BeanPropertyRowMapper<>(PermissionDTO.class);
+		return getJdbcOps().query(TempQuery.FIND_PERMISSION_ROLE.toUpperCase(), params(roleId), mapper);
 	}
 
 }

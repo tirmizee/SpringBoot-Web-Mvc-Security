@@ -3,10 +3,7 @@ package com.tirmizee.backend.service;
 import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
-import com.tirmizee.backend.api.user.data.ReqUpdateAccountNonLockedDTO;
-import com.tirmizee.backend.api.user.data.ReqUpdateEnableDTO;
-import com.tirmizee.backend.api.user.data.ReqUpdateFirstLoginDTO;
-import com.tirmizee.backend.api.user.data.ReqUpdatePasswordExpiredDTO;
+import com.tirmizee.backend.api.user.data.ReqUpdateStatusDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
 import com.tirmizee.backend.api.user.data.UserDetailDTO;
 import com.tirmizee.core.datatable.RequestTable;
@@ -28,13 +25,15 @@ public interface UserService {
 	
 	void changePasswordExpired(String username, ReqPasswordExpriedDTO passwordExpriedDTO);
 	
-	void updateStatusEnable(ReqUpdateEnableDTO updateEnable);
+	void updateStatusEnable(ReqUpdateStatusDTO updateEnable);
 	
-	void updateStatusFirstLogin(ReqUpdateFirstLoginDTO updateFirstLogin);
+	void updateStatusFirstLogin(ReqUpdateStatusDTO updateFirstLogin);
 	
-	void updateStatusLocked(ReqUpdateAccountNonLockedDTO updateAccountNonLocked);
+	void updateStatusLocked(ReqUpdateStatusDTO updateAccountNonLocked);
 	
-	void updateStatusPasswordExpired(ReqUpdatePasswordExpiredDTO updatePasswordExpired);
+	void updateStatusAccountExpired(ReqUpdateStatusDTO updateAccountExpired);
+	
+	void updateStatusPasswordExpired(ReqUpdateStatusDTO updatePasswordExpired);
 	
 	ResponseTable<UserDetailDTO> pagingTable(RequestTable<UserDetailCriteriaDTO> requestTable); 
 	

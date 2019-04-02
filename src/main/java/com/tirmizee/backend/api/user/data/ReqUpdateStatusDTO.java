@@ -2,12 +2,12 @@ package com.tirmizee.backend.api.user.data;
 
 import java.io.Serializable;
 
-public class ReqUpdateFirstLoginDTO implements Serializable {
+public class ReqUpdateStatusDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String username;
-	private boolean firstLogin;
+	private boolean status;
 	
 	public String getUsername() {
 		return username;
@@ -15,11 +15,11 @@ public class ReqUpdateFirstLoginDTO implements Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public boolean isFirstLogin() {
-		return firstLogin;
+	public boolean getStatus() {
+		return status;
 	}
-	public void setFirstLogin(boolean firstLogin) {
-		this.firstLogin = firstLogin;
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
-
+	
 }

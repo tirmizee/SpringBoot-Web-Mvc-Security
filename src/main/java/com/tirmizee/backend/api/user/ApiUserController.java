@@ -19,10 +19,7 @@ import com.tirmizee.backend.api.user.data.ReqForgotPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
-import com.tirmizee.backend.api.user.data.ReqUpdateAccountNonLockedDTO;
-import com.tirmizee.backend.api.user.data.ReqUpdateEnableDTO;
-import com.tirmizee.backend.api.user.data.ReqUpdateFirstLoginDTO;
-import com.tirmizee.backend.api.user.data.ReqUpdatePasswordExpiredDTO;
+import com.tirmizee.backend.api.user.data.ReqUpdateStatusDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
 import com.tirmizee.backend.api.user.data.UserDetailDTO;
 import com.tirmizee.backend.service.UserService;
@@ -39,7 +36,6 @@ public class ApiUserController {
 	@Autowired 
 	private UserService userService;
 	
-	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/password/firstlogin")
 	public MessageSuccess changePasswordFirstLogin(@RequestBody @Valid ReqPasswordDTO passwordDTO) {
 		final String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -47,7 +43,6 @@ public class ApiUserController {
 		return new MessageSuccess();
 	}
 	
-	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/password/expried")
 	public MessageSuccess changePasswordExpried(@RequestBody @Valid ReqPasswordExpriedDTO passwordExpriedDTO) {
 		final String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -55,14 +50,12 @@ public class ApiUserController {
 		return new MessageSuccess();
 	}
 	
-	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/password/forgot")
 	public MessageSuccess forgotPassword(@RequestBody @Valid ReqForgotPasswordDTO forgotPasswordDTO) {
 		userService.forgotPassword(forgotPasswordDTO.getEmail());
 		return new MessageSuccess();
 	}
 	
-	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/password/reset")
 	public MessageSuccess resetPassword(@RequestBody @Valid ReqPasswordResetTokenDTO passwordResetTokenDTO) {
 		userService.resetPassword(passwordResetTokenDTO);
@@ -71,29 +64,36 @@ public class ApiUserController {
 	
 	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/update/enabled")
-	public MessageSuccess updateEnabled(@RequestBody @Valid ReqUpdateEnableDTO reqUpdateEnableDTO) {
-		userService.updateStatusEnable(reqUpdateEnableDTO);
+	public MessageSuccess updateEnabled(@RequestBody @Valid ReqUpdateStatusDTO reqStatusDTO) {
+		userService.updateStatusEnable(reqStatusDTO);
 		return new MessageSuccess(null, "Update Status Enble Complete.");
 	}
 	
 	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/update/passwordexpired")
-	public MessageSuccess updatePasswordExpired(@RequestBody @Valid ReqUpdatePasswordExpiredDTO reqUpdatePasswordExpiredDTO) {
-		userService.updateStatusPasswordExpired(reqUpdatePasswordExpiredDTO);
+	public MessageSuccess updatePasswordExpired(@RequestBody @Valid ReqUpdateStatusDTO reqStatusDTO) {
+		userService.updateStatusPasswordExpired(reqStatusDTO);
+		return new MessageSuccess(null, "Update Status Password Expired Complete.");
+	}
+	
+	@PreAuthorize("hasAnyAuthority('P002')")
+	@PostMapping(path = "/update/accountnonexpired")
+	public MessageSuccess updateAccountExpired(@RequestBody @Valid ReqUpdateStatusDTO reqStatusDTO) {
+		userService.updateStatusAccountExpired(reqStatusDTO);
 		return new MessageSuccess(null, "Update Status Password Expired Complete.");
 	}
 	
 	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/update/accountnonlocked")
-	public MessageSuccess updateAccountNonLocked(@RequestBody @Valid ReqUpdateAccountNonLockedDTO reqUpdateAccountNonLockedDTO) {
-		userService.updateStatusLocked(reqUpdateAccountNonLockedDTO);
+	public MessageSuccess updateAccountNonLocked(@RequestBody @Valid ReqUpdateStatusDTO reqStatusDTO) {
+		userService.updateStatusLocked(reqStatusDTO);
 		return new MessageSuccess(null, "Update Status Account Non Locked Complete.");
 	}
 	
 	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/update/firstlogin")
-	public MessageSuccess updateFirstLogin(@RequestBody @Valid ReqUpdateFirstLoginDTO reqUpdateFirstLoginDTO) {
-		userService.updateStatusFirstLogin(reqUpdateFirstLoginDTO);
+	public MessageSuccess updateFirstLogin(@RequestBody @Valid ReqUpdateStatusDTO reqStatusDTO) {
+		userService.updateStatusFirstLogin(reqStatusDTO);
 		return new MessageSuccess(null, "Update Status First Login Complete.");
 	}
 	
