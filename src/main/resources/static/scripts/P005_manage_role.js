@@ -106,7 +106,7 @@ var ManageRoleModule = function(){
 			responsive   : false,
 			searching    : true,
 			scrollX      : true,
-			deferRender  : true,
+			deferRender  : false,
 			data: [],
 			columns: [
 				{ data : null           ,title : "Order" },
@@ -221,19 +221,51 @@ var ManageRoleModule = function(){
 	}
 	
 	var updateRole = function(){
+		
 		var request = {
 			roleId : SelectedRoleId,
 			roleCode : $('#FormEditRole input[name="roleCode"]').val(),
 			roleName : $('#FormEditRole input[name="roleName"]').val(),
 			perIds : []
 		};
+		
 		$('input:checked', $('#TBEditPermission').dataTable().fnGetNodes()).each(function() {
 			var data = TableEditPermission.row($(this).parents('tr')).data();
 			if (data !== undefined) {
 				request.perIds.push(data.perId);
 			}
 		});
-		alert(JSON.stringify(request));
+		
+		AjaxManager.PostData(request ,"api/role/update",
+			function(response){
+				if (response) {
+					$.confirm({
+					    title: 'Meaages Alert!',
+					    content: 'Remove Session Complete',
+					    type: 'green',
+					    typeAnimated: true,
+					    buttons: {
+					        close: function () {
+					        	$('#ModalEditRole').modal('hide');
+					        }
+					    }
+					});
+				}
+			},
+			function(jqXHR, textStatus, errorThrown){
+				$.confirm({
+				    title: 'Meaages Alert!',
+				    content: 'Remove Session Complete',
+				    type: 'red',
+				    typeAnimated: true,
+				    buttons: {
+				        close: function () {
+				        	$('#ModalEditRole').modal('hide');
+				        }
+				    }
+				});
+			}
+		);
 	}
 	
 	return {

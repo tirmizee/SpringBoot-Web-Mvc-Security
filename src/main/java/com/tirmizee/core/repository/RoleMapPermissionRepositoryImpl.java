@@ -43,7 +43,7 @@ public class RoleMapPermissionRepositoryImpl extends AbstractOracleJdbcRepositor
 	}
 	
 	public RoleMapPermissionRepositoryImpl(String tableName) {
-		super(ROW_MAPPER, ROW_UNMAPPER, new TableDescription(tableName, null, COL_PER_ID,COL_PER_ID));
+		super(ROW_MAPPER, ROW_UNMAPPER, new TableDescription(tableName, null, COL_ROLE_ID, COL_PER_ID));
 	}
 
 	@Override

@@ -58,7 +58,8 @@ public class ApiRoleController {
 	
 	@PostMapping(path = "/update")
 	public MessageSuccess updateRole(@RequestBody @Valid ReqUpdateRoleDTO updateRoleDTO) {
-		return null;
+		roleService.updateRole(updateRoleDTO);
+		return new MessageSuccess();
 	}
 	
 	@PostMapping(path = "/page")
