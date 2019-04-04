@@ -1,5 +1,5 @@
 var LoginModule = function(){
-	
+
 	var handleFormLogin = function(){
 		$('#formLogin').formValidation({
 	        fields: {

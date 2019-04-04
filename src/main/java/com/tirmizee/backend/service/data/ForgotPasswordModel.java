@@ -2,6 +2,8 @@ package com.tirmizee.backend.service.data;
 
 import java.sql.Timestamp;
 
+import org.springframework.core.io.FileSystemResource;
+
 public class ForgotPasswordModel {
 
 	private String title;

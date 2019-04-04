@@ -86,13 +86,10 @@ public class SessionServiceImpl implements SessionService {
 		int count = 0;
 		List<Object> principals = sessionRegistry.getAllPrincipals();
 		for (Object principal : principals) {
-			if (principal instanceof UserProfile) {
-				UserProfile profile = (UserProfile) principal;
-				List<SessionInformation> sessionInfos = sessionRegistry.getAllSessions(profile, true);
-				for (SessionInformation sessionInfo : sessionInfos) {
-					if (sessionInfo.isExpired()) {
-						count++;
-					}
+			List<SessionInformation> sessionInfos = sessionRegistry.getAllSessions(principal, true);
+			for (SessionInformation sessionInfo : sessionInfos) {
+				if (sessionInfo.isExpired()) {
+					count++;
 				}
 			}
 		}
@@ -104,13 +101,10 @@ public class SessionServiceImpl implements SessionService {
 		int count = 0;
 		List<Object> principals = sessionRegistry.getAllPrincipals();
 		for (Object principal : principals) {
-			if (principal instanceof UserProfile) {
-				UserProfile profile = (UserProfile) principal;
-				List<SessionInformation> sessionInfos = sessionRegistry.getAllSessions(profile, false);
-				for (SessionInformation sessionInfo : sessionInfos) {
-					if (!sessionInfo.isExpired()) {
-						count++;
-					}
+			List<SessionInformation> sessionInfos = sessionRegistry.getAllSessions(principal, false);
+			for (SessionInformation sessionInfo : sessionInfos) {
+				if (!sessionInfo.isExpired()) {
+					count++;
 				}
 			}
 		}

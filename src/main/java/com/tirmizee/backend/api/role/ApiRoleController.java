@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import com.tirmizee.backend.api.role.data.ReqUpdateRoleDTO;
 import com.tirmizee.backend.api.role.data.RoleDTO;
 import com.tirmizee.backend.api.role.data.SearchRoleDTO;
 import com.tirmizee.backend.api.role.data.SearchTermDTO;
 import com.tirmizee.backend.dao.RoleDao;
 import com.tirmizee.backend.service.RoleService;
+import com.tirmizee.backend.web.data.MessageSuccess;
 import com.tirmizee.core.component.PageMapper;
 import com.tirmizee.core.datatable.PageRequestHelper;
 import com.tirmizee.core.datatable.RequestTable;
@@ -52,6 +54,11 @@ public class ApiRoleController {
 			}
 		});
 		return deferredResult;
+	}
+	
+	@PostMapping(path = "/update")
+	public MessageSuccess updateRole(@RequestBody @Valid ReqUpdateRoleDTO updateRoleDTO) {
+		return null;
 	}
 	
 	@PostMapping(path = "/page")

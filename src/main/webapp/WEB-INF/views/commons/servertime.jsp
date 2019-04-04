@@ -11,7 +11,6 @@ $(document).ready(function() {
 	var stompClient = Stomp.over(socket);
     
 	stompClient.connect({}, function (frame) {
-        console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/greetings', function (message) {
         	var respose = JSON.parse(message.body).content;
         	$("#server_time").text(respose);

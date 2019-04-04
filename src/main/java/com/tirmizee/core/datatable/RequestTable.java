@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @see https://datatables.net/manual/server-side
  */
 
-public class RequestTable<T> implements Serializable{
+public class RequestTable<T> implements Serializable {
 
 	private static final long serialVersionUID = -2791529125797233533L;
 	

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -154,7 +155,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
 	public void forgotPassword(String email) {
 		
 		User user = userDao.findByEmail(email);
@@ -181,7 +181,7 @@ public class UserServiceImpl implements UserService {
 			passwordModel.setTitle("Forgot Password");
 			passwordModel.setUrl(url);
 			passwordModel.setUsername(user.getUsername());
-			emailService.sendMailForgotPassword(passwordModel);
+			emailService.sendMailForgotPassword(passwordModel,new FileSystemResource("E:\\New Microsoft Word Document.docx"));
 		});
 		
 	}
@@ -253,7 +253,5 @@ public class UserServiceImpl implements UserService {
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}
-	
-	
 	
 }

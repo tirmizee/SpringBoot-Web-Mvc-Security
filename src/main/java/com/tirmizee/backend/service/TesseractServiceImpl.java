@@ -4,12 +4,21 @@ import java.io.File;
 
 import org.springframework.stereotype.Service;
 
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
+
 @Service
 public class TesseractServiceImpl implements TesseractService {
 
 	@Override
 	public String generateText(File imageFile) {
-		return null;
+		try {
+			Tesseract tesseract = new Tesseract();
+			tesseract.setDatapath("E:/Tesseract-OCR/tessdata");
+			return tesseract.doOCR(imageFile);		
+		} catch (TesseractException e) {		
+			return null;
+		}
 	}
 
 }

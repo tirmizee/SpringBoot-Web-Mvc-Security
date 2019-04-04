@@ -2,6 +2,7 @@ package com.tirmizee;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.task.TaskExecutor;
@@ -17,13 +18,11 @@ public class ApplicationInitializer extends SpringBootServletInitializer {
 	public static void main(String...args) {
 		SpringApplication.run(ApplicationInitializer.class, args);
 	}
-	
+
 	@Bean("taskExecutor")
+	@ConfigurationProperties("spring.task.execution")
 	public TaskExecutor taskExecutor() {
-		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-		executor.setCorePoolSize(10);
-		executor.setMaxPoolSize(20);
-		return executor;
+		return  new ThreadPoolTaskExecutor();
 	}
 	
 } 

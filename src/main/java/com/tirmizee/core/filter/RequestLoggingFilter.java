@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.AbstractRequestLoggingFilter;
 
 public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
-	
+
 	@Override
 	protected void beforeRequest(HttpServletRequest request, String message) {}
 

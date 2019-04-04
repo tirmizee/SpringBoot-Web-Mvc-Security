@@ -1,6 +1,7 @@
 var ManageRoleModule = function(){
 	
 	var Search = {};
+	var SelectedRoleId = null;
 	var TableRole = {};
 	var TableEditPermission = {};
 	
@@ -77,6 +78,8 @@ var ManageRoleModule = function(){
 		}).on('click', 'button[data-btn-name="btnEdit"]', function (event) {
 			
 			var data = TableRole.row($(this).parents('tr')).data();
+			
+			SelectedRoleId = data.roleId;
 			
 			$('#ModalEditRole').modal({
 			    backdrop: 'static',
@@ -218,33 +221,19 @@ var ManageRoleModule = function(){
 	}
 	
 	var updateRole = function(){
-		/* var ReqForgotPassword = {
-    	email : $('input[name="email"]').val()
-    };
-    
-    AjaxManager.PostData(ReqForgotPassword, "api/user/password/forgot",
-		function(response){
-        	$.confirm({
-			    title: 'Message Alert!',
-			    content: 'The system has received the request. Please check the email.',
-			    type: 'green',
-			    typeAnimated: true,
-			    buttons: {
-			        ok : {
-			            text: 'OK',
-			            btnClass: 'btn-green',
-			            closeIcon: true,
-			            action: function(){
-			            	window.location.href = 'login';
-			            }
-			        }
-			    }
-			});
-    	},
-    	function(jqXHR, textStatus, errorThrown){
-    		$('#formForgotPassword button[type="submit"]').prop("disabled",false);
-    	}
-	);*/
+		var request = {
+			roleId : SelectedRoleId,
+			roleCode : $('#FormEditRole input[name="roleCode"]').val(),
+			roleName : $('#FormEditRole input[name="roleName"]').val(),
+			perIds : []
+		};
+		$('input:checked', $('#TBEditPermission').dataTable().fnGetNodes()).each(function() {
+			var data = TableEditPermission.row($(this).parents('tr')).data();
+			if (data !== undefined) {
+				request.perIds.push(data.perId);
+			}
+		});
+		alert(JSON.stringify(request));
 	}
 	
 	return {

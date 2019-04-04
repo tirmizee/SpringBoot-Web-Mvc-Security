@@ -209,6 +209,20 @@
 		    <version>4.3.1</version>
 		</dependency>
 		
+		<!-- excel 2003-->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.12</version>
+		</dependency>
+		
+		<!-- excel 2007 over-->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.12</version>
+		</dependency>
+		
 	</dependencies>
 	
 	<build>

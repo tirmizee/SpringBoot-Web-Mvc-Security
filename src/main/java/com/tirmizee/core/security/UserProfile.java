@@ -128,7 +128,6 @@ public class UserProfile extends UserDetailsImpl {
 		private boolean isFirstLogin;
 		private Date credentialsExpiredDate;
 		
-		
 		public Builder(){}
 		
 		public Builder firstName(String firstName){

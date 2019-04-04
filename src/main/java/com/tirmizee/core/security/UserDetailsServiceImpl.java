@@ -42,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		List<Permission> permissions = permissionDao.findByUsername(username);
 		LOG.info(username + " : " + permissions.stream().map(e -> e.getPerCode()).collect(Collectors.toList()).toString());
-		
+
 		return new UserProfile.Builder()
 				.username(username)
 				.password(userDetail.getPassword())

@@ -3,6 +3,7 @@ package com.tirmizee.core.security;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,9 @@ public class UserDetailsImpl implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 	
 	public UserDetailsImpl(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+		if (StringUtils.isEmpty(username) || (password == null)) {
+			throw new IllegalArgumentException("Cannot pass null or empty values to constructor");
+		}
 		this.username = username;
 		this.password = password;
 		this.authorities = authorities;
@@ -35,6 +39,9 @@ public class UserDetailsImpl implements UserDetails {
 	}
 
 	public UserDetailsImpl(Builder<?> builder) {
+		if (StringUtils.isEmpty(builder.username) || (builder.password == null)) {
+			throw new IllegalArgumentException("Cannot pass null or empty values to constructor");
+		}
 		this.username = builder.username;
 		this.password = builder.password;
 		this.authorities = builder.authorities;
