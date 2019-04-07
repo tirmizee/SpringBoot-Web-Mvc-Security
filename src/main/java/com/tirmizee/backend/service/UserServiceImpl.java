@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +18,7 @@ import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
 import com.tirmizee.backend.api.user.data.ReqUpdateStatusDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
-import com.tirmizee.backend.api.user.data.UserDetailDTO;
+import com.tirmizee.backend.api.user.data.UserDetailPageDTO;
 import com.tirmizee.backend.dao.ForgotPasswordDao;
 import com.tirmizee.backend.dao.LogPasswordDao;
 import com.tirmizee.backend.dao.UserDao;
@@ -135,12 +134,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ResponseTable<UserDetailDTO> pagingTable(RequestTable<UserDetailCriteriaDTO> requestTable) {
-		Pageable pageable = PageRequestHelper.build(requestTable, UserDetailDTO.class);
-		Page<UserDetailDTO> page = userDao.findPageByCriteria(pageable, requestTable.getSerch());
+	public ResponseTable<UserDetailPageDTO> pagingTable(RequestTable<UserDetailCriteriaDTO> requestTable) {
+		Pageable pageable = PageRequestHelper.build(requestTable, UserDetailPageDTO.class);
+		Page<UserDetailPageDTO> page = userDao.findPageByCriteria(pageable, requestTable.getSerch());
 		return new ResponseTable<>(page);
 	}
 
+	@Override
+	public void fourceAccountExpired(String username) {
+		User user = userDao.findByUsername(username);
+		user.setAccountnonexpired(false);
+		user.setUpdateDate(DateUtils.now());
+		userDao.save(user);
+	}
+	
 	@Override
 	public void fourcePasswordExpired(String username) {
 		User user = userDao.findByUsername(username);
@@ -175,13 +182,13 @@ public class UserServiceImpl implements UserService {
 		forgotPassword.setCreateDate(DateUtils.nowTimestamp());
 		forgotPassword.setReset(false);
 		forgotPasswordDao.save(forgotPassword);
-		
+
 		task.execute(() -> {
 			ForgotPasswordModel passwordModel = mapper.map(forgotPassword, ForgotPasswordModel.class);
 			passwordModel.setTitle("Forgot Password");
 			passwordModel.setUrl(url);
 			passwordModel.setUsername(user.getUsername());
-			emailService.sendMailForgotPassword(passwordModel,new FileSystemResource("E:\\New Microsoft Word Document.docx"));
+			emailService.sendMailForgotPassword(passwordModel);
 		});
 		
 	}
@@ -253,5 +260,5 @@ public class UserServiceImpl implements UserService {
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}
-	
+
 }

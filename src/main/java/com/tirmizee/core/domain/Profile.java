@@ -9,6 +9,7 @@ public class Profile implements Persistable<Long>{
 	private transient boolean persisted;
 	
 	private Long profileId;
+	private String citizenId;
 	private String lastName;
 	private String firstName;
 	private String email;
@@ -69,6 +70,14 @@ public class Profile implements Persistable<Long>{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getCitizenId() {
+		return citizenId;
+	}
+
+	public void setCitizenId(String citizenId) {
+		this.citizenId = citizenId;
 	}
 
 	@Override

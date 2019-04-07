@@ -9,14 +9,10 @@ import com.tirmizee.core.filter.RequestLoggingFilter;
 @Configuration
 public class LoggingConfig {
 	
-	public static final String MESSAGE_PREFIX = "request [";
-	
 	@Bean
 	@ConfigurationProperties("logging")
 	public RequestLoggingFilter logFilter() {
-		RequestLoggingFilter loggingFilter = new RequestLoggingFilter();
-		loggingFilter.setAfterMessagePrefix(MESSAGE_PREFIX);
-		return loggingFilter;
+		return new RequestLoggingFilter();
 	}
 
 }

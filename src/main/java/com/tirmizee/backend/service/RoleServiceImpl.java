@@ -48,14 +48,13 @@ public class RoleServiceImpl implements RoleService {
 	public void updateRole(ReqUpdateRoleDTO updateRoleDTO) {
 		
 		Role role = roleDao.findOne(updateRoleDTO.getRoleId());
+		
 		if (role == null) {
 			throw new BusinessException(MessageCode.MSG006, "Role data");
 		}
 		
 		List<RoleMapPermission> oldPermissons = roleMapPermissionDao.findByRoleId(role.getId());
 		List<Integer> updatePermissions = CollectionUtils.emptyIfNull(updateRoleDTO.getPerIds());
-		
-		System.out.println(oldPermissons.isEmpty());
 		
 		for (Iterator<Integer> updateIterator = updatePermissions.iterator() ; updateIterator.hasNext();) {
 			Integer updatePerId = updateIterator.next();
@@ -77,7 +76,7 @@ public class RoleServiceImpl implements RoleService {
 			roleMapPermissionDao.delete(oldPermissons);
 		}
 		
-		// insert permisson of role
+		// insert permission of role
 		if (!updatePermissions.isEmpty()) {
 			for (Integer perId : updatePermissions) {
 				RoleMapPermission newPermission = new RoleMapPermission();

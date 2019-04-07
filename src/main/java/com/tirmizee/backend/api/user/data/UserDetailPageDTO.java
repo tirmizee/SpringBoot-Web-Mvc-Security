@@ -7,10 +7,11 @@ import com.tirmizee.core.repository.ProfileRepository;
 import com.tirmizee.core.repository.RoleRepository;
 import com.tirmizee.core.repository.UserRepository;
 
-public class UserDetailDTO implements Serializable {
+public class UserDetailPageDTO implements Serializable {
 
 	private static final long serialVersionUID = 1831017480680058509L;
 
+	@SortColumn(UserRepository.COL_USER_ID)
 	private Long userId;
 	
 	@SortColumn(UserRepository.COL_USERNAME)

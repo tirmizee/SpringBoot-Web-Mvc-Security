@@ -21,19 +21,18 @@ public class LogPasswordServiceImpl implements LogPasswordService {
 	@Override
 	public boolean isPasswordExists(String username, String password) {
 		List<LogPassword> logPasswords = logPasswordDao.findByUsername(username);
-		for (LogPassword logPassword : logPasswords) {
-			if (passwordEncoder.matches(password, logPassword.getPassword())) {
-				return true;
-			}
-		}
-		return false;
+		return isMatches(logPasswords, password);
 	}
 
 	@Override
 	public boolean isPasswordExists(String username, String password, int limit) {
 		List<LogPassword> logPasswords = logPasswordDao.findDescByUsername(username, limit);
-		for (LogPassword logPassword : logPasswords) {
-			if (passwordEncoder.matches(password, logPassword.getPassword())) {
+		return isMatches(logPasswords, password);
+	}
+	
+	private boolean isMatches(List<LogPassword> listPassword, String checkPassword) {
+		for (LogPassword logPassword : listPassword) {
+			if (passwordEncoder.matches(checkPassword, logPassword.getPassword())) {
 				return true;
 			}
 		}

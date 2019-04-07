@@ -6,6 +6,6 @@ import com.tirmizee.backend.service.data.ForgotPasswordModel;
 
 public interface EmailService {
 	
-	void sendMailForgotPassword(ForgotPasswordModel forgotPasswordModel, Resource...file);
-
+	void sendMailForgotPassword(ForgotPasswordModel forgotPasswordModel, Resource...resource);
+	
 }

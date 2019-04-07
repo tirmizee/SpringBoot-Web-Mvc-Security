@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,9 @@ import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
 import com.tirmizee.backend.api.user.data.ReqUpdateStatusDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
-import com.tirmizee.backend.api.user.data.UserDetailDTO;
+import com.tirmizee.backend.api.user.data.UserDetailPageDTO;
+import com.tirmizee.backend.api.user.data.UserDetailUpdateDTO;
+import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.backend.service.UserService;
 import com.tirmizee.backend.web.data.MessageSuccess;
 import com.tirmizee.core.datatable.RequestTable;
@@ -32,6 +35,9 @@ import com.tirmizee.core.datatable.ResponseTable;
 public class ApiUserController {
 	
 	public final Logger LOG = Logger.getLogger(ApiUserController.class);
+	
+	@Autowired 
+	private UserDao userDao;
 	
 	@Autowired 
 	private UserService userService;
@@ -98,12 +104,18 @@ public class ApiUserController {
 	}
 	
 	@PreAuthorize("hasAnyAuthority('P002')")
+	@GetMapping(path = "/get/{userId}")
+	public UserDetailUpdateDTO getUser(@PathVariable Long userId) {
+		return userDao.findDetailByUserId(userId);
+	}
+	
+	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/page")
-	public DeferredResult<ResponseTable<UserDetailDTO>> pageDataTable(@RequestBody @Valid RequestTable<UserDetailCriteriaDTO> requestTable){
-		DeferredResult<ResponseTable<UserDetailDTO>> deferredResult = new DeferredResult<>(60000L);
+	public DeferredResult<ResponseTable<UserDetailPageDTO>> pageDataTable(@RequestBody @Valid RequestTable<UserDetailCriteriaDTO> requestTable){
+		DeferredResult<ResponseTable<UserDetailPageDTO>> deferredResult = new DeferredResult<>(60000L);
 		ForkJoinPool.commonPool().submit(()->{
 			try {
-				ResponseTable<UserDetailDTO> result = userService.pagingTable(requestTable);
+				ResponseTable<UserDetailPageDTO> result = userService.pagingTable(requestTable);
 				deferredResult.setResult(result);
 			}catch (Exception exception) {
 				deferredResult.setErrorResult(exception);

@@ -15,6 +15,7 @@ public class User implements Persistable<Long>{
 	private java.sql.Date updateDate;
 	private java.sql.Date createDate;
 	private java.sql.Date credentialsexpiredDate;
+	private java.sql.Date accountExpiredDate;
 	private boolean credentialsnonexpired;
 	private boolean accountnonexpired;
 	private boolean accountnonlocked;	
@@ -141,6 +142,14 @@ public class User implements Persistable<Long>{
 
 	public void setMaxSession(Integer maxSession) {
 		this.maxSession = maxSession;
+	}
+
+	public java.sql.Date getAccountExpiredDate() {
+		return accountExpiredDate;
+	}
+
+	public void setAccountExpiredDate(java.sql.Date accountExpiredDate) {
+		this.accountExpiredDate = accountExpiredDate;
 	}
 
 	@Override

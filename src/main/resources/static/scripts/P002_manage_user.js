@@ -39,15 +39,16 @@ var ManageUserModule = function(){
 			columns: [
 				{ data : null           		  ,title : "Action" },
 				{ data : null                     ,title : "Order" },
-				{ data : "username"               ,title : "Ussername"},
-				{ data : "firstName"              ,title : "First Name"},
-				{ data : "lastName"               ,title : "Last Name"},
-				{ data : "roleName"               ,title : "Role Name"},
-				{ data : "email"                  ,title : "Email"},
-				{ data : "enabled"     		      ,title : "Status Enable"},
-				{ data : "accountnonexpired"      ,title : "Status Account"},
-				{ data : "accountnonlocked"       ,title : "Status Locked"},
-				{ data : "credentialsnonexpired"  ,title : "Status Password"},
+				{ data : "userId"                 ,title : "User ID" },
+				{ data : "username"               ,title : "Username" },
+				{ data : "firstName"              ,title : "Full Name" },
+				{ data : "lastName"               ,title : "Last Name" },
+				{ data : "roleName"               ,title : "Role Name" },
+				{ data : "email"                  ,title : "Email" },
+				{ data : "enabled"     		      ,title : "Status Enable" },
+				{ data : "accountnonexpired"      ,title : "Status Account" },
+				{ data : "accountnonlocked"       ,title : "Status Locked" },
+				{ data : "credentialsnonexpired"  ,title : "Status Password" },
 				{ data : "firstLogin"             ,title : "Status First Login"}
 			],
 			columnDefs: [
@@ -68,7 +69,17 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 7,
+					targets   : 4,
+					render    : function (data, type, row, meta) {
+						return row.firstName + ' ' + row.lastName;
+					}
+				},
+				{
+					targets   : 5,
+					visible   : false
+				},
+				{
+					targets   : 8,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var enable = '<a data-btn-name="enable" href=""><span class="label label-success raduis">enable</span></a>';
@@ -77,16 +88,16 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 8,
+					targets   : 9,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
-						var normal = '<a data-btn-name="account" href=""><span class="label label-success raduis">normal</span></a>';
-						var expired = '<a data-btn-name="account" href=""><span class="label label-danger raduis">expired</span></a>';
+						var normal = '<a data-btn-name="accountExpired" href=""><span class="label label-success raduis">normal</span></a>';
+						var expired = '<a data-btn-name="accountExpired" href=""><span class="label label-danger raduis">expired</span></a>';
 						return data ? normal : expired;
 					}
 				},
 				{
-					targets   : 9,
+					targets   : 10,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="locked" href=""><span class="label label-success raduis">normal</span></a>';
@@ -95,16 +106,16 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 10,
+					targets   : 11,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
-						var normal = '<a data-btn-name="expired" href=""><span class="label label-success raduis">normal</span></a>';
-						var expired = '<a data-btn-name="expired" href=""><span class="label label-danger raduis">expired</span></a>';
+						var normal = '<a data-btn-name="passwordExpired" href=""><span class="label label-success raduis">normal</span></a>';
+						var expired = '<a data-btn-name="passwordExpired" href=""><span class="label label-danger raduis">expired</span></a>';
 						return data ? normal : expired;
 					}
 				},
 				{
-					targets   : 11,
+					targets   : 12,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="firstlogin" href=""><span class="label label-success raduis">active</span></a>';
@@ -131,30 +142,63 @@ var ManageUserModule = function(){
 			var data = DataTable.row($(this).parents('tr')).data();
 			confirmUpdateStatusLocked(data);
 			
-		}).on('click', 'a[data-btn-name="expired"]', function (event) {
+		}).on('click', 'a[data-btn-name="passwordExpired"]', function (event) {
 			event.preventDefault();
 			
 			var data = DataTable.row($(this).parents('tr')).data();
-			confirmUpdateStatusExpired(data);
+			confirmUpdateStatusPasswordExpired(data);
 			
 		}).on('click', 'a[data-btn-name="firstlogin"]', function (event) {
 			event.preventDefault();
 			
 			var data = DataTable.row($(this).parents('tr')).data();
 			confirmUpdateStatusLogin(data);
-		}).on('click', 'a[data-btn-name="account"]', function (event) {
+		}).on('click', 'a[data-btn-name="accountExpired"]', function (event) {
 			event.preventDefault();
 			
 			var data = DataTable.row($(this).parents('tr')).data();
 			confirmUpdateStatusAccount(data);
+		}).on('click', 'button[data-btn-name="btnEdit"]', function (event) {
+			
+			var data = DataTable.row($(this).parents('tr')).data();
+			showModalEdit(data);
+			
+		}).on('click', 'button[data-btn-name="btnView"]', function (event) {
+			
+			var data = DataTable.row($(this).parents('tr')).data();
+			alert(JSON.stringify(data,null,5));
+			
+		}).on('click', 'button[data-btn-name="btnDelete"]', function (event) {
+			
+			var data = DataTable.row($(this).parents('tr')).data();
+			alert(JSON.stringify(data,null,5));
+			
 		});
 		
+	}
+	
+	var showModalEdit = function(data){
+		$('#ModalEditUser').modal({
+		    backdrop: 'static',
+		    keyboard: false
+		});
+		AjaxManager.GetData(null, 'api/user/get/' + data.userId,
+			function(response){
+				$('#FormEditUser input[name="userId"]').val(response.userId);
+				$('#FormEditUser input[name="username"]').val(response.username);
+				$('#FormEditUser input[name="firstName"]').val(response.firstName);
+				$('#FormEditUser input[name="lastName"]').val(response.lastName);
+			},
+			function(jqXHR, textStatus, errorThrown){
+				$.alert('Error!');
+			}
+		);
 	}
 	
 	var confirmUpdateStatusAccount = function(data){
 		$.confirm({
 		    title: 'Confirm!',
-		    icon: 'glyphicon glyphicon-heart',
+		    icon: 'fa fa-warning',
 		    type: 'blue',
 		    content: 'Simple confirm!',
 		    buttons: {
@@ -172,7 +216,7 @@ var ManageUserModule = function(){
 	var confirmUpdateStatusEnable = function(data){
 		$.confirm({
 		    title: 'Confirm!',
-		    icon: 'glyphicon glyphicon-heart',
+		    icon: 'fa fa-warning',
 		    type: 'blue',
 		    content: 'Simple confirm!',
 		    buttons: {
@@ -189,12 +233,12 @@ var ManageUserModule = function(){
 	
 	var confirmUpdateStatusLocked = function(data){
 		$.confirm({
-		    title: 'Confirm!',
-		    icon: 'glyphicon glyphicon-heart',
-		    type: 'blue',
-		    content: 'Simple confirm!',
-		    buttons: {
-		        confirm: {
+		    title : 'Confirm!',
+		    icon : 'fa fa-warning',
+		    type : 'blue',
+		    content : 'Simple confirm!',
+		    buttons : {
+		        confirm : {
 		        	btnClass : 'btn-blue',
 		        	action : function() {
 		        		updateStatusLocked(data);
@@ -205,32 +249,32 @@ var ManageUserModule = function(){
 		});
 	}
 	
-	var confirmUpdateStatusExpired = function(data){
+	var confirmUpdateStatusPasswordExpired = function(data){
 		$.confirm({
-		    title: 'Confirm!',
-		    icon: 'glyphicon glyphicon-heart',
-		    type: 'blue',
-		    content: 'Simple confirm!',
-		    buttons: {
-		        confirm: {
+		    title : 'Confirm!',
+		    icon : 'fa fa-warning',
+		    type : 'blue',
+		    content : 'Simple confirm!',
+		    buttons : {
+		        confirm : {
 		        	btnClass : 'btn-blue',
 		        	action : function() {
-		        		updateStatusExpired(data);
+		        		updateStatusPasswordExpired(data);
 		            }
 		        },
-		        cancel: function () {}
+		        cancel : function () {}
 		    }
 		});
 	}
 	
 	var confirmUpdateStatusLogin = function(data){
 		$.confirm({
-		    title: 'Confirm!',
-		    icon: 'glyphicon glyphicon-heart',
-		    type: 'blue',
-		    content: 'Simple confirm!',
-		    buttons: {
-		        confirm: {
+		    title : 'Confirm!',
+		    icon : 'fa fa-warning',
+		    type : 'blue',
+		    content : 'Simple confirm!',
+		    buttons : {
+		        confirm : {
 		        	btnClass : 'btn-blue',
 		        	action : function() {
 		        		updateStatusLogin(data);
@@ -293,7 +337,7 @@ var ManageUserModule = function(){
 		);
 	}
 
-	var updateStatusExpired = function(data){
+	var updateStatusPasswordExpired = function(data){
 		var request = {
 			username : data.username,
 			status : !data.credentialsnonexpired

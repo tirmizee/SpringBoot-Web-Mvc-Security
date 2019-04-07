@@ -8,7 +8,7 @@ import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
 @Service
-public class TesseractServiceImpl implements TesseractService {
+public class ORCServiceImpl implements ORCService {
 
 	@Override
 	public String generateText(File imageFile) {

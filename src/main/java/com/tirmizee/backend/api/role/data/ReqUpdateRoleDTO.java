@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 public class ReqUpdateRoleDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;

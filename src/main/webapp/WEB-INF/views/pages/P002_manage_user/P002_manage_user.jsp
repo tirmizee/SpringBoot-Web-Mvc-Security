@@ -12,6 +12,13 @@
   	.raduis {
 	    border-radius: 1em !important;
 	}
+	th {
+		border-top: 1px solid black;
+		background-color: #f4f4f4;
+	}
+	.readonly {
+		background-color: #eee !important;
+	}
   </style>
 <title><spring:message code="app.name"/></title>
 </head> 
@@ -45,6 +52,7 @@
   		<div class="control-sidebar-bg"></div>
 	
 	</div>
+<jsp:include page="component/modal_edit_user.jsp" />
 <script src="${pageContext.request.contextPath}/resources/scripts/commons/Commons.AjaxManager.js"></script>
 <script src="${pageContext.request.contextPath}/resources/scripts/P002_manage_user.js"></script>
 <script>

@@ -15,6 +15,7 @@ public class UserDetail implements Serializable{
 	private String roleCode;
 	private String roleName;
 	private Date credentialsexpiredDate;
+	private Date accountExpiredDate;
 	private boolean credentialsnonexpired;
 	private boolean accountnonexpired;
 	private boolean accountnonlocked;	
@@ -106,6 +107,12 @@ public class UserDetail implements Serializable{
 	public void setMaxSession(Integer maxSession) {
 		this.maxSession = maxSession;
 	}
+	public Date getAccountExpiredDate() {
+		return accountExpiredDate;
+	}
+	public void setAccountExpiredDate(Date accountExpiredDate) {
+		this.accountExpiredDate = accountExpiredDate;
+	}
 	@Override
 	public String toString() {
 		return "UserDetail [username=" + username + ", password=" + password + ", lastName=" + lastName + ", firstName="
@@ -113,6 +120,5 @@ public class UserDetail implements Serializable{
 				+ accountnonexpired + ", accountnonlocked=" + accountnonlocked + ", enabled=" + enabled
 				+ ", isFirstLogin=" + firstLogin + "]";
 	}
-	
 	
 }

@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.stereotype.Component;
 
 import com.tirmizee.core.constant.PermissionCode;
+import com.tirmizee.core.exception.UserAccountExpiredException;
 import com.tirmizee.core.exception.FirstloginException;
 import com.tirmizee.core.exception.LimitBadCredentialsException;
 import com.tirmizee.core.exception.PasswordExpriedException;
@@ -40,6 +41,11 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 			STRATEGY.sendRedirect(request, response, "/login?error=Username or Password invalid");
 		} 
 		
+		// DETERMINE URL FOR USERNAME LOCKED
+		else if(exception instanceof LockedException) {
+			STRATEGY.sendRedirect(request, response, "/login?error=Username is Locked");
+		}
+		
 		// DETERMINE URL FOR PASSWORD INVALID
 		else if(exception instanceof LimitBadCredentialsException) {
 			LimitBadCredentialsException badCredentials = (LimitBadCredentialsException) exception;
@@ -47,9 +53,9 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 			STRATEGY.sendRedirect(request, response, String.format("/login?error=%s", error));
 		} 
 		
-		// DETERMINE URL FOR USERNAME LOCKED
-		else if(exception instanceof LockedException) {
-			STRATEGY.sendRedirect(request, response, "/login?error=Username is Locked");
+		// DETERMINE URL FOR ACCOUNT EXPRIED
+		else if(exception instanceof UserAccountExpiredException) {
+			STRATEGY.sendRedirect(request, response, "/login?error=User Account is Expired");
 		}
 
 		// DETERMINE URL FOR USER FIRST LOGIN

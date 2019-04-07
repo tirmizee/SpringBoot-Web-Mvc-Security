@@ -16,6 +16,7 @@ public class UserProfile extends UserDetailsImpl {
 	private boolean isFirstLogin;
 	private Integer maxSession;
 	private Date credentialsExpiredDate;
+	private Date accountExpiredDate;
 	private java.util.Date createDate;
 	
 	public UserProfile(Builder builder) {
@@ -29,6 +30,7 @@ public class UserProfile extends UserDetailsImpl {
 		this.isFirstLogin = builder.isFirstLogin;
 		this.maxSession = builder.maxSession;
 		this.credentialsExpiredDate = builder.credentialsExpiredDate;
+		this.accountExpiredDate = builder.accountExpiredDate;
 	}
 	
 	public String getFirstName() {
@@ -103,6 +105,14 @@ public class UserProfile extends UserDetailsImpl {
 		this.maxSession = maxSession;
 	}
 
+	public Date getAccountExpiredDate() {
+		return accountExpiredDate;
+	}
+
+	public void setAccountExpiredDate(Date accountExpiredDate) {
+		this.accountExpiredDate = accountExpiredDate;
+	}
+
 	@Override
     public boolean equals(Object obj) {
 		if (obj instanceof UserDetails) {
@@ -127,6 +137,7 @@ public class UserProfile extends UserDetailsImpl {
 		private java.util.Date createDate;
 		private boolean isFirstLogin;
 		private Date credentialsExpiredDate;
+		private Date accountExpiredDate;
 		
 		public Builder(){}
 		
@@ -172,6 +183,11 @@ public class UserProfile extends UserDetailsImpl {
 		
 		public Builder credentialsExpiredDate(Date credentialsExpiredDate){
 			this.credentialsExpiredDate = credentialsExpiredDate;
+			return this;
+		}
+		
+		public Builder accountExpiredDate(Date accountExpiredDate){
+			this.accountExpiredDate = accountExpiredDate;
 			return this;
 		}
 		

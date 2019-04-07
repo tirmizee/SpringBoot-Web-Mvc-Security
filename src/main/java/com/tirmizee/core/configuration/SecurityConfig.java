@@ -133,9 +133,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.exceptionHandling()
-				.accessDeniedHandler(accessDeniedHandler)
-				.and()
 			.csrf()
 				.csrfTokenRepository(httpSessionCsrfTokenRepository())
 				.ignoringAntMatchers("/logout")
@@ -172,6 +169,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             	.deleteCookies("JSESSIONID")
                 .permitAll()
                 .and()
+            .exceptionHandling()
+				.accessDeniedHandler(accessDeniedHandler)
+				.and()
             .sessionManagement()
 //	            .maximumSessions(1)                        
 //	            .maxSessionsPreventsLogin(false)

@@ -1,56 +1,42 @@
-import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
-import org.springframework.security.crypto.codec.Hex;
-
-import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 public class Demo3 {
 
 	public static void main(String[] args) throws WriterException, IOException {
-//		String UUID = java.util.UUID.randomUUID().toString();
-//		System.out.println(UUID);
-//		System.out.println(Base64.encodeBase64String(UUID.getBytes()));
-//		System.out.println(new String(Base64.decodeBase64(Base64.encodeBase64String(UUID.getBytes()))));	
-		System.out.println(digest("Gdl@2019"));
+		byte[] buffer = new byte[1024];
+    	
+    	try{
+    		
+    		FileOutputStream fos = new FileOutputStream("E:\\MyFile.zip");
+    		ZipOutputStream zos = new ZipOutputStream(fos);
+    		ZipEntry ze= new ZipEntry("log.log");
+    		zos.putNextEntry(ze);
+    		FileInputStream in = new FileInputStream("E:\\log.log");
+   	   
+    		int len;
+    		while ((len = in.read(buffer)) > 0) {
+    			zos.write(buffer, 0, len);
+    		}
+
+    		in.close();
+    		zos.closeEntry();
+           
+    		//remember close it
+    		zos.close();
+          
+    		System.out.println("Done");
+
+    	}catch(IOException ex){
+    	   ex.printStackTrace();
+    	}
 	}
 
-	public static byte[] generateQRCodeByte(String text, int width, int height) throws WriterException, IOException {
-		BitMatrix bitMatrix = new QRCodeWriter().encode(text, BarcodeFormat.QR_CODE, width, height);
-		ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
-		MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
-		return pngOutputStream.toByteArray();
-	}
-	public static String digest(String plainText) {
-		String encText = "";
-
-		try {
-			MessageDigest digest = MessageDigest.getInstance("MD5");
-			digest.update(plainText.getBytes());
-			byte[] bytes = digest.digest();
-			encText = new String(Hex.encode(bytes));
-		} catch (NoSuchAlgorithmException var4) {
-			;
-		}
-
-		return encText;
-	}
-
-	public static byte[] digestToByte(String plainText) {
-		try {
-			MessageDigest digest = MessageDigest.getInstance("MD5");
-			digest.update(plainText.getBytes());
-			byte[] bytes = digest.digest();
-			return bytes;
-		} catch (NoSuchAlgorithmException var3) {
-			return null;
-		}
-	}
+	
 	
 }

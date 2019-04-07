@@ -1,5 +1,6 @@
 package com.tirmizee.core.configuration;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -10,6 +11,8 @@ import com.tirmizee.core.component.VarargMessageSourceImpl;
 
 @Configuration
 public class MessageSourcesConfig {
+	
+	public final Logger LOG = Logger.getLogger(MessageSourcesConfig.class);
 
 	@Bean(name = "messageSource")
 	public VarargMessageSource varargMessageSource() {

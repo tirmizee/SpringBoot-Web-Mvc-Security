@@ -14,7 +14,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
-import com.tirmizee.backend.api.user.data.UserDetailDTO;
+import com.tirmizee.backend.api.user.data.UserDetailPageDTO;
+import com.tirmizee.backend.api.user.data.UserDetailUpdateDTO;
 import com.tirmizee.core.domain.User;
 import com.tirmizee.core.domain.UserDetail;
 import com.tirmizee.core.repository.ProfileRepository;
@@ -39,6 +40,42 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	}
 	
 	@Override
+	public UserDetailUpdateDTO findDetailByUserId(Long userId) {
+		try {
+			final MapSqlParameterSource params = new MapSqlParameterSource()
+				.addValue("userId", userId);
+			final StringBuilder statemet = new StringBuilder()
+				.append("SELECT ")
+				.append(USER_ID).append(" , ")
+				.append(USERNAME).append(" , ")
+				.append(PASSWORD).append(" , ")
+				.append(RoleRepository.ROLE_ID).append(" , ")
+				.append(RoleRepository.ROLE_CODE).append(" , ")
+				.append(RoleRepository.ROLE_NAME).append(" , ")
+				.append(ENABLED).append(" , ")
+				.append(ACCOUNTNONLOCKED).append(" , ")
+				.append(ACCOUNTNONEXPIRED).append(" , ")
+				.append(ACCOUNT_EXPIRED_DATE).append(" , ")
+				.append(COL_CREDENTIALSEXPIRED_DATE).append(" , ")
+				.append(CREDENTIALSNONEXPIRED).append(" , ")
+				.append(FIRST_LOGIN).append(" , ")
+				.append(MAX_SESSION).append(" , ")
+				.append(ProfileRepository.FIRST_NAME).append(" , ")
+				.append(ProfileRepository.EMAIL).append(" , ")
+				.append(ProfileRepository.LAST_NAME)
+				.append(" FROM ").append(TB_USERS)
+				.append(" INNER JOIN ").append(ProfileRepository.TB_PROFILE)
+				.append(" ON ").append(PROFILE_ID).append(" = ").append(ProfileRepository.PROFILE_ID)
+				.append(" INNER JOIN ").append(RoleRepository.TB_ROLE)
+				.append(" ON ").append(FK_ROLE_ID).append(" = ").append(RoleRepository.ROLE_ID)
+				.append(" WHERE ").append(USER_ID).append(" = :userId ");
+			return getNamedJdbcOps().queryForObject(statemet.toString(), params, new BeanPropertyRowMapper<>(UserDetailUpdateDTO.class));
+		} catch(EmptyResultDataAccessException ex) {
+			return null;
+		}
+	}
+	
+	@Override
 	public UserDetail findDetailByUsername(String username) {
 		try {
 			final MapSqlParameterSource params = new MapSqlParameterSource()
@@ -53,6 +90,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 				.append(ENABLED).append(" , ")
 				.append(ACCOUNTNONLOCKED).append(" , ")
 				.append(ACCOUNTNONEXPIRED).append(" , ")
+				.append(ACCOUNT_EXPIRED_DATE).append(" , ")
 				.append(COL_CREDENTIALSEXPIRED_DATE).append(" , ")
 				.append(CREDENTIALSNONEXPIRED).append(" , ")
 				.append(FIRST_LOGIN).append(" , ")
@@ -72,7 +110,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	}
 
 	@Override
-	public Page<UserDetailDTO> findPageByCriteria(Pageable pageable, UserDetailCriteriaDTO search) {
+	public Page<UserDetailPageDTO> findPageByCriteria(Pageable pageable, UserDetailCriteriaDTO search) {
 		List<Object> params = new LinkedList<>();
 		StringBuilder statement = new StringBuilder()
 			.append(" SELECT ")
@@ -124,10 +162,10 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 		}
 		
 		String statementPage = getSqlGenerator().selectAll(statement, pageable);
-		List<UserDetailDTO> content = getJdbcOps().query(
+		List<UserDetailPageDTO> content = getJdbcOps().query(
 			statementPage.toString(), 
 			params.toArray(), 
-			new BeanPropertyRowMapper<>(UserDetailDTO.class)
+			new BeanPropertyRowMapper<>(UserDetailPageDTO.class)
 		);
 		long total = count(statement.toString(), params.toArray());
 		return new PageImpl<>(content, pageable, total);

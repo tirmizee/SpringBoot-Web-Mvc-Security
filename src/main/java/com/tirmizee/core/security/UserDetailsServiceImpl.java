@@ -52,6 +52,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				.accountNonLocked(userDetail.isAccountnonlocked())
 				.credentialsNonExpired(userDetail.isCredentialsnonexpired())
 				.credentialsExpiredDate(userDetail.getCredentialsexpiredDate())
+				.accountExpiredDate(userDetail.getAccountExpiredDate())
 				.firstName(userDetail.getFirstName())
 				.lastName(userDetail.getLastName())
 				.roleCode(userDetail.getRoleCode())

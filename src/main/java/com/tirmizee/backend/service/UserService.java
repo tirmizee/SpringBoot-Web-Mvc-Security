@@ -5,7 +5,7 @@ import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
 import com.tirmizee.backend.api.user.data.ReqUpdateStatusDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
-import com.tirmizee.backend.api.user.data.UserDetailDTO;
+import com.tirmizee.backend.api.user.data.UserDetailPageDTO;
 import com.tirmizee.core.datatable.RequestTable;
 import com.tirmizee.core.datatable.ResponseTable;
 
@@ -16,6 +16,8 @@ public interface UserService {
 	boolean isPasswordExpired(String username);
 	
 	void forgotPassword(String email);
+	
+	void fourceAccountExpired(String username);
 	
 	void fourcePasswordExpired(String username);
 	
@@ -35,6 +37,6 @@ public interface UserService {
 	
 	void updateStatusPasswordExpired(ReqUpdateStatusDTO updatePasswordExpired);
 	
-	ResponseTable<UserDetailDTO> pagingTable(RequestTable<UserDetailCriteriaDTO> requestTable); 
+	ResponseTable<UserDetailPageDTO> pagingTable(RequestTable<UserDetailCriteriaDTO> requestTable); 
 	
 }
