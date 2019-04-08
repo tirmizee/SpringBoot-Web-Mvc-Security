@@ -18,8 +18,12 @@ import com.tirmizee.backend.api.user.data.UserDetailPageDTO;
 import com.tirmizee.backend.api.user.data.UserDetailUpdateDTO;
 import com.tirmizee.core.domain.User;
 import com.tirmizee.core.domain.UserDetail;
+import com.tirmizee.core.repository.DistrictRepository;
+import com.tirmizee.core.repository.PostCodeRepository;
 import com.tirmizee.core.repository.ProfileRepository;
+import com.tirmizee.core.repository.ProvinceRepository;
 import com.tirmizee.core.repository.RoleRepository;
+import com.tirmizee.core.repository.SubDistrictRepository;
 import com.tirmizee.core.repository.UserRepositoryImpl;
 
 @Repository 
@@ -64,12 +68,28 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 				.append(ProfileRepository.TEL).append(" , ")
 				.append(ProfileRepository.FIRST_NAME).append(" , ")
 				.append(ProfileRepository.EMAIL).append(" , ")
-				.append(ProfileRepository.LAST_NAME)
+				.append(ProfileRepository.SUB_DISTRICT_CODE).append(" , ")
+				.append(ProfileRepository.LAST_NAME).append(" , ")
+				.append(ProvinceRepository.PROVINCE_ID).append(" , ")
+				.append(ProvinceRepository.PROVINCE_NAME_TH).append(" , ")
+				.append(DistrictRepository.DISTRICT_ID).append(" , ")
+				.append(DistrictRepository.DISTRICT_NAME_TH).append(" , ")
+				.append(SubDistrictRepository.SUBDISTRICT_ID).append(" , ")
+				.append(SubDistrictRepository.SUBDISTRICT_NAME_TH).append(" , ")
+				.append(PostCodeRepository.ZIPCODE)
 				.append(" FROM ").append(TB_USERS)
 				.append(" INNER JOIN ").append(ProfileRepository.TB_PROFILE)
 				.append(" ON ").append(PROFILE_ID).append(" = ").append(ProfileRepository.PROFILE_ID)
 				.append(" INNER JOIN ").append(RoleRepository.TB_ROLE)
 				.append(" ON ").append(FK_ROLE_ID).append(" = ").append(RoleRepository.ROLE_ID)
+				.append(" LEFT JOIN ").append(SubDistrictRepository.TB_SUBDISTRICTS)
+				.append(" ON ").append(ProfileRepository.SUB_DISTRICT_CODE).append(" = ").append(SubDistrictRepository.SUBDISTRICT_CODE)
+				.append(" LEFT JOIN ").append(DistrictRepository.TB_DISTRICTS)
+				.append(" ON ").append(SubDistrictRepository.FK_DISTRICT_ID).append(" = ").append(DistrictRepository.DISTRICT_ID)
+				.append(" LEFT JOIN ").append(ProvinceRepository.TB_PROVINCES)
+				.append(" ON ").append(DistrictRepository.FK_PROVINCE_ID).append(" = ").append(ProvinceRepository.PROVINCE_ID)
+				.append(" LEFT JOIN ").append(PostCodeRepository.TB_POSTCODE)
+				.append(" ON ").append(SubDistrictRepository.SUBDISTRICT_CODE).append(" = ").append(PostCodeRepository.SUB_DISTRICT_CODE)
 				.append(" WHERE ").append(USER_ID).append(" = :userId ");
 			return getNamedJdbcOps().queryForObject(statemet.toString(), params, new BeanPropertyRowMapper<>(UserDetailUpdateDTO.class));
 		} catch(EmptyResultDataAccessException ex) {

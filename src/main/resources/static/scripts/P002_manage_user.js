@@ -186,6 +186,15 @@ var ManageUserModule = function(){
 		});
 		AjaxManager.GetData(null, 'api/user/get/' + data.userId,
 			function(response){
+			
+				selectedProvinceId = response.provinceId;
+				selectedDistrictId = response.districtId;
+			
+				var optionProvince = { value : response.provinceId    ,text : response.provinceNameTh};
+				var optionDistrict = { value : response.districtId    ,text : response.districtNameTh};
+				var optionSubDist =  { value : response.subdistrictId ,text : response.subdistrictNameTh};
+				
+				$('#SLProvince,#SLDistrict,#SLSubDistrict').empty();
 				$('#FormEditUser input[name="userId"]').val(response.userId);
 				$('#FormEditUser input[name="username"]').val(response.username);
 				$('#FormEditUser input[name="firstName"]').val(response.firstName);
@@ -193,7 +202,10 @@ var ManageUserModule = function(){
 				$('#FormEditUser input[name="citizenId"]').val(response.citizenId);
 				$('#FormEditUser input[name="tel"]').val(response.tel);
 				$('#FormEditUser input[name="email"]').val(response.email);
-				
+				$('#FormEditUser input[name="postCode"]').val(response.zipcode);
+				$('#SLProvince').append($('<option>', optionProvince)).prop('selected',true);
+				$('#SLDistrict').append($('<option>', optionDistrict)).prop('selected',true);
+				$('#SLSubDistrict').append($('<option>', optionSubDist)).prop('selected',true);
 			},
 			function(jqXHR, textStatus, errorThrown){
 				
@@ -309,7 +321,7 @@ var ManageUserModule = function(){
 				        }
 				    }
 				});
-				DataTable.ajax.reload(false);
+				DataTable.ajax.reload(null, false);
 			},
 			function(jqXHR, textStatus, errorThrown){
 				$.alert('Error!');
@@ -335,7 +347,7 @@ var ManageUserModule = function(){
 				        }
 				    }
 				});
-				DataTable.ajax.reload(false);
+				DataTable.ajax.reload(null, false);
 			},
 			function(jqXHR, textStatus, errorThrown){
 				$.alert('Error!');
@@ -361,7 +373,7 @@ var ManageUserModule = function(){
 				        }
 				    }
 				});
-				DataTable.ajax.reload(false);
+				DataTable.ajax.reload(null, false);
 			},
 			function(jqXHR, textStatus, errorThrown){
 				$.alert('Error!');
@@ -387,7 +399,7 @@ var ManageUserModule = function(){
 				        }
 				    }
 				});
-				DataTable.ajax.reload(false);
+				DataTable.ajax.reload(null, false);
 			},
 			function(jqXHR, textStatus, errorThrown){
 				$.alert('Error!');
@@ -413,7 +425,7 @@ var ManageUserModule = function(){
 				        }
 				    }
 				});
-				DataTable.ajax.reload(false);
+				DataTable.ajax.reload(null, false);
 			},
 			function(jqXHR, textStatus, errorThrown){
 				$.alert('Error!');
@@ -482,7 +494,6 @@ var ManageUserModule = function(){
 	var handleSelectProvince = function(){
 		$('#SLProvince').select2({
 			dropdownParent: $('#ModalEditUser .modal-content'),
-			placeholder: '',
 			ajax: {
 			    url : 'api/province/findByTerm',
 			    delay : 250,

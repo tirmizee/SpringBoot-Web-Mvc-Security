@@ -22,6 +22,14 @@ public class UserDetailUpdateDTO implements Serializable {
 	private Integer roleId;
 	private String roleName;
 	private String roleCode;
+	private Integer provinceId;
+	private Integer districtId;
+	private Integer subdistrictId;
+	private String provinceNameTh;
+	private String districtNameTh;
+	private String subdistrictNameTh;
+	private String subDistrictCode;
+	private String zipcode;
 	
 	public Long getUserId() {
 		return userId;
@@ -118,6 +126,54 @@ public class UserDetailUpdateDTO implements Serializable {
 	}
 	public void setTel(String tel) {
 		this.tel = tel;
+	}
+	public String getSubDistrictCode() {
+		return subDistrictCode;
+	}
+	public void setSubDistrictCode(String subDistrictCode) {
+		this.subDistrictCode = subDistrictCode;
+	}
+	public Integer getProvinceId() {
+		return provinceId;
+	}
+	public void setProvinceId(Integer provinceId) {
+		this.provinceId = provinceId;
+	}
+	public Integer getDistrictId() {
+		return districtId;
+	}
+	public void setDistrictId(Integer districtId) {
+		this.districtId = districtId;
+	}
+	public Integer getSubdistrictId() {
+		return subdistrictId;
+	}
+	public void setSubdistrictId(Integer subdistrictId) {
+		this.subdistrictId = subdistrictId;
+	}
+	public String getZipcode() {
+		return zipcode;
+	}
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+	public String getProvinceNameTh() {
+		return provinceNameTh;
+	}
+	public void setProvinceNameTh(String provinceNameTh) {
+		this.provinceNameTh = provinceNameTh;
+	}
+	public String getDistrictNameTh() {
+		return districtNameTh;
+	}
+	public void setDistrictNameTh(String districtNameTh) {
+		this.districtNameTh = districtNameTh;
+	}
+	public String getSubdistrictNameTh() {
+		return subdistrictNameTh;
+	}
+	public void setSubdistrictNameTh(String subdistrictNameTh) {
+		this.subdistrictNameTh = subdistrictNameTh;
 	}
 	
 }

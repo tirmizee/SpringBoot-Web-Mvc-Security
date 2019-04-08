@@ -7,7 +7,8 @@
 	            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	            <h4 class="modal-title"><label>Edit User</label></h4>
 	        </div>
-	        <div class="modal-body"  style="margin: 20px;">
+	        <div class="modal-body"  style="margin:0 20px 20px 20px;">
+	        	<h3>User Account</h3>
 	        	<div class="row">
 	        		<div class="col-md-6">
 	        			<div class="row">
@@ -112,8 +113,6 @@
 					</div>
 				</div>
 				
-				<hr>
-				<h3>Address</h3>
 				<div class="row">
 	        		<div class="col-md-6">
 	        			<div class="row">
@@ -121,7 +120,7 @@
 		        				<div class="form-group">
 							        <label>Province</label>
 							        <select id="SLProvince" class="form-control select2" style="width: 100%;">
-								        <option selected="selected"></option>
+							        	
 								    </select>
 							    </div>
 	        				</div>
@@ -129,7 +128,6 @@
 	        					<div class="form-group">
 							        <label>District</label>
 							        <select id="SLDistrict" class="form-control select2" style="width: 100%;">
-								        <option selected="selected"></option>
 								    </select>
 							    </div>
 	        				</div>
@@ -141,7 +139,6 @@
 		        				<div class="form-group">
 							        <label>Sub District</label>
 							        <select id="SLSubDistrict" class="form-control select2" style="width: 100%;">
-								        <option selected="selected"></option>
 								    </select>
 							    </div>
 	        				</div>
