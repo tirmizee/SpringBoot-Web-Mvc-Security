@@ -90,13 +90,13 @@ var ManageRoleModule = function(){
 				function(response){
 					$('#FormEditRole input[name="roleCode"]').val(response.roleCode);
 					$('#FormEditRole input[name="roleName"]').val(response.roleName);
+					TableEditPermission.ajax.url( 'api/permission/' + data.roleId).load();
 				},
 				function(jqXHR, textStatus, errorThrown){
 					$.alert('Error!');
 				}
 			);
 			
-			TableEditPermission.ajax.url( 'api/permission/' + data.roleId).load();
 		});
 	}
 	

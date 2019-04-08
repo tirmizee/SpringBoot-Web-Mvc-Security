@@ -41,5 +41,5 @@ public class ProvinceRepositoryImpl extends AbstractOracleJdbcRepository<Provinc
 		entity.setProvinceId(generatedId.intValue());
 		return entity;
 	}
-
+	
 }

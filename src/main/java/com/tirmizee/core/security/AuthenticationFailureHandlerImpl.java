@@ -20,6 +20,7 @@ import com.tirmizee.core.exception.UserAccountExpiredException;
 import com.tirmizee.core.exception.FirstloginException;
 import com.tirmizee.core.exception.LimitBadCredentialsException;
 import com.tirmizee.core.exception.PasswordExpriedException;
+import com.tirmizee.core.exception.UserAccountDisabledException;
 
 /**
  * @author Pratya Yeekhaday
@@ -52,6 +53,11 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 			String error = badCredentials.isLocked() ? "Username is Locked" : "Username or Password invalid";
 			STRATEGY.sendRedirect(request, response, String.format("/login?error=%s", error));
 		} 
+		
+		// DETERMINE URL FOR ACCOUNT Disabled
+		else if(exception instanceof UserAccountDisabledException) {
+			STRATEGY.sendRedirect(request, response, "/login?error=User Account is Disabled");
+		}
 		
 		// DETERMINE URL FOR ACCOUNT EXPRIED
 		else if(exception instanceof UserAccountExpiredException) {

@@ -13,7 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 /**
- * @author pratya yeekhaday
+ * @author Pratya Yeekhaday
  *
  */
 public class PageMapperImpl extends DozerBeanMapper implements PageMapper {

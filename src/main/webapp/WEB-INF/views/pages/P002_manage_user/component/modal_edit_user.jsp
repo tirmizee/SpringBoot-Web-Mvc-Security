@@ -36,6 +36,14 @@
 	        			</div>
 	        		</div>
 	        		<div class="col-md-6">
+		        		
+	        		</div>
+	        	</div>
+			
+				<hr>
+				<h3>Personal Info</h3>
+				<div class="row">
+					<div class="col-md-6">
 		        		<div class="row">
 	        				<div class="col-md-6">
 		        				<div class="form-group">
@@ -61,6 +69,95 @@
 	        				</div>
 	        			</div>
 	        		</div>
+	        		<div class="col-md-6">
+	        		</div>
+	        	</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+							        <label>Citizen ID</label>
+							        <div class="input-group date">
+							            <div class="input-group-addon">
+							                <i class="fa fa-trademark"></i>
+							            </div>
+							            <input name="citizenId" type="text" class="form-control pull-right" >
+							        </div>
+							    </div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+							        <label>Tel</label>
+							        <div class="input-group date">
+							            <div class="input-group-addon">
+							                <i class="fa fa-trademark"></i>
+							            </div>
+							            <input name="tel" type="text" class="form-control pull-right" >
+							        </div>
+							    </div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+					        <label>Email</label>
+					        <div class="input-group date">
+					            <div class="input-group-addon">
+					                <i class="fa fa-suitcase"></i>
+					            </div>
+					            <input name="email" type="text" class="form-control pull-right" >
+					        </div>
+					    </div>
+					</div>
+				</div>
+				
+				<hr>
+				<h3>Address</h3>
+				<div class="row">
+	        		<div class="col-md-6">
+	        			<div class="row">
+	        				<div class="col-md-6">
+		        				<div class="form-group">
+							        <label>Province</label>
+							        <select id="SLProvince" class="form-control select2" style="width: 100%;">
+								        <option selected="selected"></option>
+								    </select>
+							    </div>
+	        				</div>
+	        				<div class="col-md-6">
+	        					<div class="form-group">
+							        <label>District</label>
+							        <select id="SLDistrict" class="form-control select2" style="width: 100%;">
+								        <option selected="selected"></option>
+								    </select>
+							    </div>
+	        				</div>
+	        			</div>
+	        		</div>
+	        		<div class="col-md-6">
+		        		<div class="row">
+	        				<div class="col-md-6">
+		        				<div class="form-group">
+							        <label>Sub District</label>
+							        <select id="SLSubDistrict" class="form-control select2" style="width: 100%;">
+								        <option selected="selected"></option>
+								    </select>
+							    </div>
+	        				</div>
+	        				<div class="col-md-6">
+	        					<div class="form-group">
+							        <label>Post Code</label>
+							        <div class="input-group date">
+							            <div class="input-group-addon readonly">
+							                <i class="fa fa-suitcase"></i>
+							            </div>
+							            <input name="postCode" type="text" class="form-control pull-right" readonly>
+							        </div>
+							    </div>
+	        				</div>
+	        			</div>
+	        		</div>
 	        	</div>
 			
 			    <div class="row">
@@ -72,8 +169,8 @@
 	        
 	        <div class="modal-footer ">
 	        	<div class="row text-center">
-		            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		            <button type="submit" class="btn btn-success">Save</button>
+		            <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+		            <button type="submit" class="btn btn-success btn-flat">Save</button>
 	            </div>
 	        </div>
 	        </form>

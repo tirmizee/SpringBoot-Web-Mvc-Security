@@ -17,6 +17,11 @@ import org.springframework.core.env.Environment;
 import com.tirmizee.core.constant.Constant;
 import com.tirmizee.core.constant.Properties;
 
+
+/**
+ * @author User
+ *
+ */
 @Configuration
 @PropertySource("classpath:db.properties")
 public class TomcatEmbeddedConfig {

@@ -49,10 +49,10 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                    	  <input type="hidden" name="uid" value="${uid}" />
-		            	  <input type="hidden" name="token" value="${token}" />
-		            	  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 	
-		            	  <button type="submit" class="btn btn-success btn-block btn-flat">Send</button>
+						<input type="hidden" name="uid" value="${uid}" />
+						<input type="hidden" name="token" value="${token}" />
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 	
+						<button type="submit" class="btn btn-success btn-block btn-flat">Send</button>
                     </div>
                 </div>
             </form>

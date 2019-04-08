@@ -26,6 +26,8 @@ public class ProfileRepositoryImpl extends AbstractOracleJdbcRepository<Profile,
 			profile.setFirstName(rs.getString(COL_FIRST_NAME));
 			profile.setEmail(rs.getString(COL_EMAIL));
 			profile.setCitizenId(rs.getString(COL_CITIZEN_ID));
+			profile.setSubDistrictCode(rs.getString(COL_SUB_DISTRICT_CODE));
+			profile.setTel(rs.getString(COL_TEL));
 			return profile.withPersisted(true);
 		}
 	};
@@ -41,6 +43,8 @@ public class ProfileRepositoryImpl extends AbstractOracleJdbcRepository<Profile,
 			map.put(COL_EMAIL, param.getEmail());
 			map.put(COL_PROFILE_ID, param.getProfileId());
 			map.put(COL_CITIZEN_ID, param.getCitizenId());
+			map.put(COL_SUB_DISTRICT_CODE, param.getSubDistrictCode());
+			map.put(COL_TEL, param.getTel());
 			return map;
 		}
 	};

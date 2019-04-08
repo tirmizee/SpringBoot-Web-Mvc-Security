@@ -14,6 +14,8 @@ public interface ProfileRepository extends JdbcRepository<Profile, Long>{
 	public static final String COL_EMAIL = "EMAIL";
 	public static final String COL_PROFILE_ID = "PROFILE_ID";
 	public static final String COL_CITIZEN_ID = "CITIZEN_ID";
+	public static final String COL_SUB_DISTRICT_CODE = "SUB_DISTRICT_CODE";
+	public static final String COL_TEL = "TEL";
 	
 	public static final String UPDATE_DATE = "PROFILE.UPDATE_DATE";
 	public static final String CREATE_DATE = "PROFILE.CREATE_DATE";
@@ -22,5 +24,7 @@ public interface ProfileRepository extends JdbcRepository<Profile, Long>{
 	public static final String EMAIL = "PROFILE.EMAIL";
 	public static final String PROFILE_ID = "PROFILE.PROFILE_ID";
 	public static final String CITIZEN_ID = "PROFILE.CITIZEN_ID";
+	public static final String SUB_DISTRICT_CODE = "PROFILE.SUB_DISTRICT_CODE";
+	public static final String TEL = "PROFILE.TEL";
 	
 }

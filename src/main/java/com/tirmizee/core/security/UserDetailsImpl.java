@@ -87,18 +87,18 @@ public class UserDetailsImpl implements UserDetails {
 		return enabled;
 	}
 	
-	 @Override
-     public boolean equals(Object obj) {
-         if (obj instanceof UserDetails) {
-           return username.equals(((UserDetails) obj).getUsername());
-         }
-         return false;
-     }
+	@Override
+    public boolean equals(Object obj) {
+		if (obj instanceof UserDetails) {
+			return username.equals(((UserDetails) obj).getUsername());
+        }
+        return false;
+    }
 
-     @Override
-     public int hashCode() {
-         return username != null ? username.hashCode() : 0;
-     }
+	@Override
+	public int hashCode() {
+		return username != null ? username.hashCode() : 0;
+	}
 	
 	public static class Builder<T extends Builder<?>>{
 		
@@ -132,7 +132,7 @@ public class UserDetailsImpl implements UserDetails {
 			return getThis();
 		}
 		
-		public T authorities(GrantedAuthority... authorities) {
+		public T authorities(GrantedAuthority...authorities) {
 			return authorities(Arrays.asList(authorities));
 		}
 		

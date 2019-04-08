@@ -13,6 +13,8 @@ public class Profile implements Persistable<Long>{
 	private String lastName;
 	private String firstName;
 	private String email;
+	private String tel;
+	private String subDistrictCode;
 	private java.sql.Date updateDate;
 	private java.sql.Date createDate;
 	
@@ -78,6 +80,22 @@ public class Profile implements Persistable<Long>{
 
 	public void setCitizenId(String citizenId) {
 		this.citizenId = citizenId;
+	}
+
+	public String getSubDistrictCode() {
+		return subDistrictCode;
+	}
+
+	public void setSubDistrictCode(String subDistrictCode) {
+		this.subDistrictCode = subDistrictCode;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
 
 	@Override

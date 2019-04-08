@@ -13,10 +13,12 @@ public class UserDetailUpdateDTO implements Serializable {
 	private boolean accountnonexpired;
 	private boolean accountnonlocked;	
 	private boolean enabled;
+	private String citizenId;
 	private boolean firstLogin;
 	private String lastName;
 	private String firstName;
 	private String email;
+	private String tel;
 	private Integer roleId;
 	private String roleName;
 	private String roleCode;
@@ -104,6 +106,18 @@ public class UserDetailUpdateDTO implements Serializable {
 	}
 	public void setRoleCode(String roleCode) {
 		this.roleCode = roleCode;
+	}
+	public String getCitizenId() {
+		return citizenId;
+	}
+	public void setCitizenId(String citizenId) {
+		this.citizenId = citizenId;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
 	
 }

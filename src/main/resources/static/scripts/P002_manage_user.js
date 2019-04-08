@@ -3,6 +3,9 @@ var ManageUserModule = function(){
 	var Search = {};
 	var DataTable = {};
 	
+	var selectedProvinceId = null;
+	var selectedDistrictId = null;
+	
 	var activeMenu = function(){
 		 $('ul.sidebar-menu > li.treeview-setting').addClass('active');
 	}
@@ -179,8 +182,7 @@ var ManageUserModule = function(){
 	
 	var showModalEdit = function(data){
 		$('#ModalEditUser').modal({
-		    backdrop: 'static',
-		    keyboard: false
+		    backdrop: 'static'
 		});
 		AjaxManager.GetData(null, 'api/user/get/' + data.userId,
 			function(response){
@@ -188,9 +190,13 @@ var ManageUserModule = function(){
 				$('#FormEditUser input[name="username"]').val(response.username);
 				$('#FormEditUser input[name="firstName"]').val(response.firstName);
 				$('#FormEditUser input[name="lastName"]').val(response.lastName);
+				$('#FormEditUser input[name="citizenId"]').val(response.citizenId);
+				$('#FormEditUser input[name="tel"]').val(response.tel);
+				$('#FormEditUser input[name="email"]').val(response.email);
+				
 			},
 			function(jqXHR, textStatus, errorThrown){
-				$.alert('Error!');
+				
 			}
 		);
 	}
@@ -426,7 +432,7 @@ var ManageUserModule = function(){
 		});
 	}
 	
-	var handleSelect2Role = function(){
+	var handleSelectRole = function(){
 		$('#SLRole').select2({
 			placeholder: 'Role',
 			ajax: {
@@ -473,12 +479,192 @@ var ManageUserModule = function(){
 		});
 	}
 	
+	var handleSelectProvince = function(){
+		$('#SLProvince').select2({
+			dropdownParent: $('#ModalEditUser .modal-content'),
+			placeholder: '',
+			ajax: {
+			    url : 'api/province/findByTerm',
+			    delay : 250,
+			    type : 'POST',
+			    contentType : 'application/json',
+			    headers : {
+			    	[AjaxManager.CsrfHeader] : AjaxManager.CsrfToken 
+	            },
+	            data : function (params) {
+	            	params.page = params.page || 0;
+	            	params.size = 10;
+	                return JSON.stringify(params);
+	            },
+			    processResults : function (data , params) {
+			    	return {
+		                results : $.map(data.content, function (item) { 
+		                    return {
+		                    	id     : item.provinceId,
+		                    	code   : item.provincecCode,
+		                    	text   : item.provinceNameTh,
+		                    	textEn   : item.provinceNameEn
+		                    }
+		                }),
+	                    pagination: {
+	                        more : !data.last
+	                    }
+		            };
+			    }
+			},
+			cache : true,
+			templateResult : function (data) {
+				  
+				var $template = $('<div></div>');
+				var $body_line1 = $('<span>' + data.text + '</span>');  
+				var $body_line2 = $('<small><b>' + data.code + ' : ' + data.textEn + '</b></small>');  
+				
+				$template.append($body_line1);
+				$template.append('<br>');
+				$template.append($body_line2);
+				  
+				return $template;
+			} 
+		}).on('select2:select', function (e) {
+		    selectedProvinceId = e.params.data.id;
+		    $('#SLDistrict').val([]).trigger('change');
+		    $('#SLSubDistrict').val([]).trigger('change');
+		    $('#FormEditUser input[name="postCode"]').val('');
+		});
+	}
+	
+	var handleSelectDistrict = function(){
+		$('#SLDistrict').select2({
+			dropdownParent: $('#ModalEditUser .modal-content'),
+			placeholder: '',
+			ajax: {
+			    url : 'api/district/findByTerm',
+			    delay : 250,
+			    type : 'POST',
+			    contentType : 'application/json',
+			    headers : {
+			    	[AjaxManager.CsrfHeader] : AjaxManager.CsrfToken  
+	            },
+	            data : function (params) {
+	            	params.page = params.page || 0;
+	            	params.size = 10;
+	            	params.provinceId = selectedProvinceId;
+	                return JSON.stringify(params);
+	            },
+			    processResults : function (data , params) {
+			    	return {
+		                results : $.map(data.content, function (item) {
+		                    return {
+		                    	id     : item.districtId,
+		                    	code   : item.districtCode,
+		                    	text   : item.districtNameTh,
+		                        textEn : item.districtNameEn
+		                    }
+		                }),
+	                    pagination: {
+	                        more : !data.last
+	                    }
+		            };
+			    }
+			  },
+			  cache : true,
+			  templateResult : function (data) {
+				  
+				  var $template = $('<div></div>');
+				  var $body_line1 = $('<span>' + data.text + '</span>');  
+				  var $body_line2 = $('<small><b>' + data.code + ' : ' + data.textEn + ' </b></small>');  
+				  
+				  $template.append($body_line1);
+				  $template.append('<br>');
+				  $template.append($body_line2);
+				  
+                  return $template;
+			  } 
+		}).on('select2:select', function (e) {
+			selectedDistrictId = e.params.data.id;
+			$('#SLSubDistrict').val([]).trigger('change');
+			$('#FormEditUser input[name="postCode"]').val('');
+		});
+	}
+	
+	var handleSelectSubDistrict = function(){
+		$('#SLSubDistrict').select2({
+			dropdownParent: $('#ModalEditUser .modal-content'),
+			placeholder: '',
+			ajax: {
+			    url : 'api/subdistrict/findByTerm',
+			    delay : 250,
+			    type : 'POST',
+			    contentType : 'application/json',
+			    headers : {
+			    	[AjaxManager.CsrfHeader] : AjaxManager.CsrfToken  
+	            },
+	            data : function (params) {
+	            	params.page = params.page || 0;
+	            	params.size = 10;
+	            	params.districtId = selectedDistrictId;
+	                return JSON.stringify(params);
+	            },
+			    processResults : function (data , params) {
+			    	return {
+		                results : $.map(data.content, function (item) {
+		                    return {
+		                    	id     : item.subdistrictId,
+		                    	code   : item.subdistrictCode,
+		                    	text   : item.subdistrictNameTh,
+		                    	postcode   : item.zipcode
+		                    }
+		                }),
+	                    pagination: {
+	                        more : !data.last
+	                    }
+		            };
+			    }
+			  },
+			  cache : true,
+			  templateResult : function (data) {
+				  
+				  var $template = $('<div></div>');
+				  var $body_line1 = $('<span>' + data.text + '</span>');  
+				  var $body_line2 = $('<small><b>' + data.code + '</b></small>');  
+				  
+				  $template.append($body_line1);
+				  $template.append('<br>');
+				  $template.append($body_line2);
+				  
+                  return $template;
+			  } 
+		}).on('select2:select', function (e) {
+			$('#FormEditUser input[name="postCode"]').val(e.params.data.postcode);
+		});
+	}
+	
+	var handleInputCitizenId = function(){
+		$('#FormEditUser input[name="citizenId"]').inputmask({
+			mask : "9-9999-99999-99-9",
+			autoUnmask : true
+		});
+	}
+	
+	var handleInputTel = function(){
+		$('#FormEditUser input[name="tel"]').inputmask({
+			mask : "(999) 999-9999",
+			autoUnmask : true
+		});
+	}
+	
 	return {
 		init : function(){
 			activeMenu();
 			handleDataTable();
 			handleButtonSearch();
-			handleSelect2Role();
+			handleSelectRole();
+			handleSelectProvince();
+			handleSelectDistrict();
+			handleSelectSubDistrict();
+			handleInputTel();
+			handleInputCitizenId();
+			
 		}
 	};
 	

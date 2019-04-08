@@ -10,13 +10,11 @@ import org.springframework.data.domain.Pageable;
 import com.tirmizee.core.exception.UnsupportedSQLException;
 import com.tirmizee.core.jdbcrepository.TableDescription;
 
-
 public class MysqlGenerator extends AbstractSqlGenerator {
 
 	public static final String PRODUCT_NAME = "MySQL";
 	
 	public static String LIMIT_OFFSET_WRAPPER = "%s LIMIT %d OFFSET %d";
-	
 	
 	@Override
 	public boolean isCompatible(DatabaseMetaData metadata) throws SQLException {

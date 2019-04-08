@@ -9,6 +9,7 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -19,6 +20,7 @@ import com.tirmizee.core.exception.UserAccountExpiredException;
 import com.tirmizee.core.exception.FirstloginException;
 import com.tirmizee.core.exception.LimitBadCredentialsException;
 import com.tirmizee.core.exception.PasswordExpriedException;
+import com.tirmizee.core.exception.UserAccountDisabledException;
 import com.tirmizee.core.utilities.DateUtils;
 
 
@@ -84,6 +86,8 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 	
 		} catch (AccountExpiredException ex) {
 			throw new UserAccountExpiredException(username, "User account is expired");	
+		} catch (DisabledException ex) {
+			throw new UserAccountDisabledException(username, "User account is expired");	
 		} catch (CredentialsExpiredException ex) {
 			throw new PasswordExpriedException(username, "Force password expried change");
 		} catch (Exception exception) {
