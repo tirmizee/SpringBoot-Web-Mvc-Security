@@ -5,6 +5,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy;
 
+/**
+ * @author Pratya Yeekhaday
+ *
+ */
 public class CustomConcurrentSessionControlAuthenStrategy extends ConcurrentSessionControlAuthenticationStrategy {
 
 	public CustomConcurrentSessionControlAuthenStrategy(SessionRegistry sessionRegistry) {

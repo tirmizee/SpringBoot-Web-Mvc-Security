@@ -136,9 +136,9 @@ var ManageSessionModule = function(){
 						DataTable.rows.add(usersLogged);
 						DataTable.draw();
 						
-						$('#SPCountUserLogged').text(countUserLogged);
-						$('#SPCountSessionExpired').text(countSessionExpired);
-						$('#SPCountUserActive').text(countSessionActive);
+						$('#SPCountUserLogged')     .animateNumber({ number: countUserLogged });
+						$('#SPCountSessionExpired') .animateNumber({ number: countSessionExpired });
+						$('#SPCountUserActive')     .animateNumber({ number: countSessionActive });
 						$('#TBSession_wrapper,#BoxUsersLogged,#BoxUsersActive,#BoxSessionExpried').waitMe("hide");
 				
 					}, 300);
@@ -154,7 +154,7 @@ var ManageSessionModule = function(){
 			function(response){
 				setTimeout(function(){ 
 					$('#BoxAllUsers').waitMe("hide");
-					$('#SPCountUsers').text(response);
+					$('#SPCountUsers').animateNumber({ number: response });
 				}, 300);
 			},
 			function(jqXHR, textStatus, errorThrown){
@@ -173,8 +173,8 @@ var ManageSessionModule = function(){
 		init : function(){
 			activeMenu();
 			handleDataTable();
-			loadData();
 			handleButtonRefresh();
+			loadData();
 		}
 	};
 	

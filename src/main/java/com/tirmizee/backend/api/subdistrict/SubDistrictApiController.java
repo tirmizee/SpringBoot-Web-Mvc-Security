@@ -23,6 +23,6 @@ public class SubDistrictApiController {
 	@PostMapping(path = "/findByTerm")
 	public Page<SubDistrictDTO> findByTerm(@RequestBody @Valid SearchSubDistrictDTO search){
 		return subDistrictDao.findByTerm(search);
-	}
+	} 
 	
 }

@@ -1,9 +1,12 @@
 var ManageRoleModule = function(){
 	
-	var Search = {};
+	var SearchRole = {};
+	var SearchPermission = {};
 	var SelectedRoleId = null;
+	
 	var TableRole = {};
 	var TableEditPermission = {};
+	var TableSearchPermission = {};
 	
 	var activeMenu = function(){
 		 $('ul.sidebar-menu > li.treeview-setting').addClass('active');
@@ -31,7 +34,7 @@ var ManageRoleModule = function(){
 					[AjaxManager.CsrfHeader] : AjaxManager.CsrfToken 
 	            },
 				data : function (d) {
-					d.search = Search;
+					d.search = SearchRole;
 					return JSON.stringify(d);
 				},error : function (xhr, error, thrown) {
 					window.location.replace("login");
@@ -154,10 +157,56 @@ var ManageRoleModule = function(){
 	    });
 	}
 	
+	var handleTableSearchPermission = function(){
+		TableSearchPermission = $('#TBSearchPermission').DataTable({
+			serverSide   : true,
+			searching    : false,
+			responsive   : false,
+			scrollX      : true,
+			select       : true,
+			deferRender  : true,
+			ajax: {
+				url: 'api/permission/page',
+				type: "POST",
+				contentType: 'application/json',
+				headers: {
+					[AjaxManager.CsrfHeader] : AjaxManager.CsrfToken 
+	            },
+				data : function (d) {
+					d.search = SearchPermission;
+					return JSON.stringify(d);
+				},error : function (xhr, error, thrown) {
+					window.location.replace("login");
+	            }
+			},
+			columns: [
+				{ data : null          ,title : "Order" },
+				{ data : "perId"       ,title : "Permission ID"},
+				{ data : "perCode"     ,title : "Permission Code"},
+				{ data : "perName"     ,title : "Permission Name"}
+			],
+			columnDefs: [
+				{
+					targets   : 0,
+					width     : "5%",
+					orderable : false,
+					render    : function (data, type, row, meta) {
+						return meta.settings._iDisplayStart + meta.row + 1;
+					}
+				},
+				{
+					targets : 1,
+					visible : false
+				}
+			]
+		});
+		TableSearchPermission.columns.adjust();
+	}
+	
 	var handleButtonSearch = function(){
-		$('#BtnSearch').on('click', function(){
-			Search.roleCode = $('#FormSearchRole input[name="roleCode"]').val();
-			Search.roleName = $('#FormSearchRole input[name="roleName"]').val();
+		$('#BtnSearch').on('click', function(event){
+			SearchRole.roleCode = $('#FormSearchRole input[name="roleCode"]').val();
+			SearchRole.roleName = $('#FormSearchRole input[name="roleName"]').val();
 			TableRole.ajax.reload();
 		});
 	}
@@ -223,10 +272,10 @@ var ManageRoleModule = function(){
 	var updateRole = function(){
 		
 		var request = {
-			roleId : SelectedRoleId,
+			roleId   : SelectedRoleId,
 			roleCode : $('#FormEditRole input[name="roleCode"]').val(),
 			roleName : $('#FormEditRole input[name="roleName"]').val(),
-			perIds : []
+			perIds   : []
 		};
 		
 		$('input:checked', $('#TBEditPermission').dataTable().fnGetNodes()).each(function() {
@@ -268,15 +317,23 @@ var ManageRoleModule = function(){
 		);
 	}
 	
+	var handleTab = function(){
+		$('#tab').on('shown.bs.tab', function(){
+			TableSearchPermission.columns.adjust();
+		});
+	}
+	
 	return {
 		init : function(){
 			activeMenu();
 			handleTableRole();
 			handleTableEditPermission();
+			handleTableSearchPermission();
 			handleButtonSearch();
 			handleButtonClear();
 			handleModalEditRole();
 			handleFormEditRole();
+			handleTab();
 		}
 	};
 	

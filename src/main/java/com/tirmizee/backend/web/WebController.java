@@ -88,4 +88,10 @@ public class WebController {
 		return "pages/P005_manage_role/P005_manage_role";
 	}
 	
+//	@PreAuthorize("hasAnyAuthority('P005')")
+	@GetMapping(path = "/file")
+	public String file(ModelMap model) {
+		return "pages/P006_file/P006_file";
+	}
+	
 }

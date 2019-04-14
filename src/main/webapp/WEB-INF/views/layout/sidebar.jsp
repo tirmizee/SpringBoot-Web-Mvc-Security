@@ -35,6 +35,19 @@
 				</ul>
 			</li>
 			</security:authorize>
+			
+			<li class="treeview-file">
+			    <a href="#">
+					<i class="fa fa-cog"></i> 
+					<span>File</span>
+			   		<span class="pull-right-container">
+			   			<i class="fa fa-angle-left pull-right"></i>
+			   		</span>
+			    </a>
+				<ul class="treeview-menu" style="display: none;">
+					<li class="menu-file"><a href="${pageContext.request.contextPath}/file"><i class="fa fa-book"></i> <span>Upload</span></a></li>
+				</ul>
+			</li>
 			<security:authorize access="hasAnyAuthority('P004')">
 			<li class="menu-log"><a href="${pageContext.request.contextPath}/log"><i class="fa fa-book"></i> <span><spring:message code="app.menu.viewlog"/></span></a></li>
 			</security:authorize>

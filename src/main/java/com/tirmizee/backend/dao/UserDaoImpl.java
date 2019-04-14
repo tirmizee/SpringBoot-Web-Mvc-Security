@@ -185,7 +185,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 		
 		String statementPage = getSqlGenerator().selectAll(statement, pageable);
 		List<UserDetailPageDTO> content = getJdbcOps().query(
-			statementPage.toString(), 
+			statementPage, 
 			params.toArray(), 
 			new BeanPropertyRowMapper<>(UserDetailPageDTO.class)
 		);

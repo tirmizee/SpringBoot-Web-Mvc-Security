@@ -33,7 +33,11 @@
 			
 			<!-- CONTENT BODY -->
    			<section class="content">
-				<jsp:include page="component/body.jsp" />
+				<div class="box box-default">
+				    <div class="box-body" style="">
+				    	<table id="TBLog" class="display nowrap" cellspacing="0" width="100%"></table>
+				    </div>
+				</div>
    			</section>
    			 
    		</div>

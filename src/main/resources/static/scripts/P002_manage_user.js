@@ -136,65 +136,84 @@ var ManageUserModule = function(){
 		}).on('click', 'a[data-btn-name="enable"]', function (event) {
 			event.preventDefault();
 			
-			var data = DataTable.row($(this).parents('tr')).data();
+			var node = $(this).parents('tr');
+			var data = DataTable.row(node).data();
 			confirmUpdateStatusEnable(data);
 			
 		}).on('click', 'a[data-btn-name="locked"]', function (event) {
 			event.preventDefault();
 			
-			var data = DataTable.row($(this).parents('tr')).data();
+			var node = $(this).parents('tr');
+			var data = DataTable.row(node).data();
 			confirmUpdateStatusLocked(data);
 			
 		}).on('click', 'a[data-btn-name="passwordExpired"]', function (event) {
 			event.preventDefault();
 			
-			var data = DataTable.row($(this).parents('tr')).data();
+			var node = $(this).parents('tr');
+			var data = DataTable.row(node).data();
 			confirmUpdateStatusPasswordExpired(data);
 			
 		}).on('click', 'a[data-btn-name="firstlogin"]', function (event) {
 			event.preventDefault();
 			
-			var data = DataTable.row($(this).parents('tr')).data();
+			var node = $(this).parents('tr');
+			var data = DataTable.row(node).data();
 			confirmUpdateStatusLogin(data);
+		
 		}).on('click', 'a[data-btn-name="accountExpired"]', function (event) {
 			event.preventDefault();
 			
-			var data = DataTable.row($(this).parents('tr')).data();
+			var node = $(this).parents('tr');
+			var data = DataTable.row(node).data();
 			confirmUpdateStatusAccount(data);
+		
 		}).on('click', 'button[data-btn-name="btnEdit"]', function (event) {
 			
-			var data = DataTable.row($(this).parents('tr')).data();
+			var node = $(this).parents('tr');
+			var data = DataTable.row(node).data();
 			showModalEdit(data);
 			
 		}).on('click', 'button[data-btn-name="btnView"]', function (event) {
 			
-			var data = DataTable.row($(this).parents('tr')).data();
+			var node = $(this).parents('tr');
+			var data = DataTable.row(node).data();
 			alert(JSON.stringify(data,null,5));
 			
 		}).on('click', 'button[data-btn-name="btnDelete"]', function (event) {
 			
-			var data = DataTable.row($(this).parents('tr')).data();
+			var node = $(this).parents('tr');
+			var data = DataTable.row(node).data();
 			alert(JSON.stringify(data,null,5));
 			
 		});
 		
 	}
 	
-	var showModalEdit = function(data){
+	var showModalEdit = function(data) {
 		$('#ModalEditUser').modal({
 		    backdrop: 'static'
 		});
 		AjaxManager.GetData(null, 'api/user/get/' + data.userId,
 			function(response){
-			
+				
 				selectedProvinceId = response.provinceId;
 				selectedDistrictId = response.districtId;
-			
-				var optionProvince = { value : response.provinceId    ,text : response.provinceNameTh};
-				var optionDistrict = { value : response.districtId    ,text : response.districtNameTh};
-				var optionSubDist =  { value : response.subdistrictId ,text : response.subdistrictNameTh};
 				
-				$('#SLProvince,#SLDistrict,#SLSubDistrict').empty();
+				var selectedProv = { value : response.provinceId    ,text : response.provinceNameTh};
+				var selectedDist = { value : response.districtId    ,text : response.districtNameTh};
+				var selectedSubd = { value : response.subdistrictId ,text : response.subdistrictNameTh};
+				var selectedRole = { value : response.roleId        ,text : response.roleName};
+				
+				var passwordExpiredDate = new Date(response.credentialsexpiredDate);
+				var accountExpiredDate = new Date(response.accountExpiredDate);
+				
+				var elementAccountExpired = $('.toggle-account-expired')[0];
+				var elementAccountEnabled = $('.toggle-account-enabled')[0];
+				var elementAccountLocked = $('.toggle-account-locked')[0];
+				var elementPasswordExpired = $('.toggle-password-expired')[0];
+				
+				$('#SLProvince, #SLDistrict, #SLSubDistrict').empty();
 				$('#FormEditUser input[name="userId"]').val(response.userId);
 				$('#FormEditUser input[name="username"]').val(response.username);
 				$('#FormEditUser input[name="firstName"]').val(response.firstName);
@@ -203,9 +222,18 @@ var ManageUserModule = function(){
 				$('#FormEditUser input[name="tel"]').val(response.tel);
 				$('#FormEditUser input[name="email"]').val(response.email);
 				$('#FormEditUser input[name="postCode"]').val(response.zipcode);
-				$('#SLProvince').append($('<option>', optionProvince)).prop('selected',true);
-				$('#SLDistrict').append($('<option>', optionDistrict)).prop('selected',true);
-				$('#SLSubDistrict').append($('<option>', optionSubDist)).prop('selected',true);
+				$('#FormEditUser input[name="maxSession"]').val(response.maxSession);
+				$('#FormEditUser input[name="accountExpiredDate"]').datepicker('setDate', accountExpiredDate);
+				$('#FormEditUser input[name="passwordExpiredDate"]').datepicker('setDate', passwordExpiredDate);
+				$('#SLProvince').append($('<option>', selectedProv)).prop('selected', true);
+				$('#SLDistrict').append($('<option>', selectedDist)).prop('selected', true);
+				$('#SLSubDistrict').append($('<option>', selectedSubd)).prop('selected', true);
+				$('#FormEditUser select[name="roleId"]').append($('<option>', selectedRole)).prop('selected', true);
+				
+				defaultToggleElement(elementAccountExpired, response.accountnonexpired);
+				defaultToggleElement(elementAccountEnabled, response.accountnonexpired);
+				defaultToggleElement(elementAccountLocked, response.accountnonexpired);
+				defaultToggleElements(elementPasswordExpired, response.accountnonexpired);
 			},
 			function(jqXHR, textStatus, errorThrown){
 				
@@ -306,7 +334,7 @@ var ManageUserModule = function(){
 	var updateStatusEnable = function(data){
 		var request = {
 			username : data.username,
-			status : !data.enabled
+			status   : !data.enabled
 		};
 		AjaxManager.PostData(request, 'api/user/update/enabled',
 			function(response){
@@ -332,7 +360,7 @@ var ManageUserModule = function(){
 	var updateStatusLocked = function(data){
 		var request = {
 			username : data.username,
-			status : !data.accountnonlocked
+			status   : !data.accountnonlocked
 		};
 		AjaxManager.PostData(request, 'api/user/update/accountnonlocked',
 			function(response){
@@ -358,7 +386,7 @@ var ManageUserModule = function(){
 	var updateStatusPasswordExpired = function(data){
 		var request = {
 			username : data.username,
-			status : !data.credentialsnonexpired
+			status   : !data.credentialsnonexpired
 		};
 		AjaxManager.PostData(request, 'api/user/update/passwordexpired',
 			function(response){
@@ -384,7 +412,7 @@ var ManageUserModule = function(){
 	var updateStatusLogin = function(data){
 		var request = {
 			username : data.username,
-			status : !data.firstLogin
+			status   : !data.firstLogin
 		};
 		AjaxManager.PostData(request, 'api/user/update/firstlogin',
 			function(response){
@@ -410,7 +438,7 @@ var ManageUserModule = function(){
 	var updateStatusAccount = function(data){
 		var request = {
 			username : data.username,
-			status : !data.accountnonexpired
+			status   : !data.accountnonexpired
 		};
 		AjaxManager.PostData(request, 'api/user/update/accountnonexpired',
 			function(response){
@@ -447,6 +475,53 @@ var ManageUserModule = function(){
 	var handleSelectRole = function(){
 		$('#SLRole').select2({
 			placeholder: 'Role',
+			ajax: {
+			    url : 'api/role/page',
+			    delay : 250,
+			    type : 'POST',
+			    contentType : 'application/json',
+			    headers : {
+			    	[AjaxManager.CsrfHeader] : AjaxManager.CsrfToken 
+	            },
+	            data : function (params) {
+	            	params.page = params.page || 0;
+	            	params.size = 5;
+	                return JSON.stringify(params);
+	            },
+			    processResults : function (data , params) {
+			    	return {
+		                results : $.map(data.content, function (item) { 
+		                    return {
+		                    	id     : item.roleId,
+		                    	code   : item.roleCode,
+		                    	text   : item.roleName
+		                    }
+		                }),
+	                    pagination: {
+	                        more : !data.last
+	                    }
+		            };
+			    }
+			},
+			cache : true,
+			templateResult : function (data) {
+				  
+				var $template = $('<div></div>');
+				var $body_line1 = $('<span>' + data.text + '</span>');  
+				var $body_line2 = $('<small><b>code : </b>' + data.code + '</small>');  
+				
+				$template.append($body_line1);
+				$template.append('<br>');
+				$template.append($body_line2);
+				  
+				return $template;
+			} 
+		});
+	}
+	
+	var handleSelectEditRole = function(){
+		$('#FormEditUser select[name="roleId"]').select2({
+			dropdownParent: $('#ModalEditUser .modal-content'),
 			ajax: {
 			    url : 'api/role/page',
 			    delay : 250,
@@ -664,18 +739,124 @@ var ManageUserModule = function(){
 		});
 	}
 	
+	var handleInputMaxSession = function(){
+		var quantitiy = 0;
+		var element = $('#FormEditUser input[name="maxSession"]');
+		$('.number-plus').click(function(e){
+			e.preventDefault();
+			var quantity = parseInt($(element).val());
+			$(element).val(quantity + 1);
+		});
+		$('.number-minus').click(function(e){
+			e.preventDefault();
+			var quantity = parseInt($(element).val());
+			if(quantity > 0){
+				$(element).val(quantity - 1);
+	        }
+		});
+		$(element).inputmask('Regex', {regex: "^[0-9]+$"});
+		
+	}
+	
+	var handleDateAccountExpired = function(){
+		$('#FormEditUser input[name="accountExpiredDate"]').datepicker({
+			autoclose: true,
+			format: 'dd/mm/yyyy',
+	        startDate: '+0d'
+		});
+	}
+	
+	var handlePasswordExpiredDate = function(){
+		$('#FormEditUser input[name="passwordExpiredDate"]').datepicker({
+			autoclose: true,
+			format: 'dd/mm/yyyy',
+	        startDate: '+0d'
+		});
+	}
+	
+	var defaultToggleElement = function(element, flag){
+		$(element).find('.active').removeClass('active');
+		if(flag){
+			$(element).find('[data-name="Y"]').addClass('active');
+			$(element).find('[data-name="Y"]').removeClass('btn-default');
+			$(element).find('[data-name="Y"]').removeClass('btn-success');
+			$(element).find('[data-name="Y"]').addClass('btn-success');
+			$(element).find('[data-name="N"]').removeClass('btn-danger');
+			$(element).find('[data-name="N"]').removeClass('btn-default');
+			$(element).find('[data-name="N"]').addClass('btn-default');
+		}else {
+			$(element).find('[data-name="N"]').addClass('active');
+			$(element).find('[data-name="N"]').removeClass('btn-default');
+			$(element).find('[data-name="N"]').removeClass('btn-danger');
+			$(element).find('[data-name="N"]').addClass('btn-danger');
+			$(element).find('[data-name="Y"]').removeClass('btn-success');
+			$(element).find('[data-name="Y"]').removeClass('btn-default');
+			$(element).find('[data-name="Y"]').addClass('btn-default');
+		}
+	}
+	
+	var toggleElement = function(element){
+		$(element).find('.btn').toggleClass('active');
+		if($(element).find('.active').data('name') == 'Y'){
+			$(element).find('.active').removeClass('btn-default');
+			$(element).find('.active').removeClass('btn-success');
+			$(element).find('.active').addClass('btn-success');
+			$(element).find(':not(.active)').removeClass('btn-danger');
+			$(element).find(':not(.active)').removeClass('btn-default');
+			$(element).find(':not(.active)').addClass('btn-default');
+		}else {
+			$(element).find('.active').removeClass('btn-default');
+			$(element).find('.active').removeClass('btn-danger');
+			$(element).find('.active').addClass('btn-danger');
+			$(element).find(':not(.active)').removeClass('btn-success');
+			$(element).find(':not(.active)').removeClass('btn-default');
+			$(element).find(':not(.active)').addClass('btn-default');
+		}
+	}
+	
+	var handleToggleAccountExpired = function(){
+		$('.toggle-account-expired').click(function(event) {
+			toggleElement(this);
+		});
+	}
+	
+	var handleToggleAccountEnabled = function(){
+		$('.toggle-account-enabled').click(function(event) {
+			toggleElement(this);
+		});
+	}
+	
+	var handleToggleAccountLocked = function(){
+		$('.toggle-account-locked').click(function(event) {
+			toggleElement(this);
+		});
+	}
+	
+	var handleTogglePasswordExpired = function(){
+		$('.toggle-password-expired').click(function(event) {
+			toggleElement(this);
+		});
+	}
+	
 	return {
 		init : function(){
 			activeMenu();
 			handleDataTable();
 			handleButtonSearch();
 			handleSelectRole();
+			handleSelectEditRole();
 			handleSelectProvince();
 			handleSelectDistrict();
 			handleSelectSubDistrict();
 			handleInputTel();
 			handleInputCitizenId();
-			
+			handleInputMaxSession();
+			handleDateAccountExpired();
+			handlePasswordExpiredDate();
+			handleToggleAccountExpired();
+			handleToggleAccountEnabled();
+			handleToggleAccountLocked();
+			handleTogglePasswordExpired();
 		}
 	};
 	

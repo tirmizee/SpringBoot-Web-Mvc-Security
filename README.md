@@ -1,10 +1,14 @@
 # SpringBoot 
 Building Enterprise Java Applications the Spring Way
 ## Example
+- Limit login attempts
+- Limit Maximum Sessions For User
 - Bean Validation using Hibernate  Validator
-- Paging and sorting  
+- Paging, Searching And Sorting  
 - Sending Email Template With Attachment
 - Multiple Languages web application
+- Forgot password send Email reset password
+- Forcing user to change expired password
 
 ## Building and running
 

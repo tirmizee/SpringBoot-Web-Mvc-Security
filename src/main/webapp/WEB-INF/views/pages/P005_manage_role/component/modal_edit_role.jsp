@@ -37,7 +37,7 @@
 	        		</div>
 	        		<div class="col-md-6">
 		        		<div class="form-group">
-					        <label>Per Name</label>
+					        <label>Role Description</label>
 					        <div class="input-group date">
 					            <div class="input-group-addon">
 					                <i class="fa fa-sticky-note-o"></i>

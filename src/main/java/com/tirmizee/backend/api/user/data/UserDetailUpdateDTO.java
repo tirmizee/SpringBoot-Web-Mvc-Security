@@ -2,14 +2,24 @@ package com.tirmizee.backend.api.user.data;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class UserDetailUpdateDTO implements Serializable {
 
 	private static final long serialVersionUID = -7358757628634792977L;
 
 	private Long userId;
 	private String username;
+	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private java.sql.Date credentialsexpiredDate;
+	
 	private boolean credentialsnonexpired;
+	
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private java.sql.Date accountExpiredDate;
+	
+	private Integer maxSession;
 	private boolean accountnonexpired;
 	private boolean accountnonlocked;	
 	private boolean enabled;
@@ -174,6 +184,18 @@ public class UserDetailUpdateDTO implements Serializable {
 	}
 	public void setSubdistrictNameTh(String subdistrictNameTh) {
 		this.subdistrictNameTh = subdistrictNameTh;
+	}
+	public java.sql.Date getAccountExpiredDate() {
+		return accountExpiredDate;
+	}
+	public void setAccountExpiredDate(java.sql.Date accountExpiredDate) {
+		this.accountExpiredDate = accountExpiredDate;
+	}
+	public Integer getMaxSession() {
+		return maxSession;
+	}
+	public void setMaxSession(Integer maxSession) {
+		this.maxSession = maxSession;
 	}
 	
 }

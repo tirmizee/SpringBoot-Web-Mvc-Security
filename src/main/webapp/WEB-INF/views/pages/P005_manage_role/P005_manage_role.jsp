@@ -53,7 +53,6 @@
 <style type="text/css">
 th {
 	border-top: 1px solid black;
-	/*border-bottom: 1px solid #dddddd; */
 	background-color: #f4f4f4;
 } 
 .toggle.ios, .toggle-on.ios, .toggle-off.ios { 
@@ -88,10 +87,27 @@ th {
 			
 			<!-- CONTENT BODY -->
    			<section class="content">
-				<jsp:include page="component/body.jsp" />
+				<div class="row">
+					<div class="col-md-12">
+						<div class="nav-tabs-custom">
+						    <ul id="tab" class="nav nav-tabs">
+						        <li class="active"><a href="#tab_role" data-toggle="tab" aria-expanded="true"><b>Roles</b></a></li>
+						        <li class=""><a href="#tab_permission" data-toggle="tab" aria-expanded="false"><b>Permission</b></a></li>
+						    </ul>
+						    <div class="tab-content">
+						        <div class="tab-pane active" id="tab_role">
+						        	<jsp:include page="component/tab_role.jsp" />
+						        </div>
+						        <div class="tab-pane" id="tab_permission">
+						        	<jsp:include page="component/tab_permission.jsp" />
+						        </div>
+						    </div>
+						</div>
+					</div>
+				</div>
    			</section>
    			 
-   		</div>
+   		</div><!-- END CONTENT-->
    	
    		<!-- FOOTER -->	
    		<jsp:include page="../../layout/footer.jsp" />
