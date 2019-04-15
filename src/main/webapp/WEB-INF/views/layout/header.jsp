@@ -38,12 +38,12 @@
 				</li>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="${pageContext.request.contextPath}/resources/libs/admin-lte2/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                        <img src="${profile.profileImage}" class="user-image" alt="User Image">
                         <span class="hidden-xs font-kanit-medium">${profile.username}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header">
-                            <img src="${pageContext.request.contextPath}/resources/libs/admin-lte2/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                            <img src="${profile.profileImage}" class="img-circle" alt="User Image">
                             <p>
                                 ${profile.firstName}  ${profile.lastName}
                                 <small>Member since Nov. 2012</small>

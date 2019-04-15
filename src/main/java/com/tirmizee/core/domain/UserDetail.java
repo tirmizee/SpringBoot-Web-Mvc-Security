@@ -11,6 +11,7 @@ public class UserDetail implements Serializable{
 	private String password;
 	private String lastName;
 	private String firstName;
+	private String profileImage;
 	private Integer roleId;
 	private String roleCode;
 	private String roleName;
@@ -112,6 +113,12 @@ public class UserDetail implements Serializable{
 	}
 	public void setAccountExpiredDate(Date accountExpiredDate) {
 		this.accountExpiredDate = accountExpiredDate;
+	}
+	public String getProfileImage() {
+		return profileImage;
+	}
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 	@Override
 	public String toString() {

@@ -10,6 +10,7 @@ public class Province implements Persistable<Integer> {
 	private String provincecCode;
 	private String provinceNameTh;
 	private String provinceNameEn;
+	private Integer geoId;
 
 	@Override
 	public Integer getId() {
@@ -53,4 +54,12 @@ public class Province implements Persistable<Integer> {
 		this.provinceNameEn = provinceNameEn;
 	}
 
+	public Integer getGeoId() {
+		return geoId;
+	}
+
+	public void setGeoId(Integer geoId) {
+		this.geoId = geoId;
+	}
+	
 }

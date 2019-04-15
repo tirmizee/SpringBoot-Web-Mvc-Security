@@ -9,6 +9,7 @@ Building Enterprise Java Applications the Spring Way
 - Multiple Languages web application
 - Forgot password send Email reset password
 - Forcing user to change expired password
+- Uploading both data and files in one form using Ajax
 
 ## Building and running
 

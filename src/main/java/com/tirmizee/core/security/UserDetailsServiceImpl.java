@@ -35,7 +35,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		
 		UserDetail userDetail  = userDao.findDetailByUsername(username);
-		
 		if (userDetail == null ) {
 			throw new UsernameNotFoundException(username);
 		}
@@ -57,6 +56,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				.lastName(userDetail.getLastName())
 				.roleCode(userDetail.getRoleCode())
 				.roleName(userDetail.getRoleName())
+				.profileImage(userDetail.getProfileImage())
 				.isFirstLogin(userDetail.getFirstLogin())
 				.maxSession(userDetail.getMaxSession())
 				.createDate(DateUtils.now())

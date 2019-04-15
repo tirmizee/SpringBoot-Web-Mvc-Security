@@ -14,9 +14,9 @@ public class WorkbookUtils {
 	public Workbook create(MultipartFile fileExcel) throws IOException {
 		String extension = FilenameUtils.getExtension(fileExcel.getOriginalFilename());
 		switch(extension){
-			case "xls"  : return  new HSSFWorkbook(fileExcel.getInputStream());
-			case "xlsx" : return  new XSSFWorkbook(fileExcel.getInputStream()); 
-			default : return new XSSFWorkbook(fileExcel.getInputStream()); 
+			case "xls"  : return new HSSFWorkbook(fileExcel.getInputStream());
+			case "xlsx" : return new XSSFWorkbook(fileExcel.getInputStream()); 
+			default : throw new IOException("The File format is incorrect."); 
 		}
 	}
 	

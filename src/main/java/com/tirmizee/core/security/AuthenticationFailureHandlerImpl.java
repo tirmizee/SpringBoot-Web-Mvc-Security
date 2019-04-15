@@ -54,7 +54,7 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 			STRATEGY.sendRedirect(request, response, String.format("/login?error=%s", error));
 		} 
 		
-		// DETERMINE URL FOR ACCOUNT Disabled
+		// DETERMINE URL FOR ACCOUNT DISABLED
 		else if(exception instanceof UserAccountDisabledException) {
 			STRATEGY.sendRedirect(request, response, "/login?error=User Account is Disabled");
 		}

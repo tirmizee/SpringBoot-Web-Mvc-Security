@@ -14,6 +14,7 @@ public class Profile implements Persistable<Long>{
 	private String firstName;
 	private String email;
 	private String tel;
+	private String profileImage;
 	private String subDistrictCode;
 	private java.sql.Date updateDate;
 	private java.sql.Date createDate;
@@ -96,6 +97,14 @@ public class Profile implements Persistable<Long>{
 
 	public void setTel(String tel) {
 		this.tel = tel;
+	}
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 
 	@Override

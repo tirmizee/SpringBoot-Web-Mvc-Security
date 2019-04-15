@@ -13,6 +13,7 @@ public class UserProfile extends UserDetailsImpl {
 	private String roleCode;
 	private String roleName;
 	private String accessIp;
+	private String profileImage;
 	private boolean isFirstLogin;
 	private Integer maxSession;
 	private Date credentialsExpiredDate;
@@ -25,6 +26,7 @@ public class UserProfile extends UserDetailsImpl {
 		this.lastName = builder.lastName;
 		this.roleCode = builder.roleCode;
 		this.roleName = builder.roleName;
+		this.profileImage = builder.profileImage;
 		this.accessIp = builder.accessIp;
 		this.createDate = builder.createDate;
 		this.isFirstLogin = builder.isFirstLogin;
@@ -113,6 +115,14 @@ public class UserProfile extends UserDetailsImpl {
 		this.accountExpiredDate = accountExpiredDate;
 	}
 
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
 	@Override
     public boolean equals(Object obj) {
 		if (obj instanceof UserDetails) {
@@ -133,6 +143,7 @@ public class UserProfile extends UserDetailsImpl {
 		private String roleCode;
 		private String roleName;
 		private String accessIp;
+		private String profileImage;
 		private Integer maxSession;
 		private java.util.Date createDate;
 		private boolean isFirstLogin;
@@ -158,6 +169,11 @@ public class UserProfile extends UserDetailsImpl {
 		
 		public Builder roleName(String roleName){
 			this.roleName = roleName;
+			return this;
+		}
+		
+		public Builder profileImage(String profileImage){
+			this.profileImage = profileImage;
 			return this;
 		}
 		

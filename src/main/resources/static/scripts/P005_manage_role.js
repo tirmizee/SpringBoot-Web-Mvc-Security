@@ -140,7 +140,7 @@ var ManageRoleModule = function(){
 					orderDataType : "dom-text",
 					render : function (data, type, row, meta) {
 						var checked = (data ? 'checked' : '');
-						return '<input type="checkbox" ' + checked + ' data-toggle="toggle" data-style="ios" data-onstyle="success" data-offstyle="danger" data-size="mini">';
+						return '<input type="checkbox" ' + checked + ' data-toggle="toggle" data-style="ios" data-onstyle="success" data-offstyle="danger" data-size="mini" >';
 					}
 				}
 			],
@@ -183,7 +183,8 @@ var ManageRoleModule = function(){
 				{ data : null          ,title : "Order" },
 				{ data : "perId"       ,title : "Permission ID"},
 				{ data : "perCode"     ,title : "Permission Code"},
-				{ data : "perName"     ,title : "Permission Name"}
+				{ data : "perName"     ,title : "Permission Name"},
+				{ data : "createDate"  ,title : "Create Date"}
 			],
 			columnDefs: [
 				{
@@ -197,10 +198,13 @@ var ManageRoleModule = function(){
 				{
 					targets : 1,
 					visible : false
+				},
+				{
+					targets : 1 ,
+					width     : "10%"
 				}
 			]
 		});
-		TableSearchPermission.columns.adjust();
 	}
 	
 	var handleButtonSearch = function(){
@@ -211,9 +215,23 @@ var ManageRoleModule = function(){
 		});
 	}
 	
+	var handleButtonSearchPermission = function(){
+		$('#BtnSearchPermission').on('click', function(event){
+			SearchPermission.perCode = $('#FormSearchPermission input[name="perCode"]').val();
+			SearchPermission.perName = $('#FormSearchPermission input[name="perName"]').val();
+			TableSearchPermission.ajax.reload();
+		});
+	}
+	
 	var handleButtonClear = function(){
 		$('#BtnClear').on('click', function(){
 			$('#FormSearchRole')[0].reset();
+		});
+	}
+	
+	var handleButtonClearFormPermission = function(){
+		$('#BtnClearPermission').on('click', function(){
+			$('#FormSearchPermission')[0].reset();
 		});
 	}
 	
@@ -330,7 +348,9 @@ var ManageRoleModule = function(){
 			handleTableEditPermission();
 			handleTableSearchPermission();
 			handleButtonSearch();
+			handleButtonSearchPermission();
 			handleButtonClear();
+			handleButtonClearFormPermission();
 			handleModalEditRole();
 			handleFormEditRole();
 			handleTab();

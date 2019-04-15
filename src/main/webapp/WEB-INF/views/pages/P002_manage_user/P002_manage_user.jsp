@@ -86,7 +86,7 @@
    		
    			<!-- CONTENT HEADER -->
 			<section class="content-header">
-				<h1>POO3 <small>manage users</small></h1>
+				<h1>P003 <small>manage users</small></h1>
 				<jsp:include page="../../commons/servertime.jsp" />
 			</section>
 			

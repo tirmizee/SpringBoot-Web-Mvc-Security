@@ -18,6 +18,10 @@ import org.springframework.stereotype.Component;
 
 import com.tirmizee.backend.service.AppSettingService;
 
+/**
+ * @author Pratya Yeekhaday
+ *
+ */
 @Component
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler{
 

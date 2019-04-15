@@ -9,7 +9,7 @@
     <section class="sidebar">
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="${pageContext.request.contextPath}/resources/libs/admin-lte2/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="${profile.profileImage}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p>${profile.username}</p>
@@ -35,7 +35,6 @@
 				</ul>
 			</li>
 			</security:authorize>
-			
 			<li class="treeview-file">
 			    <a href="#">
 					<i class="fa fa-cog"></i> 
@@ -45,12 +44,13 @@
 			   		</span>
 			    </a>
 				<ul class="treeview-menu" style="display: none;">
-					<li class="menu-file"><a href="${pageContext.request.contextPath}/file"><i class="fa fa-book"></i> <span>Upload</span></a></li>
+					<security:authorize access="hasAnyAuthority('P004')">
+					<li class="menu-log"><a href="${pageContext.request.contextPath}/log"><i class="fa fa-book"></i> <span><spring:message code="app.menu.viewlog"/></span></a></li>
+					</security:authorize>
+					<li class="menu-file"><a href="${pageContext.request.contextPath}/file"><i class="fa fa-book"></i> <span>Upload Excel</span></a></li>
 				</ul>
 			</li>
-			<security:authorize access="hasAnyAuthority('P004')">
-			<li class="menu-log"><a href="${pageContext.request.contextPath}/log"><i class="fa fa-book"></i> <span><spring:message code="app.menu.viewlog"/></span></a></li>
-			</security:authorize>
+			
 			<security:authorize access="hasAnyAuthority('P002,P003,P005')">
 			<li class="treeview-setting">
 			    <a href="#">
@@ -67,9 +67,9 @@
 				   	<security:authorize access="hasAnyAuthority('P003')">
 				   	<li><a href="${pageContext.request.contextPath}/managesession"><i class="fa fa-users"></i><spring:message code="app.menu.managesession"/></a></li>
 				   	</security:authorize>
-				   <%-- 	<security:authorize access="hasAnyAuthority('P005')"> --%>
+				    <security:authorize access="hasAnyAuthority('P005')">
 				   	<li><a href="${pageContext.request.contextPath}/managerole"><i class="fa fa-users"></i><spring:message code="app.menu.permission"/></a></li>
-					<%-- </security:authorize> --%>
+					</security:authorize>
 					<li><a href="${pageContext.request.contextPath}/managerole"><i class="fa fa-users"></i><spring:message code="app.menu.appsetting"/></a></li>
 				</ul>
 			</li>

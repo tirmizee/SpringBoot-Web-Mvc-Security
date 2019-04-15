@@ -37,6 +37,8 @@ public class UserDetailPageDTO implements Serializable {
 	
 	private Integer profileId;
 	
+	private String profileImage;
+	
 	@SortColumn(ProfileRepository.COL_LAST_NAME)
 	private String lastName;
 	
@@ -142,6 +144,12 @@ public class UserDetailPageDTO implements Serializable {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getProfileImage() {
+		return profileImage;
+	}
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 	
 }

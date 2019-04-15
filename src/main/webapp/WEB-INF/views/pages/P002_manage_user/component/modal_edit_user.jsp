@@ -139,8 +139,6 @@
 	        		</div>
 	        	</div>
 	        	
-	        	
-			
 				<hr>
 				<h3>Personal Info</h3>
 				<div class="row">

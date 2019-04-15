@@ -6,8 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.AbstractRequestLoggingFilter;
 
-import com.tirmizee.core.constant.Constant;
-
 public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 
 	@Override
@@ -23,7 +21,15 @@ public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 	@Override
 	protected boolean shouldLog(HttpServletRequest request) {
 		final String requestUrl = request.getRequestURL().toString();
-		return StringUtils.indexOfAny(requestUrl, Constant.Resource.APPLICATION.getStringArray("logging.url.ignore")) < 0;
+		return StringUtils.indexOfAny(requestUrl, ignoreUrl()) < 0;
+	}
+	
+	private String[] ignoreUrl() {
+		return new String[] {
+			"ws",
+			"webjars",
+			"resource"
+		};
 	}
 	
 }

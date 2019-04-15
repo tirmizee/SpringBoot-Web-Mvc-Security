@@ -41,6 +41,7 @@ var ManageUserModule = function(){
 			},
 			columns: [
 				{ data : null           		  ,title : "Action" },
+				{ data : "profileImage"           ,title : "Profile" },
 				{ data : null                     ,title : "Order" },
 				{ data : "userId"                 ,title : "User ID" },
 				{ data : "username"               ,title : "Username" },
@@ -68,21 +69,29 @@ var ManageUserModule = function(){
 					width     : "10%",
 					orderable : false,
 					render    : function (data, type, row, meta) {
+						return '<img src="' + data + '" class="img-circle" alt="Cinque Terre" width="40" height="40"> ';
+					}
+				},
+				{
+					targets   : 2,
+					width     : "10%",
+					orderable : false,
+					render    : function (data, type, row, meta) {
 						return meta.settings._iDisplayStart + meta.row + 1;
 					}
 				},
 				{
-					targets   : 4,
+					targets   : 5,
 					render    : function (data, type, row, meta) {
 						return row.firstName + ' ' + row.lastName;
 					}
 				},
 				{
-					targets   : 5,
+					targets   : 6,
 					visible   : false
 				},
 				{
-					targets   : 8,
+					targets   : 9,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var enable = '<a data-btn-name="enable" href=""><span class="label label-success raduis">enable</span></a>';
@@ -91,7 +100,7 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 9,
+					targets   : 10,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="accountExpired" href=""><span class="label label-success raduis">normal</span></a>';
@@ -100,7 +109,7 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 10,
+					targets   : 11,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="locked" href=""><span class="label label-success raduis">normal</span></a>';
@@ -109,7 +118,7 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 11,
+					targets   : 12,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="passwordExpired" href=""><span class="label label-success raduis">normal</span></a>';
@@ -118,7 +127,7 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 12,
+					targets   : 13,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="firstlogin" href=""><span class="label label-success raduis">active</span></a>';
@@ -225,15 +234,16 @@ var ManageUserModule = function(){
 				$('#FormEditUser input[name="maxSession"]').val(response.maxSession);
 				$('#FormEditUser input[name="accountExpiredDate"]').datepicker('setDate', accountExpiredDate);
 				$('#FormEditUser input[name="passwordExpiredDate"]').datepicker('setDate', passwordExpiredDate);
+				
 				$('#SLProvince').append($('<option>', selectedProv)).prop('selected', true);
 				$('#SLDistrict').append($('<option>', selectedDist)).prop('selected', true);
 				$('#SLSubDistrict').append($('<option>', selectedSubd)).prop('selected', true);
 				$('#FormEditUser select[name="roleId"]').append($('<option>', selectedRole)).prop('selected', true);
 				
 				defaultToggleElement(elementAccountExpired, response.accountnonexpired);
-				defaultToggleElement(elementAccountEnabled, response.accountnonexpired);
-				defaultToggleElement(elementAccountLocked, response.accountnonexpired);
-				defaultToggleElements(elementPasswordExpired, response.accountnonexpired);
+				defaultToggleElement(elementAccountEnabled, response.enabled);
+				defaultToggleElement(elementAccountLocked, response.accountnonlocked);
+				defaultToggleElement(elementPasswordExpired, response.credentialsnonexpired);
 			},
 			function(jqXHR, textStatus, errorThrown){
 				
