@@ -34,7 +34,7 @@ Building Enterprise Java Applications the Spring Way
 
 Uploading both data and files in one form using Ajax
 ![ccc](https://user-images.githubusercontent.com/15135199/56190157-d4c8eb00-6053-11e9-9ea3-44519fed2a57.PNG)
-![www](https://user-images.githubusercontent.com/15135199/56190630-caf3b780-6054-11e9-9d56-6e83e2ae40af.PNG)
+![yyy](https://user-images.githubusercontent.com/15135199/56191749-2626a980-6057-11e9-8296-aa58104f3b3f.PNG)
 ![ttt](https://user-images.githubusercontent.com/15135199/56191466-98e35500-6056-11e9-980f-7c03ab04d26b.PNG)
 
 
