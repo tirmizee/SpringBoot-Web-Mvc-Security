@@ -46,6 +46,7 @@ Building Enterprise Java Applications the Spring Way
 ## Forgot password send Email reset password
 ![111](https://user-images.githubusercontent.com/15135199/56121506-768c0180-5f9a-11e9-9ecc-8f8d0c5f7605.PNG)
 ![555](https://user-images.githubusercontent.com/15135199/56121055-8d7e2400-5f99-11e9-9971-76b2f869c8e8.PNG)
-![pass](https://user-images.githubusercontent.com/15135199/56202430-36e21a00-606d-11e9-8f1a-6ea3dd8a9cb1.PNG)
+![eee](https://user-images.githubusercontent.com/15135199/56230144-e33ff280-60a5-11e9-8670-9fd5b10c415d.PNG)
+
 
 
