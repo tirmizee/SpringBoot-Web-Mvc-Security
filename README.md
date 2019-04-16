@@ -32,14 +32,18 @@ Building Enterprise Java Applications the Spring Way
 
 ![Capture](https://user-images.githubusercontent.com/15135199/55896742-2f43f080-5be9-11e9-8108-4967ae457e66.PNG)
 
-Uploading both data and files in one form using Ajax
+## Uploading both data and files in one form using Ajax
+- Excel file
+
 ![ccc](https://user-images.githubusercontent.com/15135199/56190157-d4c8eb00-6053-11e9-9ea3-44519fed2a57.PNG)
+- Form upload 
+
 ![yyy](https://user-images.githubusercontent.com/15135199/56191749-2626a980-6057-11e9-8296-aa58104f3b3f.PNG)
-![ttt](https://user-images.githubusercontent.com/15135199/56191466-98e35500-6056-11e9-980f-7c03ab04d26b.PNG)
+- Validate data pre save
 
+![yyy](https://user-images.githubusercontent.com/15135199/56192730-3a6ba600-6059-11e9-829a-8ded41d8fc57.PNG)
 
-Forgot password send Email reset password
-
+## Forgot password send Email reset password
 ![111](https://user-images.githubusercontent.com/15135199/56121506-768c0180-5f9a-11e9-9ecc-8f8d0c5f7605.PNG)
 ![555](https://user-images.githubusercontent.com/15135199/56121055-8d7e2400-5f99-11e9-9971-76b2f869c8e8.PNG)
 ![444](https://user-images.githubusercontent.com/15135199/56121586-9b807480-5f9a-11e9-8191-ff0655ccad0d.PNG)

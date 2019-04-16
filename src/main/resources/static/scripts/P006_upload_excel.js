@@ -16,31 +16,69 @@ var UploadExcelModule = function(){
 			deferRender  : true,
 			data         : [],
 			columns: [
-				{ data : null             ,title : "Action" },
 				{ data : null             ,title : "Order" },
-				{ data : "name"           ,title : "App Code"},
-				{ data : "createDateText" ,title : "App Name"},
-				{ data : "createDateText" ,title : "App Version"},
-				{ data : "createDateText" ,title : "App Color"},
-				{ data : "createDateText" ,title : "App Price"},
-				{ data : "createDateText" ,title : "App Size"},
-				{ data : "createDateText" ,title : "App Date"},
-				{ data : "createDateText" ,title : "App Country"}
+				{ data : "isValid"        ,title : "Validate" },
+				{ data : "appCode"        ,title : "App Code"},
+				{ data : "appName"        ,title : "App Name"},
+				{ data : "appVersion"     ,title : "App Version"},
+				{ data : "price"          ,title : "App Price"},
+				{ data : "size"           ,title : "App Size"},
+				{ data : "date"           ,title : "App Date"},
+				{ data : "country"        ,title : "App Country"}
 			],
 			columnDefs: [
-				
+				{
+					targets : 0,
+					checkboxes : {
+					   'selectRow': true
+					}
+		        },
 				{
 					targets   : 1,
-					width     : "10%",
-					orderable : false,
+					className : "text-center",
 					render    : function (data, type, row, meta) {
-						return meta.settings._iDisplayStart + meta.row + 1;
+						var valid   = '<span class="label label-success">Valid</span>';
+						var inValid = '<span class="label label-danger">Invalid</span>';
+						return row.price > 500000 ? valid : inValid;
+					}
+				},
+				{
+					targets   : 4,
+					className : "text-center",
+					render    : function (data, type, row, meta) {
+						return '<b>' + data + '</b>';
+					}
+				},
+				{
+					targets   : 5,
+					className : "text-center",
+					render    : function (data, type, row, meta) {
+						var green = '<b class="text-success">' + data + '</b>';
+						var red   = '<b style="color:#b30303">' + data + '</b>';
+						return data > 500000 ? green : red;
+					}
+				},
+				{
+					targets   : 6,
+					className : "text-center",
+					render    : function (data, type, row, meta) {
+						return '<b>' + data + '</b>';
 					}
 				}
+				
 			],
+			fnRowCallback : function( Row, Data) {
+				if(!(Data.price > 500000)){
+					$('td', Row)
+					 	.css('background-color', '#ff6868')
+					 	.find('input[type=checkbox]')
+					 	.attr("disabled", true);
+				}
+            },
 			select: {
-		   		style: 'single'
-		    }
+		   		style: 'multi'
+		    },
+	        lengthMenu : [[5,10, 25, 50, 100, -1], [5,10, 25, 50, 100, "All"]]
 		});
 	}
 	
@@ -77,7 +115,18 @@ var UploadExcelModule = function(){
 	    }).on('success.form.bv', function(e) {
 	    	e.preventDefault();
 	    	
-	    	var FormData = new FormData($('#FormUploadExcel')[0]);
+	    	var formData = new FormData( $('#FormUploadExcel')[0]);
+	    	
+	    	AjaxManager.UploadData(formData, 'api/file/excel/pre', 
+	        	function(response){
+		    		DataTable.clear();
+					DataTable.rows.add(response);
+					DataTable.draw();
+	    		},
+				function (jqXHR, textStatus, errorThrown) {
+				
+	    		}
+			); 
         });
 	}
 	

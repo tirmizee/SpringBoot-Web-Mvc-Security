@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class WorkbookUtils {
 	
-	public Workbook create(MultipartFile fileExcel) throws IOException {
+	public static Workbook create(MultipartFile fileExcel) throws IOException {
 		String extension = FilenameUtils.getExtension(fileExcel.getOriginalFilename());
 		switch(extension){
 			case "xls"  : return new HSSFWorkbook(fileExcel.getInputStream());

@@ -23,12 +23,14 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/datatables/css/colReorder.dataTables.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/datatables/css/responsive.dataTables.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/datatables/css/select.dataTables.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/datatables/css/dataTables.checkboxes.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/waitme/css/waitMe.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/commons/fonts.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/sweetalert2/css/sweetalert2.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/jquery-confirm/css/jquery-confirm.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/inputmark/css/inputmask.css">  
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/bootstrap-toggle/css/bootstrap-toggle.min.css">
+	<link rel="stylesheet" href="http://icheck.fronteed.com/skins/all.css?v=1.0.1"> 
 	  
 	<script src="${pageContext.request.contextPath}/resources/libs/bootstrap/js/jquery-3.2.1.min.js" ></script>
 	<script src="${pageContext.request.contextPath}/resources/libs/bootstrap/js/bootstrap.min.js" ></script>
@@ -44,6 +46,7 @@
 	<script src="${pageContext.request.contextPath}/resources/libs/datatables/js/dataTables.colReorder.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/libs/datatables/js/dataTables.responsive.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/libs/datatables/js/dataTables.select.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libs/datatables/js/dataTables.checkboxes.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/libs/viewer/js/viewer.js"></script>
 	<script src="${pageContext.request.contextPath}/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="${pageContext.request.contextPath}/webjars/stomp-websocket/stomp.min.js"></script>
@@ -52,6 +55,8 @@
 	<script src="${pageContext.request.contextPath}/resources/libs/jquery-confirm/js/jquery-confirm.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/libs/inputmark/js/jquery.inputmask.bundle.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/libs/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+	<script src="http://icheck.fronteed.com/icheck.js?v=1.0.1"></script>
+	
 
   <style type="text/css">
   	
@@ -105,13 +110,13 @@
 					        		<div class="form-group">
 									    <label>File</label>
 									   	<input name="file" type="file" class="file">
-									   	<p class="help-block">Example block-level help text here.</p>
+									   	<p class="help-block">Excel file only</p>
 									</div>
 					        	</div>
 					        </div>
 					        <div class="row text-center">
 								<button id="BtnClear" type="button" class="btn btn-default btn-flat">Clear</button>
-								<button id="BtnSearch" type="button" class="btn btn-primary btn-flat">Search</button>
+								<button id="BtnSearch" type="submit" class="btn btn-success btn-flat">Validate</button>
 							</div>
 						</form>
 				    </div>
@@ -119,6 +124,10 @@
 				<div class="box box-default">
 				    <div class="box-body" style="">
 				    	<table id="TBExcel" class="display nowrap" cellspacing="0" width="100%"></table>
+				    	<div class="row text-center">
+								<button id="หห" type="button" class="btn btn-default btn-flat">Clear</button>
+								<button id="ฟ" type="submit" class="btn btn-primary btn-flat">Save</button>
+							</div>
 				    </div>
 				</div>
    			</section>
