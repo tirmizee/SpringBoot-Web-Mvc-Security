@@ -39,7 +39,7 @@ Building Enterprise Java Applications the Spring Way
 - Form upload and read Excel file
 
 ![yyy](https://user-images.githubusercontent.com/15135199/56191749-2626a980-6057-11e9-8296-aa58104f3b3f.PNG)
-- Convert data from excel to table and validate data pre save
+- Convert Excel data to table and validate data pre save
 
 ![valid](https://user-images.githubusercontent.com/15135199/56232153-49c70f80-60aa-11e9-87ab-69e7a1bc50b5.PNG)
 
