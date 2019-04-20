@@ -39,7 +39,7 @@ var UploadExcelModule = function(){
 					render    : function (data, type, row, meta) {
 						var valid   = '<span class="label label-success">Valid</span>';
 						var inValid = '<span class="label label-danger">Invalid</span>';
-						return row.price > 500000 ? valid : inValid;
+						return row.price > 350000 ? valid : inValid;
 					}
 				},
 				{
@@ -55,7 +55,7 @@ var UploadExcelModule = function(){
 					render    : function (data, type, row, meta) {
 						var green = '<b class="text-success">' + data + '</b>';
 						var red   = '<b style="color:#b30303">' + data + '</b>';
-						return data > 500000 ? green : red;
+						return data > 350000 ? green : red;
 					}
 				},
 				{
@@ -119,9 +119,33 @@ var UploadExcelModule = function(){
 	    	
 	    	AjaxManager.UploadData(formData, 'api/file/excel/pre', 
 	        	function(response){
-		    		DataTable.clear();
+	    			
+	    			var sumPrice = 0;
+	    			var sumValid = 0
+	    			var sumInvalid = 0;
+	    			
+	    			response.forEach(function (object) {
+	    				sumPrice += object.price;
+	    				sumValid += (object.price > 350000 ? 1 : 0);
+	    				sumInvalid += (object.price > 350000 ? 0 : 1);
+	    			});
+	    			
+	    			var sumValidPercen = (sumValid/response.length) * 100;
+	    			var sumInvalidPercen = (sumInvalid/response.length) * 100;
+	    			
+	    			var numberStep = $.animateNumber.numberStepFactories.separator(',');
+	    			$('#TotalRecord').animateNumber({ number: response.length, numberStep: numberStep});
+	    			$('#TotalAmount').animateNumber({ number: sumPrice, numberStep: numberStep});
+	    			$('#RecordValid').animateNumber({ number: sumValid, numberStep: numberStep});
+	    			$('#RecordInvalid').animateNumber({ number: sumInvalid, numberStep: numberStep});
+	    			$('#PercenValid').animateNumber({ number: sumValidPercen, numberStep: numberStep});
+	    			$('#PercenInvalid').animateNumber({ number: sumInvalidPercen, numberStep: numberStep});
+	    			
+	    			DataTable.clear();
 					DataTable.rows.add(response);
 					DataTable.draw();
+					
+					
 	    		},
 				function (jqXHR, textStatus, errorThrown) {
 				

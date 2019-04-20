@@ -1,6 +1,8 @@
 package com.tirmizee.core.utilities;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -23,6 +25,10 @@ public final class DateUtils {
 	public static Timestamp plusMinutes(int minutes){
 		LocalDateTime localDateNow = LocalDateTime.now().plusMinutes(minutes);
 		return Timestamp.valueOf(localDateNow);
+	}
+	
+	public static Date toDateFormat(String toDate, String format) throws ParseException{
+		return new SimpleDateFormat(format).parse(toDate);
 	}
 	
 	public static boolean nowAfter(Timestamp time){

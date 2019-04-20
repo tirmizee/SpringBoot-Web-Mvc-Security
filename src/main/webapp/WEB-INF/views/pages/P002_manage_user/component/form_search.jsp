@@ -54,6 +54,52 @@
 				</div>
         	</div>
         </div>
+         <div class="row">
+        	<div class="col-md-3">
+        		<div class="form-group">
+				    <label>Province</label>
+			        <div class="input-group date">
+			            <div class="input-group-addon">
+			                <i class="fa fa-map-marker"></i>
+			            </div>
+				    	<input name="email" type="text" class="form-control" placeholder="Province...">
+				    </div>
+				</div>
+        	</div>
+        	<div class="col-md-3">
+        		<div class="form-group">
+				    <label>District</label>
+			        <div class="input-group date">
+			            <div class="input-group-addon">
+			                <i class="fa fa-map-marker"></i>
+			            </div>
+				    	<input name="email" type="text" class="form-control" placeholder="District...">
+				    </div>
+				</div>
+        	</div>
+        	<div class="col-md-3">
+        		<div class="form-group">
+				    <label>Sub District</label>
+			        <div class="input-group date">
+			            <div class="input-group-addon">
+			                <i class="fa fa-map-marker"></i>
+			            </div>
+				    	<input name="email" type="text" class="form-control" placeholder="Sub District...">
+				    </div>
+				</div>
+        	</div>
+        	<div class="col-md-3">
+        		<div class="form-group">
+				    <label>Tel NO.</label>
+			        <div class="input-group date">
+			            <div class="input-group-addon">
+			                <i class="fa fa-phone"></i>
+			            </div>
+				    	<input name="email" type="text" class="form-control" placeholder="Tel...">
+				    </div>
+				</div>
+        	</div>
+        </div>
         <div class="row">
         	<div class="col-md-3">
         		<div class="form-group">

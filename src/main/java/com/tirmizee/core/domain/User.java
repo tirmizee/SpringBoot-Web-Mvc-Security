@@ -9,7 +9,7 @@ public class User implements Persistable<Long>{
 	private transient boolean persisted;
 	
 	private Long userId;
-	private Integer profileId;
+	private Long profileId;
 	private String username;
 	private String password;
 	private java.sql.Date updateDate;
@@ -40,11 +40,11 @@ public class User implements Persistable<Long>{
 		this.userId = userId;
 	}
 
-	public Integer getProfileId() {
+	public Long getProfileId() {
 		return profileId;
 	}
 
-	public void setProfileId(Integer profileId) {
+	public void setProfileId(Long profileId) {
 		this.profileId = profileId;
 	}
 

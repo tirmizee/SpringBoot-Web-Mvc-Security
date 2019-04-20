@@ -197,5 +197,17 @@ public class UserDetailUpdateDTO implements Serializable {
 	public void setMaxSession(Integer maxSession) {
 		this.maxSession = maxSession;
 	}
+	@Override
+	public String toString() {
+		return "UserDetailUpdateDTO [userId=" + userId + ", username=" + username + ", credentialsexpiredDate="
+				+ credentialsexpiredDate + ", credentialsnonexpired=" + credentialsnonexpired + ", accountExpiredDate="
+				+ accountExpiredDate + ", maxSession=" + maxSession + ", accountnonexpired=" + accountnonexpired
+				+ ", accountnonlocked=" + accountnonlocked + ", enabled=" + enabled + ", citizenId=" + citizenId
+				+ ", firstLogin=" + firstLogin + ", lastName=" + lastName + ", firstName=" + firstName + ", email="
+				+ email + ", tel=" + tel + ", roleId=" + roleId + ", roleName=" + roleName + ", roleCode=" + roleCode
+				+ ", provinceId=" + provinceId + ", districtId=" + districtId + ", subdistrictId=" + subdistrictId
+				+ ", provinceNameTh=" + provinceNameTh + ", districtNameTh=" + districtNameTh + ", subdistrictNameTh="
+				+ subdistrictNameTh + ", subDistrictCode=" + subDistrictCode + ", zipcode=" + zipcode + "]";
+	}
 	
 }

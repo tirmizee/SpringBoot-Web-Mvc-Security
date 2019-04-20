@@ -20,7 +20,7 @@ import com.tirmizee.core.utilities.WorkbookUtils;
 
 @RestController
 @RequestMapping(path = "api/file")
-public class ApiUploadController {
+public class ApiFileController {
 	
 	@Autowired
 	private ExcelService excelService;

@@ -89,8 +89,8 @@ public class TomcatEmbeddedConfig {
 		resource.setName(JNDI_ORACLE_DEV);
 		resource.setType(DataSource.class.getName());
 		resource.setProperty("auth", "Container");
-		resource.setProperty("maxActive", "1");
-		resource.setProperty("maxIdle", "1");
+		resource.setProperty("maxActive", "10");
+		resource.setProperty("maxIdle", "5");
 		resource.setProperty("factory", "com.zaxxer.hikari.HikariJNDIFactory");
 		resource.setProperty("driverClassName", env.getProperty(Properties.DB.ORACLE_DEV_DRIVER));
 		resource.setProperty("jdbcUrl", env.getProperty(Properties.DB.ORACLE_DEV_URL));

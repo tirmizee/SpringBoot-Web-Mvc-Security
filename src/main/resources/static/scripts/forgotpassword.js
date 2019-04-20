@@ -1,7 +1,7 @@
 var ForgotPasswordModule = function(){
 	
 	var handleFormForgotPassword = function(){
-		$('#formForgotPassword').bootstrapValidator({
+		$('#FormForgotPassword').bootstrapValidator({
 	        fields: {
 	            email: {
 	                validators: {
@@ -41,7 +41,7 @@ var ForgotPasswordModule = function(){
 					});
             	},
             	function(jqXHR, textStatus, errorThrown){
-            		$('#formForgotPassword button[type="submit"]').prop("disabled",false);
+            		$('#FormForgotPassword button[type="submit"]').prop("disabled",false);
             	}
 			);
 		});

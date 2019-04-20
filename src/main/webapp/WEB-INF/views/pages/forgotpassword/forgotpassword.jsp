@@ -38,7 +38,7 @@
         </div>
         <div class="login-box-body with-body-white">
             <p class="login-box-msg font-kanit-regular">Forgot Password</p>
-            <form  id="formForgotPassword" action="login" method="post">
+            <form  id="FormForgotPassword" action="login" method="post">
             	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />	
                 <div class="form-group has-feedback">
                 	<span class="fa fa-user form-control-feedback"></span>

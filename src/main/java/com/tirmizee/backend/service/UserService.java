@@ -6,6 +6,7 @@ import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
 import com.tirmizee.backend.api.user.data.ReqUpdateStatusDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
 import com.tirmizee.backend.api.user.data.UserDetailPageDTO;
+import com.tirmizee.backend.api.user.data.UserDetailUpdateDTO;
 import com.tirmizee.core.datatable.RequestTable;
 import com.tirmizee.core.datatable.ResponseTable;
 
@@ -26,6 +27,8 @@ public interface UserService {
 	void changePasswordFirstLogin(String username, ReqPasswordDTO passwordDTO);
 	
 	void changePasswordExpired(String username, ReqPasswordExpriedDTO passwordExpriedDTO);
+	
+	void updateUser(UserDetailUpdateDTO updateUser);
 	
 	void updateStatusEnable(ReqUpdateStatusDTO updateEnable);
 	

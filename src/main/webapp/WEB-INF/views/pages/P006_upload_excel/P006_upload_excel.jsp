@@ -30,7 +30,6 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/jquery-confirm/css/jquery-confirm.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/inputmark/css/inputmask.css">  
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/bootstrap-toggle/css/bootstrap-toggle.min.css">
-	<link rel="stylesheet" href="http://icheck.fronteed.com/skins/all.css?v=1.0.1"> 
 	  
 	<script src="${pageContext.request.contextPath}/resources/libs/bootstrap/js/jquery-3.2.1.min.js" ></script>
 	<script src="${pageContext.request.contextPath}/resources/libs/bootstrap/js/bootstrap.min.js" ></script>
@@ -55,7 +54,7 @@
 	<script src="${pageContext.request.contextPath}/resources/libs/jquery-confirm/js/jquery-confirm.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/libs/inputmark/js/jquery.inputmask.bundle.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/libs/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
-	<script src="http://icheck.fronteed.com/icheck.js?v=1.0.1"></script>
+	<script src="${pageContext.request.contextPath}/resources/libs/jquery-animate-number/js/jquery.animateNumber.min.js"></script>
 	
 
   <style type="text/css">
@@ -84,50 +83,14 @@
 			
 			<!-- CONTENT BODY -->
    			<section class="content">
-				<div class="box box-default">
-				    <div class="box-header with-border">
-				        <h3 class="box-title">Expandable</h3>
-				        <div class="box-tools pull-right">
-				            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-				            </button>
-				        </div>
-				    </div>
-				    <div class="box-body" style="">
-				    	<form id="FormUploadExcel">
-					        <div class="row">
-					        	<div class="col-md-6">
-									<div class="form-group">
-								        <label>Description</label>
-								        <div class="input-group date">
-								            <div class="input-group-addon">
-								                <i class="fa fa-file-excel-o"></i>
-								            </div>
-								            <input name="description" type="text" class="form-control" placeholder="Description...">
-								        </div>
-								    </div>
-					        	</div>
-					        	<div class="col-md-6">
-					        		<div class="form-group">
-									    <label>File</label>
-									   	<input name="file" type="file" class="file">
-									   	<p class="help-block">Excel file only</p>
-									</div>
-					        	</div>
-					        </div>
-					        <div class="row text-center">
-								<button id="BtnClear" type="button" class="btn btn-default btn-flat">Clear</button>
-								<button id="BtnSearch" type="submit" class="btn btn-success btn-flat">Validate</button>
-							</div>
-						</form>
-				    </div>
-				</div>
+				<jsp:include page="component/form_upload.jsp" />
 				<div class="box box-default">
 				    <div class="box-body" style="">
 				    	<table id="TBExcel" class="display nowrap" cellspacing="0" width="100%"></table>
 				    	<div class="row text-center">
-								<button id="หห" type="button" class="btn btn-default btn-flat">Clear</button>
-								<button id="ฟ" type="submit" class="btn btn-primary btn-flat">Save</button>
-							</div>
+							<button id="หห" type="button" class="btn btn-default btn-flat">Clear</button>
+							<button id="ฟ" type="submit" class="btn btn-primary btn-flat">Save</button>
+						</div>
 				    </div>
 				</div>
    			</section>

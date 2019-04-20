@@ -215,11 +215,11 @@ var ManageUserModule = function(){
 				var selectedRole = { value : response.roleId        ,text : response.roleName};
 				
 				var passwordExpiredDate = new Date(response.credentialsexpiredDate);
-				var accountExpiredDate = new Date(response.accountExpiredDate);
+				var accountExpiredDate  = new Date(response.accountExpiredDate);
 				
-				var elementAccountExpired = $('.toggle-account-expired')[0];
-				var elementAccountEnabled = $('.toggle-account-enabled')[0];
-				var elementAccountLocked = $('.toggle-account-locked')[0];
+				var elementAccountExpired  = $('.toggle-account-expired')[0];
+				var elementAccountEnabled  = $('.toggle-account-enabled')[0];
+				var elementAccountLocked   = $('.toggle-account-locked')[0];
 				var elementPasswordExpired = $('.toggle-password-expired')[0];
 				
 				$('#SLProvince, #SLDistrict, #SLSubDistrict').empty();
@@ -549,9 +549,9 @@ var ManageUserModule = function(){
 			    	return {
 		                results : $.map(data.content, function (item) { 
 		                    return {
-		                    	id     : item.roleId,
-		                    	code   : item.roleCode,
-		                    	text   : item.roleName
+		                    	id   : item.roleId,
+		                    	code : item.roleCode,
+		                    	text : item.roleName
 		                    }
 		                }),
 	                    pagination: {
@@ -599,7 +599,7 @@ var ManageUserModule = function(){
 		                    	id     : item.provinceId,
 		                    	code   : item.provincecCode,
 		                    	text   : item.provinceNameTh,
-		                    	textEn   : item.provinceNameEn
+		                    	textEn : item.provinceNameEn
 		                    }
 		                }),
 	                    pagination: {
@@ -735,6 +735,80 @@ var ManageUserModule = function(){
 		});
 	}
 	
+	var handleFormEditUser = function(){
+		$('#FormEditUser').bootstrapValidator({
+			excluded: [':disabled'],
+	        fields : {
+	        	username : {
+	                validators: {
+	                    notEmpty: {
+	                        message: 'The username is required'
+	                    }
+	                }
+	            }
+        	}
+		}).on('success.form.bv', function(e) {
+            e.preventDefault();
+            confirmUpdateUser();
+		});
+	}
+	
+	var confirmUpdateUser = function(){
+		$.confirm({
+		    title: 'Confirm!',
+		    icon: 'fa fa-warning',
+		    typeAnimated: true,
+		    animation: 'zoom',
+		    type: 'blue',
+		    content: '<b>Are you sure to update.</b>',
+		    buttons: {
+		        cancel: function (){
+		        	$('#FormEditUser button[type="submit"]').removeClass("disabled");
+		        	$('#FormEditUser button[type="submit"]').prop("disabled",false);
+		        },
+	            confirm: {
+		        	btnClass : 'btn-blue',
+		        	action : function() {
+		        		updateUser();
+		        	}
+		        }
+		    }
+		});
+	}
+	
+	var updateUser = function(){
+		
+		var request = {};
+		
+		request.username               = $('#FormEditUser input[name="username"]').val();
+		request.maxSession             = $('#FormEditUser input[name="maxSession"]').val();
+		request.roleId                 = $('#FormEditUser select[name="roleId"]').val();
+		request.accountExpiredDate     = $('#FormEditUser input[name="accountExpiredDate"]').datepicker("getDate");
+		request.credentialsexpiredDate = $('#FormEditUser input[name="passwordExpiredDate"]').datepicker("getDate");
+		request.enabled                = $('.toggle-account-enabled').find('.active').data('name') == 'Y';
+		request.accountnonlocked       = $('.toggle-account-locked').find('.active').data('name') == 'Y';
+		request.accountnonexpired      = $('.toggle-account-expired').find('.active').data('name') == 'Y';
+		request.credentialsnonexpired  = $('.toggle-password-expired').find('.active').data('name') == 'Y';
+		request.firstName              = $('#FormEditUser input[name="firstName"]').val();
+		request.lastName               = $('#FormEditUser input[name="lastName"]').val();
+		request.citizenId              = $('#FormEditUser input[name="citizenId"]').val();
+		request.tel                    = $('#FormEditUser input[name="tel"]').val();
+		request.email                  = $('#FormEditUser input[name="email"]').val();
+		request.subDistrictCode        = $('#SLSubDistrict').select2('data')[0].code;
+		request.provinceId             = $('#SLProvince').val();
+		request.districtId             = $('#SLDistrict').val();
+		request.subdistrictId          = $('#SLSubDistrict').val();
+		
+		AjaxManager.PostData( request, 'api/user/update' ,
+			function(response){
+
+			},
+			function(jqXHR, textStatus, errorThrown){
+			
+			}
+		);
+	}
+	
 	var handleInputCitizenId = function(){
 		$('#FormEditUser input[name="citizenId"]').inputmask({
 			mask : "9-9999-99999-99-9",
@@ -848,6 +922,14 @@ var ManageUserModule = function(){
 		});
 	}
 	
+	var handleModalEditUser = function(){
+		$(document).bind('shown.bs.modal', function (e) {
+		
+		}).bind('hidden.bs.modal', function (event) {
+			$('#FormEditUser').bootstrapValidator('resetForm', true);
+		});
+	}
+	
 	return {
 		init : function(){
 			activeMenu();
@@ -867,6 +949,8 @@ var ManageUserModule = function(){
 			handleToggleAccountEnabled();
 			handleToggleAccountLocked();
 			handleTogglePasswordExpired();
+			handleModalEditUser();
+			handleFormEditUser();
 		}
 	};
 	

@@ -19,8 +19,10 @@ import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
 import com.tirmizee.backend.api.user.data.ReqUpdateStatusDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
 import com.tirmizee.backend.api.user.data.UserDetailPageDTO;
+import com.tirmizee.backend.api.user.data.UserDetailUpdateDTO;
 import com.tirmizee.backend.dao.ForgotPasswordDao;
 import com.tirmizee.backend.dao.LogPasswordDao;
+import com.tirmizee.backend.dao.ProfileDao;
 import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.backend.service.data.ForgotPasswordModel;
 import com.tirmizee.core.component.PageMapper;
@@ -30,6 +32,7 @@ import com.tirmizee.core.datatable.RequestTable;
 import com.tirmizee.core.datatable.ResponseTable;
 import com.tirmizee.core.domain.ForgotPassword;
 import com.tirmizee.core.domain.LogPassword;
+import com.tirmizee.core.domain.Profile;
 import com.tirmizee.core.domain.User;
 import com.tirmizee.core.exception.BusinessException;
 import com.tirmizee.core.utilities.DateUtils;
@@ -52,6 +55,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired 
 	private LogPasswordDao logPasswordDao;
+	
+	@Autowired 
+	private ProfileDao profileDao;
 	
 	@Autowired 
 	private ForgotPasswordDao forgotPasswordDao;
@@ -259,6 +265,25 @@ public class UserServiceImpl implements UserService {
 		user.setAccountnonexpired(updateAccountExpired.getStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
+	}
+
+	@Override
+	@Transactional
+	public void updateUser(UserDetailUpdateDTO updateUser) {
+		
+		User user = userDao.findByUsername(updateUser.getUsername());
+		if (user == null) {
+			throw new BusinessException(MessageCode.MSG006, updateUser.getUsername());
+		}
+		
+		Profile profile = profileDao.findOne(user.getProfileId());
+		
+		mapper.map(updateUser, profile);
+		mapper.map(updateUser, user);
+
+		userDao.save(user);
+		profileDao.save(profile);
+		
 	}
 
 }

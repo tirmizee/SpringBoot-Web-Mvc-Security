@@ -30,7 +30,6 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/inputmark/css/inputmask.css">  
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libs/bootstrap-toggle/css/bootstrap-toggle.min.css">
 	
-	  
 	<script src="${pageContext.request.contextPath}/resources/libs/bootstrap/js/jquery-3.2.1.min.js" ></script>
 	<script src="${pageContext.request.contextPath}/resources/libs/bootstrap/js/bootstrap.min.js" ></script>
 	<script src="${pageContext.request.contextPath}/resources/libs/select2/js/select2.full.min.js" ></script>
@@ -92,7 +91,7 @@
 			
 			<!-- CONTENT BODY -->
    			<section class="content">
-				<jsp:include page="component/body.jsp" />
+				<jsp:include page="component/form_search.jsp" />
    			</section>
    			 
    		</div>

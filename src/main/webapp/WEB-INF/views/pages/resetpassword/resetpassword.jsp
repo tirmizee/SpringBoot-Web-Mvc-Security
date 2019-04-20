@@ -37,6 +37,9 @@
             <a href=""><b>Spring Boot</b> 1.5</a>
         </div>
         <div class="login-box-body with-body-white">
+        	<div class="row" style="text-align: center;">
+        		<i class="fa fa-fw fa-unlock-alt fa-5x"></i>
+        	</div>
             <p class="login-box-msg font-kanit-regular">Reset Password</p>
             <form  id="formResetPassword" action="login" method="post">
                 <div class="form-group has-feedback">

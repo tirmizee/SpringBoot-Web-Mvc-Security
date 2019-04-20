@@ -1,6 +1,7 @@
 package com.tirmizee.backend.service;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Service;
 
 import com.tirmizee.backend.api.file.data.MockDataDTO;
+import com.tirmizee.core.utilities.DateUtils;
 
 @Service
 public class ExcelServiceImpl implements ExcelService {
@@ -46,6 +48,14 @@ public class ExcelServiceImpl implements ExcelService {
 			Cell cell_4 = row.getCell(4);
 			cell_4.setCellType(Cell.CELL_TYPE_STRING);
 			mockData.setSize(cell_4.getStringCellValue());
+			
+			Cell cell_5 = row.getCell(5);
+			cell_5.setCellType(Cell.CELL_TYPE_STRING);
+			try {
+				mockData.setDate(DateUtils.toDateFormat(cell_5.getStringCellValue(), "yyyy-mm-dd"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			
 			Cell cell_6 = row.getCell(6);
 			cell_6.setCellType(Cell.CELL_TYPE_STRING);

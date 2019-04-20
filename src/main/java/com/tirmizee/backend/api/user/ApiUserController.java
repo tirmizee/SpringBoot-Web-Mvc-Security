@@ -110,6 +110,13 @@ public class ApiUserController {
 	}
 	
 	@PreAuthorize("hasAnyAuthority('P002')")
+	@PostMapping(path = "/update")
+	public MessageSuccess updateUser(@RequestBody @Valid UserDetailUpdateDTO updateUser) {
+		userService.updateUser(updateUser);
+		return new MessageSuccess(null, "Update User Complete.");
+	}
+	
+	@PreAuthorize("hasAnyAuthority('P002')")
 	@PostMapping(path = "/page")
 	public DeferredResult<ResponseTable<UserDetailPageDTO>> pageDataTable(@RequestBody @Valid RequestTable<UserDetailCriteriaDTO> requestTable){
 		DeferredResult<ResponseTable<UserDetailPageDTO>> deferredResult = new DeferredResult<>(60000L);

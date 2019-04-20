@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @JsonAutoDetect(
 	fieldVisibility = JsonAutoDetect.Visibility.ANY,
@@ -21,7 +22,10 @@ public class MockDataDTO implements Serializable {
 	private String appVersion;
 	private BigDecimal price;
 	private String size;
+	
+	@JsonFormat(pattern="dd-MM-yyyy")
 	private Date date;
+	
 	private String country;
 	
 	public String getAppCode() {

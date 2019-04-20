@@ -17,7 +17,7 @@ import com.tirmizee.backend.web.data.MessageSuccess;
 
 @RestController
 @RequestMapping(path = "/api/session")
-public class SessionApiController {
+public class ApiSessionController {
 	
 	@Autowired
 	private SessionService sessionService;

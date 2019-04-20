@@ -31,7 +31,7 @@ public class UserRepositoryImpl extends AbstractOracleJdbcRepository<User, Long>
 			user.setEnabled(rs.getBoolean(COL_ENABLED));
 			user.setPassword(rs.getString(COL_PASSWORD));
 			user.setUsername(rs.getString(COL_USERNAME));
-			user.setProfileId(rs.getInt(COL_PROFILE_ID));
+			user.setProfileId(rs.getLong(COL_PROFILE_ID));
 			user.setMaxSession(rs.getInt(COL_MAX_SESSION));
 			user.setAccountExpiredDate(rs.getDate(COL_ACCOUNT_EXPIRED_DATE));
 			return user.withPersisted(true);
