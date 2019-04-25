@@ -49,9 +49,9 @@ public class ExcelServiceImpl implements ExcelService {
 			cell_4.setCellType(Cell.CELL_TYPE_STRING);
 			mockData.setSize(cell_4.getStringCellValue());
 			
-			Cell cell_5 = row.getCell(5);
-			cell_5.setCellType(Cell.CELL_TYPE_STRING);
 			try {
+				Cell cell_5 = row.getCell(5);
+				cell_5.setCellType(Cell.CELL_TYPE_STRING);
 				mockData.setDate(DateUtils.toDateFormat(cell_5.getStringCellValue(), "yyyy-mm-dd"));
 			} catch (ParseException e) {
 				e.printStackTrace();

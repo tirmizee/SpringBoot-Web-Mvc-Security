@@ -14,6 +14,8 @@ public interface UserDao extends UserRepository {
 
 	User findByUsername(String username);
 	
+	User findByUsername(String username, Long excludeUserId);
+	
 	User findByEmail(String email);
 
 	UserDetail findDetailByUsername(String username);

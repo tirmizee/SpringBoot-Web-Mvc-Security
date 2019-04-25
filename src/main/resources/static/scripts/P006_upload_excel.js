@@ -12,9 +12,16 @@ var UploadExcelModule = function(){
 			responsive   : false,
 			searching    : true,
 			scrollX      : true,
-			select       : true,
 			deferRender  : true,
 			data         : [],
+			language: {
+		        select: {
+		        	rows: {
+		                _: "",
+		                1: ""
+		            }
+		        }
+		    },
 			columns: [
 				{ data : null             ,title : "Order" },
 				{ data : "isValid"        ,title : "Validate" },
@@ -68,7 +75,7 @@ var UploadExcelModule = function(){
 				
 			],
 			fnRowCallback : function( Row, Data) {
-				if(!(Data.price > 500000)){
+				if(!(Data.price > 350000)){
 					$('td', Row)
 					 	.css('background-color', '#ff6868')
 					 	.find('input[type=checkbox]')
@@ -78,8 +85,13 @@ var UploadExcelModule = function(){
 			select: {
 		   		style: 'multi'
 		    },
+		    order : [[2, 'asc']],
 	        lengthMenu : [[5,10, 25, 50, 100, -1], [5,10, 25, 50, 100, "All"]]
-		});
+		}).on('select', function (e, dt, type, indexes) {
+			var count = DataTable.rows( { selected: true } ).count();
+			$('#TBExcel_info select-item').text(count);
+	    });
+
 	}
 	
 	var handleFormUpload = function(){
@@ -95,7 +107,7 @@ var UploadExcelModule = function(){
 	        	description : {
 	                validators: {
 	                    notEmpty: {
-	                        message: 'กรุณาเลือก IP'
+	                        message: 'กรุณากรอกรายละเอียด'
 	                    }
 	                }
 	            },
@@ -125,15 +137,15 @@ var UploadExcelModule = function(){
 	    			var sumInvalid = 0;
 	    			
 	    			response.forEach(function (object) {
-	    				sumPrice += object.price;
-	    				sumValid += (object.price > 350000 ? 1 : 0);
+	    				sumPrice   += object.price;
+	    				sumValid   += (object.price > 350000 ? 1 : 0);
 	    				sumInvalid += (object.price > 350000 ? 0 : 1);
 	    			});
 	    			
-	    			var sumValidPercen = (sumValid/response.length) * 100;
+	    			var sumValidPercen   = (sumValid/response.length) * 100;
 	    			var sumInvalidPercen = (sumInvalid/response.length) * 100;
-	    			
 	    			var numberStep = $.animateNumber.numberStepFactories.separator(',');
+
 	    			$('#TotalRecord').animateNumber({ number: response.length, numberStep: numberStep});
 	    			$('#TotalAmount').animateNumber({ number: sumPrice, numberStep: numberStep});
 	    			$('#RecordValid').animateNumber({ number: sumValid, numberStep: numberStep});

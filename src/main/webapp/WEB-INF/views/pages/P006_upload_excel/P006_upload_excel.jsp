@@ -58,7 +58,13 @@
 	
 
   <style type="text/css">
-  	
+  	.small-box h4 {
+	    font-size: 28px !important;
+	    font-weight: bold;
+	    margin: 0 0 20px 0;
+	    white-space: nowrap;
+	    padding: 0;
+	}
   </style>
   
 <title><spring:message code="app.name"/></title>

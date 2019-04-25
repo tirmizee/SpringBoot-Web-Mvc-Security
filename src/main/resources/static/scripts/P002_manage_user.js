@@ -36,7 +36,7 @@ var ManageUserModule = function(){
 					d.search = Search;
 					return JSON.stringify(d);
 				},error : function (xhr, error, thrown) {
-					window.location.replace("/login");
+					window.location.replace("login");
 	            }
 			},
 			columns: [
@@ -49,6 +49,7 @@ var ManageUserModule = function(){
 				{ data : "lastName"               ,title : "Last Name" },
 				{ data : "roleName"               ,title : "Role Name" },
 				{ data : "email"                  ,title : "Email" },
+				{ data : "tel"                    ,title : "Tel" },
 				{ data : "enabled"     		      ,title : "Status Enable" },
 				{ data : "accountnonexpired"      ,title : "Status Account" },
 				{ data : "accountnonlocked"       ,title : "Status Locked" },
@@ -94,13 +95,20 @@ var ManageUserModule = function(){
 					targets   : 9,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
+						return '<p data-mask>' + data + '</p>';
+					}
+				},
+				{
+					targets   : 10,
+					className : "text-center",
+					render    : function (data, type, row, meta) {
 						var enable = '<a data-btn-name="enable" href=""><span class="label label-success raduis">enable</span></a>';
 						var disable = '<a data-btn-name="enable" href=""><span class="label label-danger raduis">disable</span></a>';
 						return data ? enable : disable;
 					}
 				},
 				{
-					targets   : 10,
+					targets   : 11,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="accountExpired" href=""><span class="label label-success raduis">normal</span></a>';
@@ -109,7 +117,7 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 11,
+					targets   : 12,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="locked" href=""><span class="label label-success raduis">normal</span></a>';
@@ -118,7 +126,7 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 12,
+					targets   : 13,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="passwordExpired" href=""><span class="label label-success raduis">normal</span></a>';
@@ -127,7 +135,7 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 13,
+					targets   : 14,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="firstlogin" href=""><span class="label label-success raduis">active</span></a>';
@@ -473,6 +481,7 @@ var ManageUserModule = function(){
 	
 	var handleButtonSearch = function(){
 		$('#BtnSearch').on('click', function(){
+			Search.tel = $('input[name="tel"]').val();
 			Search.username = $('input[name="username"]').val();
 			Search.firstName = $('input[name="firstName"]').val();
 			Search.lastName = $('input[name="lastName"]').val();
@@ -482,9 +491,16 @@ var ManageUserModule = function(){
 		});
 	}
 	
+	var handleButtonClear = function(){
+		$('#BtnClear').on('click', function(){
+			$('#FormSearchUser')[0].reset();
+			$('#SLRole').val([]).trigger('change');
+		});
+	}
+	
 	var handleSelectRole = function(){
 		$('#SLRole').select2({
-			placeholder: 'Role',
+			placeholder: 'All',
 			ajax: {
 			    url : 'api/role/page',
 			    delay : 250,
@@ -780,6 +796,7 @@ var ManageUserModule = function(){
 		
 		var request = {};
 		
+		request.userId                 = $('#FormEditUser input[name="userId"]').val();
 		request.username               = $('#FormEditUser input[name="username"]').val();
 		request.maxSession             = $('#FormEditUser input[name="maxSession"]').val();
 		request.roleId                 = $('#FormEditUser select[name="roleId"]').val();
@@ -795,13 +812,20 @@ var ManageUserModule = function(){
 		request.tel                    = $('#FormEditUser input[name="tel"]').val();
 		request.email                  = $('#FormEditUser input[name="email"]').val();
 		request.subDistrictCode        = $('#SLSubDistrict').select2('data')[0].code;
-		request.provinceId             = $('#SLProvince').val();
-		request.districtId             = $('#SLDistrict').val();
-		request.subdistrictId          = $('#SLSubDistrict').val();
 		
 		AjaxManager.PostData( request, 'api/user/update' ,
 			function(response){
-
+				$.confirm({
+				    title: 'Meaages Alert!',
+				    content: 'Update User Complete',
+				    type: 'green',
+				    typeAnimated: true,
+				    buttons: {
+				        close: function () {
+				        	$('#ModalEditUser').modal('hide');
+				        }
+				    }
+				});
 			},
 			function(jqXHR, textStatus, errorThrown){
 			
@@ -845,8 +869,7 @@ var ManageUserModule = function(){
 	var handleDateAccountExpired = function(){
 		$('#FormEditUser input[name="accountExpiredDate"]').datepicker({
 			autoclose: true,
-			format: 'dd/mm/yyyy',
-	        startDate: '+0d'
+			format: 'dd/mm/yyyy'
 		});
 	}
 	
@@ -935,6 +958,7 @@ var ManageUserModule = function(){
 			activeMenu();
 			handleDataTable();
 			handleButtonSearch();
+			handleButtonClear();
 			handleSelectRole();
 			handleSelectEditRole();
 			handleSelectProvince();

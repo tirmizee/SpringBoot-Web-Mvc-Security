@@ -271,9 +271,14 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void updateUser(UserDetailUpdateDTO updateUser) {
 		
-		User user = userDao.findByUsername(updateUser.getUsername());
+		User user = userDao.findOne(updateUser.getUserId());
 		if (user == null) {
-			throw new BusinessException(MessageCode.MSG006, updateUser.getUsername());
+			throw new BusinessException(MessageCode.MSG006, updateUser.getUserId());
+		}
+		
+		User usernameUpdate = userDao.findByUsername(updateUser.getUsername(), updateUser.getUserId());
+		if (usernameUpdate != null) {
+			throw new BusinessException(MessageCode.MSG007, updateUser.getUsername());
 		}
 		
 		Profile profile = profileDao.findOne(user.getProfileId());

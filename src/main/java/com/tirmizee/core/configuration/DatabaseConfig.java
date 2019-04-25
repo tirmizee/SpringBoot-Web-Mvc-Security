@@ -14,17 +14,23 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.tirmizee.core.constant.Constant;
 
+/**
+ * @author Pratya Yeekhaday
+ *
+ */
 @Configuration
 @EnableTransactionManagement
 public class DatabaseConfig {
 	
 	public static final Logger LOG = Logger.getLogger(DatabaseConfig.class);
 	
+	public static final String JAVA_ENV = "java:/comp/env/";
+	
 	@Bean
 	@Profile(Constant.Profiles.DEVELOP)
 	public DataSource dataSourceOracleDev() throws IllegalArgumentException, NamingException {
 		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
-		bean.setJndiName("java:/comp/env/" + TomcatEmbeddedConfig.JNDI_ORACLE_DEV);  
+		bean.setJndiName(JAVA_ENV + TomcatEmbeddedConfig.JNDI_ORACLE_DEV);  
 		bean.setProxyInterface(DataSource.class);
 		bean.setLookupOnStartup(false);
 		bean.afterPropertiesSet();
@@ -35,7 +41,7 @@ public class DatabaseConfig {
 	@Profile(Constant.Profiles.UAT)
 	public DataSource dataSourceOracleUat() throws IllegalArgumentException, NamingException{
 		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
-		bean.setJndiName("java:/comp/env/" + TomcatEmbeddedConfig.JNDI_ORACLE_UAT);  
+		bean.setJndiName(JAVA_ENV + TomcatEmbeddedConfig.JNDI_ORACLE_UAT);  
 		bean.setProxyInterface(DataSource.class);
 		bean.setLookupOnStartup(false);
 		bean.afterPropertiesSet();
@@ -46,7 +52,7 @@ public class DatabaseConfig {
 	@Profile(Constant.Profiles.PRODUCTION)
 	public DataSource dataSourceOracleProduction() throws IllegalArgumentException, NamingException{
 		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
-		bean.setJndiName("java:/comp/env/" + TomcatEmbeddedConfig.JNDI_ORACLE_PRO);  
+		bean.setJndiName(JAVA_ENV + TomcatEmbeddedConfig.JNDI_ORACLE_PRO);  
 		bean.setProxyInterface(DataSource.class);
 		bean.setLookupOnStartup(false);
 		bean.afterPropertiesSet();

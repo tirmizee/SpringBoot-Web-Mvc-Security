@@ -16,7 +16,7 @@
             <ul class="nav navbar-nav">
             	<li class="dropdown notifications-menu">
 				   <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-				   		<i class="fa fa-language " style="height: 20px;font-size:20px"></i>
+				   		<i class="fa fa-language " style="height: 18px;font-size:20px"></i>
                         <span id="spLanguage" class="label label-warning">${pageContext.response.locale}</span>
 				   </a>
 				   <ul class="dropdown-menu">

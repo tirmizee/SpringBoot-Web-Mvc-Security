@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.util.Assert;
 
 import com.tirmizee.core.component.PasswordGenerator;
@@ -20,7 +19,7 @@ public final class CustomHttpSessionCsrfTokenRepository implements CsrfTokenRepo
 
 	private static final String DEFAULT_CSRF_HEADER_NAME = "X-CSRF-TOKEN";
 
-	private static final String DEFAULT_CSRF_TOKEN_ATTR_NAME = HttpSessionCsrfTokenRepository.class
+	private static final String DEFAULT_CSRF_TOKEN_ATTR_NAME = CustomHttpSessionCsrfTokenRepository.class
 			.getName().concat(".CSRF_TOKEN");
 
 	private String parameterName = DEFAULT_CSRF_PARAMETER_NAME;

@@ -25,11 +25,7 @@ public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 	}
 	
 	private String[] ignoreUrl() {
-		return new String[] {
-			"ws",
-			"webjars",
-			"resource"
-		};
+		return new String[] { "ws", "webjars", "resource" };
 	}
 	
 }

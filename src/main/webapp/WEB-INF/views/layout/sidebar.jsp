@@ -5,7 +5,7 @@
 <style>
 	aside.main-sidebar {font-family: kanit-medium}
 </style>
-<aside class="main-sidebar" style="font-family: kanit-medium">
+<aside class="main-sidebar" style="font-family: kanit-medium;" >
     <section class="sidebar">
         <div class="user-panel">
             <div class="pull-left image">

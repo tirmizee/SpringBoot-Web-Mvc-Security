@@ -48,6 +48,9 @@ public class UserDetailPageDTO implements Serializable {
 	@SortColumn(ProfileRepository.COL_EMAIL)
 	private String email;
 	
+	@SortColumn(ProfileRepository.COL_TEL)
+	private String tel;
+	
 	private Integer roleId;
 	
 	@SortColumn(RoleRepository.COL_ROLE_NAME)
@@ -150,6 +153,12 @@ public class UserDetailPageDTO implements Serializable {
 	}
 	public void setProfileImage(String profileImage) {
 		this.profileImage = profileImage;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
 	
 }

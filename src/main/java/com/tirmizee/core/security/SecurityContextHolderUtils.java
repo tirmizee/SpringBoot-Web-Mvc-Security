@@ -31,7 +31,7 @@ public class SecurityContextHolderUtils {
 	
 	public static void addAuthority(String username, String authority){
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		authorities.add( new SimpleGrantedAuthority(authority));
+		authorities.add(new SimpleGrantedAuthority(authority));
 		authorities.addAll(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 		UsernamePasswordAuthenticationToken authRequest = authenticationToken(username , null ,authorities);
 		updateAuthentication(authRequest);

@@ -85,7 +85,6 @@ public class RoleServiceImpl implements RoleService {
 				roleMapPermissionDao.save(newPermission);
 			}
 		}
-		
 	}
 
 }

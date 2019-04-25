@@ -6,6 +6,7 @@ public class UserDetailCriteriaDTO {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private String tel;
 	private Integer roleId;
 	
 	public String getUsername() {
@@ -37,6 +38,12 @@ public class UserDetailCriteriaDTO {
 	}
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
 	
 }

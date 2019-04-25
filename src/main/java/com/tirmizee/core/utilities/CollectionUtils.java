@@ -10,7 +10,7 @@ import java.util.List;
 public class CollectionUtils {
 	
 	public static <T> List<T> emptyIfNull(List<T> list) {
-	    return (list == null) ? Collections.emptyList() : list;
+	    return list == null ? Collections.emptyList() : list;
 	}
 
 }

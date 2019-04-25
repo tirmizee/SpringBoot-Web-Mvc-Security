@@ -29,7 +29,7 @@
 			    <div class="col-lg-3 col-xs-6">
 			        <div class="small-box bg-yellow">
 			            <div class="inner">
-			                <h3 id="TotalAmount">0</h3>
+			                <h4 id="TotalAmount">0</h4>
 			                <p>Total Amount</p>
 			            </div>
 			            <a href="#" class="small-box-footer">

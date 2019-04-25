@@ -148,6 +148,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 				.append(ProfileRepository.FIRST_NAME).append(",")
 				.append(ProfileRepository.LAST_NAME).append(",")
 				.append(ProfileRepository.EMAIL).append(",")
+				.append(ProfileRepository.TEL).append(",")
 				.append(ProfileRepository.COL_PROFILE_IMAGE).append(",")
 				.append(RoleRepository.ROLE_CODE).append(",")
 				.append(RoleRepository.ROLE_ID).append(",")
@@ -180,6 +181,11 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 			params.add("%" + StringUtils.trimToEmpty(search.getEmail()) + "%");
 		}
 		
+		if (!StringUtils.isBlank(search.getTel())) {
+			statement.append(" AND ").append(ProfileRepository.TEL).append(" LIKE ? ");
+			params.add("%" + StringUtils.trimToEmpty(search.getTel()) + "%");
+		}
+		
 		if (search.getRoleId() != null) {
 			statement.append(" AND ").append(RoleRepository.ROLE_ID).append(" = ? ");
 			params.add(search.getRoleId());
@@ -205,6 +211,19 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 					.append(" ON ").append(PROFILE_ID).append(" = ").append(ProfileRepository.PROFILE_ID)
 				.append(" WHERE ").append(ProfileRepository.EMAIL).append(" = ? ");
 			return getJdbcOps().queryForObject(statemet.toString(), params(email), ROW_MAPPER);
+		} catch(EmptyResultDataAccessException ex) {
+			return null;
+		}
+	}
+
+	@Override
+	public User findByUsername(String username, Long excludeUserId) {
+		try {
+			StringBuilder statemet = new StringBuilder()
+				.append("SELECT * FROM ").append(TB_USERS)
+				.append(" WHERE ").append(COL_USERNAME).append(" = ? ")
+				.append(" AND ").append(COL_USER_ID).append(" <> ? ");
+			return getJdbcOps().queryForObject(statemet.toString(), params(username, excludeUserId), ROW_MAPPER);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}

@@ -3,12 +3,14 @@ Building Enterprise Java Applications the Spring Way
 ## Example
 - Limit login attempts
 - Limit Maximum Sessions For User
+- Setting Session Timeout and Update Database table on timeout
+- Forgot password send Email reset password
+- Forcing user to change a password at the first time login
+- Forcing user to change expired password
 - Bean Validation using Hibernate  Validator
 - Paging, Searching And Sorting  
 - Sending Email Template With Attachment
 - Multiple Languages web application
-- Forgot password send Email reset password
-- Forcing user to change expired password
 - Uploading both data and files in one form using Ajax
 
 ## Building and running

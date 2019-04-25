@@ -26,7 +26,7 @@ import org.springframework.security.web.authentication.session.CompositeSessionA
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.LazyCsrfTokenRepository;
 import org.springframework.security.web.session.ConcurrentSessionFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.session.SimpleRedirectSessionInformationExpiredStrategy;
@@ -80,16 +80,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
     
     @Bean
-    public ConcurrentSessionFilter concurrentSessionFilter(){
+    public ConcurrentSessionFilter concurrentSessionFilter() {
     	return new ConcurrentSessionFilter(sessionRegistry(), sessionInformationExpiredStrategy());
     }
-    
-    @Bean 
-	public CsrfTokenRepository httpSessionCsrfTokenRepository() {
-    	CustomHttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new CustomHttpSessionCsrfTokenRepository();
-    	httpSessionCsrfTokenRepository.setHeaderName(Constant.Resource.APPLICATION.getString("security.csrf.header"));
-		return httpSessionCsrfTokenRepository;
-	}
     
     @Bean
     public SimpleRedirectSessionInformationExpiredStrategy sessionInformationExpiredStrategy(){
@@ -101,6 +94,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
 	}
 	
+	/*
+    *	https://stackoverflow.com/questions/49057057/how-does-crsf-lazycsrftokenrepository-work
+    */    
+    @Bean
+    public LazyCsrfTokenRepository lazyCsrfTokenRepository() {
+    	CustomHttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new CustomHttpSessionCsrfTokenRepository();
+    	httpSessionCsrfTokenRepository.setHeaderName(Constant.Resource.APPLICATION.getString("security.csrf.header"));
+    	return new LazyCsrfTokenRepository(httpSessionCsrfTokenRepository);
+    }
+	    
 	@Bean
     public CompositeSessionAuthenticationStrategy sessionAuthenticationStrategy(){
 		List<SessionAuthenticationStrategy> delegateStrategies = Arrays.asList(
@@ -134,7 +137,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.csrf()
-				.csrfTokenRepository(httpSessionCsrfTokenRepository())
+				.csrfTokenRepository(lazyCsrfTokenRepository())
 				.ignoringAntMatchers("/logout")
 				.and()
 			.authorizeRequests()

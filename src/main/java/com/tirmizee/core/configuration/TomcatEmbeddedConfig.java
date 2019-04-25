@@ -81,9 +81,9 @@ public class TomcatEmbeddedConfig {
 		};
 	}
 	
-	/**
+	/*
 	 * https://github.com/brettwooldridge/HikariCP/wiki/JNDI-DataSource-Factory-(Tomcat,-etc.)
-	 **/	
+	 */	
 	private ContextResource resourceDatasourceDev() {
 		ContextResource resource = new ContextResource();
 		resource.setName(JNDI_ORACLE_DEV);
