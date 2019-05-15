@@ -1,6 +1,7 @@
 package com.tirmizee.core.security;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,6 +19,7 @@ public class UserProfile extends UserDetailsImpl {
 	private Integer maxSession;
 	private Date credentialsExpiredDate;
 	private Date accountExpiredDate;
+	private Timestamp accountLockedDate;
 	private java.util.Date createDate;
 	
 	public UserProfile(Builder builder) {
@@ -33,6 +35,7 @@ public class UserProfile extends UserDetailsImpl {
 		this.maxSession = builder.maxSession;
 		this.credentialsExpiredDate = builder.credentialsExpiredDate;
 		this.accountExpiredDate = builder.accountExpiredDate;
+		this.accountLockedDate = builder.accountLockedDate;
 	}
 	
 	public String getFirstName() {
@@ -123,6 +126,14 @@ public class UserProfile extends UserDetailsImpl {
 		this.profileImage = profileImage;
 	}
 
+	public Timestamp getAccountLockedDate() {
+		return accountLockedDate;
+	}
+
+	public void setAccountLockedDate(Timestamp accountLockedDate) {
+		this.accountLockedDate = accountLockedDate;
+	}
+
 	@Override
     public boolean equals(Object obj) {
 		if (obj instanceof UserDetails) {
@@ -149,6 +160,7 @@ public class UserProfile extends UserDetailsImpl {
 		private boolean isFirstLogin;
 		private Date credentialsExpiredDate;
 		private Date accountExpiredDate;
+		private Timestamp accountLockedDate;
 		
 		public Builder(){}
 		
@@ -204,6 +216,11 @@ public class UserProfile extends UserDetailsImpl {
 		
 		public Builder accountExpiredDate(Date accountExpiredDate){
 			this.accountExpiredDate = accountExpiredDate;
+			return this;
+		}
+		
+		public Builder accountLockedDate(Timestamp accountLockedDate){
+			this.accountLockedDate = accountLockedDate;
 			return this;
 		}
 		

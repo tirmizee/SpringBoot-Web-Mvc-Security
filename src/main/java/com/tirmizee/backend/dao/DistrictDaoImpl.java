@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.tirmizee.backend.api.district.data.SearchDistrictDTO;
+import com.tirmizee.backend.api.address.data.SearchDistrictDTO;
 import com.tirmizee.core.domain.District;
 import com.tirmizee.core.repository.DistrictRepositoryImpl;
 
@@ -24,12 +24,12 @@ public class DistrictDaoImpl extends DistrictRepositoryImpl implements DistrictD
 		
 		StringBuilder statement = new StringBuilder()
 			.append(" SELECT * FROM ").append(TB_DISTRICTS)
-			.append(" WHERE ").append(COL_FK_PROVINCE_ID).append(" = ? ")
+			.append(" WHERE ").append(COL_PROVINCE_CODE).append(" = ? ")
 			.append(" AND (").append(COL_DISTRICT_NAME_TH).append(" LIKE ? ")
 			.append(" OR ").append(COL_DISTRICT_NAME_EN).append(" LIKE ? )");
 		
 		List<Object> params = new LinkedList<>();
-		params.add(search.getProvinceId());
+		params.add(search.getProvinceCode());
 		params.add("%" + StringUtils.trimToEmpty(search.getTerm()) + "%");
 		params.add("%" + StringUtils.trimToEmpty(search.getTerm()) + "%");
 		

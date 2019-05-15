@@ -33,7 +33,9 @@ public class UserDetailUpdateDTO implements Serializable {
 	private String roleName;
 	private String roleCode;
 	private Integer provinceId;
+	private String provinceCode;
 	private Integer districtId;
+	private String districtCode;
 	private Integer subdistrictId;
 	private String provinceNameTh;
 	private String districtNameTh;
@@ -196,6 +198,18 @@ public class UserDetailUpdateDTO implements Serializable {
 	}
 	public void setMaxSession(Integer maxSession) {
 		this.maxSession = maxSession;
+	}
+	public String getProvinceCode() {
+		return provinceCode;
+	}
+	public void setProvinceCode(String provinceCode) {
+		this.provinceCode = provinceCode;
+	}
+	public String getDistrictCode() {
+		return districtCode;
+	}
+	public void setDistrictCode(String districtCode) {
+		this.districtCode = districtCode;
 	}
 	@Override
 	public String toString() {

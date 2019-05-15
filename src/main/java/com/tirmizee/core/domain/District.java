@@ -9,8 +9,8 @@ public class District implements Persistable<Integer> {
 	private String districtNameEn;
 	private String districtNameTh;
 	private String districtCode;
-	private Integer fkProvinceId;
 	private Integer districtId;
+	private String provincecCode;
 	
 	@Override
 	public Integer getId() {
@@ -46,12 +46,12 @@ public class District implements Persistable<Integer> {
 		this.districtCode = districtCode;
 	}
 
-	public Integer getFkProvinceId() {
-		return fkProvinceId;
+	public String getProvincecCode() {
+		return provincecCode;
 	}
 
-	public void setFkProvinceId(Integer fkProvinceId) {
-		this.fkProvinceId = fkProvinceId;
+	public void setProvincecCode(String provincecCode) {
+		this.provincecCode = provincecCode;
 	}
 
 	public Integer getDistrictId() {

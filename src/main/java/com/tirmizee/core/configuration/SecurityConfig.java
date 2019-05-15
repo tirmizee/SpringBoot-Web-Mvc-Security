@@ -159,6 +159,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(
 					"/passwordexpried"
 				).hasAuthority(PermissionCode.PG01)
+				.antMatchers(
+					"/swagger-ui.html"
+				).hasAnyAuthority(PermissionCode.P002)
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()

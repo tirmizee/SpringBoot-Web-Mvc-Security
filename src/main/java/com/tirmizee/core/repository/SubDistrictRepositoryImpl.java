@@ -23,7 +23,7 @@ public class SubDistrictRepositoryImpl extends AbstractOracleJdbcRepository<SubD
 			map.put(COL_SUBDISTRICT_NAME_EN, param.getSubdistrictNameEn());
 			map.put(COL_SUBDISTRICT_NAME_TH, param.getSubdistrictNameTh());
 			map.put(COL_SUBDISTRICT_CODE, param.getSubdistrictCode());
-			map.put(COL_FK_DISTRICT_ID, param.getFkDistrictId());
+			map.put(COL_DISTRICT_CODE, param.getDistrictCode());
 			map.put(COL_SUBDISTRICT_ID, param.getSubdistrictId());
 			return map;
 		}

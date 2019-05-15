@@ -1,12 +1,13 @@
 package com.tirmizee.backend.dao;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
+import com.tirmizee.backend.api.address.data.SearchVillageDTO;
 import com.tirmizee.core.domain.Village;
 import com.tirmizee.core.repository.VillageRepository;
 
 public interface VillageDao extends VillageRepository {
 	
-	List<Village> findBySubDistrictCode(String subDistrictCode);
+	Page<Village> findByTerm(SearchVillageDTO search);
 
 }

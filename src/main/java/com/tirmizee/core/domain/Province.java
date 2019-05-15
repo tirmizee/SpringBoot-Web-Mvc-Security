@@ -7,7 +7,7 @@ public class Province implements Persistable<Integer> {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer provinceId;
-	private String provincecCode;
+	private String provinceCode;
 	private String provinceNameTh;
 	private String provinceNameEn;
 	private Integer geoId;
@@ -30,12 +30,12 @@ public class Province implements Persistable<Integer> {
 		this.provinceId = provinceId;
 	}
 
-	public String getProvincecCode() {
-		return provincecCode;
+	public String getProvinceCode() {
+		return provinceCode;
 	}
 
-	public void setProvincecCode(String provincecCode) {
-		this.provincecCode = provincecCode;
+	public void setProvinceCode(String provinceCode) {
+		this.provinceCode = provinceCode;
 	}
 
 	public String getProvinceNameTh() {

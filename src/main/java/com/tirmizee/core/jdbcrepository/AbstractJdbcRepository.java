@@ -13,7 +13,8 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -38,7 +39,7 @@ import com.tirmizee.core.jdbcrepository.sql.SqlGeneratorFactory;
  */
 public abstract class AbstractJdbcRepository<T extends Persistable<ID>, ID extends Serializable> implements JdbcRepository<T, ID>, InitializingBean {
 
-	public static Logger LOG = Logger.getLogger(AbstractJdbcRepository.class);
+	protected final Log LOG = LogFactory.getLog(getClass());
 	
 	private TableDescription table;
 	private final RowMapper<T> rowMapper;
@@ -86,7 +87,6 @@ public abstract class AbstractJdbcRepository<T extends Persistable<ID>, ID exten
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		LOG.info("afterPropertiesSet");
 		Assert.notNull(dataSource, "dataSource must be provided");
 		this.jdbcOperations = new JdbcTemplate(this.dataSource);
 		this.sqlGenerator = sqlGeneratorFactory.getGenerator(dataSource);

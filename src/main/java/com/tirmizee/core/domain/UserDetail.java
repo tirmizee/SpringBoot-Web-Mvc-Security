@@ -2,6 +2,7 @@ package com.tirmizee.core.domain;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class UserDetail implements Serializable{
 
@@ -17,6 +18,7 @@ public class UserDetail implements Serializable{
 	private String roleName;
 	private Date credentialsexpiredDate;
 	private Date accountExpiredDate;
+	private Timestamp accountLockedDate;
 	private boolean credentialsnonexpired;
 	private boolean accountnonexpired;
 	private boolean accountnonlocked;	
@@ -120,12 +122,11 @@ public class UserDetail implements Serializable{
 	public void setProfileImage(String profileImage) {
 		this.profileImage = profileImage;
 	}
-	@Override
-	public String toString() {
-		return "UserDetail [username=" + username + ", password=" + password + ", lastName=" + lastName + ", firstName="
-				+ firstName + ", credentialsnonexpired=" + credentialsnonexpired + ", accountnonexpired="
-				+ accountnonexpired + ", accountnonlocked=" + accountnonlocked + ", enabled=" + enabled
-				+ ", isFirstLogin=" + firstLogin + "]";
+	public Timestamp getAccountLockedDate() {
+		return accountLockedDate;
+	}
+	public void setAccountLockedDate(Timestamp accountLockedDate) {
+		this.accountLockedDate = accountLockedDate;
 	}
 	
 }

@@ -3,8 +3,11 @@ package com.tirmizee.core.configuration;
 import javax.sql.DataSource;
 
 import org.apache.catalina.Context;
+import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.tomcat.util.descriptor.web.ContextResource;
+import org.apache.tomcat.util.descriptor.web.SecurityCollection;
+import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
@@ -44,7 +47,16 @@ public class TomcatEmbeddedConfig {
 			}
 			@Override
 			protected void postProcessContext(Context context) {
-				context.getNamingResources().addResource(resourceDatasourceDev());
+				
+				SecurityConstraint securityConstraint = new SecurityConstraint();
+		         securityConstraint.setUserConstraint("CONFIDENTIAL");
+		        
+		         SecurityCollection collection = new SecurityCollection();
+		         collection.addPattern("/*");
+		         securityConstraint.addCollection(collection);
+		         
+		         context.addConstraint(securityConstraint);
+		         context.getNamingResources().addResource(resourceDatasourceDev());
 			}
 		};
 	}
@@ -52,7 +64,7 @@ public class TomcatEmbeddedConfig {
 	@Bean
 	@Profile(Constant.Profiles.UAT)
 	public TomcatEmbeddedServletContainerFactory TomcatEmbeddedContainerUat() {
-		return new TomcatEmbeddedServletContainerFactory() {
+		TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
 			@Override
 			protected TomcatEmbeddedServletContainer getTomcatEmbeddedServletContainer(Tomcat tomcat) {
 				 tomcat.enableNaming();
@@ -63,6 +75,9 @@ public class TomcatEmbeddedConfig {
 				context.getNamingResources().addResource(resourceDatasourceUat());
 			}
 		};
+		
+		tomcat.addAdditionalTomcatConnectors(initiateHttpConnector());
+		return tomcat;
 	}
 	
 	@Bean
@@ -123,6 +138,15 @@ public class TomcatEmbeddedConfig {
 		resource.setProperty("username", env.getProperty(Properties.DB.ORACLE_PRO_USER));
 		resource.setProperty("password", env.getProperty(Properties.DB.ORACLE_PRO_PASS));
 		return resource;
+	}
+	
+	private Connector initiateHttpConnector() {
+		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+		connector.setScheme("http");
+	    connector.setPort(8090);
+	    connector.setSecure(false);
+	    connector.setRedirectPort(8443);
+	    return connector;
 	}
 	
 }

@@ -3,7 +3,7 @@ package com.tirmizee.core.repository;
 import com.tirmizee.core.domain.Role;
 import com.tirmizee.core.jdbcrepository.JdbcRepository;
 
-public interface RoleRepository extends JdbcRepository<Role, Integer>{
+public interface RoleRepository extends JdbcRepository<Role, Integer> {
 
 	public static final String TB_ROLE = "ROLE";
 	public static final String COL_UPDATE_BY = "UPDATE_BY";

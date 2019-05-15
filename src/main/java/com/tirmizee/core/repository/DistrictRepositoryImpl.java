@@ -23,7 +23,7 @@ public class DistrictRepositoryImpl extends AbstractOracleJdbcRepository<Distric
 			map.put(COL_DISTRICT_NAME_EN, param.getDistrictNameEn());
 			map.put(COL_DISTRICT_NAME_TH, param.getDistrictNameTh());
 			map.put(COL_DISTRICT_CODE, param.getDistrictCode());
-			map.put(COL_FK_PROVINCE_ID, param.getFkProvinceId());
+			map.put(COL_PROVINCE_CODE, param.getProvincecCode());
 			map.put(COL_DISTRICT_ID, param.getDistrictId());
 			return map;
 		}

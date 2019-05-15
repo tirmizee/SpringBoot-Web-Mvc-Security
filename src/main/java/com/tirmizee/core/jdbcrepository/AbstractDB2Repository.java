@@ -4,15 +4,12 @@ import java.io.Serializable;
 
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
 import org.springframework.data.domain.Persistable;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.tirmizee.core.jdbcrepository.sql.SqlGenerator;
 
 public abstract class AbstractDB2Repository<T extends Persistable<ID>, ID extends Serializable> extends AbstractJdbcRepository<T,ID> {
-	
-	public static final Logger LOG = Logger.getLogger(AbstractDB2Repository.class);
 	
 	public AbstractDB2Repository(RowMapper<T> rowMapper, RowUnmapper<T> rowUnmapper, SqlGenerator sqlGenerator,
 			TableDescription table) {

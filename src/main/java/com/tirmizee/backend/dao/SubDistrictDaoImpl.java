@@ -11,8 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.tirmizee.backend.api.subdistrict.data.SearchSubDistrictDTO;
-import com.tirmizee.backend.api.subdistrict.data.SubDistrictDTO;
+import com.tirmizee.backend.api.address.data.SearchSubDistrictDTO;
+import com.tirmizee.backend.api.address.data.SubDistrictDTO;
 import com.tirmizee.core.repository.PostCodeRepository;
 import com.tirmizee.core.repository.SubDistrictRepositoryImpl;
 
@@ -31,11 +31,11 @@ public class SubDistrictDaoImpl extends SubDistrictRepositoryImpl implements Sub
 			.append(" FROM ").append(TB_SUBDISTRICTS)
 			.append(" LEFT JOIN ").append(PostCodeRepository.TB_POSTCODE)
 			.append(" ON ").append(SUBDISTRICT_CODE).append(" = ").append(PostCodeRepository.SUB_DISTRICT_CODE)
-			.append(" WHERE ").append(FK_DISTRICT_ID).append(" = ? ")
+			.append(" WHERE ").append(DISTRICT_CODE).append(" = ? ")
 			.append(" AND ").append(SUBDISTRICT_NAME_TH).append(" LIKE ? ");
 			
 		List<Object> params = new LinkedList<>();
-		params.add(search.getDistrictId());
+		params.add(search.getDistrictCode());
 		params.add("%" + StringUtils.trimToEmpty(search.getTerm()) + "%");
 		
 		String statementPage =  getSqlGenerator().selectAll(statement, pageable);

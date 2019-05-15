@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.tirmizee.backend.api.province.data.SearchProvinceDTO;
+import com.tirmizee.backend.api.address.data.SearchProvinceDTO;
 import com.tirmizee.core.domain.Province;
 import com.tirmizee.core.repository.ProvinceRepositoryImpl;
 

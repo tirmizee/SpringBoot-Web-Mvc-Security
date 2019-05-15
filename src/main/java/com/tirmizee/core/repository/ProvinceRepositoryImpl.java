@@ -21,7 +21,7 @@ public class ProvinceRepositoryImpl extends AbstractOracleJdbcRepository<Provinc
 		public Map<String, Object> mapColumns(Province param) {
 			Map<String, Object> map = new LinkedHashMap<>();
 			map.put(COL_PROVINCE_ID, param.getProvinceId());
-			map.put(COL_PROVINCEC_CODE, param.getProvincecCode());
+			map.put(COL_PROVINCE_CODE, param.getProvinceCode());
 			map.put(COL_PROVINCE_NAME_TH, param.getProvinceNameTh());
 			map.put(COL_PROVINCE_NAME_EN, param.getProvinceNameEn());
 			map.put(COL_GEO_ID, param.getGeoId());

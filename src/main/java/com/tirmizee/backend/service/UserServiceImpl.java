@@ -77,6 +77,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired 
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private UserAttempService userAttempService;
+	
 	@Override
 	@Transactional
 	public void changePasswordFirstLogin(String username, ReqPasswordDTO passwordDTO) {
@@ -229,7 +232,14 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void updateStatusEnable(ReqUpdateStatusDTO updateEnableDTO) {
-		User user = userDao.findByUsername(updateEnableDTO.getUsername());
+		
+		String username = updateEnableDTO.getUsername();
+		User user = userDao.findByUsername(username);
+
+		if (user == null) {
+			throw new BusinessException(MessageCode.MSG006, username);
+		}
+		
 		user.setEnabled(updateEnableDTO.getStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
@@ -237,7 +247,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateStatusPasswordExpired(ReqUpdateStatusDTO UpdatePasswordExpiredDTO) {
-		User user = userDao.findByUsername(UpdatePasswordExpiredDTO.getUsername());
+		
+		String username = UpdatePasswordExpiredDTO.getUsername();
+		User user = userDao.findByUsername(username);
+
+		if (user == null) {
+			throw new BusinessException(MessageCode.MSG006, username);
+		}
+		
 		user.setCredentialsnonexpired(UpdatePasswordExpiredDTO.getStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
@@ -245,15 +262,30 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateStatusLocked(ReqUpdateStatusDTO updateAccountNonLockedDTO) {
-		User user = userDao.findByUsername(updateAccountNonLockedDTO.getUsername());
+		
+		String username = updateAccountNonLockedDTO.getUsername();
+		User user = userDao.findByUsername(username);
+
+		if (user == null) {
+			throw new BusinessException(MessageCode.MSG006,username);
+		}
+		
 		user.setAccountnonlocked(updateAccountNonLockedDTO.getStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
+		userAttempService.resetLoginAttempt(user.getUsername(), request.getRemoteAddr());
 	}
 
 	@Override
 	public void updateStatusFirstLogin(ReqUpdateStatusDTO updateFirstLogin) {
-		User user = userDao.findByUsername(updateFirstLogin.getUsername());
+		
+		String username = updateFirstLogin.getUsername();
+		User user = userDao.findByUsername(username);
+
+		if (user == null) {
+			throw new BusinessException(MessageCode.MSG006, username);
+		}
+		
 		user.setFirstLogin(updateFirstLogin.getStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
@@ -261,7 +293,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateStatusAccountExpired(ReqUpdateStatusDTO updateAccountExpired) {
-		User user = userDao.findByUsername(updateAccountExpired.getUsername());
+		
+		String username = updateAccountExpired.getUsername();
+		User user = userDao.findByUsername(username);
+
+		if (user == null) {
+			throw new BusinessException(MessageCode.MSG006, username);
+		}
+		
 		user.setAccountnonexpired(updateAccountExpired.getStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);

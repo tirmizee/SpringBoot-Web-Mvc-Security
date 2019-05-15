@@ -4,6 +4,8 @@ public interface UserAttempService {
 
 	boolean updateLoginAttemptIsLocked(String username, String accessIp);
 	
+	void updateLoginAttemptIsLockedDate(String username, String accessIp);
+	
 	void resetLoginAttempt(String username, String accessIp);
 	
 }

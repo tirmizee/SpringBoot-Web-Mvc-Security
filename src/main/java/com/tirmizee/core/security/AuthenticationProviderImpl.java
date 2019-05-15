@@ -2,7 +2,6 @@ package com.tirmizee.core.security;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.TaskExecutor;
@@ -16,11 +15,11 @@ import org.springframework.security.core.AuthenticationException;
 
 import com.tirmizee.backend.service.UserAttempService;
 import com.tirmizee.backend.service.UserService;
-import com.tirmizee.core.exception.UserAccountExpiredException;
 import com.tirmizee.core.exception.FirstloginException;
 import com.tirmizee.core.exception.LimitBadCredentialsException;
 import com.tirmizee.core.exception.PasswordExpriedException;
 import com.tirmizee.core.exception.UserAccountDisabledException;
+import com.tirmizee.core.exception.UserAccountExpiredException;
 import com.tirmizee.core.utilities.DateUtils;
 
 
@@ -30,8 +29,6 @@ import com.tirmizee.core.utilities.DateUtils;
  */
 public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 	
-	public static final Logger LOG = Logger.getLogger(AuthenticationProviderImpl.class);
-
 	@Autowired
 	@Qualifier("taskExecutor")
 	private TaskExecutor task;
@@ -59,23 +56,25 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 			
 			// FIRST LOGIN 
 			if (userProfile.isFirstLogin()) {
-				LOG.info(username + " : " + "first login");
+				logger.info(username + " : " + "first login");
 				throw new FirstloginException(username, "Force password change first login");
 			}
 			
-			// PASSWORD EXPRIED 
+			// PASSWORD EXPIRED 
 			if(DateUtils.nowAfter(userProfile.getCredentialsExpiredDate())) {
-				LOG.info(username + " : " + "password expried");
+				logger.info(username + " : " + "password expried");
 				userService.fourcePasswordExpired(username);
 				throw new PasswordExpriedException(username, "Force password expried change");
 			}
 			
-			// ACCOUNT EXPRIED 
+			// ACCOUNT EXPIRED 
 			if(DateUtils.nowAfter(userProfile.getAccountExpiredDate())) {
-				LOG.info(username + " : " + "account expired");
+				logger.info(username + " : " + "account expired");
 				userService.fourceAccountExpired(username);
 				throw new UserAccountExpiredException(username, "User account is expired");
 			}
+			
+			// ACCOUNT LOCKED DATE
 			
 			return authen;
 			

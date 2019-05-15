@@ -10,7 +10,6 @@ import com.tirmizee.core.domain.User;
 import com.tirmizee.core.domain.UserAttemp;
 import com.tirmizee.core.utilities.DateUtils;
 
-
 @Service
 public class UserAttempServiceImpl implements UserAttempService {
 
@@ -49,6 +48,11 @@ public class UserAttempServiceImpl implements UserAttempService {
 			userDao.save(user);
 		}
 		return isLocked;
+	}
+	
+	@Override
+	public void updateLoginAttemptIsLockedDate(String username, String accessIp) {
+		
 	}
 
 	@Override

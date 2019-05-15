@@ -218,7 +218,6 @@
 		        				<div class="form-group">
 							        <label>Province</label>
 							        <select id="SLProvince" class="form-control select2" style="width: 100%;">
-							        	
 								    </select>
 							    </div>
 	        				</div>
@@ -255,11 +254,22 @@
 	        		</div>
 	        	</div>
 			
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+					        <label>Village</label>
+					        <select id="SLVillage" class="form-control select2" style="width: 100%;">
+						    </select>
+					    </div>
+					</div>
+				</div>
+			
 			    <div class="row">
 					<div class="box-body">
 				    	<table id="TBEditPermission" class="display nowrap" cellspacing="0" width="100%"></table>
 				    </div>
 			    </div>
+			    
 	        </div>
 	        
 	        <div class="modal-footer ">

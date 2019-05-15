@@ -44,6 +44,12 @@
 	<script src="${pageContext.request.contextPath}/resources/libs/sweetalert2/js/sweetalert2.all.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libs/jquery-confirm/js/jquery-confirm.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libs/chart/js/Chart.bundle.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libs/jquery-flot/js/jquery.flot.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libs/jquery-flot/js/jquery.flot.resize.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libs/jquery-flot/js/jquery.flot.pie.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libs/jquery-flot/js/jquery.flot.categories.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libs/chart/js/Chart.bundle.js"></script>
+    
 
 <title><spring:message code="app.name"/></title>
 </head> 
@@ -67,7 +73,38 @@
 			
 			<!-- CONTENT BODY -->
    			<section class="content">
-				<jsp:include page="component/body.jsp" />
+				<div class="row">
+					<div class="col-md-6">
+						<div class="box box-primary">
+						    <div class="box-header with-border">
+						        <i class="fa fa-bar-chart-o"></i>
+						        <h3 class="box-title">Donut Chart</h3>
+						        <div class="box-tools pull-right">
+						            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+						            </button>
+						        </div>
+						    </div>
+						    <div class="box-body">
+						        <div id="donut-chart" style="height: 260px;"></div>
+						    </div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="box box-primary">
+						    <div class="box-header with-border">
+						        <i class="fa fa-bar-chart-o"></i>
+						        <h3 class="box-title">Chart</h3>
+						        <div class="box-tools pull-right">
+						            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+						            </button>
+						        </div>
+						    </div>
+						    <div class="box-body">
+						        <canvas id="chart"></canvas>
+						    </div>
+						</div>
+					</div>
+				</div>
    			</section>
    			 
    		</div>
@@ -77,6 +114,7 @@
   		<div class="control-sidebar-bg"></div>
 	
 	</div>
+<script src="${pageContext.request.contextPath}/resources/scripts/commons/Commons.AjaxManager.js"></script>
 <script src="${pageContext.request.contextPath}/resources/scripts/P001_report.js"></script>
 <script>
 $(document).ready(function() {

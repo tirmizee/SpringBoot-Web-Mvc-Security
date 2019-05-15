@@ -1,5 +1,7 @@
 package com.tirmizee.core.domain;
 
+import java.sql.Timestamp;
+
 import org.springframework.data.domain.Persistable;
 
 public class User implements Persistable<Long>{
@@ -16,6 +18,7 @@ public class User implements Persistable<Long>{
 	private java.sql.Date createDate;
 	private java.sql.Date credentialsexpiredDate;
 	private java.sql.Date accountExpiredDate;
+	private Timestamp accountLockedDate;
 	private boolean credentialsnonexpired;
 	private boolean accountnonexpired;
 	private boolean accountnonlocked;	
@@ -150,6 +153,14 @@ public class User implements Persistable<Long>{
 
 	public void setAccountExpiredDate(java.sql.Date accountExpiredDate) {
 		this.accountExpiredDate = accountExpiredDate;
+	}
+	
+	public Timestamp getAccountLockedDate() {
+		return accountLockedDate;
+	}
+
+	public void setAccountLockedDate(Timestamp accountLockedDate) {
+		this.accountLockedDate = accountLockedDate;
 	}
 
 	@Override

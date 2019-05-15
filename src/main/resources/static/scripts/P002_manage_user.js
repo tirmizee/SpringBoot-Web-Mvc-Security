@@ -3,8 +3,9 @@ var ManageUserModule = function(){
 	var Search = {};
 	var DataTable = {};
 	
-	var selectedProvinceId = null;
-	var selectedDistrictId = null;
+	var selectedProvinceCode = null;
+	var selectedDistrictCode = null;
+	var selectedSubDistrictCode = null;
 	
 	var activeMenu = function(){
 		 $('ul.sidebar-menu > li.treeview-setting').addClass('active');
@@ -149,6 +150,9 @@ var ManageUserModule = function(){
 		    },
 			colReorder : {
 		        fixedColumnsLeft: 2
+		    },
+		    fnRowCallback : function( Row, Data) {
+		    	 $(".img-circle").fadeIn("slow");
 		    }
 		}).on('click', 'a[data-btn-name="enable"]', function (event) {
 			event.preventDefault();
@@ -214,8 +218,8 @@ var ManageUserModule = function(){
 		AjaxManager.GetData(null, 'api/user/get/' + data.userId,
 			function(response){
 				
-				selectedProvinceId = response.provinceId;
-				selectedDistrictId = response.districtId;
+				selectedProvinceCode = response.provinceCode;
+				selectedDistrictCode = response.districtCode;
 				
 				var selectedProv = { value : response.provinceId    ,text : response.provinceNameTh};
 				var selectedDist = { value : response.districtId    ,text : response.districtNameTh};
@@ -596,7 +600,7 @@ var ManageUserModule = function(){
 		$('#SLProvince').select2({
 			dropdownParent: $('#ModalEditUser .modal-content'),
 			ajax: {
-			    url : 'api/province/findByTerm',
+			    url : 'api/address/province',
 			    delay : 250,
 			    type : 'POST',
 			    contentType : 'application/json',
@@ -613,7 +617,7 @@ var ManageUserModule = function(){
 		                results : $.map(data.content, function (item) { 
 		                    return {
 		                    	id     : item.provinceId,
-		                    	code   : item.provincecCode,
+		                    	code   : item.provinceCode,
 		                    	text   : item.provinceNameTh,
 		                    	textEn : item.provinceNameEn
 		                    }
@@ -638,9 +642,10 @@ var ManageUserModule = function(){
 				return $template;
 			} 
 		}).on('select2:select', function (e) {
-		    selectedProvinceId = e.params.data.id;
+			selectedProvinceCode = e.params.data.code;
 		    $('#SLDistrict').val([]).trigger('change');
 		    $('#SLSubDistrict').val([]).trigger('change');
+		    $('#SLVillage').val([]).trigger('change');
 		    $('#FormEditUser input[name="postCode"]').val('');
 		});
 	}
@@ -648,9 +653,8 @@ var ManageUserModule = function(){
 	var handleSelectDistrict = function(){
 		$('#SLDistrict').select2({
 			dropdownParent: $('#ModalEditUser .modal-content'),
-			placeholder: '',
 			ajax: {
-			    url : 'api/district/findByTerm',
+			    url : 'api/address/district',
 			    delay : 250,
 			    type : 'POST',
 			    contentType : 'application/json',
@@ -660,7 +664,7 @@ var ManageUserModule = function(){
 	            data : function (params) {
 	            	params.page = params.page || 0;
 	            	params.size = 10;
-	            	params.provinceId = selectedProvinceId;
+	            	params.provinceCode = selectedProvinceCode;
 	                return JSON.stringify(params);
 	            },
 			    processResults : function (data , params) {
@@ -693,8 +697,9 @@ var ManageUserModule = function(){
                   return $template;
 			  } 
 		}).on('select2:select', function (e) {
-			selectedDistrictId = e.params.data.id;
+			selectedDistrictCode = e.params.data.code;
 			$('#SLSubDistrict').val([]).trigger('change');
+			$('#SLVillage').val([]).trigger('change');
 			$('#FormEditUser input[name="postCode"]').val('');
 		});
 	}
@@ -702,9 +707,8 @@ var ManageUserModule = function(){
 	var handleSelectSubDistrict = function(){
 		$('#SLSubDistrict').select2({
 			dropdownParent: $('#ModalEditUser .modal-content'),
-			placeholder: '',
 			ajax: {
-			    url : 'api/subdistrict/findByTerm',
+			    url : 'api/address/subdistrict',
 			    delay : 250,
 			    type : 'POST',
 			    contentType : 'application/json',
@@ -714,7 +718,7 @@ var ManageUserModule = function(){
 	            data : function (params) {
 	            	params.page = params.page || 0;
 	            	params.size = 10;
-	            	params.districtId = selectedDistrictId;
+	            	params.districtCode = selectedDistrictCode;
 	                return JSON.stringify(params);
 	            },
 			    processResults : function (data , params) {
@@ -747,11 +751,63 @@ var ManageUserModule = function(){
                   return $template;
 			  } 
 		}).on('select2:select', function (e) {
+			selectedSubDistrictCode = e.params.data.code;
+			$('#SLVillage').val([]).trigger('change');
 			$('#FormEditUser input[name="postCode"]').val(e.params.data.postcode);
 		});
 	}
 	
-	var handleFormEditUser = function(){
+	var handleSelectVillage = function() {
+		$('#SLVillage').select2({
+			dropdownParent: $('#ModalEditUser .modal-content'),
+			ajax: {
+			    url : 'api/address/village',
+			    delay : 250,
+			    type : 'POST',
+			    contentType : 'application/json',
+			    headers : {
+			    	[AjaxManager.CsrfHeader] : AjaxManager.CsrfToken  
+	            },
+	            data : function (params) {
+	            	params.page = params.page || 0;
+	            	params.size = 10;
+	            	params.subDistrictCode = selectedSubDistrictCode;
+	                return JSON.stringify(params);
+	            },
+			    processResults : function (data , params) {
+			    	return {
+		                results : $.map(data.content, function (item) {
+		                    return {
+		                    	id     : item.villageCode,
+		                    	text   : item.villageName,
+		                    	no     : item.villageNo
+		                    }
+		                }),
+	                    pagination: {
+	                        more : !data.last
+	                    }
+		            };
+			    }
+			  },
+			  cache : true,
+			  templateResult : function (data) {
+				  
+				  var $template = $('<div></div>');
+				  var $body_line1 = $('<span>' + data.text + '</span>');  
+				  var $body_line2 = $('<small><b>NO : ' + data.no + '</b></small>');  
+				  
+				  $template.append($body_line1);
+				  $template.append('<br>');
+				  $template.append($body_line2);
+				  
+                  return $template;
+			  } 
+		}).on('select2:select', function (e) {
+
+		});
+	}
+	
+	var handleFormEditUser = function() {
 		$('#FormEditUser').bootstrapValidator({
 			excluded: [':disabled'],
 	        fields : {
@@ -848,20 +904,24 @@ var ManageUserModule = function(){
 	}
 	
 	var handleInputMaxSession = function(){
+		
 		var quantitiy = 0;
 		var element = $('#FormEditUser input[name="maxSession"]');
-		$('.number-plus').click(function(e){
-			e.preventDefault();
+		
+		$('.number-plus').click(function(event){
+			event.preventDefault();
 			var quantity = parseInt($(element).val());
 			$(element).val(quantity + 1);
 		});
-		$('.number-minus').click(function(e){
-			e.preventDefault();
+		
+		$('.number-minus').click(function(event){
+			event.preventDefault();
 			var quantity = parseInt($(element).val());
 			if(quantity > 0){
 				$(element).val(quantity - 1);
 	        }
 		});
+		
 		$(element).inputmask('Regex', {regex: "^[0-9]+$"});
 		
 	}
@@ -964,6 +1024,7 @@ var ManageUserModule = function(){
 			handleSelectProvince();
 			handleSelectDistrict();
 			handleSelectSubDistrict();
+			handleSelectVillage();
 			handleInputTel();
 			handleInputCitizenId();
 			handleInputMaxSession();

@@ -24,6 +24,7 @@ public class CustomConcurrentSessionControlAuthenStrategy extends ConcurrentSess
 			UserProfile userProfile = (UserProfile) principal;
 			return ObjectUtils.defaultIfNull(userProfile.getMaxSession(), 1);
 		}
+		
 		return 1;
 	}
 	
