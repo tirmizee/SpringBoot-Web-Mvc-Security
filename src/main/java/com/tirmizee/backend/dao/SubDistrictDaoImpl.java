@@ -12,9 +12,14 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.tirmizee.backend.api.address.data.SearchSubDistrictDTO;
+import com.tirmizee.backend.api.address.data.SubDistrictCountVillageDTO;
 import com.tirmizee.backend.api.address.data.SubDistrictDTO;
+import com.tirmizee.core.repository.DistrictRepository;
 import com.tirmizee.core.repository.PostCodeRepository;
+import com.tirmizee.core.repository.ProvinceRepository;
+import com.tirmizee.core.repository.SubDistrictRepository;
 import com.tirmizee.core.repository.SubDistrictRepositoryImpl;
+import com.tirmizee.core.repository.VillageRepository;
 
 @Repository
 public class SubDistrictDaoImpl extends SubDistrictRepositoryImpl implements SubDistrictDao {
@@ -46,6 +51,30 @@ public class SubDistrictDaoImpl extends SubDistrictRepositoryImpl implements Sub
 		);
 		Long total = count(statement.toString(), params.toArray());
 		return new PageImpl<>(content, pageable, total);
+	}
+
+	@Override
+	public List<SubDistrictCountVillageDTO> findCountVillageByDistrictCode(String districtCode) {
+		StringBuilder statetment = new StringBuilder()
+			.append(" SELECT ")
+			.append(  SUBDISTRICT_CODE).append(",")
+			.append(  SUBDISTRICT_NAME_TH).append(",")
+			.append(" COUNT(*) AS COUNT_VILLAGE ")
+			.append(" FROM ").append(ProvinceRepository.TB_PROVINCES)
+			.append(" INNER JOIN ").append(DistrictRepository.TB_DISTRICTS)
+			.append(" ON ").append(ProvinceRepository.PROVINCE_CODE)
+			.append(" = ").append(DistrictRepository.PROVINCE_CODE)
+			.append(" INNER JOIN ").append(SubDistrictRepository.TB_SUBDISTRICTS)
+			.append(" ON ").append(DistrictRepository.DISTRICT_CODE)
+			.append(" = ").append(DISTRICT_CODE)
+			.append(" INNER JOIN ").append(VillageRepository.TB_VILLAGES)
+			.append(" ON ").append(SUBDISTRICT_CODE)
+			.append(" = ").append(VillageRepository.SUB_DISTRICT_CODE)
+			.append(" WHERE ").append(DistrictRepository.DISTRICT_CODE).append(" = ? ")
+			.append(" GROUP BY ")
+			.append(  SUBDISTRICT_CODE).append(",")
+			.append(  SUBDISTRICT_NAME_TH);
+		return getJdbcOps().query(statetment.toString(), params(districtCode), new BeanPropertyRowMapper<>(SubDistrictCountVillageDTO.class));
 	}
 
 }

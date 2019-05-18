@@ -187,7 +187,7 @@ public class UserServiceImpl implements UserService {
 		forgotPassword.setEmail(email);
 		forgotPassword.setToken(token);
 		forgotPassword.setAccessIp(accessIp);
-		forgotPassword.setExpiredDate(DateUtils.plusMinutes(15));
+		forgotPassword.setExpiredDate(DateUtils.nowTimestampPlusMinutes(15));
 		forgotPassword.setCreateDate(DateUtils.nowTimestamp());
 		forgotPassword.setReset(false);
 		forgotPasswordDao.save(forgotPassword);

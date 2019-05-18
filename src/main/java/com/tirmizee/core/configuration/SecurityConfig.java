@@ -33,7 +33,7 @@ import org.springframework.security.web.session.SimpleRedirectSessionInformation
 
 import com.tirmizee.backend.dao.PermissionDao;
 import com.tirmizee.backend.dao.UserDao;
-import com.tirmizee.core.constant.Constant;
+import com.tirmizee.core.constant.ApplicationResource;
 import com.tirmizee.core.constant.PermissionCode;
 import com.tirmizee.core.security.AuthenticationProviderImpl;
 import com.tirmizee.core.security.CustomConcurrentSessionControlAuthenStrategy;
@@ -100,7 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public LazyCsrfTokenRepository lazyCsrfTokenRepository() {
     	CustomHttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new CustomHttpSessionCsrfTokenRepository();
-    	httpSessionCsrfTokenRepository.setHeaderName(Constant.Resource.APPLICATION.getString("security.csrf.header"));
+    	httpSessionCsrfTokenRepository.setHeaderName(ApplicationResource.SECURITY_CSRF_HEADER);
     	return new LazyCsrfTokenRepository(httpSessionCsrfTokenRepository);
     }
 	    

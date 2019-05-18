@@ -1,10 +1,9 @@
 package com.tirmizee.core.repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -15,20 +14,7 @@ import com.tirmizee.core.jdbcrepository.RowUnmapper;
 @Repository("PermissionRepository")
 public class PermissionRepositoryImpl extends AbstractOracleJdbcRepository<Permission, Integer> implements PermissionRepository {
 
-	public static final RowMapper<Permission> ROW_MAPPER = new RowMapper<Permission>() {
-		@Override
-		public Permission mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Permission permission = new Permission();
-			permission.setUpdateBy(rs.getString(COL_UPDATE_BY));
-			permission.setUpdateDate(rs.getDate(COL_UPDATE_DATE));
-			permission.setCreateDate(rs.getDate(COL_CREATE_DATE));
-			permission.setPerName(rs.getString(COL_PER_NAME));
-			permission.setPerCode(rs.getString(COL_PER_CODE));
-			permission.setPerId(rs.getInt(COL_PER_ID));
-			permission.setCreateBy(rs.getString(COL_CREATE_BY));
-			return permission;
-		}
-	};
+	public static final RowMapper<Permission> ROW_MAPPER = new BeanPropertyRowMapper<>(Permission.class);
 	
 	public static final RowUnmapper<Permission> ROW_UNMAPPER = new RowUnmapper<Permission>() {
 		@Override

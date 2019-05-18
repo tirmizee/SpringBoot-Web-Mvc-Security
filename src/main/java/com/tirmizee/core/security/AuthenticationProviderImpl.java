@@ -15,8 +15,9 @@ import org.springframework.security.core.AuthenticationException;
 
 import com.tirmizee.backend.service.UserAttempService;
 import com.tirmizee.backend.service.UserService;
+import com.tirmizee.backend.service.data.LockUserTime;
 import com.tirmizee.core.exception.FirstloginException;
-import com.tirmizee.core.exception.LimitBadCredentialsException;
+import com.tirmizee.core.exception.LockTimePasswordInvalidException;
 import com.tirmizee.core.exception.PasswordExpriedException;
 import com.tirmizee.core.exception.UserAccountDisabledException;
 import com.tirmizee.core.exception.UserAccountExpiredException;
@@ -52,35 +53,44 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 			
 			Authentication authen = super.authenticate(authentication);
 			UserProfile userProfile =  (UserProfile) authen.getPrincipal();
-			task.execute(() -> userAttempService.resetLoginAttempt(username, accessIp));
 			
-			// FIRST LOGIN 
+			if (DateUtils.nowAfter(userProfile.getAccountLockedDate())) {
+				task.execute(() -> userAttempService.resetLoginAttempt(username, accessIp));
+			}
+			
+			/*FIRST LOGIN */
 			if (userProfile.isFirstLogin()) {
 				logger.info(username + " : " + "first login");
 				throw new FirstloginException(username, "Force password change first login");
 			}
 			
-			// PASSWORD EXPIRED 
+			/*PASSWORD EXPIRED*/ 
 			if(DateUtils.nowAfter(userProfile.getCredentialsExpiredDate())) {
 				logger.info(username + " : " + "password expried");
 				userService.fourcePasswordExpired(username);
 				throw new PasswordExpriedException(username, "Force password expried change");
 			}
 			
-			// ACCOUNT EXPIRED 
+			/*ACCOUNT EXPIRED*/ 
 			if(DateUtils.nowAfter(userProfile.getAccountExpiredDate())) {
 				logger.info(username + " : " + "account expired");
 				userService.fourceAccountExpired(username);
 				throw new UserAccountExpiredException(username, "User account is expired");
 			}
 			
-			// ACCOUNT LOCKED DATE
+			/*ACCOUNT LOCKED TIME*/
+			if(DateUtils.nowBefore(userProfile.getAccountLockedDate())) {
+				logger.info(username + " : " + "account locked time");
+				throw new LockTimePasswordInvalidException(username, "User account is expired", userProfile.getAccountLockedDate());
+			}
 			
 			return authen;
 			
 		} catch (BadCredentialsException ex) {
-			boolean isLocked = userAttempService.updateLoginAttemptIsLocked(username, accessIp);
-			throw new LimitBadCredentialsException(ex.getMessage(), username, isLocked);
+			logger.info(username + " : " + "account locked time");
+//			LockUser lockUser = userAttempService.updateLoginAttemptFail(username, accessIp);
+			LockUserTime lockUserTime = userAttempService.updateLockUserTime(username, accessIp);
+			throw new LockTimePasswordInvalidException(ex.getMessage(), username, lockUserTime.getLockTime());
 		} catch (AccountExpiredException ex) {
 			throw new UserAccountExpiredException(username, "User account is expired");	
 		} catch (DisabledException ex) {

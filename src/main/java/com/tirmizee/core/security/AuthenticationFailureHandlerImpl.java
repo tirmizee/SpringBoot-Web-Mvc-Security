@@ -1,6 +1,7 @@
 package com.tirmizee.core.security;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +17,13 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.stereotype.Component;
 
 import com.tirmizee.core.constant.PermissionCode;
-import com.tirmizee.core.exception.UserAccountExpiredException;
 import com.tirmizee.core.exception.FirstloginException;
-import com.tirmizee.core.exception.LimitBadCredentialsException;
+import com.tirmizee.core.exception.LockPasswordInvalidException;
+import com.tirmizee.core.exception.LockTimePasswordInvalidException;
 import com.tirmizee.core.exception.PasswordExpriedException;
 import com.tirmizee.core.exception.UserAccountDisabledException;
+import com.tirmizee.core.exception.UserAccountExpiredException;
+import com.tirmizee.core.utilities.DateUtils;
 
 /**
  * @author Pratya Yeekhaday
@@ -31,7 +34,7 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 	
 	public static final Logger LOG = Logger.getLogger(AuthenticationFailureHandlerImpl.class);
 	
-	private final RedirectStrategy STRATEGY = new DefaultRedirectStrategy();
+	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
@@ -39,29 +42,44 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 
 		// DETERMINE URL FOR USERNAME INVALID
 		if (exception instanceof UsernameNotFoundException) {
-			STRATEGY.sendRedirect(request, response, "/login?error=Username or Password invalid");
+			redirectStrategy.sendRedirect(request, response, "/login?error=Username or Password invalid");
 		} 
 		
-		// DETERMINE URL FOR USERNAME LOCKED
+		// DETERMINE URL FOR USERNAME IS LOCKED
 		else if(exception instanceof LockedException) {
-			STRATEGY.sendRedirect(request, response, "/login?error=Username is Locked");
+			redirectStrategy.sendRedirect(request, response, "/login?error=Username is Locked");
 		}
 		
 		// DETERMINE URL FOR PASSWORD INVALID
-		else if(exception instanceof LimitBadCredentialsException) {
-			LimitBadCredentialsException badCredentials = (LimitBadCredentialsException) exception;
-			String error = badCredentials.isLocked() ? "Username is Locked" : "Username or Password invalid";
-			STRATEGY.sendRedirect(request, response, String.format("/login?error=%s", error));
+		else if (exception instanceof LockTimePasswordInvalidException) {
+			
+			LockTimePasswordInvalidException lockTimeException = (LockTimePasswordInvalidException) exception;
+			String errorName = "Username or Password invalid";
+			Timestamp lockTime = lockTimeException.getLockedTime();
+			System.out.println(lockTime);
+			if (lockTime != null) {
+				String dateFormat = DateUtils.DD_MM_YYYY.format(lockTime);
+				errorName = DateUtils.nowBefore(lockTime) ? "Username is locked <br> Time : " + dateFormat : errorName;
+			} 
+			
+			redirectStrategy.sendRedirect(request, response, "/login?error=" + errorName);
+		}
+		
+		// DETERMINE URL FOR PASSWORD INVALID
+		else if(exception instanceof LockPasswordInvalidException) {
+			LockPasswordInvalidException passwordInvalidException = (LockPasswordInvalidException) exception;
+			String error = passwordInvalidException.isLocked() ? "Username is Locked" : "Username or Password invalid";
+			redirectStrategy.sendRedirect(request, response, String.format("/login?error=%s", error));
 		} 
 		
 		// DETERMINE URL FOR ACCOUNT DISABLED
 		else if(exception instanceof UserAccountDisabledException) {
-			STRATEGY.sendRedirect(request, response, "/login?error=User Account is Disabled");
+			redirectStrategy.sendRedirect(request, response, "/login?error=User Account is Disabled");
 		}
 		
 		// DETERMINE URL FOR ACCOUNT EXPRIED
 		else if(exception instanceof UserAccountExpiredException) {
-			STRATEGY.sendRedirect(request, response, "/login?error=User Account is Expired");
+			redirectStrategy.sendRedirect(request, response, "/login?error=User Account is Expired");
 		}
 
 		// DETERMINE URL FOR USER FIRST LOGIN
@@ -69,7 +87,7 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 			final FirstloginException firstloginException = (FirstloginException) exception;
 			final String username = firstloginException.getUsername();
 			SecurityContextHolderUtils.grantAuthority(username, PermissionCode.PG00);
-			STRATEGY.sendRedirect(request, response, "/firstlogin");
+			redirectStrategy.sendRedirect(request, response, "/firstlogin");
 		}
 		
 		// DETERMINE URL FOR USER PASSWORD EXPRIED
@@ -77,10 +95,10 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 			final PasswordExpriedException passwordExpriedException = (PasswordExpriedException) exception;
 			final String username = passwordExpriedException.getUsername();
 			SecurityContextHolderUtils.grantAuthority(username, PermissionCode.PG01);
-			STRATEGY.sendRedirect(request, response, "/passwordexpried");
+			redirectStrategy.sendRedirect(request, response, "/passwordexpried");
 		}
 		
-		else STRATEGY.sendRedirect(request, response, "/login");
+		else redirectStrategy.sendRedirect(request, response, "/login");
 		
 	}
 	

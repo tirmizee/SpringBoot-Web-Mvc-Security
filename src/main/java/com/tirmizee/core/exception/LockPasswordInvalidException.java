@@ -2,24 +2,24 @@ package com.tirmizee.core.exception;
 
 import org.springframework.security.core.AuthenticationException;
 
-public class LimitBadCredentialsException extends AuthenticationException {
+public class LockPasswordInvalidException extends AuthenticationException {
 
 	private static final long serialVersionUID = 4901051389431476698L;
 
 	private String username;
 	private boolean isLocked;
 	
-	public LimitBadCredentialsException(String msg) {
+	public LockPasswordInvalidException(String msg) {
 		super(msg);
 	}
 	
-	public LimitBadCredentialsException(String msg, String username, boolean isLocked) {
+	public LockPasswordInvalidException(String msg, String username, boolean isLocked) {
 		super(msg);
 		this.username = username;
 		this.isLocked = isLocked;
 	}
 
-	public LimitBadCredentialsException(String msg, Throwable t) {
+	public LockPasswordInvalidException(String msg, Throwable t) {
 		super(msg, t);
 	}
 

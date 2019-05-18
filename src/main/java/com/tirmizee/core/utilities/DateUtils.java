@@ -9,8 +9,15 @@ import java.util.Date;
 
 public final class DateUtils {
 
+	public static final SimpleDateFormat DD_MM_YYYY = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+	
 	public static Timestamp nowTimestamp(){
 		return new Timestamp(new Date().getTime());
+	}
+	
+	public static Timestamp nowTimestampPlusMinutes(int minutes){
+		LocalDateTime localDateNow = LocalDateTime.now().plusMinutes(minutes);
+		return Timestamp.valueOf(localDateNow);
 	}
 	
 	public static java.sql.Date now(){
@@ -22,17 +29,16 @@ public final class DateUtils {
 		return java.sql.Date.valueOf(localDateNow);
 	}
 	
-	public static Timestamp plusMinutes(int minutes){
-		LocalDateTime localDateNow = LocalDateTime.now().plusMinutes(minutes);
-		return Timestamp.valueOf(localDateNow);
-	}
-	
 	public static Date toDateFormat(String toDate, String format) throws ParseException{
 		return new SimpleDateFormat(format).parse(toDate);
 	}
 	
 	public static boolean nowAfter(Timestamp time){
 		return time == null ? false : nowTimestamp().after(time);
+	}
+	
+	public static boolean nowBefore(Timestamp time){
+		return time == null ? false : nowTimestamp().before(time);
 	}
 	
 	public static boolean nowAfter(java.sql.Date date){

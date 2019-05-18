@@ -20,8 +20,8 @@ public class MessageSourcesConfig {
 		varargMessageSource.setBasenames(
 			"classpath:i18n/error/errors",
 			"classpath:i18n/messages/messages");
-		varargMessageSource.setUseCodeAsDefaultMessage(true);
 		varargMessageSource.setDefaultEncoding("UTF-8");
+		varargMessageSource.setUseCodeAsDefaultMessage(true);
 		return varargMessageSource;
 	}
 	

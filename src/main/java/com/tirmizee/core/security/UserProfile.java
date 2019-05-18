@@ -3,8 +3,6 @@ package com.tirmizee.core.security;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 public class UserProfile extends UserDetailsImpl {
 	
 	private static final long serialVersionUID = 196667297093501169L;
@@ -134,19 +132,6 @@ public class UserProfile extends UserDetailsImpl {
 		this.accountLockedDate = accountLockedDate;
 	}
 
-	@Override
-    public boolean equals(Object obj) {
-		if (obj instanceof UserDetails) {
-			return getUsername().equals(((UserDetails) obj).getUsername());
-		}
-		return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return getUsername() != null ? getUsername().hashCode() : 0;
-    }
-	
 	public static class Builder extends UserDetailsImpl.Builder<Builder>{
 		
 		private String firstName;

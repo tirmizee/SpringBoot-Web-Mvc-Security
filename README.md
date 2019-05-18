@@ -1,7 +1,8 @@
 # SpringBoot 
 Building Enterprise Java Applications the Spring Way
 ## Example
-- Limit login attempts
+- preventing brute force authentication attempts
+- block user account after 3 consecutive failed login attempts
 - Limit Maximum Sessions For User
 - Setting Session Timeout and Update Database table on timeout
 - Forgot password send Email reset password

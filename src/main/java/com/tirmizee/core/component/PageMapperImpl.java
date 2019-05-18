@@ -46,8 +46,8 @@ public class PageMapperImpl extends DozerBeanMapper implements PageMapper {
 	
 	private <S,T> Page<T> internalMapPage(final Page<S> object, Class<T> destinationClass){
 		final List<T> content = new ArrayList<>();
-		final int page = object.getNumber(),
-			      size = object.getSize();
+		final int page = object.getNumber();
+		final int size = object.getSize();
 		Sort sort = object.getSort();
 		PageRequest pageRequest = new PageRequest(page,size,sort);
 		for (S s : object.getContent()) {
