@@ -1,8 +1,8 @@
 # SpringBoot 
 Building Enterprise Java Applications the Spring Way
 ## Example
-- preventing brute force authentication attempts
-- block user account after 3 consecutive failed login attempts
+- Preventing brute force authentication attempts
+- Block user account after 3 consecutive failed login attempts
 - Limit Maximum Sessions For User
 - Setting Session Timeout and Update Database table on timeout
 - Forgot password send Email reset password
@@ -49,6 +49,11 @@ Building Enterprise Java Applications the Spring Way
 ![sss](https://user-images.githubusercontent.com/15135199/56460122-edc0fb80-63c7-11e9-9d9f-146bd258849b.PNG)
 
 ![valid](https://user-images.githubusercontent.com/15135199/56232153-49c70f80-60aa-11e9-87ab-69e7a1bc50b5.PNG)
+
+
+## Chart
+
+![Capture](https://user-images.githubusercontent.com/15135199/57978243-7ec0dc00-7a33-11e9-8aad-1bf0c540d7ec.PNG)
 
 ## Forgot password send Email reset password
 ![111](https://user-images.githubusercontent.com/15135199/56121506-768c0180-5f9a-11e9-9ecc-8f8d0c5f7605.PNG)

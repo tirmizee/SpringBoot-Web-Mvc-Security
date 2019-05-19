@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tirmizee.backend.api.address.data.DistrictCountVillageDTO;
 import com.tirmizee.backend.api.address.data.DistrictDTO;
 import com.tirmizee.backend.api.address.data.ProvinceDTO;
 import com.tirmizee.backend.api.address.data.SearchDistrictDTO;
 import com.tirmizee.backend.api.address.data.SearchProvinceDTO;
 import com.tirmizee.backend.api.address.data.SearchSubDistrictDTO;
 import com.tirmizee.backend.api.address.data.SearchVillageDTO;
-import com.tirmizee.backend.api.address.data.SubDistrictCountVillageDTO;
 import com.tirmizee.backend.api.address.data.SubDistrictDTO;
 import com.tirmizee.backend.api.address.data.VillageDTO;
 import com.tirmizee.backend.dao.DistrictDao;
@@ -78,9 +78,9 @@ public class AddressApiController {
 		return mapper.map(page, ProvinceDTO.class);
 	}
 	
-	@GetMapping(path = "/subdistrict/{districtCode}/countvillage")
-	public List<SubDistrictCountVillageDTO> countVillageOfSubDistrict(@PathVariable String districtCode){
-		return subDistrictDao.findCountVillageByDistrictCode(districtCode);
+	@GetMapping(path = "/district/{districtCode}/countvillage")
+	public List<DistrictCountVillageDTO> countVillageOfSubDistrict(@PathVariable String districtCode){
+		return districtDao.findCountVillageByDistrictCode(districtCode);
 	}
 	
 }

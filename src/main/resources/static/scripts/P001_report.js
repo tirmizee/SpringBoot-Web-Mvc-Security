@@ -78,70 +78,144 @@ var ReportModule = function(){
 	};
 	
 	var handleChart = function(){
-	  	
+		AjaxManager.GetData(null, 'api/address/district/9004/countvillage',
+			function(response){
+				renderBarchart(response);
+			},
+			function(jqXHR, textStatus, errorThrown){}
+		);
+	}
+	
+	var renderBarchart = function(response) {
+		
+		var label = null;
+		var labels = []; 
+		var datas = []; 
+		var backgroundColor = [];
+		
+		$.each(response, function( index, value) {
+			if (value.subdistrictCode == '900401') {
+				label = value.subdistrictNameTh;
+			}
+			datas.push(value.countVillage);
+			labels.push(value.subdistrictNameTh);
+			backgroundColor.push('rgba(54, 162, 235, 0.9)');
+		});
+		
+		var data = {
+			labels: labels,
+	        datasets: [
+	        	{
+		            label :label,
+		            data : datas,
+		            backgroundColor : backgroundColor
+		        }
+	        ]
+		};
+		
+		var options = {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }]
+	        }
+	    };
+		
 		var ctx  = $('#chart').get(0).getContext('2d');
 		var myChart = new Chart(ctx, {
-		    type: 'bar',
-		    data: {
-		        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-		        datasets: [
-		        	{
-			            label: 'Male',
-			            data: [
-			            	_randomScalingFactor(20),
-			            	_randomScalingFactor(20),
-			            	_randomScalingFactor(20),
-			            	_randomScalingFactor(20),
-			            	_randomScalingFactor(20),
-			            	_randomScalingFactor(20)
-			            ],
-			            backgroundColor: [
-			            	'rgba(54, 162, 235, 0.9)',
-			                'rgba(54, 162, 235, 0.9)',
-			                'rgba(54, 162, 235, 0.9)',
-			                'rgba(54, 162, 235, 0.9)',
-			                'rgba(54, 162, 235, 0.9)',
-			                'rgba(54, 162, 235, 0.9)'
-			            ]
-			        },
-			        {
-			            label: 'Famale',
-			            data: [
-			            	_randomScalingFactor(20),
-			            	_randomScalingFactor(20),
-			            	_randomScalingFactor(20),
-			            	_randomScalingFactor(20),
-			            	_randomScalingFactor(20),
-			            	_randomScalingFactor(20)
-			            ],
-			            backgroundColor: [
-			            	'rgba(255, 159, 64, 0.9)',
-			            	'rgba(255, 159, 64, 0.9)',
-			            	'rgba(255, 159, 64, 0.9)',
-			            	'rgba(255, 159, 64, 0.9)',
-			            	'rgba(255, 159, 64, 0.9)',
-			                'rgba(255, 159, 64, 0.9)'
-			            ]
-			        }
-		        ]
-		    },
-		    options: {
-		        scales: {
-		            yAxes: [{
-		                ticks: {
-		                    beginAtZero:true
-		                }
-		            }]
-		        }
-		    }
+		    type : 'bar',
+		    data : data,
+		    options : options
 		});
-	    
+	}
+	
+	var handleLineChart = function(){
+		
+		var DATA_COUNT = 12;
+		
+		var data = {
+			labels: Samples.utils.months({count: DATA_COUNT}),
+			datasets: [{
+				data: Samples.utils.numbers({
+					count: DATA_COUNT,
+					min: 0,
+					max: 100
+				}),
+				backgroundColor: '#red',
+				borderColor: '#4dc9f6',
+			}]
+		};
+
+		var options = {
+			legend: false,
+			tooltips: true,
+			elements: {
+				line: {
+					fill: false,
+				}
+			},
+			scales: {
+		      xAxes: [{
+		         ticks: {
+		            fontColor: "white",
+		         }
+		      }],
+		      yAxes: [{
+		    	  ticks: {
+		            fontColor: "white",
+		         }
+		      }]
+		   }
+		};
+		var ctx  = $('#chart-0').get(0).getContext('2d');
+		var chart = new Chart(ctx, {
+			type: 'line',
+			data: data,
+			options: options
+		});
+	}
+	
+	var handleBarChart = function(){
+		 
+		var barChartCanvas = $('#barChart').get(0).getContext('2d')
+		var barChart       = new Chart(barChartCanvas);
+		var barChartData = {
+			labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+		    datasets: [
+		        {
+		          label               : 'Spring',
+		          backgroundColor     : '#605ca8',
+		          data                : [65, 59, 80, 81, 56, 55, 40]
+		        },
+		        {
+		          label               : 'Strut',
+		          backgroundColor     : '#ff9800',
+		          data                : [28, 48, 40, 19, 86, 27, 90]
+		        }
+	        ]
+		};
+		 
+		barChartData.datasets[1].fillColor   = '#00a65a';
+		barChartData.datasets[1].strokeColor = '#00a65a';
+		barChartData.datasets[1].pointColor  = '#00a65a';
+	
+		var barChartOptions = {
+		  type: 'bar',
+		  data: barChartData
+		};
+		
+		barChartOptions.datasetFill = false
+		new Chart(barChartCanvas, barChartOptions)
 	}
 	
 	return {
 		init : function(){
 			activeMenu();
 			handleDonutCart();
+			handleLineChart();
+			handleBarChart();
 			handleChart();
 		}
 	};

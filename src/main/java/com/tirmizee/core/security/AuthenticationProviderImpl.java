@@ -54,10 +54,6 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 			Authentication authen = super.authenticate(authentication);
 			UserProfile userProfile =  (UserProfile) authen.getPrincipal();
 			
-			if (DateUtils.nowAfter(userProfile.getAccountLockedDate())) {
-				task.execute(() -> userAttempService.resetLoginAttempt(username, accessIp));
-			}
-			
 			/*FIRST LOGIN */
 			if (userProfile.isFirstLogin()) {
 				logger.info(username + " : " + "first login");
@@ -83,6 +79,8 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 				logger.info(username + " : " + "account locked time");
 				throw new LockTimePasswordInvalidException(username, "User account is expired", userProfile.getAccountLockedDate());
 			}
+			
+			task.execute(() -> userAttempService.resetLoginAttempt(username, accessIp));
 			
 			return authen;
 			
