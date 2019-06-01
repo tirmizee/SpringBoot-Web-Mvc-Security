@@ -18,6 +18,7 @@ public class Profile implements Persistable<Long>{
 	private String subDistrictCode;
 	private java.sql.Date updateDate;
 	private java.sql.Date createDate;
+	private byte[] profileByte;
 	
 	public boolean isPersisted() {
 		return persisted;
@@ -105,6 +106,14 @@ public class Profile implements Persistable<Long>{
 
 	public void setProfileImage(String profileImage) {
 		this.profileImage = profileImage;
+	}
+
+	public byte[] getProfileByte() {
+		return profileByte;
+	}
+
+	public void setProfileByte(byte[] profileByte) {
+		this.profileByte = profileByte;
 	}
 
 	@Override

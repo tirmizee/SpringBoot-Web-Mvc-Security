@@ -7,10 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jndi.JndiObjectFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.tirmizee.core.constant.Constant;
 
@@ -19,7 +16,7 @@ import com.tirmizee.core.constant.Constant;
  *
  */
 @Configuration
-@EnableTransactionManagement
+//@EnableTransactionManagement
 public class DatabaseConfig {
 	
 	public static final Logger LOG = Logger.getLogger(DatabaseConfig.class);
@@ -59,7 +56,7 @@ public class DatabaseConfig {
 		return (DataSource) bean.getObject();
 	}
 
-	@Bean 
+	/*@Bean 
 	@Profile(Constant.Profiles.DEVELOP)
 	public PlatformTransactionManager transactionManagerOracleDev() throws IllegalArgumentException, NamingException  {
 	    return new DataSourceTransactionManager(dataSourceOracleDev());
@@ -75,6 +72,6 @@ public class DatabaseConfig {
 	@Profile(Constant.Profiles.PRODUCTION)
 	public PlatformTransactionManager transactionManagerOracleProduction() throws IllegalArgumentException, NamingException {
 	    return new DataSourceTransactionManager(dataSourceOracleProduction());
-	}
+	}*/
 	
 }

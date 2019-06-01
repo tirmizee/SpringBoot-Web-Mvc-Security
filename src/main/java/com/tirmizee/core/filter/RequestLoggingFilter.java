@@ -6,6 +6,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.AbstractRequestLoggingFilter;
 
+/**
+ * @author Pratya Yeekhaday
+ *
+ */
 public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 
 	@Override

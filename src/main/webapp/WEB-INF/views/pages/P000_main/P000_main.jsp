@@ -29,7 +29,7 @@
 			
 			<!-- CONTENT BODY -->
    			<section class="content">
-				<jsp:include page="component/body.jsp" />
+				
    			</section>
    			 
    		</div>

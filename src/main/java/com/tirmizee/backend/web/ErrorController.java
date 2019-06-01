@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
-public class WebErrorController {
+public class ErrorController {
 
-	public static final Logger LOGGER = Logger.getLogger(WebErrorController.class);
+	public static final Logger LOGGER = Logger.getLogger(ErrorController.class);
 	
 	@GetMapping(value = "/accessdenied")
 	@ResponseStatus(code = HttpStatus.FORBIDDEN)

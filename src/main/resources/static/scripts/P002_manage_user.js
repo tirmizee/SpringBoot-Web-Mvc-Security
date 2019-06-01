@@ -71,7 +71,8 @@ var ManageUserModule = function(){
 					width     : "10%",
 					orderable : false,
 					render    : function (data, type, row, meta) {
-						return '<img src="' + data + '" class="img-circle" alt="Cinque Terre" width="40" height="40"> ';
+						var url = 'resource/proile/img/' + row.userId;
+						return '<img src="' + url + '" class="img-circle" alt="Cinque Terre" width="40" height="40"> ';
 					}
 				},
 				{

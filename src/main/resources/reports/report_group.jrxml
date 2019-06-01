@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_group" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bb8acdd8-a842-4d43-8630-aa645d41551a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="68289e71-b97a-49cd-b5e2-39fc902fbc78"/>
+	<parameter name="provinceCode" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+    ROWNUM,
+    dis.district_code,
+    dis.district_name_th,
+    sub.subdistrict_code,
+    sub.subdistrict_name_th,
+    vil.village_code,
+    vil.village_name,
+    1
+FROM districts dis
+INNER JOIN subdistricts sub ON dis.district_code = sub.district_code
+INNER JOIN villages     vil ON sub.subdistrict_code = vil.sub_district_code
+WHERE dis.province_code = $P{provinceCode}]]>
+	</queryString>
+	<field name="ROWNUM" class="java.math.BigDecimal"/>
+	<field name="DISTRICT_CODE" class="java.lang.String"/>
+	<field name="DISTRICT_NAME_TH" class="java.lang.String"/>
+	<field name="SUBDISTRICT_CODE" class="java.lang.String"/>
+	<field name="SUBDISTRICT_NAME_TH" class="java.lang.String"/>
+	<field name="VILLAGE_CODE" class="java.lang.String"/>
+	<field name="VILLAGE_NAME" class="java.lang.String"/>
+	<field name="1" class="java.math.BigDecimal"/>
+	<variable name="sum_village" class="java.lang.Integer" resetType="Group" resetGroup="District Code" calculation="Sum">
+		<variableExpression><![CDATA[$F{1}]]></variableExpression>
+	</variable>
+	<group name="District Code">
+		<groupExpression><![CDATA[$F{DISTRICT_CODE}]]></groupExpression>
+		<groupFooter>
+			<band height="20">
+				<textField>
+					<reportElement mode="Opaque" x="499" y="0" width="56" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="aaff5fb5-26b3-4e78-93b8-c9199667d4ad"/>
+					<box>
+						<pen lineWidth="0.75"/>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{sum_village}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="499" height="20" backcolor="#CCCCFF" uuid="cfaccb96-23f6-42c8-8642-cbcca31036a6"/>
+					<box>
+						<pen lineWidth="0.75"/>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="TH SarabunPSK" size="16" isBold="true" pdfFontName="reports/fonts/THSARABUN BOLD.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["ยอดรวม : "+ $F{DISTRICT_NAME_TH}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="207" y="0" width="130" height="35" uuid="c71a3e38-4043-4be1-aeb4-1ece84f1ab50"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="20" isBold="true" pdfFontName="reports/fonts/THSARABUN BOLD.TTF" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[รายงานข้อมูลจังหวัด]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="b879988d-f133-4df7-9293-592744498bfd"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="55" height="20" backcolor="#CCCCFF" uuid="1be56323-34d5-410d-8b47-0ad6893b518f"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16" pdfFontName="reports/fonts/THSARABUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ลำดับ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="55" y="0" width="74" height="20" backcolor="#CCCCFF" uuid="35b1bfaa-b6dc-49ab-a298-afccc3bfc2d9"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16" pdfFontName="reports/fonts/THSARABUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[รหัสอำเภอ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="129" y="0" width="74" height="20" backcolor="#CCCCFF" uuid="0ac07946-20c5-4afb-9ce6-311ea23e1b17"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16" pdfFontName="reports/fonts/THSARABUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ชื่ออำเภอ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="203" y="0" width="74" height="20" backcolor="#CCCCFF" uuid="167eb9a7-e6d9-473c-97fb-3575eb241c9d"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16" pdfFontName="reports/fonts/THSARABUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[รหัสตำบล]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="277" y="0" width="74" height="20" backcolor="#CCCCFF" uuid="4783e445-8b53-4c9c-857f-21717b5b6a5c"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16" pdfFontName="reports/fonts/THSARABUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ชื่อตำบล]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="351" y="0" width="74" height="20" backcolor="#CCCCFF" uuid="f9daf5a4-5213-41b8-8f41-603d361317b2"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16" pdfFontName="reports/fonts/THSARABUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[รหัสหมู่บ้าน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="425" y="0" width="74" height="20" backcolor="#CCCCFF" uuid="ce5a5a81-9e26-45fa-8045-56d7bf3237d2"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16" pdfFontName="reports/fonts/THSARABUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ชื่อหมู่บ้าน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="499" y="0" width="56" height="20" backcolor="#CCCCFF" uuid="9f2d9660-f34d-4d55-abf7-ed658f0f5dd6"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16" pdfFontName="reports/fonts/THSARABUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[จำนวน]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="55" height="20" uuid="68b5ee89-ae1f-43a9-8804-e3dc812f06d8"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ROWNUM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="55" y="0" width="74" height="20" uuid="adf529a4-ee1b-42c2-94d6-ca215b8bf264"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DISTRICT_CODE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="129" y="0" width="74" height="20" uuid="21c2cd81-25ab-44e1-b815-490b6c7bbaa5"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="reports/fonts/THSARABUN.TTF" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DISTRICT_NAME_TH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="203" y="0" width="74" height="20" uuid="d42e92a2-63f2-42e3-a5fc-f0e241caf99c"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SUBDISTRICT_CODE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="0" width="74" height="20" uuid="85a7a08f-497e-46f4-a79d-0c1e3e6071d0"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="reports/fonts/THSARABUN.TTF" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUBDISTRICT_NAME_TH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="351" y="0" width="74" height="20" uuid="6a435156-1a60-4833-8ffd-c79f6178f961"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{VILLAGE_CODE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="0" width="74" height="20" uuid="ea5c0806-c257-4159-966b-577a30a70f65"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="reports/fonts/THSARABUN.TTF" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VILLAGE_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="499" y="0" width="56" height="20" uuid="a71d044f-0f55-44c4-a6bf-a59bcb14f4ef"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="435" y="34" width="80" height="20" uuid="c75524aa-0084-42ce-94d0-f5ac081c8978"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="34" width="40" height="20" uuid="63c1dbe2-8296-4b8a-8e65-2f9da663a06f"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="209" y="0" width="130" height="35" uuid="c1a6f85e-880c-4e02-82e0-e1d398c37ce1"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="TH SarabunPSK" size="20" isBold="true" pdfFontName="reports/fonts/THSARABUN BOLD.TTF" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[ไม่พบข้อมูล]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

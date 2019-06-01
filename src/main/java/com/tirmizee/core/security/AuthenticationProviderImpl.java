@@ -23,7 +23,6 @@ import com.tirmizee.core.exception.UserAccountDisabledException;
 import com.tirmizee.core.exception.UserAccountExpiredException;
 import com.tirmizee.core.utilities.DateUtils;
 
-
 /**
  * @author Pratya Yeekhaday
  *

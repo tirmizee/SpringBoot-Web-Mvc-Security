@@ -30,15 +30,16 @@
 			    </a>
 				<ul class="treeview-menu" style="display: none;">
 					<security:authorize access="hasAnyAuthority('P001')">
-				   	<li><a href="${pageContext.request.contextPath}/report"><i class="fa fa-pie-chart"></i><spring:message code="app.menu.report.chart"/></a></li>
+				   	<li><a href="${pageContext.request.contextPath}/report/chart"><i class="fa fa-pie-chart"></i><spring:message code="app.menu.report.chart"/></a></li>
+				   	<li><a href="${pageContext.request.contextPath}/report/pdf"><i class="fa fa-file-pdf-o"></i><spring:message code="app.menu.report.pdf"/></a></li>
 					</security:authorize>
 				</ul>
 			</li>
 			</security:authorize>
 			<li class="treeview-file">
 			    <a href="#">
-					<i class="fa fa-cog"></i> 
-					<span>File</span>
+					<i class="fa fa-file"></i> 
+					<span>Document</span>
 			   		<span class="pull-right-container">
 			   			<i class="fa fa-angle-left pull-right"></i>
 			   		</span>

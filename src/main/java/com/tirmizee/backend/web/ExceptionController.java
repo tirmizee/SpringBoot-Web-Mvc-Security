@@ -1,6 +1,7 @@
 package com.tirmizee.backend.web;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,7 +18,7 @@ import com.tirmizee.core.exception.UrlNotFoundException;
 @ControllerAdvice
 public class ExceptionController {
 	
-	public final Logger LOG = Logger.getLogger(ExceptionController.class);
+	public final Logger LOG = LoggerFactory.getLogger(ExceptionController.class);
 	
 	@Autowired
 	private VarargMessageSource messageSource;

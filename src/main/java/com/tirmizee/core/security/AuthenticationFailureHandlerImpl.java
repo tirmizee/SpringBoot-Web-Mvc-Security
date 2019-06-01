@@ -40,23 +40,23 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
 			throws IOException, ServletException {
 
-		// DETERMINE URL FOR USERNAME INVALID
+		/*DETERMINE URL FOR USERNAME INVALID*/
 		if (exception instanceof UsernameNotFoundException) {
 			redirectStrategy.sendRedirect(request, response, "/login?error=Username or Password invalid");
 		} 
 		
-		// DETERMINE URL FOR USERNAME IS LOCKED
+		/*DETERMINE URL FOR USERNAME IS LOCKED*/
 		else if(exception instanceof LockedException) {
 			redirectStrategy.sendRedirect(request, response, "/login?error=Username is Locked");
 		}
 		
-		// DETERMINE URL FOR PASSWORD INVALID
+		/*DETERMINE URL FOR PASSWORD INVALID*/
 		else if (exception instanceof LockTimePasswordInvalidException) {
 			
 			LockTimePasswordInvalidException lockTimeException = (LockTimePasswordInvalidException) exception;
 			String errorName = "Username or Password invalid";
 			Timestamp lockTime = lockTimeException.getLockedTime();
-			System.out.println(lockTime);
+
 			if (lockTime != null) {
 				String dateFormat = DateUtils.DD_MM_YYYY.format(lockTime);
 				errorName = DateUtils.nowBefore(lockTime) ? "Username is locked <br> Time : " + dateFormat : errorName;

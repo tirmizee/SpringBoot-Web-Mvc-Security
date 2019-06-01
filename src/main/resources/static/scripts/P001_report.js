@@ -7,7 +7,7 @@ var ReportModule = function(){
 	}
 	
 	var loadData = function(){
-		AjaxManager.GetData(null, 'api/geography/countprovince/',
+		AjaxManager.GetData(null, '../api/geography/countprovince/',
 			function(response){
 				data = $.map(response, function (item) { 
                     return {
@@ -24,7 +24,7 @@ var ReportModule = function(){
 	}
 	
 	var handleDonutCart =  function(){
-		AjaxManager.GetData(null, 'api/geography/countprovince/',
+		AjaxManager.GetData(null, '../api/geography/countprovince/',
 			function(response){
 				renderDonutCart(response);
 			},
@@ -78,7 +78,7 @@ var ReportModule = function(){
 	};
 	
 	var handleChart = function(){
-		AjaxManager.GetData(null, 'api/address/district/9004/countvillage',
+		AjaxManager.GetData(null, '../api/address/district/9004/countvillage',
 			function(response){
 				renderBarchart(response);
 			},

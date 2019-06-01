@@ -24,7 +24,7 @@ public class WorkbookUtils {
 		}
 	}
 	
-	public static byte[] toByteArray(Workbook workbook) throws IOException{
+	public static byte[] toByteArray(Workbook workbook) throws IOException {
 		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		 workbook.write(bos);
 		 return bos.toByteArray();

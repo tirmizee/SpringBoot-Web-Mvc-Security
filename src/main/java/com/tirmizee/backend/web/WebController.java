@@ -1,5 +1,8 @@
 package com.tirmizee.backend.web;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,7 +24,7 @@ public class WebController {
 	private ForgotPasswordService forgotPasswordService;
 	
 	@GetMapping(path = {"/","/login"})
-	public String login(@RequestParam(required = false) String error, ModelMap model) {
+	public String login(@RequestParam(required = false) String error, ModelMap model) throws MalformedURLException, IOException {
 		if(error != null) { 
 			model.addAttribute("error", error);
 		}
@@ -57,9 +60,14 @@ public class WebController {
 	}
 	
 	@PreAuthorize("hasAnyAuthority('P001')")
-	@GetMapping(path = "/report")
+	@GetMapping(path = "/report/chart")
 	public String report(ModelMap model) {
 		return "pages/P001_report/P001_report";
+	}
+	
+	@GetMapping(path = "/report/pdf")
+	public String reportPdf(ModelMap model) {
+		return "pages/P007/P007";
 	}
 	
 	@PreAuthorize("hasAnyAuthority('P002')")
