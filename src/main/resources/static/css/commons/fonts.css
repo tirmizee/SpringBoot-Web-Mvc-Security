@@ -1,0 +1,44 @@
+@font-face {
+	font-family: 'kanit-regular';
+	src: url('../../fonts/kanit/Kanit-Regular.ttf');
+}
+
+@font-face {
+	font-family: 'kanit-medium';
+	src: url('../../fonts/kanit/Kanit-Medium.ttf');
+}
+
+@font-face {
+	font-family: 'kanit-light';
+	src: url('../../fonts/kanit/Kanit-Light.ttf');
+}
+
+@font-face {
+	font-family: 'kanit-thin';
+	src: url('../../fonts/kanit/Kanit-Thin.ttf');
+}
+
+@font-face {
+	font-family: 'kanit-thin';
+	src: url('../../fonts/kanit/Kanit-ExtraLight.ttf');
+}
+
+.font-kanit-regular {
+	font-family: 'kanit-regular'
+}
+
+.font-kanit-medium {
+	font-family: 'kanit-medium'
+}
+
+.font-kanit-light {
+	font-family: 'kanit-light'
+}
+
+.font-kanit-thin {
+	font-family: 'kanit-thin'
+}
+
+.font-kanit-thin {
+	font-family: 'kanit-thin'
+}

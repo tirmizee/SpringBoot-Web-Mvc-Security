@@ -1,0 +1,63 @@
+<style>
+.color-black {
+	color: black;
+}
+.wrapper {
+	margin-left: 10%;
+	margin-right: 10%;
+}
+.wrapper-header{
+	padding:10px;
+	background-color: #00c0ef;
+	color: white;
+}
+.wrapper-body{
+	padding:35px;
+	background-color:  #fdfdfd;
+}
+.wrapper-footer{
+	padding:10px;
+	background-color: #f9f9f9;
+}
+.button {
+  background-color: orange;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  border-radius:20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+.tab{
+	margin-left: 30px;
+}
+.text-center{
+	text-align: center;
+}
+</style>
+<body>
+	<div class="wrapper">
+		<div class="wrapper-header">
+			<h2 align="center"><span class="color-black">Spring Boot</span> Forgot Password</h2>
+		</div>
+		<div class="wrapper-body">
+			<h3>Hi ${object.username}</h3>
+			<p><span class="tab"></span>You recently requested to reset password for your Spring Boot Account. Click the button below to reset it.</p>
+			<div class="text-center">
+				<a href="${object.url}" class="button"><b>Reset Your Password</b></a>
+				<br>
+			</div>
+			<p>if you did not request a password, please ignore this email. This password reset is only valid for next 15 minutes.</p>
+		</div>
+		<div class="wrapper-footer">
+			<div class="text-center">
+				<small>©Spring Boot, 2019</small>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
