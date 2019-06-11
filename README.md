@@ -13,7 +13,7 @@ Building Enterprise Java Applications the Spring Way
 - Pagination result using select2 ajax remote data
 - Sending Email Template With Attachment
 - Multiple Languages web application
-- Generate PDF and Excel file
+- Generate PDF and Excel file 
 - Uploading both data and files in one form using Ajax
 
 ## Building and running
