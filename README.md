@@ -14,9 +14,6 @@ Building Enterprise Java Applications the Spring Way
 - Sending Email Template With Attachment
 - Multiple Languages web application
 - Generate PDF and Excel file 
-- Paging, Searching And Sorting  
-- Sending Email Template With Attachment
-- Multiple Languages web application
 - Uploading both data and files in one form using Ajax
 
 ## Building and running
