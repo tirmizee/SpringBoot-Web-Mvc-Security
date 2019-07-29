@@ -2,8 +2,10 @@ package com.tirmizee.backend.dao;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,9 @@ import com.tirmizee.core.repository.UserRepository;
 @Repository
 public class PermissionDaoImpl extends PermissionRepositoryImpl implements PermissionDao {
 
+	@Autowired
+	private Map<String, String> queries;
+	
 	@Override
 	public List<Permission> findByUsername(String username) {
 		StringBuilder statement = new StringBuilder()
@@ -62,6 +67,7 @@ public class PermissionDaoImpl extends PermissionRepositoryImpl implements Permi
 			statement.append(" AND ").append(COL_PER_CODE).append(" LIKE ? ");
 			params.add("%" + StringUtils.trimToEmpty(search.getPerCode()) + "%");
 		}
+		
 		if (search.getPerName() != null) {
 			statement.append(" AND ").append(COL_PER_NAME).append(" LIKE ? ");
 			params.add("%" + StringUtils.trimToEmpty(search.getPerName()) + "%");

@@ -150,7 +150,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					"/forgotpassword",
 					"/resetpassword/**",
 					"/api/user/password/forgot",
-					"/api/user/password/reset"
+					"/api/user/password/reset",
+					"/export/**"
 				).permitAll()
 				.antMatchers(
 					"/firstlogin",

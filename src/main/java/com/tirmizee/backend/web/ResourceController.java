@@ -20,7 +20,7 @@ public class ResourceController {
 	
 	@ResponseBody
 	@PreAuthorize("hasAnyAuthority('P002')")
-	@GetMapping(path = "/proile/img/{uid}", produces = { MediaType.IMAGE_JPEG_VALUE,	MediaType.IMAGE_PNG_VALUE })
+	@GetMapping(path = "/proile/img/{uid}", produces = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
 	public byte[] ddsadsa(@PathVariable Long uid) {
 		byte[] blob = profileDao.findByUserId(uid).getProfileByte();
 		return blob;

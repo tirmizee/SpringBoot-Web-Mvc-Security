@@ -1,5 +1,7 @@
 package com.tirmizee.core.configuration;
 
+import java.util.Map;
+
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
@@ -7,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jndi.JndiObjectFactoryBean;
 
 import com.tirmizee.core.constant.Constant;
@@ -54,6 +57,17 @@ public class DatabaseConfig {
 		bean.setLookupOnStartup(false);
 		bean.afterPropertiesSet();
 		return (DataSource) bean.getObject();
+	}
+	
+	
+	@Bean
+	@SuppressWarnings("unchecked")
+	public Map<String, String> queries(){
+		Map<String, String> mapQueries = null;
+		try(ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:query.xml")) {
+			mapQueries = (Map<String, String>) context.getBean("mapQueries");
+		}
+		return mapQueries;
 	}
 
 	/*@Bean 

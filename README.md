@@ -62,5 +62,9 @@ Building Enterprise Java Applications the Spring Way
 ![555](https://user-images.githubusercontent.com/15135199/56121055-8d7e2400-5f99-11e9-9971-76b2f869c8e8.PNG)
 ![eee](https://user-images.githubusercontent.com/15135199/56230144-e33ff280-60a5-11e9-8670-9fd5b10c415d.PNG)
 
+## Ref
+- https://www.baeldung.com/httpclient-ssl
+
+
 
 

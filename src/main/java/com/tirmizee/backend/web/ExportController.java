@@ -41,6 +41,26 @@ public class ExportController {
 	    return new ModelAndView(view, model);
 	}
 	
+	@GetMapping(path = "/test.pdf")
+	public ModelAndView test() throws SQLException {
+		
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		Map<String, Object> model = new HashMap<>();
+		model.put(JasperParameter.REPORT_CONNECTION, connection);
+		model.put("stDate", "01/06/2562");
+		model.put("edDate", "30/06/2562");
+		model.put("citizenId", null);
+		model.put("fullname", null);
+		model.put("age", null);
+		model.put("searchBankCode",null);
+		model.put("searchBranchCode",null);
+		model.put("userAdd", null);
+		JasperReportsPdfView view = new JasperReportsPdfView();
+	    view.setUrl("classpath:reports/Nsf_013_1.jrxml");
+	    view.setApplicationContext(appContext);
+	    return new ModelAndView(view, model);
+	}
+	
 	@GetMapping(path = "/province{provinceCode}.pdf")
 	public ModelAndView province(@PathVariable String provinceCode) throws SQLException {
 		
