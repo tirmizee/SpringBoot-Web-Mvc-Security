@@ -109,10 +109,6 @@ public abstract class AbstractJdbcRepository<T extends Persistable<ID>, ID exten
         return jdbcOperations;
     }
 	
-	protected NamedParameterJdbcOperations getNamedJdbcOps() {
-        return new NamedParameterJdbcTemplate(jdbcOperations);
-    }
-	
 	protected SqlGenerator getSqlGenerator() {
 		return sqlGenerator;
 	}

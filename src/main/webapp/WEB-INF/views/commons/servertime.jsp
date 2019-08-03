@@ -14,6 +14,11 @@ $(document).ready(function() {
         stompClient.subscribe('/topic/greetings', function (message) {
         	var respose = JSON.parse(message.body).content;
         	$("#server_time").text(respose);
+        });  
+        
+        stompClient.subscribe('/topic/notify', function (message) {
+        	var respose = JSON.parse(message.body).content;
+        	$("#btnSocket").text(respose);
         }); 
     });
 	

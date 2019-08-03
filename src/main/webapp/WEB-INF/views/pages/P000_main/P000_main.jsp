@@ -29,7 +29,7 @@
 			
 			<!-- CONTENT BODY -->
    			<section class="content">
-				
+				<button id="btnSocket">send</button>
    			</section>
    			 
    		</div>

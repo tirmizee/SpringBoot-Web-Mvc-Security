@@ -26,7 +26,7 @@ public class DatabaseConfig {
 	
 	public static final String JAVA_ENV = "java:/comp/env/";
 	
-	@Bean
+	@Bean("dataSource")
 	@Profile(Constant.Profiles.DEVELOP)
 	public DataSource dataSourceOracleDev() throws IllegalArgumentException, NamingException {
 		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
@@ -37,7 +37,7 @@ public class DatabaseConfig {
 		return (DataSource) bean.getObject();
 	}
 	
-	@Bean
+	@Bean("dataSource")
 	@Profile(Constant.Profiles.UAT)
 	public DataSource dataSourceOracleUat() throws IllegalArgumentException, NamingException{
 		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
@@ -48,7 +48,7 @@ public class DatabaseConfig {
 		return (DataSource) bean.getObject();
 	}
 	
-	@Bean
+	@Bean("dataSource")
 	@Profile(Constant.Profiles.PRODUCTION)
 	public DataSource dataSourceOracleProduction() throws IllegalArgumentException, NamingException{
 		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           

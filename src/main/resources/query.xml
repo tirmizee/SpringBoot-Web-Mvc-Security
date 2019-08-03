@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util.xsd">
+<util:map id="mapQueries" map-class="java.util.HashMap">
+
+   <entry key="GET.PROFILE.BY.USERID">
+       <value>
+       	<![CDATA[
+			SELECT 
+			    PROFILE.*  
+			FROM PROFILE 
+			INNER JOIN USERS ON PROFILE.PROFILE_ID = USERS.PROFILE_ID 
+			WHERE USERS.USER_ID = ?
+        	]]>
+        </value>
+   </entry>
+   
+   <entry key="FIND.PERMISSION.BY.USERNAME">
+       <value>
+       	<![CDATA[
+			SELECT 
+			    PERMISSION.* 
+			FROM USERS 
+			INNER JOIN ROLE ON USERS.FK_ROLE_ID = ROLE.ROLE_ID 
+			INNER JOIN ROLE_MAP_PERMISSION ON ROLE.ROLE_ID = ROLE_MAP_PERMISSION.ROLE_ID 
+			INNER JOIN PERMISSION ON ROLE_MAP_PERMISSION.PER_ID = PERMISSION.PER_ID 
+			WHERE USERS.USERNAME = ? 
+        	]]>
+        </value>
+   </entry>
+   
+    <entry key="GET.DETAIL.BY.USERNAME">
+       <value>
+       	<![CDATA[
+			SELECT 
+			    USERS.USERNAME , 
+			    USERS.PASSWORD , 
+			    ROLE.ROLE_ID , 
+			    ROLE.ROLE_CODE , 
+			    ROLE.ROLE_NAME , 
+			    USERS.ENABLED , 
+			    USERS.ACCOUNTNONLOCKED , 
+			    USERS.ACCOUNTNONEXPIRED , 
+			    USERS.ACCOUNT_EXPIRED_DATE , 
+			    USERS.ACCOUNT_LOCKED_DATE , 
+			    CREDENTIALSEXPIRED_DATE , 
+			    USERS.CREDENTIALSNONEXPIRED , 
+			    USERS.FIRST_LOGIN , 
+			    USERS.MAX_SESSION , 
+			    PROFILE.PROFILE_IMAGE , 
+			    PROFILE.FIRST_NAME , 
+			    PROFILE.LAST_NAME 
+			FROM USERS INNER JOIN PROFILE ON USERS.PROFILE_ID = PROFILE.PROFILE_ID 
+			INNER JOIN ROLE ON USERS.FK_ROLE_ID = ROLE.ROLE_ID 
+			WHERE USERS.USERNAME = :username 
+        	]]>
+        </value>
+   </entry>
+    
+   <entry key="FIND.DETAIL.BY.USERID">
+        <value>
+       	<![CDATA[
+			SELECT 
+			    USERS.USER_ID , 
+			    USERS.USERNAME , 
+			    USERS.PASSWORD , 
+			    ROLE.ROLE_ID , 
+			    ROLE.ROLE_CODE , 
+			    ROLE.ROLE_NAME , 
+			    USERS.ENABLED , 
+			    USERS.ACCOUNTNONLOCKED ,
+			    USERS.ACCOUNTNONEXPIRED , 
+			    USERS.ACCOUNT_EXPIRED_DATE , 
+			    CREDENTIALSEXPIRED_DATE , 
+			    USERS.CREDENTIALSNONEXPIRED , 
+			    USERS.FIRST_LOGIN , 
+			    USERS.MAX_SESSION , 
+			    PROFILE.CITIZEN_ID , 
+			    PROFILE.TEL ,
+			    PROFILE.FIRST_NAME ,
+			    PROFILE.EMAIL , 
+			    PROFILE.SUB_DISTRICT_CODE ,
+			    PROFILE.LAST_NAME , 
+			    PROVINCES.PROVINCE_ID , 
+			    PROVINCES.PROVINCE_CODE , 
+			    PROVINCES.PROVINCE_NAME_TH ,
+			    DISTRICTS.DISTRICT_ID , 
+			    DISTRICTS.DISTRICT_CODE , 
+			    DISTRICTS.DISTRICT_NAME_TH ,
+			    SUBDISTRICTS.SUBDISTRICT_ID ,
+			    SUBDISTRICTS.SUBDISTRICT_NAME_TH , 
+			    POSTCODE.ZIPCODE 
+			FROM USERS 
+			INNER JOIN PROFILE ON USERS.PROFILE_ID = PROFILE.PROFILE_ID 
+			INNER JOIN ROLE ON USERS.FK_ROLE_ID = ROLE.ROLE_ID 
+			LEFT JOIN SUBDISTRICTS ON PROFILE.SUB_DISTRICT_CODE = SUBDISTRICTS.SUBDISTRICT_CODE 
+			LEFT JOIN DISTRICTS ON SUBDISTRICTS.DISTRICT_CODE = DISTRICTS.DISTRICT_CODE 
+			LEFT JOIN PROVINCES ON DISTRICTS.PROVINCE_CODE = PROVINCES.PROVINCE_CODE 
+			LEFT JOIN POSTCODE ON SUBDISTRICTS.SUBDISTRICT_CODE = POSTCODE.SUB_DISTRICT_CODE 
+			WHERE USERS.USER_ID = :userId
+        ]]>
+        </value>
+   </entry>
+    
+</util:map>
+</beans>

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,18 +19,18 @@ import com.tirmizee.backend.api.user.data.UserDetailPageDTO;
 import com.tirmizee.backend.api.user.data.UserDetailUpdateDTO;
 import com.tirmizee.core.domain.User;
 import com.tirmizee.core.domain.UserDetail;
-import com.tirmizee.core.repository.DistrictRepository;
-import com.tirmizee.core.repository.PostCodeRepository;
+import com.tirmizee.core.jdbcrepository.QueryNamedParameterJdbcOperations;
 import com.tirmizee.core.repository.ProfileRepository;
-import com.tirmizee.core.repository.ProvinceRepository;
 import com.tirmizee.core.repository.RoleRepository;
-import com.tirmizee.core.repository.SubDistrictRepository;
 import com.tirmizee.core.repository.UserRepositoryImpl;
 
 @Repository 
 public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	
 	public final Logger LOG = Logger.getLogger(UserDaoImpl.class);
+	
+	@Autowired
+	private QueryNamedParameterJdbcOperations QueryNamedJdbc;
 	
 	@Override
 	public User findByUsername(String username) {
@@ -46,54 +47,8 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	@Override
 	public UserDetailUpdateDTO findDetailByUserId(Long userId) {
 		try {
-			final MapSqlParameterSource params = new MapSqlParameterSource()
-				.addValue("userId", userId);
-			final StringBuilder statemet = new StringBuilder()
-				.append("SELECT ")
-				.append(USER_ID).append(" , ")
-				.append(USERNAME).append(" , ")
-				.append(PASSWORD).append(" , ")
-				.append(RoleRepository.ROLE_ID).append(" , ")
-				.append(RoleRepository.ROLE_CODE).append(" , ")
-				.append(RoleRepository.ROLE_NAME).append(" , ")
-				.append(ENABLED).append(" , ")
-				.append(ACCOUNTNONLOCKED).append(" , ")
-				.append(ACCOUNTNONEXPIRED).append(" , ")
-				.append(ACCOUNT_EXPIRED_DATE).append(" , ")
-				.append(COL_CREDENTIALSEXPIRED_DATE).append(" , ")
-				.append(CREDENTIALSNONEXPIRED).append(" , ")
-				.append(FIRST_LOGIN).append(" , ")
-				.append(MAX_SESSION).append(" , ")
-				.append(ProfileRepository.CITIZEN_ID).append(" , ")
-				.append(ProfileRepository.TEL).append(" , ")
-				.append(ProfileRepository.FIRST_NAME).append(" , ")
-				.append(ProfileRepository.EMAIL).append(" , ")
-				.append(ProfileRepository.SUB_DISTRICT_CODE).append(" , ")
-				.append(ProfileRepository.LAST_NAME).append(" , ")
-				.append(ProvinceRepository.PROVINCE_ID).append(" , ")
-				.append(ProvinceRepository.PROVINCE_CODE).append(" , ")
-				.append(ProvinceRepository.PROVINCE_NAME_TH).append(" , ")
-				.append(DistrictRepository.DISTRICT_ID).append(" , ")
-				.append(DistrictRepository.DISTRICT_CODE).append(" , ")
-				.append(DistrictRepository.DISTRICT_NAME_TH).append(" , ")
-				.append(SubDistrictRepository.SUBDISTRICT_ID).append(" , ")
-				.append(SubDistrictRepository.SUBDISTRICT_NAME_TH).append(" , ")
-				.append(PostCodeRepository.ZIPCODE)
-				.append(" FROM ").append(TB_USERS)
-				.append(" INNER JOIN ").append(ProfileRepository.TB_PROFILE)
-				.append(" ON ").append(PROFILE_ID).append(" = ").append(ProfileRepository.PROFILE_ID)
-				.append(" INNER JOIN ").append(RoleRepository.TB_ROLE)
-				.append(" ON ").append(FK_ROLE_ID).append(" = ").append(RoleRepository.ROLE_ID)
-				.append(" LEFT JOIN ").append(SubDistrictRepository.TB_SUBDISTRICTS)
-				.append(" ON ").append(ProfileRepository.SUB_DISTRICT_CODE).append(" = ").append(SubDistrictRepository.SUBDISTRICT_CODE)
-				.append(" LEFT JOIN ").append(DistrictRepository.TB_DISTRICTS)
-				.append(" ON ").append(SubDistrictRepository.DISTRICT_CODE).append(" = ").append(DistrictRepository.DISTRICT_CODE)
-				.append(" LEFT JOIN ").append(ProvinceRepository.TB_PROVINCES)
-				.append(" ON ").append(DistrictRepository.PROVINCE_CODE).append(" = ").append(ProvinceRepository.PROVINCE_CODE)
-				.append(" LEFT JOIN ").append(PostCodeRepository.TB_POSTCODE)
-				.append(" ON ").append(SubDistrictRepository.SUBDISTRICT_CODE).append(" = ").append(PostCodeRepository.SUB_DISTRICT_CODE)
-				.append(" WHERE ").append(USER_ID).append(" = :userId ");
-			return getNamedJdbcOps().queryForObject(statemet.toString(), params, new BeanPropertyRowMapper<>(UserDetailUpdateDTO.class));
+			final MapSqlParameterSource params = new MapSqlParameterSource("userId", userId);
+			return QueryNamedJdbc.queryNamedForObject("FIND.DETAIL.BY.USERID", params, UserDetailUpdateDTO.class);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}
@@ -102,34 +57,8 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	@Override
 	public UserDetail findDetailByUsername(String username) {
 		try {
-			final MapSqlParameterSource params = new MapSqlParameterSource()
-				.addValue("username", username);
-			final StringBuilder statemet = new StringBuilder()
-				.append("SELECT ")
-				.append(USERNAME).append(" , ")
-				.append(PASSWORD).append(" , ")
-				.append(RoleRepository.ROLE_ID).append(" , ")
-				.append(RoleRepository.ROLE_CODE).append(" , ")
-				.append(RoleRepository.ROLE_NAME).append(" , ")
-				.append(ENABLED).append(" , ")
-				.append(ACCOUNTNONLOCKED).append(" , ")
-				.append(ACCOUNTNONEXPIRED).append(" , ")
-				.append(ACCOUNT_EXPIRED_DATE).append(" , ")
-				.append(ACCOUNT_LOCKED_DATE).append(" , ")
-				.append(COL_CREDENTIALSEXPIRED_DATE).append(" , ")
-				.append(CREDENTIALSNONEXPIRED).append(" , ")
-				.append(FIRST_LOGIN).append(" , ")
-				.append(MAX_SESSION).append(" , ")
-				.append(ProfileRepository.PROFILE_IMAGE).append(" , ")
-				.append(ProfileRepository.FIRST_NAME).append(" , ")
-				.append(ProfileRepository.LAST_NAME)
-				.append(" FROM ").append(TB_USERS)
-				.append(" INNER JOIN ").append(ProfileRepository.TB_PROFILE)
-				.append(" ON ").append(PROFILE_ID).append(" = ").append(ProfileRepository.PROFILE_ID)
-				.append(" INNER JOIN ").append(RoleRepository.TB_ROLE)
-				.append(" ON ").append(FK_ROLE_ID).append(" = ").append(RoleRepository.ROLE_ID)
-				.append(" WHERE ").append(USERNAME).append(" = :username ");
-			return getNamedJdbcOps().queryForObject(statemet.toString(), params, new BeanPropertyRowMapper<>(UserDetail.class));
+			MapSqlParameterSource params = new MapSqlParameterSource("username", username);
+			return QueryNamedJdbc.queryNamedForObject("GET.DETAIL.BY.USERNAME", params, UserDetail.class);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}

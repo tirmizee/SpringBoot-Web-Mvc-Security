@@ -14,7 +14,7 @@ import com.tirmizee.core.jdbcrepository.RowUnmapper;
 @Repository("PermissionRepository")
 public class PermissionRepositoryImpl extends AbstractOracleJdbcRepository<Permission, Integer> implements PermissionRepository {
 
-	public static final RowMapper<Permission> ROW_MAPPER = new BeanPropertyRowMapper<>(Permission.class);
+	public static final RowMapper<Permission> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Permission.class);
 	
 	public static final RowUnmapper<Permission> ROW_UNMAPPER = new RowUnmapper<Permission>() {
 		@Override
