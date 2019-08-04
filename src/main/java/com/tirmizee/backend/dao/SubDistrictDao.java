@@ -1,11 +1,8 @@
 package com.tirmizee.backend.dao;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 
 import com.tirmizee.backend.api.address.data.SearchSubDistrictDTO;
-import com.tirmizee.backend.api.address.data.DistrictCountVillageDTO;
 import com.tirmizee.backend.api.address.data.SubDistrictDTO;
 import com.tirmizee.core.repository.SubDistrictRepository;
 

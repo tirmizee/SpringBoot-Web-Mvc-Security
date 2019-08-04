@@ -46,8 +46,7 @@ public class SqlGeneratorFactory {
         try(Connection connection = dataSource.getConnection()) {
             metaData = connection.getMetaData();
         } catch (SQLException ex) {
-            throw new DataAccessResourceFailureException(
-                "Failed to retrieve database metadata", ex);
+            throw new DataAccessResourceFailureException("Failed to retrieve database metadata", ex);
         }
 
         for (SqlGenerator generator : generators) {

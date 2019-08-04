@@ -46,7 +46,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	public UserDetailUpdateDTO findDetailByUserId(Long userId) {
 		try {
 			final MapSqlParameterSource params = new MapSqlParameterSource("userId", userId);
-			return queryNamedJdbc.nameQueryForObject("FIND.DETAIL.BY.USERID", params, UserDetailUpdateDTO.class);
+			return queryNamedJdbc.queryNameForObject("FIND.DETAIL.BY.USERID", params, UserDetailUpdateDTO.class);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}
@@ -56,7 +56,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	public UserDetail findDetailByUsername(String username) {
 		try {
 			MapSqlParameterSource params = new MapSqlParameterSource("username", username);
-			return queryNamedJdbc.nameQueryForObject("GET.DETAIL.BY.USERNAME", params, UserDetail.class);
+			return queryNamedJdbc.queryNameForObject("GET.DETAIL.BY.USERNAME", params, UserDetail.class);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}
@@ -112,7 +112,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	public User findByEmail(String email) {
 		try {
 			MapSqlParameterSource params = new MapSqlParameterSource("EMAIL", email);
-			return queryNamedJdbc.nameQueryForObject("FIND.USER.BY.EMAIL",  params, User.class);
+			return queryNamedJdbc.queryNameForObject("FIND.USER.BY.EMAIL",  params, User.class);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}

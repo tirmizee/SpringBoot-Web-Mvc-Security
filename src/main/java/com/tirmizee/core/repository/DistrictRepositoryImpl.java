@@ -14,7 +14,7 @@ import com.tirmizee.core.jdbcrepository.RowUnmapper;
 @Repository("DistrictsRepository")
 public class DistrictRepositoryImpl extends AbstractOracleJdbcRepository<District, Integer> implements DistrictRepository {
 
-	public static final RowMapper<District> ROW_MAPPER = new BeanPropertyRowMapper<>(District.class);
+	public static final RowMapper<District> ROW_MAPPER = BeanPropertyRowMapper.newInstance(District.class);
 	
 	public static final RowUnmapper<District> ROW_UNMAPPER = new RowUnmapper<District>() {
 		@Override
