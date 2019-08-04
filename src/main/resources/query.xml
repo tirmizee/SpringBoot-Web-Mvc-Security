@@ -37,7 +37,7 @@
    </entry>
    
     <entry key="GET.DETAIL.BY.USERNAME">
-       <value>
+        <value>
        	<![CDATA[
 			SELECT 
 			    USERS.USERNAME , 
@@ -105,6 +105,47 @@
 			LEFT JOIN PROVINCES ON DISTRICTS.PROVINCE_CODE = PROVINCES.PROVINCE_CODE 
 			LEFT JOIN POSTCODE ON SUBDISTRICTS.SUBDISTRICT_CODE = POSTCODE.SUB_DISTRICT_CODE 
 			WHERE USERS.USER_ID = :userId
+        ]]>
+        </value>
+   </entry>
+   
+   <entry key="FIND.DETAIL.BY.CRITERIA">
+        <value>
+       	<![CDATA[
+			SELECT 
+			    USERS.USER_ID,
+			    USERS.USERNAME,
+			    USERS.FIRST_LOGIN,
+			    USERS.ENABLED,
+			    USERS.ACCOUNTNONLOCKED,
+			    USERS.ACCOUNTNONEXPIRED,
+			    USERS.CREDENTIALSNONEXPIRED,
+			    USERS.CREDENTIALSEXPIRED_DATE,
+			    PROFILE.FIRST_NAME,
+			    PROFILE.LAST_NAME,
+			    PROFILE.EMAIL,
+			    PROFILE.TEL,
+			    PROFILE_IMAGE,
+			    ROLE.ROLE_CODE,
+			    ROLE.ROLE_ID,
+			    ROLE.ROLE_NAME,
+			    ROLE.ROLE_DESC 
+			FROM USERS 
+			INNER JOIN PROFILE ON USERS.PROFILE_ID = PROFILE.PROFILE_ID
+			INNER JOIN ROLE ON USERS.FK_ROLE_ID = ROLE.ROLE_ID 
+			WHERE USERS.USER_ID IS NOT NULL
+        ]]>
+        </value>
+   </entry>
+   
+    <entry key="FIND.USER.BY.EMAIL">
+        <value>
+       	<![CDATA[
+       		SELECT 
+			    USERS.* 
+			FROM USERS 
+			INNER JOIN PROFILE ON USERS.PROFILE_ID = PROFILE.PROFILE_ID 
+			WHERE PROFILE.EMAIL = :EMAIL 
         ]]>
         </value>
    </entry>

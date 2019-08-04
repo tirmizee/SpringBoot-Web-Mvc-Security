@@ -19,7 +19,7 @@ import com.tirmizee.backend.api.user.data.UserDetailPageDTO;
 import com.tirmizee.backend.api.user.data.UserDetailUpdateDTO;
 import com.tirmizee.core.domain.User;
 import com.tirmizee.core.domain.UserDetail;
-import com.tirmizee.core.jdbcrepository.QueryNamedParameterJdbcOperations;
+import com.tirmizee.core.jdbcrepository.NameQueryJdbcOperations;
 import com.tirmizee.core.repository.ProfileRepository;
 import com.tirmizee.core.repository.RoleRepository;
 import com.tirmizee.core.repository.UserRepositoryImpl;
@@ -30,15 +30,13 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	public final Logger LOG = Logger.getLogger(UserDaoImpl.class);
 	
 	@Autowired
-	private QueryNamedParameterJdbcOperations QueryNamedJdbc;
+	private NameQueryJdbcOperations queryNamedJdbc;
 	
 	@Override
 	public User findByUsername(String username) {
 		try {
-			StringBuilder statemet = new StringBuilder()
-				.append("SELECT * FROM ").append(TB_USERS)
-				.append(" WHERE ").append(COL_USERNAME).append(" = ? ");
-			return getJdbcOps().queryForObject(statemet.toString(), params(username), ROW_MAPPER);
+			String statemet = "SELECT * FROM USER_ATTEMP WHERE USERNAME = ?";
+			return getJdbcOps().queryForObject(statemet, params(username), ROW_MAPPER);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}
@@ -48,7 +46,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	public UserDetailUpdateDTO findDetailByUserId(Long userId) {
 		try {
 			final MapSqlParameterSource params = new MapSqlParameterSource("userId", userId);
-			return QueryNamedJdbc.queryNamedForObject("FIND.DETAIL.BY.USERID", params, UserDetailUpdateDTO.class);
+			return queryNamedJdbc.nameQueryForObject("FIND.DETAIL.BY.USERID", params, UserDetailUpdateDTO.class);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}
@@ -58,7 +56,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	public UserDetail findDetailByUsername(String username) {
 		try {
 			MapSqlParameterSource params = new MapSqlParameterSource("username", username);
-			return QueryNamedJdbc.queryNamedForObject("GET.DETAIL.BY.USERNAME", params, UserDetail.class);
+			return queryNamedJdbc.nameQueryForObject("GET.DETAIL.BY.USERNAME", params, UserDetail.class);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}
@@ -67,31 +65,8 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	@Override
 	public Page<UserDetailPageDTO> findPageByCriteria(Pageable pageable, UserDetailCriteriaDTO search) {
 		List<Object> params = new LinkedList<>();
-		StringBuilder statement = new StringBuilder()
-			.append(" SELECT ")
-				.append(USER_ID).append(",")
-				.append(USERNAME).append(",")
-				.append(FIRST_LOGIN).append(",")
-				.append(ENABLED).append(",")
-				.append(ACCOUNTNONLOCKED).append(",")
-				.append(ACCOUNTNONEXPIRED).append(",")
-				.append(CREDENTIALSNONEXPIRED).append(",")
-				.append(CREDENTIALSEXPIRED_DATE).append(",")
-				.append(ProfileRepository.FIRST_NAME).append(",")
-				.append(ProfileRepository.LAST_NAME).append(",")
-				.append(ProfileRepository.EMAIL).append(",")
-				.append(ProfileRepository.TEL).append(",")
-				.append(ProfileRepository.COL_PROFILE_IMAGE).append(",")
-				.append(RoleRepository.ROLE_CODE).append(",")
-				.append(RoleRepository.ROLE_ID).append(",")
-				.append(RoleRepository.ROLE_NAME).append(",")
-				.append(RoleRepository.ROLE_DESC)
-			.append(" FROM ").append(TB_USERS)
-			.append(" INNER JOIN ").append(ProfileRepository.TB_PROFILE)
-				.append(" ON ").append(PROFILE_ID).append(" = ").append(ProfileRepository.PROFILE_ID)
-			.append(" INNER JOIN ").append(RoleRepository.TB_ROLE)
-				.append(" ON ").append(FK_ROLE_ID).append(" = ").append(RoleRepository.ROLE_ID)
-			.append(" WHERE ").append(USER_ID).append(" IS NOT NULL");
+		
+		StringBuilder statement = new StringBuilder(queryNamedJdbc.getQuery("FIND.DETAIL.BY.CRITERIA"));
 		
 		if (!StringUtils.isBlank(search.getUsername())) {
 			statement.append(" AND ").append(USERNAME).append(" LIKE ? ");
@@ -127,7 +102,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 		List<UserDetailPageDTO> content = getJdbcOps().query(
 			statementPage, 
 			params.toArray(), 
-			new BeanPropertyRowMapper<>(UserDetailPageDTO.class)
+			BeanPropertyRowMapper.newInstance(UserDetailPageDTO.class)
 		);
 		long total = count(statement.toString(), params.toArray());
 		return new PageImpl<>(content, pageable, total);
@@ -136,13 +111,8 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	@Override
 	public User findByEmail(String email) {
 		try {
-			StringBuilder statemet = new StringBuilder()
-				.append(" SELECT ").append(TB_USERS).append(".*")
-				.append(" FROM ").append(TB_USERS)
-				.append(" INNER JOIN ").append(ProfileRepository.TB_PROFILE)
-					.append(" ON ").append(PROFILE_ID).append(" = ").append(ProfileRepository.PROFILE_ID)
-				.append(" WHERE ").append(ProfileRepository.EMAIL).append(" = ? ");
-			return getJdbcOps().queryForObject(statemet.toString(), params(email), ROW_MAPPER);
+			MapSqlParameterSource params = new MapSqlParameterSource("EMAIL", email);
+			return queryNamedJdbc.nameQueryForObject("FIND.USER.BY.EMAIL",  params, User.class);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}
@@ -151,11 +121,8 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	@Override
 	public User findByUsername(String username, Long excludeUserId) {
 		try {
-			StringBuilder statemet = new StringBuilder()
-				.append("SELECT * FROM ").append(TB_USERS)
-				.append(" WHERE ").append(COL_USERNAME).append(" = ? ")
-				.append(" AND ").append(COL_USER_ID).append(" <> ? ");
-			return getJdbcOps().queryForObject(statemet.toString(), params(username, excludeUserId), ROW_MAPPER);
+			String statemet = "SELECT * FROM USERS WHERE USERNAME = ? AND USER_ID <> ?";
+			return getJdbcOps().queryForObject(statemet, params(username, excludeUserId), ROW_MAPPER);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}

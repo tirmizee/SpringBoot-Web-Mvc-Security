@@ -1,5 +1,6 @@
 package com.tirmizee.core.jdbcrepository.sql;
 
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayDeque;
@@ -42,8 +43,8 @@ public class SqlGeneratorFactory {
 
         DatabaseMetaData metaData;
         
-        try {
-            metaData = dataSource.getConnection().getMetaData();
+        try(Connection connection = dataSource.getConnection()) {
+            metaData = connection.getMetaData();
         } catch (SQLException ex) {
             throw new DataAccessResourceFailureException(
                 "Failed to retrieve database metadata", ex);
