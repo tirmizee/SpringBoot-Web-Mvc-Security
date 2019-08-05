@@ -2,39 +2,37 @@ package com.tirmizee.backend.dao;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.tirmizee.backend.api.permission.data.PermissionCriteriaDTO;
 import com.tirmizee.backend.api.permission.data.PermissionDTO;
 import com.tirmizee.core.domain.Permission;
-import com.tirmizee.core.jdbcrepository.sql.TempQuery;
+import com.tirmizee.core.jdbcrepository.NameQueryJdbcOperations;
 import com.tirmizee.core.repository.PermissionRepositoryImpl;
 
 @Repository
 public class PermissionDaoImpl extends PermissionRepositoryImpl implements PermissionDao {
 
 	@Autowired
-	private Map<String, String> queries;
+	private NameQueryJdbcOperations queryNamedJdbc;
 	
 	@Override
 	public List<Permission> findByUsername(String username) {
-		String statement = queries.get("FIND.PERMISSION.BY.USERNAME");
-		return getJdbcOps().query(statement, params(username), ROW_MAPPER);
+		MapSqlParameterSource paramSource = new MapSqlParameterSource("USERNAME",username);
+		return queryNamedJdbc.queryName("FIND.PERMISSION.BY.USERNAME", paramSource, ROW_MAPPER);
 	}
 
 	@Override
 	public List<PermissionDTO> findAllByUsername(Integer roleId) {
-		RowMapper<PermissionDTO> mapper = BeanPropertyRowMapper.newInstance(PermissionDTO.class);
-		return getJdbcOps().query(TempQuery.FIND_PERMISSION_ROLE.toUpperCase(), params(roleId), mapper);
+		MapSqlParameterSource paramSource = new MapSqlParameterSource("ROLE_ID",roleId);
+		return queryNamedJdbc.queryName("FIND.PERMISSION.BY.ROLEID", paramSource, PermissionDTO.class);
 	}
 
 	@Override

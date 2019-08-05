@@ -31,7 +31,7 @@
 			INNER JOIN ROLE ON USERS.FK_ROLE_ID = ROLE.ROLE_ID 
 			INNER JOIN ROLE_MAP_PERMISSION ON ROLE.ROLE_ID = ROLE_MAP_PERMISSION.ROLE_ID 
 			INNER JOIN PERMISSION ON ROLE_MAP_PERMISSION.PER_ID = PERMISSION.PER_ID 
-			WHERE USERS.USERNAME = ? 
+			WHERE USERS.USERNAME = :USERNAME 
         	]]>
         </value>
    </entry>
@@ -164,7 +164,7 @@
         </value>
    </entry>
    
-    <entry key="FIND.COUNT.VILLAGE.BY.DISTRICTCODE">
+   <entry key="FIND.COUNT.VILLAGE.BY.DISTRICTCODE">
         <value>
        	<![CDATA[
        		SELECT 
@@ -189,6 +189,31 @@
 			FROM DISTRICTS 
 			WHERE PROVINCE_CODE = :PROVINCE_CODE  
 			AND (DISTRICT_NAME_TH LIKE :DISTRICT_NAME_TH  OR DISTRICT_NAME_EN LIKE :DISTRICT_NAME_TH )
+        ]]>
+        </value>
+   </entry>
+    
+   <entry key="FIND.PERMISSION.BY.ROLEID">
+        <value>
+       	<![CDATA[
+       		SELECT 
+			    P.PER_ID,
+			    P.PER_CODE,
+			    P.PER_NAME,
+			    P.CREATE_BY,
+			    P.CREATE_DATE,
+			    P.UPDATE_BY,
+			    P.UPDATE_DATE,
+			    CASE WHEN U.PER_CODE IS NULL THEN 0 ELSE 1 END AS HAS_PERCODE
+			FROM PERMISSION P
+			LEFT JOIN (
+			    SELECT
+			        P.PER_CODE
+			    FROM  ROLE R                 
+			    INNER JOIN ROLE_MAP_PERMISSION RMP  ON R.ROLE_ID = RMP.ROLE_ID
+			    INNER JOIN PERMISSION P             ON RMP.PER_ID = P.PER_ID
+			    WHERE R.ROLE_ID = :ROLE_ID 
+			) U ON P.PER_CODE = U.PER_CODE
         ]]>
         </value>
    </entry>

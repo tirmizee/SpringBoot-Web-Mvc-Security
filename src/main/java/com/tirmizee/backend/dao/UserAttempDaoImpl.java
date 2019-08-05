@@ -16,7 +16,7 @@ public class UserAttempDaoImpl extends UserAttempRepositoryImpl implements UserA
 				.append(" SELECT * FROM ").append(TB_USER_ATTEMP)
 				.append(" WHERE ").append(COL_USERNAME).append(" = ? ");
 			return getJdbcOps().queryForObject(select.toString(),params(username), ROW_MAPPER);
-		}catch (EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}

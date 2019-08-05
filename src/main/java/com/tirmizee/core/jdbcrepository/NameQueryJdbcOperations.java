@@ -38,6 +38,16 @@ public interface NameQueryJdbcOperations extends NamedParameterJdbcOperations {
 	
 	<T> List<T> queryName(String queryName, SqlParameterSource paramSource, RowMapper<T> rowMapper) throws DataAccessException;
 	
+	<T> Page<T> queryForPage(String query, Pageable pageable, Map<String, ?> paramMap, Class<T> mappedClass) throws DataAccessException;
+	
+	<T> Page<T> queryForPage(String query, Pageable pageable, SqlParameterSource paramSource, Class<T> mappedClass) throws DataAccessException;
+	
+	<T> Page<T> queryForPage(String query, Pageable pageable, SqlParameterSource paramSource, RowMapper<T> rowMapper) throws DataAccessException;
+	
+	<T> Page<T> queryNameForPage(String queryName, Pageable pageable, Map<String, ?> paramMap, Class<T> mappedClass) throws DataAccessException;
+	
 	<T> Page<T> queryNameForPage(String queryName, Pageable pageable, SqlParameterSource paramSource, Class<T> mappedClass) throws DataAccessException;
+	
+	<T> Page<T> queryNameForPage(String queryName, Pageable pageable, SqlParameterSource paramSource, RowMapper<T> rowMapper) throws DataAccessException;
 	
 }

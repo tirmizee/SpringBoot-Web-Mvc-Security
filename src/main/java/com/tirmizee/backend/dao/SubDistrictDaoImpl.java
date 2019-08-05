@@ -25,11 +25,10 @@ public class SubDistrictDaoImpl extends SubDistrictRepositoryImpl implements Sub
 		Pageable pageable = new PageRequest(search.getPage(), search.getSize());
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource()
-				.addValue("DISTRICT_CODE", search.getDistrictCode())
-				.addValue("SUBDISTRICT_NAME_TH", "%" + StringUtils.trimToEmpty(search.getTerm()) + "%");
+			.addValue("DISTRICT_CODE", search.getDistrictCode())
+			.addValue("SUBDISTRICT_NAME_TH", "%" + StringUtils.trimToEmpty(search.getTerm()) + "%");
 			
 		return queryNamedJdbc.queryNameForPage("FIND.SUBDISTRICT.BY.TERM", pageable, paramSource, SubDistrictDTO.class);
 	}
-
 
 }

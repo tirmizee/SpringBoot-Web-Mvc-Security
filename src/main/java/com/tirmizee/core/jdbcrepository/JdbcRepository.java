@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * @author pratya yeekhaday
  *
  */
+@NoRepositoryBean
 public interface JdbcRepository<T extends Persistable<ID>, ID extends Serializable> extends PagingAndSortingRepository<T, ID> {
 	
 	@Override

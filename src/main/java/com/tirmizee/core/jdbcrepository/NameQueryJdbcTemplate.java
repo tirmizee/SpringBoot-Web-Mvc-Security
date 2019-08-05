@@ -30,20 +30,19 @@ public class NameQueryJdbcTemplate extends NamedParameterJdbcTemplate implements
 
 	private Map<String, String> queries;
 	private SqlGenerator sqlGenerator;
-	private SqlGeneratorFactory sqlGeneratorFactory = SqlGeneratorFactory.getInstance();
+	
+	@Autowired
+	public NameQueryJdbcTemplate(DataSource dataSource, Map<String, String> queries) {
+		super(dataSource);
+		this.queries = queries;
+		sqlGenerator = SqlGeneratorFactory.getInstance().getGenerator(dataSource);
+	}
 	
 	@Override
 	public String getQuery(String queryName) {
 		return queries.get(queryName);
 	}
 	
-	@Autowired
-	public NameQueryJdbcTemplate(DataSource dataSource, Map<String, String> queries) {
-		super(dataSource);
-		this.queries = queries;
-		sqlGenerator = sqlGeneratorFactory.getGenerator(dataSource);
-	}
-
 	@Override
 	public <T> T queryNameForObject(String queryName, Map<String, ?> paramMap, Class<T> mappedClass)
 			throws DataAccessException {
@@ -98,12 +97,61 @@ public class NameQueryJdbcTemplate extends NamedParameterJdbcTemplate implements
 	}
 	
 	@Override
-	public <T> Page<T> queryNameForPage(String queryName, Pageable pageable, SqlParameterSource paramSource, Class<T> mappedClass)
+	public <T> Page<T> queryNameForPage(String queryName, Pageable pageable, Map<String, ?> paramMap, Class<T> mappedClass)
 			throws DataAccessException {
+		StringBuilder statement = new StringBuilder(queries.get(queryName));
+		List<T> content = query(sqlGenerator.selectAll(statement, pageable), paramMap, BeanPropertyRowMapper.newInstance(mappedClass));
+		Long total = count(statement.toString(), paramMap);
+		return new PageImpl<>(content, pageable, total);
+	}
+	
+	@Override
+	public <T> Page<T> queryNameForPage(String queryName, Pageable pageable, SqlParameterSource paramSource, 
+			Class<T> mappedClass) throws DataAccessException {
 		StringBuilder statement = new StringBuilder(queries.get(queryName));
 		List<T> content = query(sqlGenerator.selectAll(statement, pageable), paramSource, BeanPropertyRowMapper.newInstance(mappedClass));
 		Long total = count(statement.toString(), paramSource);
 		return new PageImpl<>(content, pageable, total);
+	}
+	
+	@Override
+	public <T> Page<T> queryNameForPage(String queryName, Pageable pageable, SqlParameterSource paramSource,
+			RowMapper<T> rowMapper) throws DataAccessException {
+		StringBuilder statement = new StringBuilder(queries.get(queryName));
+		List<T> content = query(sqlGenerator.selectAll(statement, pageable), paramSource, rowMapper);
+		Long total = count(statement.toString(), paramSource);
+		return new PageImpl<>(content, pageable, total);
+	}
+	
+	@Override
+	public <T> Page<T> queryForPage(String query, Pageable pageable, Map<String, ?> paramMap, Class<T> mappedClass)
+			throws DataAccessException {
+		StringBuilder statement = new StringBuilder(query);
+		List<T> content = query(sqlGenerator.selectAll(statement, pageable), paramMap, BeanPropertyRowMapper.newInstance(mappedClass));
+		Long total = count(statement.toString(), paramMap);
+		return new PageImpl<>(content, pageable, total);
+	}
+
+	@Override
+	public <T> Page<T> queryForPage(String query, Pageable pageable, SqlParameterSource paramSource,
+			Class<T> mappedClass) throws DataAccessException {
+		StringBuilder statement = new StringBuilder(query);
+		List<T> content = query(sqlGenerator.selectAll(statement, pageable), paramSource, BeanPropertyRowMapper.newInstance(mappedClass));
+		Long total = count(statement.toString(), paramSource);
+		return new PageImpl<>(content, pageable, total);
+	}
+
+	@Override
+	public <T> Page<T> queryForPage(String query, Pageable pageable, SqlParameterSource paramSource,
+			RowMapper<T> rowMapper) throws DataAccessException {
+		StringBuilder statement = new StringBuilder(query);
+		List<T> content = query(sqlGenerator.selectAll(statement, pageable), paramSource,rowMapper);
+		Long total = count(statement.toString(), paramSource);
+		return new PageImpl<>(content, pageable, total);
+	}
+	
+	private Long count(String statement, Map<String, ?> paramMap) {
+		return queryForObject(sqlGenerator.count(statement), paramMap, Long.class);
 	}
 
 	private Long count(String statement, SqlParameterSource paramSource) {
@@ -113,5 +161,7 @@ public class NameQueryJdbcTemplate extends NamedParameterJdbcTemplate implements
 	public void addQuery(Map<String, String> mapQuery) {
 		queries.putAll(mapQuery);
 	}
+
 	
+
 }

@@ -59,7 +59,6 @@ public class DatabaseConfig {
 		return (DataSource) bean.getObject();
 	}
 	
-	
 	@Bean
 	@SuppressWarnings("unchecked")
 	public Map<String, String> queries(){
