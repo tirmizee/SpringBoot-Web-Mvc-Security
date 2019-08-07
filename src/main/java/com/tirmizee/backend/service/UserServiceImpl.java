@@ -214,6 +214,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		User user = userDao.findOne(uid);
+		user.setAccountLockedDate(null);
 		user.setPassword(passwordEncoder.encode(passwordResetTokenDTO.getConfirmPassword()));
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);

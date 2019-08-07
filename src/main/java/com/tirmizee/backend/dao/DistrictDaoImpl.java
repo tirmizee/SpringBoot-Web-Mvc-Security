@@ -13,14 +13,14 @@ import org.springframework.stereotype.Repository;
 import com.tirmizee.backend.api.address.data.DistrictCountVillageDTO;
 import com.tirmizee.backend.api.address.data.SearchDistrictDTO;
 import com.tirmizee.core.domain.District;
-import com.tirmizee.core.jdbcrepository.NameQueryJdbcOperations;
+import com.tirmizee.core.jdbcrepository.NamedQueryJdbcOperations;
 import com.tirmizee.core.repository.DistrictRepositoryImpl;
 
 @Repository
 public class DistrictDaoImpl extends DistrictRepositoryImpl implements DistrictDao {
 
 	@Autowired
-	private NameQueryJdbcOperations queryNamedJdbc;
+	private NamedQueryJdbcOperations queryNamedJdbc;
 	
 	@Override
 	public Page<District> findByTerm(SearchDistrictDTO search) {
@@ -31,13 +31,13 @@ public class DistrictDaoImpl extends DistrictRepositoryImpl implements DistrictD
 			.addValue("PROVINCE_CODE", search.getProvinceCode())
 			.addValue("DISTRICT_NAME_TH", "%" + StringUtils.trimToEmpty(search.getTerm()) + "%");
 		
-		return queryNamedJdbc.queryNameForPage("FIND.DISTRICT.BY.PROVINCECODE", pageable, paramSource, District.class);
+		return queryNamedJdbc.namedQueryForPage("FIND.DISTRICT.BY.PROVINCECODE", pageable, paramSource, District.class);
 	}
 	
 	@Override
 	public List<DistrictCountVillageDTO> findCountVillageByDistrictCode(String districtCode) {
 		MapSqlParameterSource paramSource = new MapSqlParameterSource("DISTRICT_CODE", districtCode);
-		return queryNamedJdbc.queryName("FIND.COUNT.VILLAGE.BY.DISTRICTCODE", paramSource, DistrictCountVillageDTO.class);
+		return queryNamedJdbc.namedQuery("FIND.COUNT.VILLAGE.BY.DISTRICTCODE", paramSource, DistrictCountVillageDTO.class);
 	}
 
 }

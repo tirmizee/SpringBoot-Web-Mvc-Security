@@ -63,7 +63,7 @@ public class DatabaseConfig {
 	@SuppressWarnings("unchecked")
 	public Map<String, String> queries(){
 		Map<String, String> mapQueries = null;
-		try(ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:query.xml")) {
+		try(ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:jdbc-query.xml")) {
 			mapQueries = (Map<String, String>) context.getBean("mapQueries");
 		}
 		return mapQueries;

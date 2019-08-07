@@ -30,6 +30,7 @@ public class ExceptionController {
 		messageError.setException(ex.getSuppressed().getClass().getName());
 		messageError.setMessage(message);
 		messageError.setStatus(ex.getStatus());
+//		ResponseEntity.status( ex.getStatus()).body(messageError);
 		return new ResponseEntity<>(messageError, ex.getStatus());
 	}
 	

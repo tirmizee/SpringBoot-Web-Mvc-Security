@@ -10,7 +10,7 @@
         http://www.springframework.org/schema/util/spring-util.xsd">
 <util:map id="mapQueries" map-class="java.util.HashMap">
 
-   <entry key="GET.PROFILE.BY.USERID">
+	<entry key="GET.PROFILE.BY.USERID">
        <value>
        	<![CDATA[
 			SELECT 
@@ -20,9 +20,9 @@
 			WHERE USERS.USER_ID = ?
         	]]>
         </value>
-   </entry>
+	</entry>
    
-   <entry key="FIND.PERMISSION.BY.USERNAME">
+   	<entry key="FIND.PERMISSION.BY.USERNAME">
        <value>
        	<![CDATA[
 			SELECT 
@@ -34,7 +34,7 @@
 			WHERE USERS.USERNAME = :USERNAME 
         	]]>
         </value>
-   </entry>
+   	</entry>
    
     <entry key="GET.DETAIL.BY.USERNAME">
         <value>
@@ -217,6 +217,33 @@
         ]]>
         </value>
    </entry>
+   
+   <entry key="FIND.ROLE">
+        <value>
+       	<![CDATA[
+       		SELECT 
+			    ROLE_ID,
+			    ROLE_CODE,
+			    ROLE_NAME,
+			    ROLE_DESC,
+			    CREATE_DATE 
+			FROM ROLE 
+			WHERE ROLE_ID IS NOT NULL
+        ]]>
+        </value>
+   </entry>
+   
+   	<entry key="GET.PASSWORD.BY.UID.AND.TOKEN">
+       <value>
+       	<![CDATA[
+			SELECT * 
+				FROM FORGOT_PASSWORD 
+				WHERE TOKEN = :TOKEN  
+				AND USERID = :USERID  
+				AND IS_RESET = 0 
+        ]]>
+        </value>
+	</entry>
     
 </util:map>
 </beans>

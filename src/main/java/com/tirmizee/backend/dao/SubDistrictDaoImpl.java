@@ -10,14 +10,14 @@ import org.springframework.stereotype.Repository;
 
 import com.tirmizee.backend.api.address.data.SearchSubDistrictDTO;
 import com.tirmizee.backend.api.address.data.SubDistrictDTO;
-import com.tirmizee.core.jdbcrepository.NameQueryJdbcOperations;
+import com.tirmizee.core.jdbcrepository.NamedQueryJdbcOperations;
 import com.tirmizee.core.repository.SubDistrictRepositoryImpl;
 
 @Repository
 public class SubDistrictDaoImpl extends SubDistrictRepositoryImpl implements SubDistrictDao {
 	
 	@Autowired
-	private NameQueryJdbcOperations queryNamedJdbc;
+	private NamedQueryJdbcOperations queryNamedJdbc;
 	
 	@Override
 	public Page<SubDistrictDTO> findByTerm(SearchSubDistrictDTO search) {
@@ -28,7 +28,7 @@ public class SubDistrictDaoImpl extends SubDistrictRepositoryImpl implements Sub
 			.addValue("DISTRICT_CODE", search.getDistrictCode())
 			.addValue("SUBDISTRICT_NAME_TH", "%" + StringUtils.trimToEmpty(search.getTerm()) + "%");
 			
-		return queryNamedJdbc.queryNameForPage("FIND.SUBDISTRICT.BY.TERM", pageable, paramSource, SubDistrictDTO.class);
+		return queryNamedJdbc.namedQueryForPage("FIND.SUBDISTRICT.BY.TERM", pageable, paramSource, SubDistrictDTO.class);
 	}
 
 }

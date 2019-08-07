@@ -14,25 +14,25 @@ import org.springframework.stereotype.Repository;
 import com.tirmizee.backend.api.permission.data.PermissionCriteriaDTO;
 import com.tirmizee.backend.api.permission.data.PermissionDTO;
 import com.tirmizee.core.domain.Permission;
-import com.tirmizee.core.jdbcrepository.NameQueryJdbcOperations;
+import com.tirmizee.core.jdbcrepository.NamedQueryJdbcOperations;
 import com.tirmizee.core.repository.PermissionRepositoryImpl;
 
 @Repository
 public class PermissionDaoImpl extends PermissionRepositoryImpl implements PermissionDao {
 
 	@Autowired
-	private NameQueryJdbcOperations queryNamedJdbc;
+	private NamedQueryJdbcOperations queryNamedJdbc;
 	
 	@Override
 	public List<Permission> findByUsername(String username) {
 		MapSqlParameterSource paramSource = new MapSqlParameterSource("USERNAME",username);
-		return queryNamedJdbc.queryName("FIND.PERMISSION.BY.USERNAME", paramSource, ROW_MAPPER);
+		return queryNamedJdbc.namedQuery("FIND.PERMISSION.BY.USERNAME", paramSource, ROW_MAPPER);
 	}
 
 	@Override
 	public List<PermissionDTO> findAllByUsername(Integer roleId) {
 		MapSqlParameterSource paramSource = new MapSqlParameterSource("ROLE_ID",roleId);
-		return queryNamedJdbc.queryName("FIND.PERMISSION.BY.ROLEID", paramSource, PermissionDTO.class);
+		return queryNamedJdbc.namedQuery("FIND.PERMISSION.BY.ROLEID", paramSource, PermissionDTO.class);
 	}
 
 	@Override

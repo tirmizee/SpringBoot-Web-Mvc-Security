@@ -26,13 +26,14 @@ import com.tirmizee.core.jdbcrepository.sql.SqlGeneratorFactory;
  *  
  */
 @Component
-public class NameQueryJdbcTemplate extends NamedParameterJdbcTemplate implements NameQueryJdbcOperations {
+public class NamedQueryJdbcTemplate extends NamedParameterJdbcTemplate implements NamedQueryJdbcOperations {
 
-	private Map<String, String> queries;
 	private SqlGenerator sqlGenerator;
 	
+	private Map<String, String> queries;
+	
 	@Autowired
-	public NameQueryJdbcTemplate(DataSource dataSource, Map<String, String> queries) {
+	public NamedQueryJdbcTemplate(DataSource dataSource, Map<String, String> queries) {
 		super(dataSource);
 		this.queries = queries;
 		sqlGenerator = SqlGeneratorFactory.getInstance().getGenerator(dataSource);
@@ -44,60 +45,60 @@ public class NameQueryJdbcTemplate extends NamedParameterJdbcTemplate implements
 	}
 	
 	@Override
-	public <T> T queryNameForObject(String queryName, Map<String, ?> paramMap, Class<T> mappedClass)
+	public <T> T namedQueryForObject(String queryName, Map<String, ?> paramMap, Class<T> mappedClass)
 			throws DataAccessException {
 		return queryForObject(queries.get(queryName), paramMap, mappedClass);
 	}
 	
 	@Override
-	public <T> T queryNameForObject(String queryName, SqlParameterSource paramSource, Class<T> mappedClass)
+	public <T> T namedQueryForObject(String queryName, SqlParameterSource paramSource, Class<T> mappedClass)
 			throws DataAccessException {
 		return queryForObject(queries.get(queryName), paramSource, BeanPropertyRowMapper.newInstance(mappedClass));
 	}
 
 	@Override
-	public <T> T queryNameForObject(String queryName, SqlParameterSource paramSource, RowMapper<T> rowMapper)
+	public <T> T namedQueryForObject(String queryName, SqlParameterSource paramSource, RowMapper<T> rowMapper)
 			throws DataAccessException {
 		return queryForObject(queries.get(queryName), paramSource,rowMapper);
 	}
 
 	@Override
-	public <T> List<T> queryName(String queryName, SqlParameterSource paramSource, RowMapper<T> rowMapper)
+	public <T> List<T> namedQuery(String queryName, SqlParameterSource paramSource, RowMapper<T> rowMapper)
 			throws DataAccessException {
 		return query(queries.get(queryName), paramSource, rowMapper);
 	}
 
 	@Override
-	public <T> List<T> queryName(String queryName, RowMapper<T> rowMapper) throws DataAccessException {
+	public <T> List<T> namedQuery(String queryName, RowMapper<T> rowMapper) throws DataAccessException {
 		return query(queries.get(queryName), rowMapper);
 	}
 
 	@Override
-	public <T> T queryName(String queryName, SqlParameterSource paramSource, ResultSetExtractor<T> rse)
+	public <T> T namedQuery(String queryName, SqlParameterSource paramSource, ResultSetExtractor<T> rse)
 			throws DataAccessException {
 		return query(queries.get(queryName),paramSource,rse);
 	}
 
 	@Override
-	public <T> List<T> queryName(String queryName, SqlParameterSource paramSource, Class<T> mappedClass)
+	public <T> List<T> namedQuery(String queryName, SqlParameterSource paramSource, Class<T> mappedClass)
 			throws DataAccessException {
 		return query(queries.get(queryName), paramSource, BeanPropertyRowMapper.newInstance(mappedClass));
 	}
 
 	@Override
-	public <T> List<T> queryName(String queryName, Map<String, ?> paramMap, RowMapper<T> rowMapper)
+	public <T> List<T> namedQuery(String queryName, Map<String, ?> paramMap, RowMapper<T> rowMapper)
 			throws DataAccessException {
-		return queryName(queries.get(queryName), paramMap, rowMapper);
+		return namedQuery(queries.get(queryName), paramMap, rowMapper);
 	}
 
 	@Override
-	public <T> List<T> queryName(String queryName, Map<String, ?> paramMap, Class<T> mappedClass)
+	public <T> List<T> namedQuery(String queryName, Map<String, ?> paramMap, Class<T> mappedClass)
 			throws DataAccessException {
 		return query(queries.get(queryName), paramMap, BeanPropertyRowMapper.newInstance(mappedClass));
 	}
 	
 	@Override
-	public <T> Page<T> queryNameForPage(String queryName, Pageable pageable, Map<String, ?> paramMap, Class<T> mappedClass)
+	public <T> Page<T> namedQueryForPage(String queryName, Pageable pageable, Map<String, ?> paramMap, Class<T> mappedClass)
 			throws DataAccessException {
 		StringBuilder statement = new StringBuilder(queries.get(queryName));
 		List<T> content = query(sqlGenerator.selectAll(statement, pageable), paramMap, BeanPropertyRowMapper.newInstance(mappedClass));
@@ -106,7 +107,7 @@ public class NameQueryJdbcTemplate extends NamedParameterJdbcTemplate implements
 	}
 	
 	@Override
-	public <T> Page<T> queryNameForPage(String queryName, Pageable pageable, SqlParameterSource paramSource, 
+	public <T> Page<T> namedQueryForPage(String queryName, Pageable pageable, SqlParameterSource paramSource, 
 			Class<T> mappedClass) throws DataAccessException {
 		StringBuilder statement = new StringBuilder(queries.get(queryName));
 		List<T> content = query(sqlGenerator.selectAll(statement, pageable), paramSource, BeanPropertyRowMapper.newInstance(mappedClass));
@@ -115,7 +116,7 @@ public class NameQueryJdbcTemplate extends NamedParameterJdbcTemplate implements
 	}
 	
 	@Override
-	public <T> Page<T> queryNameForPage(String queryName, Pageable pageable, SqlParameterSource paramSource,
+	public <T> Page<T> namedQueryForPage(String queryName, Pageable pageable, SqlParameterSource paramSource,
 			RowMapper<T> rowMapper) throws DataAccessException {
 		StringBuilder statement = new StringBuilder(queries.get(queryName));
 		List<T> content = query(sqlGenerator.selectAll(statement, pageable), paramSource, rowMapper);
@@ -161,7 +162,5 @@ public class NameQueryJdbcTemplate extends NamedParameterJdbcTemplate implements
 	public void addQuery(Map<String, String> mapQuery) {
 		queries.putAll(mapQuery);
 	}
-
-	
 
 }

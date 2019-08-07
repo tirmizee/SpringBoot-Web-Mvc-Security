@@ -19,7 +19,7 @@ import com.tirmizee.backend.api.user.data.UserDetailPageDTO;
 import com.tirmizee.backend.api.user.data.UserDetailUpdateDTO;
 import com.tirmizee.core.domain.User;
 import com.tirmizee.core.domain.UserDetail;
-import com.tirmizee.core.jdbcrepository.NameQueryJdbcOperations;
+import com.tirmizee.core.jdbcrepository.NamedQueryJdbcOperations;
 import com.tirmizee.core.repository.ProfileRepository;
 import com.tirmizee.core.repository.RoleRepository;
 import com.tirmizee.core.repository.UserRepositoryImpl;
@@ -30,12 +30,12 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	public final Logger LOG = Logger.getLogger(UserDaoImpl.class);
 	
 	@Autowired
-	private NameQueryJdbcOperations queryNamedJdbc;
+	private NamedQueryJdbcOperations queryNamedJdbc;
 	
 	@Override
 	public User findByUsername(String username) {
 		try {
-			String statemet = "SELECT * FROM USER_ATTEMP WHERE USERNAME = ?";
+			String statemet = "SELECT * FROM USERS WHERE USERNAME = ?";
 			return getJdbcOps().queryForObject(statemet, params(username), ROW_MAPPER);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
@@ -46,7 +46,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	public UserDetailUpdateDTO findDetailByUserId(Long userId) {
 		try {
 			final MapSqlParameterSource params = new MapSqlParameterSource("userId", userId);
-			return queryNamedJdbc.queryNameForObject("FIND.DETAIL.BY.USERID", params, UserDetailUpdateDTO.class);
+			return queryNamedJdbc.namedQueryForObject("FIND.DETAIL.BY.USERID", params, UserDetailUpdateDTO.class);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}
@@ -56,7 +56,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	public UserDetail findDetailByUsername(String username) {
 		try {
 			MapSqlParameterSource params = new MapSqlParameterSource("username", username);
-			return queryNamedJdbc.queryNameForObject("GET.DETAIL.BY.USERNAME", params, UserDetail.class);
+			return queryNamedJdbc.namedQueryForObject("GET.DETAIL.BY.USERNAME", params, UserDetail.class);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}
@@ -112,7 +112,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	public User findByEmail(String email) {
 		try {
 			MapSqlParameterSource params = new MapSqlParameterSource("EMAIL", email);
-			return queryNamedJdbc.queryNameForObject("FIND.USER.BY.EMAIL",  params, User.class);
+			return queryNamedJdbc.namedQueryForObject("FIND.USER.BY.EMAIL",  params, User.class);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
 		}

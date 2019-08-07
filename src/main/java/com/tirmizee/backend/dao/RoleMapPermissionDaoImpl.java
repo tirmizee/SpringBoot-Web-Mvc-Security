@@ -2,14 +2,19 @@ package com.tirmizee.backend.dao;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tirmizee.core.domain.RoleMapPermission;
+import com.tirmizee.core.jdbcrepository.NamedQueryJdbcOperations;
 import com.tirmizee.core.repository.RoleMapPermissionRepositoryImpl;
 
 @Repository
 public class RoleMapPermissionDaoImpl extends RoleMapPermissionRepositoryImpl implements RoleMapPermissionDao {
 
+	@Autowired
+	private NamedQueryJdbcOperations queryNamedJdbc;
+	
 	@Override
 	public List<RoleMapPermission> findByRoleId(Integer roleId) {
 		StringBuilder statement = new StringBuilder()

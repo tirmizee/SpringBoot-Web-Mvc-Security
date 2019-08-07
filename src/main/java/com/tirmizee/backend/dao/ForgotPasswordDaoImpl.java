@@ -1,24 +1,27 @@
 package com.tirmizee.backend.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.tirmizee.core.domain.ForgotPassword;
+import com.tirmizee.core.jdbcrepository.NamedQueryJdbcOperations;
 import com.tirmizee.core.repository.ForgotPasswordRepositoryImpl;
 
 @Repository
 public class ForgotPasswordDaoImpl extends ForgotPasswordRepositoryImpl implements ForgotPasswordDao {
 
+	@Autowired
+	private NamedQueryJdbcOperations queryNamedJdbc;
+	
 	@Override
 	public ForgotPassword findByUserIdAndToken(Long uid, String token) {
 		try {
-			String statement = new StringBuilder()
-				.append(" SELECT * FROM ").append(TB_FORGOT_PASSWORD)
-				.append(" WHERE ").append(COL_TOKEN).append(" = ? ")
-				.append(" AND ").append(COL_USERID).append(" = ? ")
-				.append(" AND ").append(COL_IS_RESET).append(" = 0 ")
-				.toString();
-			return getJdbcOps().queryForObject(statement, params(token, uid), ROW_MAPPER);
+			MapSqlParameterSource paramSource = new MapSqlParameterSource()
+				.addValue("TOKEN", token)
+				.addValue("USERID", uid);
+			return queryNamedJdbc.namedQueryForObject("GET.PASSWORD.BY.UID.AND.TOKEN", paramSource, ROW_MAPPER);
 		} catch (EmptyResultDataAccessException ex) {
 			return null;
 		}
