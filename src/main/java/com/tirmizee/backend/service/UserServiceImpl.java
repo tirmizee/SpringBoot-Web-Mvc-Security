@@ -149,6 +149,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public ResponseTable<UserDetailPageDTO> pagingTable(RequestTable<UserDetailCriteriaDTO> requestTable, UserProfile userProfile) {
+		
 		Set<String> authorities = AuthorityUtils.authorityListToSet(userProfile.getAuthorities());
 		if (CollectionUtils.isEmpty(authorities)) {
 			throw new BusinessException(MessageCode.MSG001);
@@ -163,7 +164,7 @@ public class UserServiceImpl implements UserService {
 			return new ResponseTable<>(userDao.findPageBranchUserByCriteria(pageable, userProfile.getBranchCode(), requestTable.getSerch()));
 		}
 		
-		throw new BusinessException(MessageCode.MSG001);
+		return new ResponseTable<>(userDao.findPageAllUserByCriteria(pageable, requestTable.getSerch()));
 	}
 
 	@Override

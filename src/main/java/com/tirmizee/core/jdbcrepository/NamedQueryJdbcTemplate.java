@@ -39,7 +39,7 @@ public class NamedQueryJdbcTemplate extends NamedParameterJdbcTemplate implement
 		sqlGenerator = SqlGeneratorFactory.getInstance().getGenerator(dataSource);
 	}
 	
-	@Override
+	@Override 
 	public String getQuery(String queryName) {
 		return queries.get(queryName);
 	}
@@ -138,8 +138,6 @@ public class NamedQueryJdbcTemplate extends NamedParameterJdbcTemplate implement
 		Long total = count(statement.toString(), args);
 		return new PageImpl<>(content, pageable, total);
 	}
-	
-	
 
 	@Override
 	public <T> Page<T> queryForPage(String query, Pageable pageable, Map<String, ?> paramMap, Class<T> mappedClass)
