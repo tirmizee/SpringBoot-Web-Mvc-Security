@@ -4,6 +4,9 @@ import java.sql.Timestamp;
 
 import org.springframework.data.domain.Persistable;
 
+import lombok.Data;
+
+@Data
 public class UserAttemp implements Persistable<String> {
 
 	private static final long serialVersionUID = -326668936067814297L;
@@ -23,38 +26,6 @@ public class UserAttemp implements Persistable<String> {
 	@Override
 	public boolean isNew() {
 		return !persisted;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public Integer getAttemp() {
-		return attemp;
-	}
-
-	public void setAttemp(Integer attemp) {
-		this.attemp = attemp;
-	}
-
-	public String getAccessIp() {
-		return accessIp;
-	}
-
-	public void setAccessIp(String accessIp) {
-		this.accessIp = accessIp;
-	}
-
-	public Timestamp getLastModified() {
-		return lastModified;
-	}
-
-	public void setLastModified(Timestamp lastModified) {
-		this.lastModified = lastModified;
 	}
 
 	public UserAttemp withPersisted(boolean persisted) {

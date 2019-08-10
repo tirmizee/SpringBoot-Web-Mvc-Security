@@ -13,7 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.tirmizee.backend.service.data.ForgotPasswordModel;
-import com.tirmizee.core.component.TemplateUtils;
+import com.tirmizee.core.component.TemplateOparations;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -21,7 +21,7 @@ public class EmailServiceImpl implements EmailService {
 	public static final String TEMPLATE_FORGOTPASSWORD = "ForgotPassword.ftl";
 	
 	@Autowired
-	private TemplateUtils template;
+	private TemplateOparations template;
 	
 	@Autowired
 	private JavaMailSender mailSender;

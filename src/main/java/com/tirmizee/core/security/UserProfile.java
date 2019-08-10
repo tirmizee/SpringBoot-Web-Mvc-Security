@@ -12,6 +12,7 @@ public class UserProfile extends UserDetailsImpl {
 	private String roleCode;
 	private String roleName;
 	private String accessIp;
+	private String branchCode;
 	private String profileImage;
 	private boolean isFirstLogin;
 	private Integer maxSession;
@@ -26,6 +27,7 @@ public class UserProfile extends UserDetailsImpl {
 		this.lastName = builder.lastName;
 		this.roleCode = builder.roleCode;
 		this.roleName = builder.roleName;
+		this.branchCode = builder.branchCode;
 		this.profileImage = builder.profileImage;
 		this.accessIp = builder.accessIp;
 		this.createDate = builder.createDate;
@@ -124,6 +126,14 @@ public class UserProfile extends UserDetailsImpl {
 		this.profileImage = profileImage;
 	}
 
+	public String getBranchCode() {
+		return branchCode;
+	}
+
+	public void setBranchCode(String branchCode) {
+		this.branchCode = branchCode;
+	}
+
 	public Timestamp getAccountLockedDate() {
 		return accountLockedDate;
 	}
@@ -139,6 +149,7 @@ public class UserProfile extends UserDetailsImpl {
 		private String roleCode;
 		private String roleName;
 		private String accessIp;
+		private String branchCode;
 		private String profileImage;
 		private Integer maxSession;
 		private java.util.Date createDate;
@@ -156,6 +167,11 @@ public class UserProfile extends UserDetailsImpl {
 		
 		public Builder lastName(String lastName){
 			this.lastName = lastName;
+			return this;
+		}
+		
+		public Builder branchCode(String branchCode){
+			this.branchCode = branchCode;
 			return this;
 		}
 		
@@ -210,7 +226,7 @@ public class UserProfile extends UserDetailsImpl {
 		}
 		
 		public UserProfile build(){
-			return new  UserProfile(this);
+			return new UserProfile(this);
 		}
 
 	}

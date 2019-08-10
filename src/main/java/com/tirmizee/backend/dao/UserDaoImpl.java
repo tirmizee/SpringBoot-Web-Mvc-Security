@@ -1,5 +1,7 @@
 package com.tirmizee.backend.dao;
 
+import static org.junit.Assert.assertThat;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,9 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +23,8 @@ import com.tirmizee.core.jdbcrepository.NamedQueryJdbcOperations;
 import com.tirmizee.core.repository.ProfileRepository;
 import com.tirmizee.core.repository.RoleRepository;
 import com.tirmizee.core.repository.UserRepositoryImpl;
+
+import junit.framework.Assert;
 
 @Repository 
 public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
@@ -55,7 +57,7 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	@Override
 	public UserDetail findDetailByUsername(String username) {
 		try {
-			MapSqlParameterSource params = new MapSqlParameterSource("username", username);
+			MapSqlParameterSource params = new MapSqlParameterSource("USERNAME", username);
 			return queryNamedJdbc.namedQueryForObject("GET.DETAIL.BY.USERNAME", params, UserDetail.class);
 		} catch(EmptyResultDataAccessException ex) {
 			return null;
@@ -63,9 +65,29 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 	}
 
 	@Override
-	public Page<UserDetailPageDTO> findPageByCriteria(Pageable pageable, UserDetailCriteriaDTO search) {
+	public User findByEmail(String email) {
+		try {
+			MapSqlParameterSource params = new MapSqlParameterSource("EMAIL", email);
+			return queryNamedJdbc.namedQueryForObject("FIND.USER.BY.EMAIL",  params, User.class);
+		} catch(EmptyResultDataAccessException ex) {
+			return null;
+		}
+	}
+
+	@Override
+	public User findByUsername(String username, Long excludeUserId) {
+		try {
+			String statemet = "SELECT * FROM USERS WHERE USERNAME = ? AND USER_ID <> ?";
+			return getJdbcOps().queryForObject(statemet, params(username, excludeUserId), ROW_MAPPER);
+		} catch(EmptyResultDataAccessException ex) {
+			return null;
+		}
+	}
+	
+	@Override
+	public Page<UserDetailPageDTO> findPageAllUserByCriteria(Pageable pageable, UserDetailCriteriaDTO search) {
+	
 		List<Object> params = new LinkedList<>();
-		
 		StringBuilder statement = new StringBuilder(queryNamedJdbc.getQuery("FIND.DETAIL.BY.CRITERIA"));
 		
 		if (!StringUtils.isBlank(search.getUsername())) {
@@ -98,34 +120,48 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 			params.add(search.getRoleId());
 		}
 		
-		String statementPage = getSqlGenerator().selectAll(statement, pageable);
-		List<UserDetailPageDTO> content = getJdbcOps().query(
-			statementPage, 
-			params.toArray(), 
-			BeanPropertyRowMapper.newInstance(UserDetailPageDTO.class)
-		);
-		long total = count(statement.toString(), params.toArray());
-		return new PageImpl<>(content, pageable, total);
+		return queryNamedJdbc.queryForPage(statement.toString(), pageable, params.toArray(), UserDetailPageDTO.class);
 	}
 
 	@Override
-	public User findByEmail(String email) {
-		try {
-			MapSqlParameterSource params = new MapSqlParameterSource("EMAIL", email);
-			return queryNamedJdbc.namedQueryForObject("FIND.USER.BY.EMAIL",  params, User.class);
-		} catch(EmptyResultDataAccessException ex) {
-			return null;
+	public Page<UserDetailPageDTO> findPageBranchUserByCriteria(Pageable pageable, String branchCode, UserDetailCriteriaDTO search) {
+		
+		StringBuilder statement = new StringBuilder(queryNamedJdbc.getQuery("FIND.DETAIL.BRANCH.BY.CRITERIA"));
+		
+		List<Object> params = new LinkedList<>();
+		params.add(branchCode);
+		
+		if (!StringUtils.isBlank(search.getUsername())) {
+			statement.append(" AND ").append(USERNAME).append(" LIKE ? ");
+			params.add("%" + StringUtils.trimToEmpty(search.getUsername()) + "%");
 		}
-	}
-
-	@Override
-	public User findByUsername(String username, Long excludeUserId) {
-		try {
-			String statemet = "SELECT * FROM USERS WHERE USERNAME = ? AND USER_ID <> ?";
-			return getJdbcOps().queryForObject(statemet, params(username, excludeUserId), ROW_MAPPER);
-		} catch(EmptyResultDataAccessException ex) {
-			return null;
+		
+		if (!StringUtils.isBlank(search.getFirstName())) {
+			statement.append(" AND ").append(ProfileRepository.FIRST_NAME).append(" LIKE ? ");
+			params.add("%" + StringUtils.trimToEmpty(search.getFirstName()) + "%");
 		}
+		
+		if (!StringUtils.isBlank(search.getLastName())) {
+			statement.append(" AND ").append(ProfileRepository.LAST_NAME).append(" LIKE ? ");
+			params.add("%" + StringUtils.trimToEmpty(search.getLastName()) + "%");
+		}
+		
+		if (!StringUtils.isBlank(search.getEmail())) {
+			statement.append(" AND ").append(ProfileRepository.EMAIL).append(" LIKE ? ");
+			params.add("%" + StringUtils.trimToEmpty(search.getEmail()) + "%");
+		}
+		
+		if (!StringUtils.isBlank(search.getTel())) {
+			statement.append(" AND ").append(ProfileRepository.TEL).append(" LIKE ? ");
+			params.add("%" + StringUtils.trimToEmpty(search.getTel()) + "%");
+		}
+		
+		if (search.getRoleId() != null) {
+			statement.append(" AND ").append(RoleRepository.ROLE_ID).append(" = ? ");
+			params.add(search.getRoleId());
+		}
+		
+		return queryNamedJdbc.queryForPage(statement.toString(), pageable, params.toArray(), UserDetailPageDTO.class);
 	}
 
 }

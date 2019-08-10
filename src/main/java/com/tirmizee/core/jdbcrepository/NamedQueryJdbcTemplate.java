@@ -49,6 +49,12 @@ public class NamedQueryJdbcTemplate extends NamedParameterJdbcTemplate implement
 			throws DataAccessException {
 		return queryForObject(queries.get(queryName), paramMap, mappedClass);
 	}
+
+	@Override
+	public <T> T namedQueryForObject(String queryName, Map<String, ?> paramMap, RowMapper<T> rowMapper)
+			throws DataAccessException {
+		return queryForObject(queries.get(queryName), paramMap, rowMapper);
+	}
 	
 	@Override
 	public <T> T namedQueryForObject(String queryName, SqlParameterSource paramSource, Class<T> mappedClass)
@@ -123,12 +129,32 @@ public class NamedQueryJdbcTemplate extends NamedParameterJdbcTemplate implement
 		Long total = count(statement.toString(), paramSource);
 		return new PageImpl<>(content, pageable, total);
 	}
+
+	@Override
+	public <T> Page<T> queryForPage(String query, Pageable pageable, Object[] args, Class<T> mappedClass)
+			throws DataAccessException {
+		StringBuilder statement = new StringBuilder(query);
+		List<T> content = getJdbcOperations().query(sqlGenerator.selectAll(statement, pageable), args, BeanPropertyRowMapper.newInstance(mappedClass));
+		Long total = count(statement.toString(), args);
+		return new PageImpl<>(content, pageable, total);
+	}
 	
+	
+
 	@Override
 	public <T> Page<T> queryForPage(String query, Pageable pageable, Map<String, ?> paramMap, Class<T> mappedClass)
 			throws DataAccessException {
 		StringBuilder statement = new StringBuilder(query);
 		List<T> content = query(sqlGenerator.selectAll(statement, pageable), paramMap, BeanPropertyRowMapper.newInstance(mappedClass));
+		Long total = count(statement.toString(), paramMap);
+		return new PageImpl<>(content, pageable, total);
+	}
+	
+	@Override
+	public <T> Page<T> queryForPage(String query, Pageable pageable, Map<String, ?> paramMap, RowMapper<T> rowMapper)
+			throws DataAccessException {
+		StringBuilder statement = new StringBuilder(query);
+		List<T> content = query(sqlGenerator.selectAll(statement, pageable), paramMap, rowMapper);
 		Long total = count(statement.toString(), paramMap);
 		return new PageImpl<>(content, pageable, total);
 	}
@@ -157,6 +183,10 @@ public class NamedQueryJdbcTemplate extends NamedParameterJdbcTemplate implement
 
 	private Long count(String statement, SqlParameterSource paramSource) {
 		return queryForObject(sqlGenerator.count(statement), paramSource, Long.class);
+	}
+	
+	private Long count(String statement, Object[] args) {
+		return getJdbcOperations().queryForObject(sqlGenerator.count(statement), Long.class, args);
 	}
 	
 	public void addQuery(Map<String, String> mapQuery) {

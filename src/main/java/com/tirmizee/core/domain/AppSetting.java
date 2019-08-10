@@ -2,6 +2,9 @@ package com.tirmizee.core.domain;
 
 import org.springframework.data.domain.Persistable;
 
+import lombok.Data;
+
+@Data
 public class AppSetting implements Persistable<String> {
 
 	private static final long serialVersionUID = 520853585315329157L;
@@ -20,22 +23,6 @@ public class AppSetting implements Persistable<String> {
 		return !persisted;
 	}
 
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-	
 	public AppSetting withPersisted(boolean persisted) {
 		this.persisted = persisted;
 		return this;

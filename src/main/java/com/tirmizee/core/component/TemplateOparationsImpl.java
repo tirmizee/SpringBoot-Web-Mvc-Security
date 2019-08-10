@@ -11,8 +11,8 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-@Component("TemplateUtils")
-public class TemplateUtilsImpl implements TemplateUtils{
+@Component("TemplateOparations")
+public class TemplateOparationsImpl implements TemplateOparations {
 	
 	@Autowired
 	private Configuration configuration;

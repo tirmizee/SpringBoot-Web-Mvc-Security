@@ -51,6 +51,7 @@ var ManageUserModule = function(){
 				{ data : "roleName"               ,title : "Role Name" },
 				{ data : "email"                  ,title : "Email" },
 				{ data : "tel"                    ,title : "Tel" },
+				{ data : "branchName"             ,title : "Branch" },
 				{ data : "enabled"     		      ,title : "Status Enable" },
 				{ data : "accountnonexpired"      ,title : "Status Account" },
 				{ data : "accountnonlocked"       ,title : "Status Locked" },
@@ -101,7 +102,7 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 10,
+					targets   : 11,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var enable = '<a data-btn-name="enable" href=""><span class="label label-success raduis">enable</span></a>';
@@ -110,7 +111,7 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 11,
+					targets   : 12,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="accountExpired" href=""><span class="label label-success raduis">normal</span></a>';
@@ -119,7 +120,7 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 12,
+					targets   : 13,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="locked" href=""><span class="label label-success raduis">normal</span></a>';
@@ -128,7 +129,7 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 13,
+					targets   : 14,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="passwordExpired" href=""><span class="label label-success raduis">normal</span></a>';
@@ -137,7 +138,7 @@ var ManageUserModule = function(){
 					}
 				},
 				{
-					targets   : 14,
+					targets   : 15,
 					className : "text-center",
 					render    : function (data, type, row, meta) {
 						var normal = '<a data-btn-name="firstlogin" href=""><span class="label label-success raduis">active</span></a>';

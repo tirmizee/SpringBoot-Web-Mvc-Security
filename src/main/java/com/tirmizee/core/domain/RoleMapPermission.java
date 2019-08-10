@@ -2,6 +2,9 @@ package com.tirmizee.core.domain;
 
 import org.springframework.data.domain.Persistable;
 
+import lombok.Data;
+
+@Data
 public class RoleMapPermission implements Persistable<Object[]>{
 
 	private static final long serialVersionUID = 1L;
@@ -22,29 +25,6 @@ public class RoleMapPermission implements Persistable<Object[]>{
 		return !persisted;
 	}
 
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
-
-	public Integer getPerId() {
-		return perId;
-	}
-
-	public void setPerId(Integer perId) {
-		this.perId = perId;
-	}
-
-	public java.sql.Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(java.sql.Date createDate) {
-		this.createDate = createDate;
-	}
 	public RoleMapPermission withPersisted(boolean persisted) {
 		this.persisted = persisted;
 		return this;

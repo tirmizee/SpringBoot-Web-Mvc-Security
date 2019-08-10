@@ -14,7 +14,7 @@ import com.tirmizee.core.jdbcrepository.RowUnmapper;
 @Repository("AbstractOracleJdbcRepository")
 public class ForgotPasswordRepositoryImpl extends AbstractOracleJdbcRepository<ForgotPassword, Integer> implements ForgotPasswordRepository {
 
-	public static final RowMapper<ForgotPassword> ROW_MAPPER = new BeanPropertyRowMapper<>(ForgotPassword.class);
+	public static final RowMapper<ForgotPassword> ROW_MAPPER = BeanPropertyRowMapper.newInstance(ForgotPassword.class);
 	
 	public static final RowUnmapper<ForgotPassword> ROW_UNMAPPER = new RowUnmapper<ForgotPassword>() {
 		@Override

@@ -12,7 +12,7 @@ import com.tirmizee.core.jdbcrepository.AbstractOracleJdbcRepository;
 import com.tirmizee.core.jdbcrepository.RowUnmapper;
 
 @Repository("BankBranchRepository")
-public class BankBranchRepositoryImpl extends AbstractOracleJdbcRepository<BankBranch, Long> implements BankBranchRepository {
+public class BankBranchRepositoryImpl extends AbstractOracleJdbcRepository<BankBranch, Integer> implements BankBranchRepository {
 
 	public static final RowMapper<BankBranch> ROW_MAPPER = new BeanPropertyRowMapper<>(BankBranch.class);
 
@@ -20,13 +20,14 @@ public class BankBranchRepositoryImpl extends AbstractOracleJdbcRepository<BankB
 		@Override
 		public Map<String, Object> mapColumns(BankBranch param) {
 			Map<String, Object> map = new LinkedHashMap<>();
-			map.put(COL_UPDATE_DATE, param.getUpdateDate());
-			map.put(COL_CREATE_DATE, param.getCreateDate());
+			map.put(COL_IS_BANK_BRANCH, param.getIsBankBranch());
+			map.put(COL_UPDATED_DATE, param.getUpdatedDate());
+			map.put(COL_CREATED_DATE, param.getCreatedDate());
+			map.put(COL_BRANCH_NAME_EN, param.getBranchNameEn());
+			map.put(COL_BRANCH_NAME, param.getBranchName());
+			map.put(COL_BRANCH_CODE, param.getBranchCode());
 			map.put(COL_BANK_CODE, param.getBankCode());
-			map.put(COL_BANK_BRANCH_DESC, param.getBankBranchDesc());
-			map.put(COL_BANK_BRANCH_NAME, param.getBankBranchName());
-			map.put(COL_BANK_BRANCH_CODE, param.getBankBranchCode());
-			map.put(COL_BANK_BRANCH_ID, param.getBankBranchId());
+			map.put(COL_BRANCH_ID, param.getBranchId());
 			return map;
 		}
 	};
@@ -36,12 +37,12 @@ public class BankBranchRepositoryImpl extends AbstractOracleJdbcRepository<BankB
 	}
 	
 	public BankBranchRepositoryImpl(String tableName) {
-		super(ROW_MAPPER, ROW_UNMAPPER, tableName, COL_BANK_BRANCH_ID);
+		super(ROW_MAPPER, ROW_UNMAPPER, tableName, COL_BRANCH_ID);
 	}
 
 	@Override
 	protected <S extends BankBranch> S postCreate(S entity, Number generatedId) {
-		entity.setBankBranchId(generatedId.longValue());
+		entity.setBranchId(generatedId.intValue());
 		return entity;
 	}
 	

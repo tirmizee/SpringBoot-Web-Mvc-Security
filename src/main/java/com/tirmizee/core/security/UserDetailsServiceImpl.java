@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,9 +20,10 @@ import com.tirmizee.core.domain.Permission;
 import com.tirmizee.core.domain.UserDetail;
 import com.tirmizee.core.utilities.DateUtils;
 
+
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
-	public final Logger LOG = Logger.getLogger(UserDetailsServiceImpl.class);
+	public final Logger LOG = LoggerFactory.getLogger(getClass());
 	
 	private UserDao userDao;
 	private PermissionDao permissionDao;
@@ -57,8 +59,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				.lastName(userDetail.getLastName())
 				.roleCode(userDetail.getRoleCode())
 				.roleName(userDetail.getRoleName())
+				.branchCode(userDetail.getBranchCode())
 				.profileImage(userDetail.getProfileImage())
-				.isFirstLogin(userDetail.getFirstLogin())
+				.isFirstLogin(userDetail.isFirstLogin())
 				.maxSession(userDetail.getMaxSession())
 				.createDate(DateUtils.now())
 				.build();

@@ -43,15 +43,15 @@ public class UserRepositoryImpl extends AbstractOracleJdbcRepository<User, Long>
 		@Override
 		public Map<String, Object> mapColumns(User param) {
 			Map<String, Object> map = new LinkedHashMap<>();
-			map.put(COL_FIRST_LOGIN, param.getFirstLogin());
+			map.put(COL_FIRST_LOGIN, param.isFirstLogin());
 			map.put(COL_UPDATE_DATE, param.getUpdateDate());
 			map.put(COL_CREATE_DATE, param.getCreateDate());
 			map.put(COL_FK_ROLE_ID, param.getFkRoleId());
 			map.put(COL_CREDENTIALSEXPIRED_DATE, param.getCredentialsexpiredDate());
-			map.put(COL_CREDENTIALSNONEXPIRED, param.getCredentialsnonexpired());
-			map.put(COL_ACCOUNTNONEXPIRED, param.getAccountnonexpired());
-			map.put(COL_ACCOUNTNONLOCKED, param.getAccountnonlocked());
-			map.put(COL_ENABLED, param.getEnabled());
+			map.put(COL_CREDENTIALSNONEXPIRED, param.isCredentialsnonexpired());
+			map.put(COL_ACCOUNTNONEXPIRED, param.isAccountnonexpired());
+			map.put(COL_ACCOUNTNONLOCKED, param.isAccountnonlocked());
+			map.put(COL_ENABLED, param.isEnabled());
 			map.put(COL_PASSWORD, param.getPassword());
 			map.put(COL_USERNAME, param.getUsername());
 			map.put(COL_PROFILE_ID, param.getProfileId());

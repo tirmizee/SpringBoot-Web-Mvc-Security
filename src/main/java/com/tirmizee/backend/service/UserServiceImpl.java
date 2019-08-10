@@ -2,16 +2,19 @@ package com.tirmizee.backend.service;
 
 import static com.tirmizee.core.constant.Constant.AppSetting.PASSWORD_CHANGE_DAY;
 
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
@@ -27,6 +30,7 @@ import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.backend.service.data.ForgotPasswordModel;
 import com.tirmizee.core.component.PageMapper;
 import com.tirmizee.core.constant.MessageCode;
+import com.tirmizee.core.constant.PermissionCode;
 import com.tirmizee.core.datatable.PageRequestHelper;
 import com.tirmizee.core.datatable.RequestTable;
 import com.tirmizee.core.datatable.ResponseTable;
@@ -35,6 +39,7 @@ import com.tirmizee.core.domain.LogPassword;
 import com.tirmizee.core.domain.Profile;
 import com.tirmizee.core.domain.User;
 import com.tirmizee.core.exception.BusinessException;
+import com.tirmizee.core.security.UserProfile;
 import com.tirmizee.core.utilities.DateUtils;
 
 @Service
@@ -143,10 +148,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ResponseTable<UserDetailPageDTO> pagingTable(RequestTable<UserDetailCriteriaDTO> requestTable) {
+	public ResponseTable<UserDetailPageDTO> pagingTable(RequestTable<UserDetailCriteriaDTO> requestTable, UserProfile userProfile) {
+		Set<String> authorities = AuthorityUtils.authorityListToSet(userProfile.getAuthorities());
+		if (CollectionUtils.isEmpty(authorities)) {
+			throw new BusinessException(MessageCode.MSG001);
+		}
+		
 		Pageable pageable = PageRequestHelper.build(requestTable, UserDetailPageDTO.class);
-		Page<UserDetailPageDTO> page = userDao.findPageByCriteria(pageable, requestTable.getSerch());
-		return new ResponseTable<>(page);
+		if(authorities.contains(PermissionCode.P002)) {
+			return new ResponseTable<>(userDao.findPageAllUserByCriteria(pageable, requestTable.getSerch()));
+		} 
+		
+		else if(authorities.contains(PermissionCode.P006)) {
+			return new ResponseTable<>(userDao.findPageBranchUserByCriteria(pageable, userProfile.getBranchCode(), requestTable.getSerch()));
+		}
+		
+		throw new BusinessException(MessageCode.MSG001);
 	}
 
 	@Override
@@ -323,10 +340,11 @@ public class UserServiceImpl implements UserService {
 		
 		Profile profile = profileDao.findOne(user.getProfileId());
 		
-		mapper.map(updateUser, profile);
 		mapper.map(updateUser, user);
-
+		user.setFkRoleId(updateUser.getRoleId());
 		userDao.save(user);
+		
+		mapper.map(updateUser, profile);
 		profileDao.save(profile);
 		
 	}

@@ -52,7 +52,7 @@
 				</ul>
 			</li>
 			
-			<security:authorize access="hasAnyAuthority('P002,P003,P005')">
+			<security:authorize access="hasAnyAuthority('P002,P003,P005,P006')">
 			<li class="treeview-setting">
 			    <a href="#">
 					<i class="fa fa-cog"></i> 
@@ -62,7 +62,7 @@
 			   		</span>
 			    </a>
 				<ul class="treeview-menu" style="display: none;">
-					<security:authorize access="hasAnyAuthority('P002')">
+					<security:authorize access="hasAnyAuthority('P002,P006')">
 				   	<li><a href="${pageContext.request.contextPath}/manageuser"><i class="fa fa-users"></i><spring:message code="app.menu.manageuser"/></a></li>
 				   	</security:authorize>
 				   	<security:authorize access="hasAnyAuthority('P003')">

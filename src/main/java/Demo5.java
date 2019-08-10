@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Random;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -6,25 +8,10 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 public class Demo5 {
 
 	public static void main(String[] args) throws IOException, EncryptedDocumentException, InvalidFormatException {
-		 // Creating Workbook instances 
-//        Workbook wb = new HSSFWorkbook(); 
-//        Workbook wb2 = new XSSFWorkbook(); 
-//        
-//        // An output stream accepts output bytes and sends them to sink. 
-//        OutputStream fileOut = new FileOutputStream("Geeks.xls"); 
-//        OutputStream fileOut2 = new FileOutputStream("Geeks.xlsx"); 
-
-//        // Creating Sheets using sheet object 
-//        wb.createSheet("Array"); 
-//        wb2.createSheet("Array"); 
-//  
-//        System.out.println("Sheets Has been Created successfully"); 
-//  
-//        wb.write(fileOut); 
-//        wb2.write(fileOut2); 
-		
-//		  Workbook wb = new HSSFWorkbook(); 
-		
+		for (int i = 1; i < 1000; i++) {
+			String code = new String[]{"0018610","0014257","0012481","0010903","0014848","0019734","0015696","0015458","0013685","0011577"}[new Random().nextInt(10)];
+			System.out.println("update profile set branch_code = '" + code + "' where profile_id = " + i +";");
+		}
 	}
 
 }

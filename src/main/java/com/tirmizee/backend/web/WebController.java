@@ -68,7 +68,7 @@ public class WebController {
 		return "pages/P007/P007";
 	}
 	
-	@PreAuthorize("hasAnyAuthority('P002')")
+	@PreAuthorize("hasAnyAuthority('P002','P006')")
 	@GetMapping(path = "/manageuser")
 	public String manageUser(ModelMap model) {
 		return "pages/P002_manage_user/P002_manage_user";

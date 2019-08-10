@@ -22,6 +22,8 @@ public interface UserDao extends UserRepository {
 	
 	UserDetailUpdateDTO findDetailByUserId(Long userId);
 	
-	Page<UserDetailPageDTO> findPageByCriteria(Pageable pageable, UserDetailCriteriaDTO search);
+	Page<UserDetailPageDTO> findPageAllUserByCriteria(Pageable pageable, UserDetailCriteriaDTO search);
+	
+	Page<UserDetailPageDTO> findPageBranchUserByCriteria(Pageable pageable, String branchCode, UserDetailCriteriaDTO search);
 	
 }
