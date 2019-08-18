@@ -62,9 +62,14 @@ Building Enterprise Java Applications the Spring Way
 ![555](https://user-images.githubusercontent.com/15135199/56121055-8d7e2400-5f99-11e9-9971-76b2f869c8e8.PNG)
 ![eee](https://user-images.githubusercontent.com/15135199/56230144-e33ff280-60a5-11e9-8670-9fd5b10c415d.PNG)
 
+## Tracking user logon
+![Record_2019_08_18_22_23_56_713](https://user-images.githubusercontent.com/15135199/63226785-c577cb00-c208-11e9-8eca-2bde013d5850.gif)
+
 ## Ref
 - https://www.baeldung.com/httpclient-ssl
-
+- https://www.devglan.com/spring-boot/spring-boot-websocket-integration-example
+- https://www.java67.com/2016/10/5-difference-between-stringbuffer.html
+- https://www.journaldev.com/741/java-socket-programming-server-client
 
 
 
