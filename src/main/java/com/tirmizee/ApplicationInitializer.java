@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.tirmizee;
 
 import org.springframework.boot.SpringApplication;
@@ -58,5 +57,3 @@ public class ApplicationInitializer extends SpringBootServletInitializer impleme
     }*/
 	
 } 
-
->>>>>>> branch 'master' of https://github.com/tirmizee/SpringBoot.git
