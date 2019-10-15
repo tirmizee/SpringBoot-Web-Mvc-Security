@@ -5,9 +5,8 @@ import javax.sql.DataSource;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
+import org.apache.coyote.http2.Http2Protocol;
 import org.apache.tomcat.util.descriptor.web.ContextResource;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
@@ -38,8 +37,10 @@ public class TomcatEmbeddedConfig {
 		ContextResource resource = new ContextResource();
 		resource.setName(JNDI_ORACLE_DEV);
 		resource.setType(DataSource.class.getName());
+		resource.setProperty("poolName", "TirmizeePool");
 		resource.setProperty("auth", "Container");
-//		resource.setProperty("maxActive", "20");
+		resource.setProperty("maxLifetime", "1800000");
+		resource.setProperty("connectionTimeout", "15000");
 		resource.setProperty("maximumPoolSize", "20");
 		resource.setProperty("maxIdle", "10");
 		resource.setProperty("minimumIdle", "5");
@@ -88,19 +89,11 @@ public class TomcatEmbeddedConfig {
 			}
 			@Override
 			protected void postProcessContext(Context context) {
-				
-				SecurityConstraint securityConstraint = new SecurityConstraint();
-		        securityConstraint.setUserConstraint("CONFIDENTIAL");
-		        
-		        SecurityCollection collection = new SecurityCollection();
-		        collection.addPattern("/*");
-		        securityConstraint.addCollection(collection);
-		         
-		        context.addConstraint(securityConstraint);
 		        context.getNamingResources().addResource(resourceDatasourceDev());
 			}
 		};
-		tomcat.addAdditionalTomcatConnectors(initiateHttpConnector());
+		
+		tomcat.addConnectorCustomizers(connector -> connector.addUpgradeProtocol(new Http2Protocol()));
 		return tomcat;
 	}
 	
@@ -115,6 +108,14 @@ public class TomcatEmbeddedConfig {
 			}
 			@Override
 			protected void postProcessContext(Context context) {
+				/*		SecurityConstraint securityConstraint = new SecurityConstraint();
+		        securityConstraint.setUserConstraint("CONFIDENTIAL");
+		        
+		        SecurityCollection collection = new SecurityCollection();
+		        collection.addPattern("/*");
+		        securityConstraint.addCollection(collection);
+		         
+		        context.addConstraint(securityConstraint);*/
 				context.getNamingResources().addResource(resourceDatasourceUat());
 			}
 		};
@@ -140,11 +141,13 @@ public class TomcatEmbeddedConfig {
 	}
 	
 	private Connector initiateHttpConnector() {
+		
 		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
 		connector.setScheme("http");
 	    connector.setPort(8090);
 	    connector.setSecure(false);
 	    connector.setRedirectPort(8433);
+	    connector.addUpgradeProtocol(new Http2Protocol());
 	    return connector;
 	}
 	

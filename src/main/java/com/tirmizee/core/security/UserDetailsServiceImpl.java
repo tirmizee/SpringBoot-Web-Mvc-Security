@@ -23,7 +23,7 @@ import com.tirmizee.core.utilities.DateUtils;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
-	public final Logger LOG = LoggerFactory.getLogger(getClass());
+	public final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	private UserDao userDao;
 	private PermissionDao permissionDao;
@@ -42,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		
 		List<Permission> permissions = permissionDao.findByUsername(username);
-		LOG.info(username + " : " + permissions.stream().map(e -> e.getPerCode()).collect(Collectors.toList()).toString());
+		LOGGER.info("username : {}, authorities : {}", username, permissions.stream().map(e -> e.getPerCode()).collect(Collectors.toList()).toString());
 
 		return new UserProfile.Builder()
 				.username(username)

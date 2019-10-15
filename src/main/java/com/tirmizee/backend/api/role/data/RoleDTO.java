@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tirmizee.core.datatable.SortColumn;
 import com.tirmizee.core.repository.RoleRepository;
 
+import lombok.Data;
+
+@Data
 public class RoleDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -24,36 +27,5 @@ public class RoleDTO implements Serializable {
 	@JsonFormat(pattern="dd-MM-yyyy")
 	@SortColumn(RoleRepository.COL_CREATE_DATE)
 	private java.sql.Date CreateDate;
-	
-	public Integer getRoleId() {
-		return roleId;
-	}
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
-	public String getRoleName() {
-		return roleName;
-	}
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-	public String getRoleCode() {
-		return roleCode;
-	}
-	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
-	}
-	public String getRoleDesc() {
-		return roleDesc;
-	}
-	public void setRoleDesc(String roleDesc) {
-		this.roleDesc = roleDesc;
-	}
-	public java.sql.Date getCreateDate() {
-		return CreateDate;
-	}
-	public void setCreateDate(java.sql.Date createDate) {
-		CreateDate = createDate;
-	}
 	
 }

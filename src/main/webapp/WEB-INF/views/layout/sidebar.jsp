@@ -19,6 +19,9 @@
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li class="menu-main"><a href="${pageContext.request.contextPath}/main"><i class="fa fa-book"></i> <span><spring:message code="app.menu.main"/></span></a></li>
+            <security:authorize access="hasAnyAuthority('P009')">
+            <li class="menu-notify"><a href="${pageContext.request.contextPath}/notify"><i class="fa fa-book"></i> <span><spring:message code="app.menu.notify"/></span></a></li>
+        	</security:authorize>
         	<security:authorize access="hasAnyAuthority('P001')">
         	<li class="treeview-report">
 			    <a href="#">

@@ -6,10 +6,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Locale;
 
 public final class DateUtils {
 
-	public static final SimpleDateFormat DD_MM_YYYY = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+	public static final SimpleDateFormat DD_MM_YYYY = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
 	
 	public static Timestamp nowTimestamp(){
 		return new Timestamp(new Date().getTime());

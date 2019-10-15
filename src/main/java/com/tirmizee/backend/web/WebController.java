@@ -3,7 +3,8 @@ package com.tirmizee.backend.web;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ import com.tirmizee.backend.service.ForgotPasswordService;
 @Controller
 public class WebController {
 
-	public static final Logger LOG = Logger.getLogger(WebController.class);
+	public static final Logger LOG = LoggerFactory.getLogger(WebController.class);
 	
 	@Autowired
 	private ForgotPasswordService forgotPasswordService;
@@ -29,6 +30,7 @@ public class WebController {
 		return "pages/login/login";
 	}
 	
+	@PreAuthorize("permitAll()")  
 	@GetMapping(path = "/forgotpassword")
 	public String forgotPassword(ModelMap model) {
 		return "pages/forgotpassword/forgotpassword";
@@ -42,6 +44,7 @@ public class WebController {
 		return "pages/resetpassword/resetpassword";
 	}
 	
+	@PreAuthorize("isAuthenticated()")  
 	@GetMapping(path = "/main")
 	public String main(ModelMap model) {
 		return "pages/P000_main/P000_main";
@@ -92,6 +95,12 @@ public class WebController {
 	@GetMapping(path = "/managerole")
 	public String manageRole(ModelMap model) {
 		return "pages/P005_manage_role/P005_manage_role";
+	}
+	
+	@PreAuthorize("hasAnyAuthority('P009')")
+	@GetMapping(path = "/notify")
+	public String notifyPage(ModelMap model) {
+		return "pages/P009/main";
 	}
 	
 //	@PreAuthorize("hasAnyAuthority('P005')")

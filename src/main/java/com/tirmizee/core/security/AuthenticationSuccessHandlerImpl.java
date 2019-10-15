@@ -17,6 +17,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import com.tirmizee.backend.service.AppSettingService;
+import com.tirmizee.backend.service.MessagingService;
+import com.tirmizee.backend.service.SessionService;
 
 /**
  * @author Pratya Yeekhaday
@@ -26,6 +28,12 @@ import com.tirmizee.backend.service.AppSettingService;
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler{
 
 	private final RedirectStrategy STRATEGY = new DefaultRedirectStrategy();
+	
+	@Autowired
+	private SessionService sessionService;
+	
+	@Autowired
+	private MessagingService messagingService;
 	
 	@Autowired
 	private AppSettingService appSettingService;
@@ -44,6 +52,8 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		// DETERMINE DEFAULT URL FOR PERMISSION
 		String targetUrl = determineTargetUrl(authentication);
 		
+		messagingService.sendAsyncMessage("/topic/viewusers", sessionService.allUserLoggedDetail());
+		
 		// REDIRECT URL TO TARGET 
 		STRATEGY.sendRedirect(request, response, targetUrl);
 		
@@ -61,6 +71,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 				case "R01": return "/main";
 				case "R02": return "/main";
 				case "R03": return "/main";
+				default   : return "/main";
 			}
 		}
 		return "/main";

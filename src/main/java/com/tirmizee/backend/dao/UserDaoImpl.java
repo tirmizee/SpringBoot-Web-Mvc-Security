@@ -1,7 +1,5 @@
 package com.tirmizee.backend.dao;
 
-import static org.junit.Assert.assertThat;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,8 +21,6 @@ import com.tirmizee.core.jdbcrepository.NamedQueryJdbcOperations;
 import com.tirmizee.core.repository.ProfileRepository;
 import com.tirmizee.core.repository.RoleRepository;
 import com.tirmizee.core.repository.UserRepositoryImpl;
-
-import junit.framework.Assert;
 
 @Repository 
 public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
@@ -162,6 +158,30 @@ public class UserDaoImpl extends UserRepositoryImpl implements UserDao {
 		}
 		
 		return queryNamedJdbc.queryForPage(statement.toString(), pageable, params.toArray(), UserDetailPageDTO.class);
+	}
+
+	@Override
+	public User getUserByUserIdAndBranchCode(Long userId, String branchCode) {
+		try {
+			MapSqlParameterSource params = new MapSqlParameterSource()
+				.addValue("USER_ID", userId)
+				.addValue("BRANCH_CODE", branchCode);
+			return queryNamedJdbc.namedQueryForObject("GET.USER.BY.USERID.AND.BRANCHCODE", params, User.class);
+		} catch(EmptyResultDataAccessException ex) {
+			return null;
+		}
+	}
+
+	@Override
+	public User getUserByUsernameAndBranchCode(String username, String branchCode) {
+		try {
+			MapSqlParameterSource params = new MapSqlParameterSource()
+				.addValue("USERNAME", username)
+				.addValue("BRANCH_CODE", branchCode);
+			return queryNamedJdbc.namedQueryForObject("GET.USER.BY.USERNAME.AND.BRANCHCODE", params, User.class);
+		} catch(EmptyResultDataAccessException ex) {
+			return null;
+		}
 	}
 
 }

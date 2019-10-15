@@ -51,27 +51,27 @@ public class AddressApiController {
 	@Autowired
 	private VillageDao villageDao;
 	
-	@PreAuthorize("hasAnyAuthority('P002')")
+	@PreAuthorize("hasAnyAuthority('P002,P006')")
 	@PostMapping(path = "/village")
 	public Page<VillageDTO> findVillage(@RequestBody SearchVillageDTO searchVillage){
 		Page<Village> page = villageDao.findByTerm(searchVillage);
 		return mapper.map(page, VillageDTO.class);
 	}
 	
-	@PreAuthorize("hasAnyAuthority('P002')")
+	@PreAuthorize("hasAnyAuthority('P002,P006')")
 	@PostMapping(path = "/subdistrict")
 	public Page<SubDistrictDTO> findByTerm(@RequestBody @Valid SearchSubDistrictDTO search){
 		return subDistrictDao.findByTerm(search);
 	} 
 	
-	@PreAuthorize("hasAnyAuthority('P002')")
+	@PreAuthorize("hasAnyAuthority('P002,P006')")
 	@PostMapping(path = "/district")
 	public Page<DistrictDTO> findByTerm(@RequestBody @Valid SearchDistrictDTO search){
 		Page<District> page = districtDao.findByTerm(search);
 		return mapper.map(page, DistrictDTO.class);
 	}
 	
-	@PreAuthorize("hasAnyAuthority('P002')")
+	@PreAuthorize("hasAnyAuthority('P002,P006')")
 	@PostMapping(path = "/province")
 	public Page<ProvinceDTO> findByTerm(@RequestBody @Valid SearchProvinceDTO search){
 		Page<Province> page = provinceDao.findByTerm(search);

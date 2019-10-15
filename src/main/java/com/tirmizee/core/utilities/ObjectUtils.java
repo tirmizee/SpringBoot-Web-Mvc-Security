@@ -10,4 +10,14 @@ public class ObjectUtils {
 		return obj;
 	}
 	
+	public static boolean isAnyNull(Object...obj) {
+		if (obj == null) { return true; }
+		for (Object object : obj) {
+			if (object == null) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }

@@ -26,4 +26,5 @@ public interface JdbcRepository<T extends Persistable<ID>, ID extends Serializab
 	
 	@Override
 	<S extends T> List<S> save(Iterable<S> entities);
+	
 }

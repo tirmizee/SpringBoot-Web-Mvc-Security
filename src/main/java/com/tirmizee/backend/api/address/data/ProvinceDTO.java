@@ -3,6 +3,7 @@ package com.tirmizee.backend.api.address.data;
 import java.io.Serializable;
 
 import lombok.Data;
+
 @Data
 public class ProvinceDTO implements Serializable {
 

@@ -20,7 +20,7 @@ import com.tirmizee.core.component.PageMapper;
 import com.tirmizee.core.constant.MessageCode;
 import com.tirmizee.core.domain.Role;
 import com.tirmizee.core.domain.RoleMapPermission;
-import com.tirmizee.core.exception.BusinessException;
+import com.tirmizee.core.exception.MessageSourceException;
 import com.tirmizee.core.utilities.CollectionUtils;
 
 @Service
@@ -50,7 +50,7 @@ public class RoleServiceImpl implements RoleService {
 		Role role = roleDao.findOne(updateRoleDTO.getRoleId());
 		
 		if (role == null) {
-			throw new BusinessException(MessageCode.MSG006, "Role data");
+			throw new MessageSourceException(MessageCode.MSG006, "Role data");
 		}
 		
 		List<RoleMapPermission> oldPermissons = roleMapPermissionDao.findByRoleId(role.getId());

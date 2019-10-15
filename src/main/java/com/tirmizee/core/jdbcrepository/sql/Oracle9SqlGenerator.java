@@ -19,19 +19,28 @@ public class Oracle9SqlGenerator extends AbstractSqlGenerator {
 
 	@Override
 	public String selectAll(StringBuilder statement, Pageable page) {
-		 return String.format(PAGE_WRAPPER, selectAll(statement, page.getSort()), page.getOffset(), page.getPageSize());
+		 return String.format(PAGE_WRAPPER, 
+				 selectAll(statement, page.getSort()), 
+				 page.getOffset(),
+				 page.getPageSize());
 	}
 
 	@Override
 	public String selectAll(TableDescription table, Pageable page) {
 		Sort sort = page.getSort() != null ? page.getSort() : sortById(table);
-        return String.format(PAGE_WRAPPER, selectAll(table, sort), page.getOffset(), page.getPageSize());
+        return String.format(PAGE_WRAPPER, 
+        		selectAll(table, sort),
+        		page.getOffset(),
+        		page.getPageSize());
 	}
 
 	@Override
 	public String selectAll(StringBuilder statement, TableDescription table, Pageable page) {
 		Sort sort = page.getSort() != null ? page.getSort() : sortById(table);
-		return String.format(PAGE_WRAPPER, selectAll(statement, sort), page.getOffset(), page.getPageSize());
+		return String.format(PAGE_WRAPPER, 
+				selectAll(statement, sort),
+				page.getOffset(), 
+				page.getPageSize());
 	}
 
 }

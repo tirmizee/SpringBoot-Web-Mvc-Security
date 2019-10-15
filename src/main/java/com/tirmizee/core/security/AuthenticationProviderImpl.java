@@ -2,6 +2,8 @@ package com.tirmizee.core.security;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.TaskExecutor;
@@ -29,6 +31,8 @@ import com.tirmizee.core.utilities.DateUtils;
  */
 public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 	
+	public final Logger LOGGER = LoggerFactory.getLogger(AuthenticationProviderImpl.class);
+	
 	@Autowired
 	@Qualifier("taskExecutor")
 	private TaskExecutor task;
@@ -55,27 +59,27 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 			
 			/*FIRST LOGIN */
 			if (userProfile.isFirstLogin()) {
-				logger.info(username + " : " + "first login");
+				LOGGER.info("{} : first login", username);
 				throw new FirstloginException(username, "Force password change first login");
 			}
 			
 			/*PASSWORD EXPIRED*/ 
 			if(DateUtils.nowAfter(userProfile.getCredentialsExpiredDate())) {
-				logger.info(username + " : " + "password expried");
+				LOGGER.info("{} : password expried", username);
 				userService.fourcePasswordExpired(username);
 				throw new PasswordExpriedException(username, "Force password expried change");
 			}
 			
 			/*ACCOUNT EXPIRED*/ 
 			if(DateUtils.nowAfter(userProfile.getAccountExpiredDate())) {
-				logger.info(username + " : " + "account expired");
+				LOGGER.info("{} : account expired", username);
 				userService.fourceAccountExpired(username);
 				throw new UserAccountExpiredException(username, "User account is expired");
 			}
 			
 			/*ACCOUNT LOCKED TIME*/
 			if(DateUtils.nowBefore(userProfile.getAccountLockedDate())) {
-				logger.info(username + " : " + "account locked time");
+				LOGGER.info("{} : account locked time", username);
 				throw new LockTimePasswordInvalidException(username, "User account is expired", userProfile.getAccountLockedDate());
 			}
 			
@@ -84,17 +88,21 @@ public class AuthenticationProviderImpl extends DaoAuthenticationProvider {
 			return authen;
 			
 		} catch (BadCredentialsException ex) {
-			logger.info(username + " : " + "account locked time");
+			LOGGER.info("{} : password invalid", username);
 //			LockUser lockUser = userAttempService.updateLoginAttemptFail(username, accessIp);
 			LockUserTime lockUserTime = userAttempService.updateLockUserTime(username, accessIp);
 			throw new LockTimePasswordInvalidException(ex.getMessage(), username, lockUserTime.getLockTime());
 		} catch (AccountExpiredException ex) {
+			LOGGER.info("{} : user account is expired", username);
 			throw new UserAccountExpiredException(username, "User account is expired");	
 		} catch (DisabledException ex) {
+			LOGGER.info("{} : user account is disabled", username);
 			throw new UserAccountDisabledException(username, "User account is disabled");	
 		} catch (CredentialsExpiredException ex) {
+			LOGGER.info("{} : force password expried change", username);
 			throw new PasswordExpriedException(username, "Force password expried change");
 		} catch (Exception exception) {
+			LOGGER.info("{} : {}", username, exception.getMessage());
 			throw exception;
 		}
 	}

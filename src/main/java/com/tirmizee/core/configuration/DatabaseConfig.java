@@ -5,7 +5,8 @@ import java.util.Map;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -22,7 +23,7 @@ import com.tirmizee.core.constant.Constant;
 //@EnableTransactionManagement
 public class DatabaseConfig {
 	
-	public static final Logger LOG = Logger.getLogger(DatabaseConfig.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConfig.class);
 	
 	public static final String JAVA_ENV = "java:/comp/env/";
 	

@@ -18,7 +18,10 @@ $(document).ready(function() {
         
         stompClient.subscribe('/topic/notify', function (message) {
         	var respose = JSON.parse(message.body).content;
-        	$("#btnSocket").text(respose);
+        	$.notify("Access granted" , { 
+				className : "info",
+				position : "right middle"
+			});
         }); 
     });
 	

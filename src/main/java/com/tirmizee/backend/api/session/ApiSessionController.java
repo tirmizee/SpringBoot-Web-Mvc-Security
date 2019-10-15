@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import com.tirmizee.backend.api.session.data.ResponseUserLoggedDTO;
+import com.tirmizee.backend.api.session.data.UserLoggedDetailDTO;
 import com.tirmizee.backend.service.SessionService;
 import com.tirmizee.backend.web.data.MessageSuccess;
 
@@ -49,15 +49,12 @@ public class ApiSessionController {
 	
 	@PreAuthorize("hasAnyAuthority('P003')")
 	@PostMapping(path = "/alluserlogged")
-	public DeferredResult<ResponseUserLoggedDTO> allUserLogged() {
-		DeferredResult<ResponseUserLoggedDTO> deferredResult = new DeferredResult<>(60000L);
+	public DeferredResult<UserLoggedDetailDTO> allUserLogged() {
+		DeferredResult<UserLoggedDetailDTO> deferredResult = new DeferredResult<>(60000L);
 		ForkJoinPool.commonPool().submit(() -> {
 			try {
-				ResponseUserLoggedDTO responseUserLoggedDTO = new ResponseUserLoggedDTO();
-				responseUserLoggedDTO.setUsersLogged(sessionService.allUserLogged());
-				responseUserLoggedDTO.setCountSessionActive(sessionService.countSessionsActive());
-				responseUserLoggedDTO.setCountSessionExpired(sessionService.countSessionsExpired());
-				deferredResult.setResult(responseUserLoggedDTO);
+				UserLoggedDetailDTO userLoggedDetailDTO = sessionService.allUserLoggedDetail();
+				deferredResult.setResult(userLoggedDetailDTO);
 			}catch (Exception ex) {
 				deferredResult.setErrorResult(ex);
 			}

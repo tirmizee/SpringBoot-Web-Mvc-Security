@@ -23,20 +23,21 @@ import com.tirmizee.core.jdbcrepository.sql.SqlGeneratorFactory;
 /**
  * @author Pratya Yeekhaday
  * 
- *  
  */
 @Component
 public class NamedQueryJdbcTemplate extends NamedParameterJdbcTemplate implements NamedQueryJdbcOperations {
 
+	private Map<String, String> queries;
+	
 	private SqlGenerator sqlGenerator;
 	
-	private Map<String, String> queries;
+	private static SqlGeneratorFactory sqlGeneratorFactory = SqlGeneratorFactory.getInstance();
 	
 	@Autowired
 	public NamedQueryJdbcTemplate(DataSource dataSource, Map<String, String> queries) {
 		super(dataSource);
 		this.queries = queries;
-		sqlGenerator = SqlGeneratorFactory.getInstance().getGenerator(dataSource);
+		sqlGenerator = sqlGeneratorFactory.getGenerator(dataSource);
 	}
 	
 	@Override 

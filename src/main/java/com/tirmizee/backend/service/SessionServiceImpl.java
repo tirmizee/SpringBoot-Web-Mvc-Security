@@ -11,6 +11,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
 
 import com.tirmizee.backend.api.session.data.UserLoggedDTO;
+import com.tirmizee.backend.api.session.data.UserLoggedDetailDTO;
 import com.tirmizee.core.component.PageMapper;
 import com.tirmizee.core.security.UserProfile;
 
@@ -34,7 +35,7 @@ public class SessionServiceImpl implements SessionService {
 		for (Object principal : principals) {
 			if (principal instanceof UserProfile) {
 				UserProfile profile = (UserProfile) principal;
-				List<SessionInformation> sessionInfos = getAllSessionsByUsername(profile.getUsername(), true);
+				List<SessionInformation> sessionInfos = findAllSessionsByUsername(profile.getUsername(), true);
 				for (SessionInformation sessionInfo : sessionInfos) {
 					UserLoggedDTO userLogged = mapper.map(profile, UserLoggedDTO.class);
 					userLogged.setExpired(sessionInfo.isExpired());
@@ -49,7 +50,7 @@ public class SessionServiceImpl implements SessionService {
 
 	@Override
 	public void removeSession(String username, String sessionId) {
-		List<SessionInformation> sessionInformations = getAllSessionsByUsername(username, false);
+		List<SessionInformation> sessionInformations = findAllSessionsByUsername(username, false);
 		for (SessionInformation sessionInformation : sessionInformations) {
 			if (StringUtils.equals(sessionId, sessionInformation.getSessionId())) {
 				sessionInformation.expireNow();
@@ -59,7 +60,7 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public List<SessionInformation> getAllSessionsByUsername(String username, boolean includeExpiredSessions) {
+	public List<SessionInformation> findAllSessionsByUsername(String username, boolean includeExpiredSessions) {
 		
 		List<SessionInformation> foundSession = null;
 		List<Object> principals = sessionRegistry.getAllPrincipals();
@@ -109,6 +110,15 @@ public class SessionServiceImpl implements SessionService {
 			}
 		}
 		return count;
+	}
+
+	@Override
+	public UserLoggedDetailDTO allUserLoggedDetail() {
+		UserLoggedDetailDTO userLoggedDetailDTO = new UserLoggedDetailDTO();
+		userLoggedDetailDTO.setUsersLogged(allUserLogged());
+		userLoggedDetailDTO.setCountSessionActive(countSessionsActive());
+		userLoggedDetailDTO.setCountSessionExpired(countSessionsExpired());
+		return userLoggedDetailDTO;
 	}
 
 }

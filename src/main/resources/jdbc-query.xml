@@ -280,5 +280,42 @@
         </value>
 	</entry>
     
+    <entry key="GET.USER.BY.USERID.AND.BRANCHCODE">
+        <value>
+       	<![CDATA[
+			SELECT
+			    *
+			FROM USERS U
+			INNER JOIN PROFILE P ON U.PROFILE_ID = P.PROFILE_ID
+			WHERE U.USER_ID = :USER_ID
+			AND P.BRANCH_CODE = :BRANCH_CODE
+        ]]>
+        </value>
+	</entry>
+	
+	<entry key="GET.USER.BY.USERNAME.AND.BRANCHCODE">
+        <value>
+       	<![CDATA[
+			SELECT
+			    *
+			FROM USERS U
+			INNER JOIN PROFILE P ON U.PROFILE_ID = P.PROFILE_ID
+			WHERE U.USERNAME = :USERNAME
+			AND P.BRANCH_CODE = :BRANCH_CODE
+        ]]>
+        </value>
+	</entry>
+	
+	<entry key="GET.MESSAGE.BY.CODE">
+        <value>
+       	<![CDATA[
+			SELECT
+			    *
+			FROM VALIDATE_MESSAGE
+			WHERE MSG_CODE = :MSG_CODE
+        ]]>
+        </value>
+	</entry>
+	
 </util:map>
 </beans>

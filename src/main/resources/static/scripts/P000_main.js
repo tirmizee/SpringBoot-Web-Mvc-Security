@@ -15,6 +15,7 @@ var MainModule = function(){
 	
 	return {
 		init : function(){
+			
 			activeMenu();
 			handleButton();
 		}

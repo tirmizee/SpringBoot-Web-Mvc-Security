@@ -94,7 +94,7 @@ var ManageSessionModule = function(){
 	var updateSession = function(url){
 		AjaxManager.GetData(null, url,
 			function(response){
-				loadData();
+				//loadData();
 				$.confirm({
 				    title: 'Meaages Alert!',
 				    content: 'Remove Session Complete',
@@ -126,19 +126,7 @@ var ManageSessionModule = function(){
 			function(response){
 				if (response) {
 					setTimeout(function(){ 
-						
-						var usersLogged = response.usersLogged;
-						var countUserLogged = response.usersLogged.length;
-						var countSessionActive = response.countSessionActive;
-						var countSessionExpired = response.countSessionExpired;
-						
-						DataTable.clear();
-						DataTable.rows.add(usersLogged);
-						DataTable.draw();
-						
-						$('#SPCountUserLogged')     .animateNumber({ number: countUserLogged });
-						$('#SPCountSessionExpired') .animateNumber({ number: countSessionExpired });
-						$('#SPCountUserActive')     .animateNumber({ number: countSessionActive });
+						render(response);
 						$('#TBSession_wrapper,#BoxUsersLogged,#BoxUsersActive,#BoxSessionExpried').waitMe("hide");
 				
 					}, 300);
@@ -163,6 +151,22 @@ var ManageSessionModule = function(){
 		);
 	}
 	
+	var render = function(response) {
+
+		var usersLogged = response.usersLogged;
+		var countUserLogged = response.usersLogged.length;
+		var countSessionActive = response.countSessionActive;
+		var countSessionExpired = response.countSessionExpired;
+		
+		DataTable.clear();
+		DataTable.rows.add(usersLogged);
+		DataTable.draw();
+		
+		$('#SPCountUserLogged')     .animateNumber({ number: countUserLogged });
+		$('#SPCountSessionExpired') .animateNumber({ number: countSessionExpired });
+		$('#SPCountUserActive')     .animateNumber({ number: countSessionActive });
+	}
+	
 	var handleButtonRefresh = function(){
 		$('.refresh').on('click', function(event){
 			loadData();
@@ -175,6 +179,15 @@ var ManageSessionModule = function(){
 			handleDataTable();
 			handleButtonRefresh();
 			loadData();
+			var socket = new SockJS('/tirmizee/ws');
+			var stompClient = Stomp.over(socket);
+		    
+			stompClient.connect({}, function (frame) {
+		        stompClient.subscribe('/topic/viewusers', function (message) {
+		        	var response = JSON.parse(message.body);
+		        	render(response);
+		        });  
+		    });
 		}
 	};
 	

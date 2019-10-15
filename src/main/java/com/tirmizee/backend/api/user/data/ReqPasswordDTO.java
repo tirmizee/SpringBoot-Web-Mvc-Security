@@ -6,6 +6,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.tirmizee.core.hibernate.validator.FieldMatch;
 
+import lombok.Data;
+
+@Data
 @FieldMatch(
 	field = "password", 
 	fieldMatch = "confirmPassword",
@@ -19,18 +22,5 @@ public class ReqPasswordDTO implements Serializable {
 	
 	@NotEmpty
 	private String confirmPassword;
-	
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
 	
 }
