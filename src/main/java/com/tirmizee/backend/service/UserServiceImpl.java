@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +39,8 @@ import com.tirmizee.core.domain.ForgotPassword;
 import com.tirmizee.core.domain.LogPassword;
 import com.tirmizee.core.domain.Profile;
 import com.tirmizee.core.domain.User;
-import com.tirmizee.core.exception.BusinessException;
+import com.tirmizee.core.exception.MessageSourceException;
+import com.tirmizee.core.exception.MessageException;
 import com.tirmizee.core.security.UserProfile;
 import com.tirmizee.core.utilities.DateUtils;
 
@@ -93,7 +95,7 @@ public class UserServiceImpl implements UserService {
 		
 		// VALIDATE THE PASSWORD MUST BE UNIQUE.
 		if (passwordEncoder.matches(passwordDTO.getConfirmPassword(), user.getPassword())) {
-			throw new BusinessException(MessageCode.MSG003);
+			throw new MessageSourceException(MessageCode.MSG003);
 		}
 		
 		final String passwordEncode = passwordEncoder.encode(passwordDTO.getConfirmPassword());
@@ -120,12 +122,12 @@ public class UserServiceImpl implements UserService {
 		
 		// VALIDATE OLD PASSWORD NOT VALID
 		if (!passwordEncoder.matches(passwordExpriedDTO.getOldPassword(), user.getPassword())) {
-			throw new BusinessException(MessageCode.MSG001);
+			throw new MessageSourceException(MessageCode.MSG001);
 		}
 		
 		// VALIDATE NEW PASSWORD MUST NOT BE LIKE OLD PASSWORD
 		if (logPasswordService.isPasswordExists(username, passwordExpriedDTO.getNewPasswordConfirm(), 2)) {
-			throw new BusinessException(MessageCode.MSG002);
+			throw new MessageSourceException(MessageCode.MSG002);
 		}
 		
 		int day = Integer.parseInt(appSettingService.getValue(PASSWORD_CHANGE_DAY));
@@ -148,20 +150,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ResponseTable<UserDetailPageDTO> pagingTable(RequestTable<UserDetailCriteriaDTO> requestTable, UserProfile userProfile) {
+	public ResponseTable<UserDetailPageDTO> dataTableByAuthority(RequestTable<UserDetailCriteriaDTO> requestTable, UserProfile userProfile) {
 		
 		Set<String> authorities = AuthorityUtils.authorityListToSet(userProfile.getAuthorities());
 		if (CollectionUtils.isEmpty(authorities)) {
-			throw new BusinessException(MessageCode.MSG001);
+			throw new MessageSourceException(MessageCode.MSG001);
 		}
 		
 		Pageable pageable = PageRequestHelper.build(requestTable, UserDetailPageDTO.class);
 		if(authorities.contains(PermissionCode.P002)) {
-			return new ResponseTable<>(userDao.findPageAllUserByCriteria(pageable, requestTable.getSerch()));
+			Page<UserDetailPageDTO> page = userDao.findPageAllUserByCriteria(pageable, requestTable.getSerch());
+			return new ResponseTable<>(page);
 		} 
 		
 		else if(authorities.contains(PermissionCode.P006)) {
-			return new ResponseTable<>(userDao.findPageBranchUserByCriteria(pageable, userProfile.getBranchCode(), requestTable.getSerch()));
+			Page<UserDetailPageDTO> page = userDao.findPageBranchUserByCriteria(pageable, userProfile.getBranchCode(), requestTable.getSerch());
+			return new ResponseTable<>(page);
 		}
 		
 		return new ResponseTable<>(userDao.findPageAllUserByCriteria(pageable, requestTable.getSerch()));
@@ -193,7 +197,7 @@ public class UserServiceImpl implements UserService {
 		
 		User user = userDao.findByEmail(email);
 		if (user == null) {
-			throw new BusinessException(MessageCode.MSG004);
+			throw new MessageSourceException(MessageCode.MSG004);
 		}
 		
 		String accessIp = request.getRemoteAddr();
@@ -228,7 +232,7 @@ public class UserServiceImpl implements UserService {
 		
 		ForgotPassword forgotPassword = forgotPasswordDao.findByUserIdAndToken(uid, token);
 		if (forgotPassword == null) {
-			throw new BusinessException(MessageCode.MSG005);
+			throw new MessageSourceException(MessageCode.MSG005);
 		}
 		
 		User user = userDao.findOne(uid);
@@ -256,10 +260,10 @@ public class UserServiceImpl implements UserService {
 		User user = userDao.findByUsername(username);
 
 		if (user == null) {
-			throw new BusinessException(MessageCode.MSG006, username);
+			throw new MessageSourceException(MessageCode.MSG006, username);
 		}
 		
-		user.setEnabled(updateEnableDTO.getStatus());
+		user.setEnabled(updateEnableDTO.isStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}
@@ -271,10 +275,10 @@ public class UserServiceImpl implements UserService {
 		User user = userDao.findByUsername(username);
 
 		if (user == null) {
-			throw new BusinessException(MessageCode.MSG006, username);
+			throw new MessageSourceException(MessageCode.MSG006, username);
 		}
 		
-		user.setCredentialsnonexpired(UpdatePasswordExpiredDTO.getStatus());
+		user.setCredentialsnonexpired(UpdatePasswordExpiredDTO.isStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}
@@ -286,10 +290,10 @@ public class UserServiceImpl implements UserService {
 		User user = userDao.findByUsername(username);
 
 		if (user == null) {
-			throw new BusinessException(MessageCode.MSG006,username);
+			throw new MessageSourceException(MessageCode.MSG006,username);
 		}
 		
-		user.setAccountnonlocked(updateAccountNonLockedDTO.getStatus());
+		user.setAccountnonlocked(updateAccountNonLockedDTO.isStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 		userAttempService.resetLoginAttempt(user.getUsername(), request.getRemoteAddr());
@@ -302,10 +306,10 @@ public class UserServiceImpl implements UserService {
 		User user = userDao.findByUsername(username);
 
 		if (user == null) {
-			throw new BusinessException(MessageCode.MSG006, username);
+			throw new MessageSourceException(MessageCode.MSG006, username);
 		}
 		
-		user.setFirstLogin(updateFirstLogin.getStatus());
+		user.setFirstLogin(updateFirstLogin.isStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}
@@ -317,10 +321,10 @@ public class UserServiceImpl implements UserService {
 		User user = userDao.findByUsername(username);
 
 		if (user == null) {
-			throw new BusinessException(MessageCode.MSG006, username);
+			throw new MessageSourceException(MessageCode.MSG006, username);
 		}
 		
-		user.setAccountnonexpired(updateAccountExpired.getStatus());
+		user.setAccountnonexpired(updateAccountExpired.isStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}
@@ -331,12 +335,12 @@ public class UserServiceImpl implements UserService {
 		
 		User user = userDao.findOne(updateUser.getUserId());
 		if (user == null) {
-			throw new BusinessException(MessageCode.MSG006, updateUser.getUserId());
+			throw new MessageSourceException(MessageCode.MSG006, updateUser.getUserId());
 		}
 		
 		User usernameUpdate = userDao.findByUsername(updateUser.getUsername(), updateUser.getUserId());
 		if (usernameUpdate != null) {
-			throw new BusinessException(MessageCode.MSG007, updateUser.getUsername());
+			throw new MessageSourceException(MessageCode.MSG007, updateUser.getUsername());
 		}
 		
 		Profile profile = profileDao.findOne(user.getProfileId());
@@ -348,6 +352,36 @@ public class UserServiceImpl implements UserService {
 		mapper.map(updateUser, profile);
 		profileDao.save(profile);
 		
+	}
+
+	@Override
+	public boolean hasBranch(Long userId, String branchCode) {
+		return userDao.getUserByUserIdAndBranchCode(userId, branchCode) != null;
+	}
+
+	@Override
+	public boolean hasBranch(String username, String branchCode) {
+		return userDao.getUserByUsernameAndBranchCode(username, branchCode) != null;
+	}
+	
+	@Override
+	public void validateUserByAuthority(Long userId, UserProfile userProfile) {
+		Set<String> authorities = AuthorityUtils.authorityListToSet(userProfile.getAuthorities());
+		if(authorities.contains(PermissionCode.P006)) {
+			if (!hasBranch(userId, userProfile.getBranchCode())) {
+				throw new MessageException("E001");
+			}
+		} 
+	}
+
+	@Override
+	public void validateUserByAuthority(String username, UserProfile userProfile) {
+		Set<String> authorities = AuthorityUtils.authorityListToSet(userProfile.getAuthorities());
+		if(authorities.contains(PermissionCode.P006)) {
+			if (!hasBranch(username, userProfile.getBranchCode())) {
+				throw new MessageSourceException(MessageCode.MSG008);
+			}
+		} 
 	}
 
 }

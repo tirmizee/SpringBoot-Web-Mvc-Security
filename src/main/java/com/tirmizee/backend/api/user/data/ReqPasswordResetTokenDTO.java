@@ -8,6 +8,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.tirmizee.core.hibernate.validator.FieldMatch;
 
+import lombok.Data;
+
+@Data
 @FieldMatch(
 	field = "password", 
 	fieldMatch = "confirmPassword",
@@ -28,36 +31,4 @@ public class ReqPasswordResetTokenDTO implements Serializable {
 	@NotEmpty
 	private String confirmPassword;
 
-	public Long getUid() {
-		return uid;
-	}
-
-	public void setUid(Long uid) {
-		this.uid = uid;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
-	
 }

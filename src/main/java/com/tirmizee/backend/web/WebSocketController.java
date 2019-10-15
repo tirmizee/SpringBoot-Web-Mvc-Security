@@ -12,6 +12,7 @@ import com.tirmizee.backend.web.data.Payload;
 @Controller
 public class WebSocketController {
 	
+//	@PreAuthorize("hasAnyAuthority('P002')")
 	@MessageMapping("/notify")
     @SendTo("/topic/notify")
     public Payload greeting(Notify notify) throws Exception {

@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import com.tirmizee.core.component.PageMapper;
 import com.tirmizee.core.component.PageMapperImpl;
 
-
 @Configuration
 public class DozerMapperConfig {
 	

@@ -5,6 +5,9 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.Data;
+
+@Data
 public class UserLoggedDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,59 +25,4 @@ public class UserLoggedDTO implements Serializable {
 	
 	private boolean expired ;
 	
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public String getRoleName() {
-		return roleName;
-	}
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-	public String getAccessIp() {
-		return accessIp;
-	}
-	public void setAccessIp(String accessIp) {
-		this.accessIp = accessIp;
-	}
-	public Date getCreateDate() {
-		return createDate;
-	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-	public boolean isExpired() {
-		return expired;
-	}
-	public void setExpired(boolean expired) {
-		this.expired = expired;
-	}
-	public String getSessionId() {
-		return sessionId;
-	}
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
-	public Integer getMaxSession() {
-		return maxSession;
-	}
-	public void setMaxSession(Integer maxSession) {
-		this.maxSession = maxSession;
-	}
-
 }

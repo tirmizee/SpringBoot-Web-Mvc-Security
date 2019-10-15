@@ -1,19 +1,14 @@
 package com.tirmizee.backend.web.data;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Payload {
 	
 	private String content;
-
-	public Payload(String content) {
-		this.content = content;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
 	
 }

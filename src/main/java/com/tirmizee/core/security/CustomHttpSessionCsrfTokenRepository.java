@@ -11,9 +11,6 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.util.Assert;
 
-import com.fasterxml.uuid.Generators;
-import com.tirmizee.core.component.PasswordGenerator;
-
 public final class CustomHttpSessionCsrfTokenRepository implements CsrfTokenRepository {
 	
 	private static final String DEFAULT_CSRF_PARAMETER_NAME = "_csrf";
@@ -77,6 +74,6 @@ public final class CustomHttpSessionCsrfTokenRepository implements CsrfTokenRepo
 
 	// custom create token 
 	private String createNewToken() {
-		return  Generators.timeBasedGenerator().generate() + "-" + PasswordGenerator.generate(10);
+		return UUID.randomUUID().toString();
 	}
 }

@@ -3,6 +3,8 @@ package com.tirmizee.core.filter;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.AbstractRequestLoggingFilter;
 
@@ -12,6 +14,8 @@ import org.springframework.web.filter.AbstractRequestLoggingFilter;
  */
 public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(RequestLoggingFilter.class);
+	
 	@Override
 	protected void beforeRequest(HttpServletRequest request, String message) {
 	}
@@ -20,7 +24,7 @@ public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 	protected void afterRequest(HttpServletRequest request, String message) {
 		String name = SecurityContextHolder.getContext().getAuthentication().getName();
 		String accessIp = request.getRemoteAddr();
-		logger.info(name + " : " + accessIp + " : " + message);
+		LOGGER.info("{} : {} : {}", name, accessIp, message);
 	}
 
 	@Override

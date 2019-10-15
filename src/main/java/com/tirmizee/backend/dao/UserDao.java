@@ -11,12 +11,16 @@ import com.tirmizee.core.domain.UserDetail;
 import com.tirmizee.core.repository.UserRepository;
 
 public interface UserDao extends UserRepository {
+	
+	User findByEmail(String email);
 
 	User findByUsername(String username);
 	
 	User findByUsername(String username, Long excludeUserId);
 	
-	User findByEmail(String email);
+	User getUserByUserIdAndBranchCode(Long userId, String branchCode);
+	
+	User getUserByUsernameAndBranchCode(String username, String branchCode);
 
 	UserDetail findDetailByUsername(String username);
 	

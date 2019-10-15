@@ -1,7 +1,5 @@
 package com.tirmizee.backend.service;
 
-import java.util.Set;
-
 import com.tirmizee.backend.api.user.data.ReqPasswordDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordExpriedDTO;
 import com.tirmizee.backend.api.user.data.ReqPasswordResetTokenDTO;
@@ -19,6 +17,10 @@ public interface UserService {
 
 	boolean isPasswordExpired(String username);
 	
+	boolean hasBranch(Long userId, String branchCode);
+	
+	boolean hasBranch(String username, String branchCode);
+	
 	void forgotPassword(String email);
 	
 	void fourceAccountExpired(String username);
@@ -33,6 +35,10 @@ public interface UserService {
 	
 	void updateUser(UserDetailUpdateDTO updateUser);
 	
+	void validateUserByAuthority(Long userId, UserProfile userProfile);
+	
+	void validateUserByAuthority(String username, UserProfile userProfile);
+	
 	void updateStatusEnable(ReqUpdateStatusDTO updateEnable);
 	
 	void updateStatusFirstLogin(ReqUpdateStatusDTO updateFirstLogin);
@@ -43,6 +49,6 @@ public interface UserService {
 	
 	void updateStatusPasswordExpired(ReqUpdateStatusDTO updatePasswordExpired);
 	
-	ResponseTable<UserDetailPageDTO> pagingTable(RequestTable<UserDetailCriteriaDTO> requestTable, UserProfile profile); 
+	ResponseTable<UserDetailPageDTO> dataTableByAuthority(RequestTable<UserDetailCriteriaDTO> requestTable, UserProfile profile); 
 	
 }

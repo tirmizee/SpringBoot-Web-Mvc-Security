@@ -4,6 +4,11 @@ import java.sql.Timestamp;
 
 import org.springframework.security.authentication.AccountStatusException;
 
+
+/**
+ * @author Pratya Yeelhaday
+ *
+ */
 public class LockTimePasswordInvalidException extends AccountStatusException {
 
 	private static final long serialVersionUID = 6823612577538656928L;

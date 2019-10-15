@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.core.session.SessionInformation;
 
 import com.tirmizee.backend.api.session.data.UserLoggedDTO;
+import com.tirmizee.backend.api.session.data.UserLoggedDetailDTO;
 
 public interface SessionService {
 	
@@ -18,6 +19,8 @@ public interface SessionService {
 	
 	List<UserLoggedDTO> allUserLogged();
 	
-	List<SessionInformation> getAllSessionsByUsername(String username, boolean includeExpiredSessions);
+	List<SessionInformation> findAllSessionsByUsername(String username, boolean includeExpiredSessions);
+	
+	UserLoggedDetailDTO allUserLoggedDetail();
 	
 }

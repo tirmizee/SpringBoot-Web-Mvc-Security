@@ -9,5 +9,6 @@ public final class MessageCode {
 	public static final String MSG005 = "MSG005";
 	public static final String MSG006 = "MSG006";
 	public static final String MSG007 = "MSG007";
+	public static final String MSG008 = "MSG008";
 
 }

@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
-import com.tirmizee.core.component.SOAPConnector;
+import com.tirmizee.soap.connector.SOAPConnector;
 
 @Configuration
 public class SoapClientConfig {

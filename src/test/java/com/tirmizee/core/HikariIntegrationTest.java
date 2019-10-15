@@ -10,16 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class HikariIntegrationTest {
 
 	@Autowired
     private DataSource dataSource;
  
-    @Test
+    /*@Test
     public void hikariConnectionPoolIsConfigured() {
         assertEquals("com.zaxxer.hikari.HikariDataSource", dataSource.getClass().getName());
-    }
+    }*/
     
 }
