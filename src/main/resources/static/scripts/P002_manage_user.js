@@ -53,9 +53,9 @@ var ManageUserModule = function(){
 				{ data : "tel"                    ,title : "Tel" },
 				{ data : "branchName"             ,title : "Branch" },
 				{ data : "enabled"     		      ,title : "Status Enable" },
-				{ data : "accountnonexpired"      ,title : "Status Account" },
-				{ data : "accountnonlocked"       ,title : "Status Locked" },
-				{ data : "credentialsnonexpired"  ,title : "Status Password" },
+				{ data : "accountNonExpired"      ,title : "Status Account" },
+				{ data : "accountNonLocked"       ,title : "Status Locked" },
+				{ data : "credentialsNonExpired"  ,title : "Status Password" },
 				{ data : "firstLogin"             ,title : "Status First Login"}
 			],
 			columnDefs: [
@@ -228,7 +228,7 @@ var ManageUserModule = function(){
 				var selectedSubd = { value : response.subdistrictId ,text : response.subdistrictNameTh};
 				var selectedRole = { value : response.roleId        ,text : response.roleName};
 				
-				var passwordExpiredDate = new Date(response.credentialsexpiredDate);
+				var passwordExpiredDate = new Date(response.credentialsExpiredDate);
 				var accountExpiredDate  = new Date(response.accountExpiredDate);
 				
 				var elementAccountExpired  = $('.toggle-account-expired')[0];
@@ -254,10 +254,10 @@ var ManageUserModule = function(){
 				$('#SLSubDistrict').append($('<option>', selectedSubd)).prop('selected', true);
 				$('#FormEditUser select[name="roleId"]').append($('<option>', selectedRole)).prop('selected', true);
 				
-				defaultToggleElement(elementAccountExpired, response.accountnonexpired);
+				defaultToggleElement(elementAccountExpired, response.accountNonExpired);
 				defaultToggleElement(elementAccountEnabled, response.enabled);
-				defaultToggleElement(elementAccountLocked, response.accountnonlocked);
-				defaultToggleElement(elementPasswordExpired, response.credentialsnonexpired);
+				defaultToggleElement(elementAccountLocked, response.accountNonLocked);
+				defaultToggleElement(elementPasswordExpired, response.credentialsNonExpired);
 			},
 			function(jqXHR, textStatus, errorThrown){
 				
@@ -384,7 +384,7 @@ var ManageUserModule = function(){
 	var updateStatusLocked = function(data){
 		var request = {
 			username : data.username,
-			status   : !data.accountnonlocked
+			status   : !data.accountNonLocked
 		};
 		AjaxManager.PostData(request, 'api/user/update/accountnonlocked',
 			function(response){
@@ -410,7 +410,7 @@ var ManageUserModule = function(){
 	var updateStatusPasswordExpired = function(data){
 		var request = {
 			username : data.username,
-			status   : !data.credentialsnonexpired
+			status   : !data.credentialsNonExpired
 		};
 		AjaxManager.PostData(request, 'api/user/update/passwordexpired',
 			function(response){
@@ -462,7 +462,7 @@ var ManageUserModule = function(){
 	var updateStatusAccount = function(data){
 		var request = {
 			username : data.username,
-			status   : !data.accountnonexpired
+			status   : !data.accountNonExpired
 		};
 		AjaxManager.PostData(request, 'api/user/update/accountnonexpired',
 			function(response){
@@ -859,11 +859,11 @@ var ManageUserModule = function(){
 		request.maxSession             = $('#FormEditUser input[name="maxSession"]').val();
 		request.roleId                 = $('#FormEditUser select[name="roleId"]').val();
 		request.accountExpiredDate     = $('#FormEditUser input[name="accountExpiredDate"]').datepicker("getDate");
-		request.credentialsexpiredDate = $('#FormEditUser input[name="passwordExpiredDate"]').datepicker("getDate");
+		request.credentialsExpiredDate = $('#FormEditUser input[name="passwordExpiredDate"]').datepicker("getDate");
 		request.enabled                = $('.toggle-account-enabled').find('.active').data('name') == 'Y';
-		request.accountnonlocked       = $('.toggle-account-locked').find('.active').data('name') == 'Y';
-		request.accountnonexpired      = $('.toggle-account-expired').find('.active').data('name') == 'Y';
-		request.credentialsnonexpired  = $('.toggle-password-expired').find('.active').data('name') == 'Y';
+		request.accountNonLocked       = $('.toggle-account-locked').find('.active').data('name') == 'Y';
+		request.accountNonExpired      = $('.toggle-account-expired').find('.active').data('name') == 'Y';
+		request.credentialsNonExpired  = $('.toggle-password-expired').find('.active').data('name') == 'Y';
 		request.firstName              = $('#FormEditUser input[name="firstName"]').val();
 		request.lastName               = $('#FormEditUser input[name="lastName"]').val();
 		request.citizenId              = $('#FormEditUser input[name="citizenId"]').val();

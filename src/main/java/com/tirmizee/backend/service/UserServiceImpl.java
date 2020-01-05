@@ -134,8 +134,8 @@ public class UserServiceImpl implements UserService {
 		final String passwordEncode = passwordEncoder.encode(passwordExpriedDTO.getNewPasswordConfirm());
 		
 		user.setPassword(passwordEncode);
-		user.setCredentialsexpiredDate(DateUtils.plusDays(day));
-		user.setCredentialsnonexpired(true);
+		user.setCredentialsExpiredDate(DateUtils.plusDays(day));
+		user.setCredentialsNonExpired(true);
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 		
@@ -174,7 +174,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void fourceAccountExpired(String username) {
 		User user = userDao.findByUsername(username);
-		user.setAccountnonexpired(false);
+		user.setAccountNonExpired(false);
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}
@@ -182,7 +182,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void fourcePasswordExpired(String username) {
 		User user = userDao.findByUsername(username);
-		user.setCredentialsnonexpired(false);
+		user.setCredentialsNonExpired(false);
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}
@@ -250,7 +250,7 @@ public class UserServiceImpl implements UserService {
 	public boolean isPasswordExpired(String username) {
 		User user = userDao.findByUsername(username);
 		if (user == null) { return false; }
-		return DateUtils.nowAfter(user.getCredentialsexpiredDate());
+		return DateUtils.nowAfter(user.getCredentialsExpiredDate());
 	} 
 	
 	@Override
@@ -278,7 +278,7 @@ public class UserServiceImpl implements UserService {
 			throw new MessageSourceException(MessageCode.MSG006, username);
 		}
 		
-		user.setCredentialsnonexpired(UpdatePasswordExpiredDTO.isStatus());
+		user.setCredentialsNonExpired(UpdatePasswordExpiredDTO.isStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}
@@ -293,7 +293,7 @@ public class UserServiceImpl implements UserService {
 			throw new MessageSourceException(MessageCode.MSG006,username);
 		}
 		
-		user.setAccountnonlocked(updateAccountNonLockedDTO.isStatus());
+		user.setAccountNonLocked(updateAccountNonLockedDTO.isStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 		userAttempService.resetLoginAttempt(user.getUsername(), request.getRemoteAddr());
@@ -324,7 +324,7 @@ public class UserServiceImpl implements UserService {
 			throw new MessageSourceException(MessageCode.MSG006, username);
 		}
 		
-		user.setAccountnonexpired(updateAccountExpired.isStatus());
+		user.setAccountNonExpired(updateAccountExpired.isStatus());
 		user.setUpdateDate(DateUtils.now());
 		userDao.save(user);
 	}

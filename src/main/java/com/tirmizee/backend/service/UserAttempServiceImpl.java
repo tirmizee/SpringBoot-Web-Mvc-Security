@@ -36,7 +36,7 @@ public class UserAttempServiceImpl implements UserAttempService {
 		if (userAttempt.getAttemp() >= maxLoginFail) {
 			isLocked = true;
 			User user = userDao.findByUsername(username);
-			user.setAccountnonlocked(false);
+			user.setAccountNonLocked(false);
 			userDao.save(user);
 		}
 		

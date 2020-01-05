@@ -21,17 +21,17 @@ public class UserDetailPageDTO implements Serializable {
 	@SortColumn(UserRepository.COL_USERNAME)
 	private String username;
 	
-	@SortColumn(UserRepository.COL_CREDENTIALSEXPIRED_DATE)
-	private java.sql.Date credentialsexpiredDate;
+	@SortColumn(UserRepository.COL_CREDENTIALS_EXPIRED_DATE)
+	private java.sql.Date credentialsExpiredDate;
 	
-	@SortColumn(UserRepository.COL_CREDENTIALSNONEXPIRED)
-	private boolean credentialsnonexpired;
+	@SortColumn(UserRepository.COL_CREDENTIALS_NON_EXPIRED)
+	private boolean credentialsNonExpired;
 	
-	@SortColumn(UserRepository.COL_ACCOUNTNONEXPIRED)
-	private boolean accountnonexpired;
+	@SortColumn(UserRepository.COL_ACCOUNT_NON_EXPIRED)
+	private boolean accountNonExpired;
 	
-	@SortColumn(UserRepository.COL_ACCOUNTNONLOCKED)
-	private boolean accountnonlocked;	
+	@SortColumn(UserRepository.COL_ACCOUNT_NON_LOCKED)
+	private boolean accountNonLocked;	
 	
 	@SortColumn(UserRepository.COL_ENABLED)
 	private boolean enabled;
@@ -65,8 +65,8 @@ public class UserDetailPageDTO implements Serializable {
 	
 	private String roleCode;
 	
-	public boolean isAccountnonlocked() {
-		return accountnonlocked;
+	public boolean isAccountNonLocked() {
+		return accountNonLocked;
 	}
 	public boolean isEnabled() {
 		return enabled;

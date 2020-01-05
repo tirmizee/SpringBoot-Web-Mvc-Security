@@ -19,12 +19,12 @@ public class User implements Persistable<Long>{
 	private String password;
 	private java.sql.Date updateDate;
 	private java.sql.Date createDate;
-	private java.sql.Date credentialsexpiredDate;
+	private java.sql.Date credentialsExpiredDate;
 	private java.sql.Date accountExpiredDate;
 	private Timestamp accountLockedDate;
-	private boolean credentialsnonexpired;
-	private boolean accountnonexpired;
-	private boolean accountnonlocked;	
+	private boolean credentialsNonExpired;
+	private boolean accountNonExpired;
+	private boolean accountNonLocked;	
 	private boolean enabled;
 	private boolean firstLogin;
 	private Integer fkRoleId;

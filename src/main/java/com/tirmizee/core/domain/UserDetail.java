@@ -22,12 +22,12 @@ public class UserDetail implements Serializable{
 	private Integer roleId;
 	private String roleCode;
 	private String roleName;
-	private Date credentialsexpiredDate;
+	private Date credentialsExpiredDate;
 	private Date accountExpiredDate;
 	private Timestamp accountLockedDate;
-	private boolean credentialsnonexpired;
-	private boolean accountnonexpired;
-	private boolean accountnonlocked;	
+	private boolean credentialsNonExpired;
+	private boolean accountNonExpired;
+	private boolean accountNonLocked;	
 	private boolean enabled;
 	private boolean firstLogin;
 	private Integer maxSession;

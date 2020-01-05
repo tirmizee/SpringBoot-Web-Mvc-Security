@@ -1,5 +1,8 @@
 package com.tirmizee;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -12,8 +15,9 @@ public class ApplicationInitializer extends SpringBootServletInitializer impleme
 
 	public final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
-	public static void main(String...args) {
+	public static void main(String...args) throws MalformedURLException, IOException {
 		SpringApplication.run(ApplicationInitializer.class, args);
+		
 	}
 
 	@Override

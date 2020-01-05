@@ -10,6 +10,4 @@ public interface SubDistrictDao extends SubDistrictRepository {
 	
 	Page<SubDistrictDTO> findByTerm(SearchSubDistrictDTO search);
 	
-	
-	
 }

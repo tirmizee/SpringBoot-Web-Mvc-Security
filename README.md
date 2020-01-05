@@ -79,3 +79,7 @@ Building Enterprise Java Applications the Spring Way
 - https://medium.com/better-programming/secure-a-spring-boot-rest-api-with-json-web-token-reference-to-angular-integration-e57a25806c50
 - https://pattern-match.com/blog/2018/10/17/springboot2-with-oauth2-integration/
 - https://www.youtube.com/watch?time_continue=422&v=wxebTn_a930
+- http://www.thinkplexx.com/learn/howto/security/tools/understanding-java-keytool-working-with-crt-files-fixing-certificate-problems
+- https://stackoverflow.com/questions/4325263/how-to-import-a-cer-certificate-into-a-java-keystore
+- https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html
+- https://www.vogella.com/tutorials/JavaPerformance/article.html

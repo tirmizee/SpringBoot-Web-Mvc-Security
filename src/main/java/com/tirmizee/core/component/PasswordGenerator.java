@@ -13,7 +13,6 @@ public class PasswordGenerator {
 	private static final String LOCASE_CHARACTERS = UPCASE_CHARACTERS.toLowerCase();
 	private static final Random RANDOM = new Random();
 	
-	
 	public static String generate(int length){
 		final StringBuilder password = new StringBuilder(length);
 		for (int i = 0; i < length; i++) {
