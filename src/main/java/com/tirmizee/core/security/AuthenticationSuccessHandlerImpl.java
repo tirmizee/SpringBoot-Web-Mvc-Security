@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import com.tirmizee.backend.service.AppSettingService;
 import com.tirmizee.backend.service.MessagingService;
 import com.tirmizee.backend.service.SessionService;
+import com.tirmizee.core.component.ApplicationSetting;
 
 /**
  * @author Pratya Yeekhaday
@@ -36,7 +37,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 	private MessagingService messagingService;
 	
 	@Autowired
-	private AppSettingService appSettingService;
+	private ApplicationSetting applicationSetting;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -46,7 +47,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		((UserProfile) authentication.getPrincipal()).setAccessIp(request.getRemoteAddr());
 		
 		// SET SESSION TIMEOUT
-		int sessionTimeout = Integer.parseInt(appSettingService.getValue(SESSION_TIME_OUT));
+		int sessionTimeout = applicationSetting.getSessionTimeOut();
 		request.getSession().setMaxInactiveInterval(sessionTimeout * 60);
 		
 		// DETERMINE DEFAULT URL FOR PERMISSION
