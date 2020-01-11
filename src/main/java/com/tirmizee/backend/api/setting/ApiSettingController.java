@@ -9,6 +9,10 @@ import com.tirmizee.backend.service.AppSettingService;
 import com.tirmizee.backend.web.data.MessageSuccess;
 import com.tirmizee.core.component.ApplicationSetting;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
 @RestController
 @RequestMapping(value = "/api/setting")
 public class ApiSettingController {
@@ -25,6 +29,9 @@ public class ApiSettingController {
 		applicationSetting.setMaxLoginFail(refreshApplicationSetting.getMaxLoginFail());
 		applicationSetting.setPasswordChangeDay(refreshApplicationSetting.getPasswordChangeDay());
 		applicationSetting.setSessionTimeOut(refreshApplicationSetting.getSessionTimeOut());
+		log.info("MaxLoginFail : {}" ,applicationSetting.getMaxLoginFail());
+		log.info("PasswordChangeDay : {}" ,applicationSetting.getPasswordChangeDay());
+		log.info("SessionTimeOut : {}" ,applicationSetting.getSessionTimeOut());
 		return new MessageSuccess();
 	}
 	

@@ -83,3 +83,5 @@ Building Enterprise Java Applications the Spring Way
 - https://stackoverflow.com/questions/4325263/how-to-import-a-cer-certificate-into-a-java-keystore
 - https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html
 - https://www.vogella.com/tutorials/JavaPerformance/article.html
+- https://www.javainuse.com/spring/springboot_session_redis
+- https://docs.spring.io/spring-session/docs/current/reference/html5/guides/boot-redis.html

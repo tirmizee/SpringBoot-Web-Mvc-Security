@@ -30,7 +30,7 @@ import com.tirmizee.core.domain.Role;
 
 @RestController
 @RequestMapping(path = "api/role")
-public class ApiRoleController {
+public class RoleApiController {
 
 	@Autowired
 	private RoleDao roleDao;

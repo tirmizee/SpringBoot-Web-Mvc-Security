@@ -27,10 +27,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
 	    return new LocaleChangeInterceptor() {
+	    	
 	    	@Override
 			public String getParamName() {
 				return "language";
 			}
+	    	
 	    	@Override
 	    	protected Locale parseLocaleValue(String locale) {
 	    		String repairedLocale = locale.replaceAll("'", "");

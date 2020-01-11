@@ -17,7 +17,6 @@ public class ApplicationInitializer extends SpringBootServletInitializer impleme
 	
 	public static void main(String...args) throws MalformedURLException, IOException {
 		SpringApplication.run(ApplicationInitializer.class, args);
-		
 	}
 
 	@Override

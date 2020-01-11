@@ -141,7 +141,6 @@ public class TomcatEmbeddedConfig {
 	}
 	
 	private Connector initiateHttpConnector() {
-		
 		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
 		connector.setScheme("http");
 	    connector.setPort(8090);
