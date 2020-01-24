@@ -85,3 +85,6 @@ Building Enterprise Java Applications the Spring Way
 - https://www.vogella.com/tutorials/JavaPerformance/article.html
 - https://www.javainuse.com/spring/springboot_session_redis
 - https://docs.spring.io/spring-session/docs/current/reference/html5/guides/boot-redis.html
+- https://github.com/spring-projects/spring-security-oauth/blob/master/spring-security-oauth2/src/test/resources/schema.sql
+- https://www.devglan.com/spring-security/spring-boot-security-oauth2-example
+- https://sysadmin.psu.ac.th/2019/03/03/what-is-oauth2/
