@@ -7,9 +7,9 @@ import com.tirmizee.backend.api.user.data.ReqUpdateStatusDTO;
 import com.tirmizee.backend.api.user.data.UserDetailCriteriaDTO;
 import com.tirmizee.backend.api.user.data.UserDetailPageDTO;
 import com.tirmizee.backend.api.user.data.UserDetailUpdateDTO;
+import com.tirmizee.core.config.security.UserProfile;
 import com.tirmizee.core.datatable.RequestTable;
 import com.tirmizee.core.datatable.ResponseTable;
-import com.tirmizee.core.security.UserProfile;
 
 public interface UserService {
 	

@@ -28,9 +28,9 @@ import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.backend.service.UserService;
 import com.tirmizee.backend.web.data.MessageSuccess;
 import com.tirmizee.core.annotaion.CurrentUser;
+import com.tirmizee.core.config.security.UserProfile;
 import com.tirmizee.core.datatable.RequestTable;
 import com.tirmizee.core.datatable.ResponseTable;
-import com.tirmizee.core.security.UserProfile;
 
 @RestController
 @RequestMapping("/api/user")

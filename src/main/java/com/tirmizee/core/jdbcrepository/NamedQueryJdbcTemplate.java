@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,7 +14,6 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.stereotype.Component;
 
 import com.tirmizee.core.jdbcrepository.sql.SqlGenerator;
 import com.tirmizee.core.jdbcrepository.sql.SqlGeneratorFactory;
@@ -24,7 +22,6 @@ import com.tirmizee.core.jdbcrepository.sql.SqlGeneratorFactory;
  * @author Pratya Yeekhaday
  * 
  */
-@Component
 public class NamedQueryJdbcTemplate extends NamedParameterJdbcTemplate implements NamedQueryJdbcOperations {
 
 	private Map<String, String> queries;
@@ -33,7 +30,6 @@ public class NamedQueryJdbcTemplate extends NamedParameterJdbcTemplate implement
 	
 	private static SqlGeneratorFactory sqlGeneratorFactory = SqlGeneratorFactory.getInstance();
 	
-	@Autowired
 	public NamedQueryJdbcTemplate(DataSource dataSource, Map<String, String> queries) {
 		super(dataSource);
 		this.queries = queries;

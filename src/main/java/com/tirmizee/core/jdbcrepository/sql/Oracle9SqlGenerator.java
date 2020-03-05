@@ -10,6 +10,9 @@ import com.tirmizee.core.jdbcrepository.TableDescription;
 
 public class Oracle9SqlGenerator extends AbstractSqlGenerator {
 
+	/*
+	 * https://www.databasestar.com/limit-the-number-of-rows-in-oracle/
+	 */	
 	private static final String PAGE_WRAPPER = "SELECT t2__.* FROM ( SELECT t1__.*, ROWNUM as rn__ FROM ( %s ) t1__ ) t2__ WHERE t2__.rn__ > %d AND ROWNUM <= %d";
 	
 	@Override

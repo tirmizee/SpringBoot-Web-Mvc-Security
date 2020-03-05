@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.tirmizee.backend.api.session.data.UserLoggedDTO;
 import com.tirmizee.backend.api.session.data.UserLoggedDetailDTO;
 import com.tirmizee.core.component.PageMapper;
-import com.tirmizee.core.security.UserProfile;
+import com.tirmizee.core.config.security.UserProfile;
 
 @Service
 public class SessionServiceImpl implements SessionService {

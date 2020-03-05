@@ -30,6 +30,7 @@ import com.tirmizee.backend.dao.ProfileDao;
 import com.tirmizee.backend.dao.UserDao;
 import com.tirmizee.backend.service.data.ForgotPasswordModel;
 import com.tirmizee.core.component.PageMapper;
+import com.tirmizee.core.config.security.UserProfile;
 import com.tirmizee.core.constant.MessageCode;
 import com.tirmizee.core.constant.PermissionCode;
 import com.tirmizee.core.datatable.PageRequestHelper;
@@ -41,7 +42,6 @@ import com.tirmizee.core.domain.Profile;
 import com.tirmizee.core.domain.User;
 import com.tirmizee.core.exception.MessageSourceException;
 import com.tirmizee.core.exception.MessageException;
-import com.tirmizee.core.security.UserProfile;
 import com.tirmizee.core.utilities.DateUtils;
 
 @Service
