@@ -5,6 +5,7 @@ Building Enterprise Java Applications the Spring Way
 - Block user account after 3 consecutive failed login attempts
 - Limit Maximum Sessions For User
 - Setting Session Timeout and Update Database table on timeout
+- Roles & Permissions Management
 - Tracking user logon
 - Forgot password send Email reset password
 - Forcing user to change a password at the first time login
