@@ -7,15 +7,16 @@ Building Enterprise Java Applications the Spring Way
 - Setting session timeout and update database table on timeout
 - Roles & Permissions management
 - Tracking user logon
-- Forgot password send Email reset password
+- Forgot password and send email reset password
 - Forcing user to change a password at the first time login
 - Forcing user to change expired password
 - Paging, Searching and Sorting data
 - Pagination result using select2 ajax remote data
-- Sending Email Template With Attachment
-- Multiple Languages web application
+- Sending email template with attachment
+- Multiple languages web application
 - Generate PDF and Excel file 
 - Uploading both data and files in one form using Ajax
+- Handle exceptions with @ControllerAdvice
 
 ## Building and running
 
