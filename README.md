@@ -16,7 +16,6 @@ Building Enterprise Java Applications the Spring Way
 - Multiple languages web application
 - Generate PDF and Excel file 
 - Uploading both data and files in one form using Ajax
-- Handle exceptions with @ControllerAdvice
 
 ## Building and running
 
