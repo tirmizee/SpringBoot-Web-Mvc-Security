@@ -97,7 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     
     @Bean
-    public SessionInformationExpiredStrategy sessionInformationExpiredStrategy(){
+    public SessionInformationExpiredStrategy sessionInformationExpiredStrategy() {
     	SessionInformationExpiredStrategyImpl sessionExpiredStrategy =
     		new SessionInformationExpiredStrategyImpl("/login?error=Session Expired");
     	sessionExpiredStrategy.setMessagingService(messagingService);
@@ -142,7 +142,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**","/webjars/**","/ws/**");
+		web.ignoring().antMatchers("/v2/**","/swagger**/**","/resources/**","/webjars/**","/ws/**");
 	}
 	
 	@Override
@@ -174,7 +174,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					"/resetpassword/**",
 					"/api/user/password/forgot",
 					"/api/user/password/reset",
-					"/export/**"
+					"/export/**",
+					"/swagger-ui.html"
 				).permitAll()
 				.antMatchers(
 					"/firstlogin",

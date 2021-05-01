@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.AbstractRequestLoggingFilter;
 
@@ -22,7 +23,8 @@ public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 
 	@Override
 	protected void afterRequest(HttpServletRequest request, String message) {
-		String name = SecurityContextHolder.getContext().getAuthentication().getName();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String name = authentication != null ? authentication.getName() : "";
 		String accessIp = request.getRemoteAddr();
 		LOGGER.info("{} : {} : {}", name, accessIp, message);
 	}
@@ -34,7 +36,7 @@ public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 	}
 	
 	private String[] ignoreUrl() {
-		return new String[] { "ws", "webjars", "resource" };
+		return new String[] { "ws", "webjars", "resource","swagger-ui.html"};
 	}
 	
 }

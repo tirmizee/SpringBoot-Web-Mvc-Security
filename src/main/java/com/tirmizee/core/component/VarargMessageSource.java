@@ -17,6 +17,6 @@ public interface VarargMessageSource extends HierarchicalMessageSource {
 	
 	String getVargMessageDefault(String defaultMessage, String code, Object...args);
 	
-	String getVarargsMessageDefault(String defaultMessage,Locale locale, String code, Object...args);
+	String getVarargsMessageDefault(String defaultMessage, Locale locale, String code, Object...args);
 	
 }

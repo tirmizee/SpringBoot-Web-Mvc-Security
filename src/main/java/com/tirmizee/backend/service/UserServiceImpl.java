@@ -2,6 +2,7 @@ package com.tirmizee.backend.service;
 
 import static com.tirmizee.core.constant.Constant.AppSetting.PASSWORD_CHANGE_DAY;
 
+import java.util.Random;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -204,7 +205,9 @@ public class UserServiceImpl implements UserService {
 		String token = forgotPasswordService.generateToken();
 		String url = forgotPasswordService.createURLResetPassword(user.getId(),token);
 		
+		Integer id = new Random().nextInt();
 		ForgotPassword forgotPassword = new ForgotPassword();
+		forgotPassword.setId(9);
 		forgotPassword.setUserId(user.getId());
 		forgotPassword.setEmail(email);
 		forgotPassword.setToken(token);

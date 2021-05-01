@@ -14,20 +14,19 @@ public class SqlTemplate {
 	public static final String DEFAULT_PREFIX = "{"; 
 	public static final String DEFAULT_SUFFIX = "}";
 	
-	private String PREFIX; 
-	private String SUFFIX ;
-	private StrSubstitutor substitutor;
+	private String prefix; 
+	private String suffix ;
 	private StringBuilder statement = new StringBuilder();
 	private Map<String, String> valueMap = new HashMap<String, String>();
 	
 	public SqlTemplate() {
-		PREFIX = DEFAULT_PREFIX;
-		SUFFIX = DEFAULT_SUFFIX;
+		prefix = DEFAULT_PREFIX;
+		suffix = DEFAULT_SUFFIX;
 	}
 	
 	public SqlTemplate(String prefix, String suffix) {
-		PREFIX = prefix;
-		SUFFIX = suffix;
+		this.prefix = prefix;
+		this.suffix = suffix;
 	}
 
 	public SqlTemplate append(String str) {
@@ -41,7 +40,7 @@ public class SqlTemplate {
 	}
 	
 	public String toString() {
-		substitutor = new StrSubstitutor(valueMap, PREFIX, SUFFIX);
+		StrSubstitutor substitutor = new StrSubstitutor(valueMap, prefix, suffix);
 		return substitutor.replace(statement).toString();
 	}
 	

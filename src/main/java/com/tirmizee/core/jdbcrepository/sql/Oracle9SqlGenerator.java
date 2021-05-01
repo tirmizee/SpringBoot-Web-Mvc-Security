@@ -17,7 +17,9 @@ public class Oracle9SqlGenerator extends AbstractSqlGenerator {
 	
 	@Override
 	public boolean isCompatible(DatabaseMetaData metadata) throws SQLException {
-		 return "Oracle".equals(metadata.getDatabaseProductName());
+		int version = Integer.valueOf(metadata.getDatabaseMajorVersion());
+		String productName = metadata.getDatabaseProductName();
+		return "Oracle".equals(productName) && version > 12;
 	}
 
 	@Override

@@ -23,6 +23,7 @@ public class TemplateOparationsImpl implements TemplateOparations {
 		
 			Template template = configuration.getTemplate(templateName);
 			template.process(model, writer);
+			writer.flush();
 			return writer.toString();
 		
 		} catch (IOException | TemplateException e) {

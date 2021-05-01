@@ -1,7 +1,5 @@
 package com.tirmizee.core.config.security;
 
-import static com.tirmizee.core.constant.Constant.AppSetting.SESSION_TIME_OUT;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -16,7 +14,6 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.tirmizee.backend.service.AppSettingService;
 import com.tirmizee.backend.service.MessagingService;
 import com.tirmizee.backend.service.SessionService;
 import com.tirmizee.core.component.ApplicationSetting;
