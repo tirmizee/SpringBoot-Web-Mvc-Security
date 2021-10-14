@@ -14,8 +14,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jndi.JndiObjectFactoryBean;
 
 import com.tirmizee.core.constant.Constant;
+import com.tirmizee.core.constant.DatabaseResource;
 import com.tirmizee.core.jdbcrepository.NamedQueryJdbcOperations;
 import com.tirmizee.core.jdbcrepository.NamedQueryJdbcTemplate;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 /**
  * @author Pratya Yeekhaday
@@ -32,34 +35,40 @@ public class DatabaseConfig {
 	@Bean("dataSource")
 	@Profile(Constant.Profiles.DEVELOP)
 	public DataSource dataSourceOracleDev() throws IllegalArgumentException, NamingException {
-		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
-		bean.setJndiName(JAVA_ENV + TomcatEmbeddedConfig.JNDI_ORACLE_DEV);  
-		bean.setProxyInterface(DataSource.class);
-		bean.setLookupOnStartup(false);
-		bean.afterPropertiesSet();
-		return (DataSource) bean.getObject();
+		HikariConfig config = new HikariConfig();
+		config.setDriverClassName(DatabaseResource.ORACLE_DATASOURCE_DEV_DRIVER);
+		config.setJdbcUrl(DatabaseResource.ORACLE_DATASOURCE_DEV_URL);
+		config.setUsername(DatabaseResource.ORACLE_DATASOURCE_DEV_USER);
+		config.setPassword(DatabaseResource.ORACLE_DATASOURCE_DEV_PASS);
+		config.setMaximumPoolSize(30);
+		config.setMinimumIdle(5);
+		return new HikariDataSource(config);
 	}
 	
 	@Bean("dataSource")
 	@Profile(Constant.Profiles.UAT)
 	public DataSource dataSourceOracleUat() throws IllegalArgumentException, NamingException{
-		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
-		bean.setJndiName(JAVA_ENV + TomcatEmbeddedConfig.JNDI_ORACLE_UAT);  
-		bean.setProxyInterface(DataSource.class);
-		bean.setLookupOnStartup(false);
-		bean.afterPropertiesSet();
-		return (DataSource) bean.getObject();
+		HikariConfig config = new HikariConfig();
+		config.setDriverClassName(DatabaseResource.ORACLE_DATASOURCE_UAT_DRIVER);
+		config.setJdbcUrl(DatabaseResource.ORACLE_DATASOURCE_UAT_URL);
+		config.setUsername(DatabaseResource.ORACLE_DATASOURCE_UAT_USER);
+		config.setPassword(DatabaseResource.ORACLE_DATASOURCE_UAT_PASS);
+		config.setMaximumPoolSize(30);
+		config.setMinimumIdle(5);
+		return new HikariDataSource(config);
 	}
 	
 	@Bean("dataSource")
 	@Profile(Constant.Profiles.PRODUCTION)
 	public DataSource dataSourceOracleProduction() throws IllegalArgumentException, NamingException{
-		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();           
-		bean.setJndiName(JAVA_ENV + TomcatEmbeddedConfig.JNDI_ORACLE_PRO);  
-		bean.setProxyInterface(DataSource.class);
-		bean.setLookupOnStartup(false);
-		bean.afterPropertiesSet();
-		return (DataSource) bean.getObject();
+		HikariConfig config = new HikariConfig();
+		config.setDriverClassName(DatabaseResource.ORACLE_DATASOURCE_PRO_DRIVER);
+		config.setJdbcUrl(DatabaseResource.ORACLE_DATASOURCE_PRO_URL);
+		config.setUsername(DatabaseResource.ORACLE_DATASOURCE_PRO_USER);
+		config.setPassword(DatabaseResource.ORACLE_DATASOURCE_PRO_PASS);
+		config.setMaximumPoolSize(30);
+		config.setMinimumIdle(5);
+		return new HikariDataSource(config);
 	}
 	
 	@Bean
